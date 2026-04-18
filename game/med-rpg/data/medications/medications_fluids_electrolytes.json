@@ -1,0 +1,199 @@
+{
+  "category": "Fluids & Electrolytes",
+  "category_id": "fluids_electrolytes",
+  "description": "IV fluids, electrolyte replacements, nutritional supplements, and osmotic agents.",
+  "medications": [
+    {
+      "id": "normal_saline",
+      "name": "Normal Saline (0.9% NaCl, NS)",
+      "class": "Isotonic Crystalloid",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["fluids", "normal saline", "NS", "0.9% NaCl", "isotonic", "crystalloid", "IV fluid", "resuscitation", "bolus", "maintenance"]
+    },
+    {
+      "id": "lactated_ringers",
+      "name": "Lactated Ringer's (LR)",
+      "class": "Balanced Isotonic Crystalloid",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["fluids", "lactated ringers", "LR", "Ringer's lactate", "isotonic", "crystalloid", "balanced", "IV fluid", "resuscitation", "sepsis"]
+    },
+    {
+      "id": "plasmalyte",
+      "name": "Plasma-Lyte (Normosol)",
+      "class": "Balanced Isotonic Crystalloid",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["fluids", "plasmalyte", "plasma-lyte", "normosol", "balanced", "isotonic", "crystalloid", "IV fluid", "resuscitation"]
+    },
+    {
+      "id": "half_normal_saline",
+      "name": "Half Normal Saline (0.45% NaCl, 1/2 NS)",
+      "class": "Hypotonic Crystalloid",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["fluids", "half normal saline", "0.45% NaCl", "1/2 NS", "hypotonic", "crystalloid", "maintenance fluid", "IV"]
+    },
+    {
+      "id": "d5w",
+      "name": "Dextrose 5% in Water (D5W)",
+      "class": "Hypotonic Crystalloid",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["fluids", "D5W", "dextrose 5%", "hypotonic", "crystalloid", "free water", "maintenance", "hypoglycemia", "IV"]
+    },
+    {
+      "id": "d10w",
+      "name": "Dextrose 10% in Water (D10W)",
+      "class": "Hypertonic Dextrose Solution",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["fluids", "D10W", "dextrose 10%", "glucose", "hypoglycemia", "neonatal", "hyperkalemia treatment", "IV"]
+    },
+    {
+      "id": "d5ns",
+      "name": "Dextrose 5% in Normal Saline (D5NS)",
+      "class": "Crystalloid",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["fluids", "D5NS", "dextrose 5% normal saline", "maintenance fluid", "IV"]
+    },
+    {
+      "id": "d5_half_ns",
+      "name": "Dextrose 5% in Half Normal Saline (D5 1/2 NS)",
+      "class": "Crystalloid",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["fluids", "D5 1/2 NS", "maintenance fluid", "pediatric fluids", "IV"]
+    },
+    {
+      "id": "albumin_5",
+      "name": "Albumin 5%",
+      "class": "Colloid",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["fluids", "albumin", "5% albumin", "colloid", "volume expansion", "hypoalbuminemia", "cirrhosis", "SBP", "IV"]
+    },
+    {
+      "id": "albumin_25",
+      "name": "Albumin 25%",
+      "class": "Colloid (concentrated)",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["fluids", "albumin", "25% albumin", "colloid", "hypoalbuminemia", "ascites", "hepatorenal syndrome", "IV"]
+    },
+    {
+      "id": "hypertonic_saline_fluids",
+      "name": "Hypertonic Saline (3% NaCl)",
+      "class": "Hypertonic Crystalloid",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["fluids", "hypertonic saline", "3% saline", "hyponatremia", "cerebral edema", "ICP", "IV"]
+    },
+    {
+      "id": "potassium_chloride",
+      "name": "Potassium Chloride (KCl)",
+      "class": "Electrolyte Replacement",
+      "routes": ["IV", "PO"],
+      "allergy_class": null,
+      "semantic_tags": ["fluids", "electrolytes", "potassium", "KCl", "potassium chloride", "hypokalemia", "electrolyte replacement", "K+ run", "IV"]
+    },
+    {
+      "id": "potassium_phosphate",
+      "name": "Potassium Phosphate",
+      "class": "Electrolyte Replacement",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["fluids", "electrolytes", "potassium phosphate", "hypophosphatemia", "hypokalemia", "DKA", "refeeding syndrome", "IV"]
+    },
+    {
+      "id": "magnesium_sulfate",
+      "name": "Magnesium Sulfate (MgSO4)",
+      "class": "Electrolyte Replacement / Anticonvulsant",
+      "routes": ["IV", "IM"],
+      "allergy_class": null,
+      "semantic_tags": ["fluids", "electrolytes", "magnesium", "MgSO4", "magnesium sulfate", "hypomagnesemia", "pre-eclampsia", "eclampsia", "torsades de pointes", "asthma", "Mg run", "IV"]
+    },
+    {
+      "id": "calcium_gluconate_fluids",
+      "name": "Calcium Gluconate",
+      "class": "Electrolyte Replacement / Cardiac Membrane Stabilizer",
+      "routes": ["IV", "PO"],
+      "allergy_class": null,
+      "semantic_tags": ["fluids", "electrolytes", "calcium gluconate", "calcium", "hypocalcemia", "hyperkalemia", "cardiac protection", "tetany", "IV"]
+    },
+    {
+      "id": "calcium_chloride",
+      "name": "Calcium Chloride",
+      "class": "Electrolyte Replacement",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["fluids", "electrolytes", "calcium chloride", "calcium", "hypocalcemia", "hyperkalemia", "cardiac arrest", "ACLS", "IV"]
+    },
+    {
+      "id": "sodium_phosphate",
+      "name": "Sodium Phosphate",
+      "class": "Electrolyte Replacement",
+      "routes": ["IV", "PO", "PR"],
+      "allergy_class": null,
+      "semantic_tags": ["fluids", "electrolytes", "sodium phosphate", "phosphate", "hypophosphatemia", "bowel prep", "laxative", "IV"]
+    },
+    {
+      "id": "sodium_bicarbonate_fluids",
+      "name": "Sodium Bicarbonate",
+      "class": "Alkalinizing Agent / Electrolyte",
+      "routes": ["IV", "PO"],
+      "allergy_class": null,
+      "semantic_tags": ["fluids", "electrolytes", "sodium bicarbonate", "bicarb", "acidosis", "metabolic acidosis", "hyperkalemia", "cardiac arrest", "ACLS", "IV"]
+    },
+    {
+      "id": "thiamine",
+      "name": "Thiamine (Vitamin B1)",
+      "class": "Vitamin / Nutritional Supplement",
+      "routes": ["IV", "IM", "PO"],
+      "allergy_class": null,
+      "semantic_tags": ["fluids", "vitamins", "thiamine", "vitamin B1", "Wernicke's encephalopathy", "alcoholism", "deficiency", "IV", "before glucose"]
+    },
+    {
+      "id": "multivitamin_iv",
+      "name": "Multivitamin (IV — MVI)",
+      "class": "Vitamin / Nutritional Supplement",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["fluids", "vitamins", "multivitamin", "MVI", "IV vitamins", "TPN", "nutritional support", "IV"]
+    },
+    {
+      "id": "folic_acid",
+      "name": "Folic Acid (Vitamin B9)",
+      "class": "Vitamin / Nutritional Supplement",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["fluids", "vitamins", "folic acid", "folate", "vitamin B9", "anemia", "pregnancy", "methotrexate rescue", "megaloblastic anemia"]
+    },
+    {
+      "id": "zinc_sulfate",
+      "name": "Zinc Sulfate",
+      "class": "Mineral Supplement",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["fluids", "minerals", "zinc", "zinc sulfate", "deficiency", "wound healing", "TPN supplement", "diarrhea"]
+    },
+    {
+      "id": "tpn",
+      "name": "Total Parenteral Nutrition (TPN)",
+      "class": "Nutritional Support",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["fluids", "nutrition", "TPN", "total parenteral nutrition", "nutritional support", "malnutrition", "bowel rest", "IV"]
+    },
+    {
+      "id": "mannitol_fluids",
+      "name": "Mannitol",
+      "class": "Osmotic Diuretic",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["fluids", "mannitol", "osmotic diuretic", "cerebral edema", "ICP", "intracranial pressure", "IV"]
+    }
+  ]
+}

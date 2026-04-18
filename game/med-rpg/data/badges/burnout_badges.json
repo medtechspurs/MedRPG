@@ -1,0 +1,188 @@
+{
+  "category": "Burnout Badges",
+  "category_id": "burnout_badges",
+  "description": "Negative modifier badges that hinder the player during clinical encounters. Displayed as red/orange worn-looking ovals on the badge reel UI.",
+  "trigger_rules": {
+    "description": "Burnout badges are triggered mid-encounter by poor performance. One badge is drawn randomly from the pool when a trigger fires.",
+    "triggers": [
+      {
+        "id": "harm_point_trigger",
+        "condition": "harm_points_reached",
+        "threshold": 5,
+        "description": "Reaching 5 harm points triggers a random burnout badge."
+      },
+      {
+        "id": "low_ap_trigger",
+        "condition": "ap_remaining_below",
+        "threshold": 50,
+        "description": "Dropping to 50 AP or below triggers a random burnout badge."
+      }
+    ],
+    "early_game": {
+      "max_burnout_badges_per_encounter": 1,
+      "note": "If a burnout badge is already active when a second trigger fires, nothing happens."
+    },
+    "late_game": {
+      "max_burnout_badges_per_encounter": 2,
+      "note": "Unlocked through progression. Both triggers can now each fire independently, allowing up to 2 burnout badges in one encounter."
+    },
+    "pre_attached": {
+      "description": "Some encounters on the selection screen come with a burnout badge pre-attached. The badge is visible before the player chooses the encounter. Harder encounters with pre-attached badges offer higher XP rewards."
+    }
+  },
+  "badges": [
+    {
+      "id": "burnout_burnt_out",
+      "name": "Burnt Out Resident",
+      "description": "All AP costs increased by 1.",
+      "flavor_text": "Third overnight this week. Everything takes longer.",
+      "icon": "skull",
+      "effect_type": "global_cost_increase",
+      "increase": 1,
+      "timing": "passive",
+      "xp_reward_bonus": 15,
+      "rarity": "common"
+    },
+    {
+      "id": "burnout_understaffed",
+      "name": "Understaffed",
+      "description": "All imaging orders cost +2 AP.",
+      "flavor_text": "Radiology is slammed. Hope you're not in a hurry.",
+      "icon": "turtle",
+      "effect_type": "category_cost_increase",
+      "affected_category": "imaging",
+      "increase": 2,
+      "timing": "passive",
+      "xp_reward_bonus": 15,
+      "rarity": "common"
+    },
+    {
+      "id": "burnout_difficult_stick",
+      "name": "Difficult Stick",
+      "description": "IV access must be established before any IV medication can be ordered.",
+      "flavor_text": "No veins. None. The nurses have tried three times.",
+      "icon": "broken_needle",
+      "effect_type": "prerequisite_required",
+      "prerequisite_action": "iv_access",
+      "blocks_category": "medications",
+      "route_filter": "IV",
+      "timing": "passive",
+      "xp_reward_bonus": 10,
+      "rarity": "common"
+    },
+    {
+      "id": "burnout_poor_historian",
+      "name": "Poor Historian",
+      "description": "History questions cost double AP. Answers are vague and incomplete.",
+      "flavor_text": "Chief complaint: 'It hurts.' Where? 'Everywhere.'",
+      "icon": "shrug",
+      "effect_type": "category_cost_multiplier",
+      "affected_category": "history",
+      "multiplier": 2,
+      "also_applies": "vague_response_flag",
+      "timing": "passive",
+      "xp_reward_bonus": 20,
+      "rarity": "uncommon"
+    },
+    {
+      "id": "burnout_lab_down",
+      "name": "Lab Machine Down",
+      "description": "One random lab category is unavailable this encounter.",
+      "flavor_text": "The analyzer is showing an error code nobody recognizes.",
+      "icon": "wrench",
+      "effect_type": "category_block_random",
+      "affected_category": "labs",
+      "blocked_subcategory": "random",
+      "timing": "on_encounter_start",
+      "xp_reward_bonus": 15,
+      "rarity": "uncommon"
+    },
+    {
+      "id": "burnout_allergy_surprise",
+      "name": "Allergy Surprise",
+      "description": "One undisclosed allergy is revealed mid-encounter after a medication is ordered.",
+      "flavor_text": "It's in the old chart. The one from 2009. Nobody checked.",
+      "icon": "warning",
+      "effect_type": "hidden_allergy",
+      "reveal_trigger": "medication_ordered",
+      "timing": "on_action",
+      "xp_reward_bonus": 25,
+      "rarity": "rare"
+    },
+    {
+      "id": "burnout_beliefs_on_file",
+      "name": "Beliefs on File",
+      "description": "No blood products can be administered this encounter.",
+      "flavor_text": "It's documented. It's valid. Plan accordingly.",
+      "icon": "no_entry",
+      "effect_type": "category_block",
+      "blocked_category": "transfusions",
+      "timing": "passive",
+      "xp_reward_bonus": 20,
+      "rarity": "uncommon"
+    },
+    {
+      "id": "burnout_language_barrier",
+      "name": "Language Barrier",
+      "description": "All history questions cost +1 AP. Interpreter is on the way.",
+      "flavor_text": "Interpreter ETA: unknown.",
+      "icon": "speech_bubble",
+      "effect_type": "category_cost_increase",
+      "affected_category": "history",
+      "increase": 1,
+      "timing": "passive",
+      "xp_reward_bonus": 10,
+      "rarity": "common"
+    },
+    {
+      "id": "burnout_family_in_room",
+      "name": "Family in the Room",
+      "description": "Physical exam costs +1 AP. Certain exam findings require extra sensitivity flags.",
+      "flavor_text": "There are seven of them. They all have questions.",
+      "icon": "people",
+      "effect_type": "category_cost_increase",
+      "affected_category": "physical_exam",
+      "increase": 1,
+      "timing": "passive",
+      "xp_reward_bonus": 10,
+      "rarity": "common"
+    },
+    {
+      "id": "burnout_ehr_down",
+      "name": "EHR Down",
+      "description": "Diagnosis action costs +5 AP. Records are unavailable.",
+      "flavor_text": "The system is down for maintenance. Scheduled. On a Tuesday afternoon.",
+      "icon": "computer_broken",
+      "effect_type": "action_cost_increase",
+      "affected_action": "diagnosis",
+      "increase": 5,
+      "timing": "passive",
+      "xp_reward_bonus": 15,
+      "rarity": "uncommon"
+    },
+    {
+      "id": "burnout_scanners_booked",
+      "name": "Scanner's Booked",
+      "description": "CT and MRI unavailable this encounter. X-ray and ultrasound only.",
+      "flavor_text": "The CT is down until 6pm. Sorry.",
+      "icon": "calendar_blocked",
+      "effect_type": "modality_block",
+      "blocked_modalities": ["CT", "MRI"],
+      "timing": "passive",
+      "xp_reward_bonus": 25,
+      "rarity": "rare"
+    },
+    {
+      "id": "burnout_polypharmacy",
+      "name": "Polypharmacy",
+      "description": "Patient is on 8 unknown home medications. Interaction risk is elevated.",
+      "flavor_text": "Brought in a grocery bag of pill bottles. None of them are labeled.",
+      "icon": "pill_bag",
+      "effect_type": "interaction_risk_elevated",
+      "harm_point_risk": true,
+      "timing": "passive",
+      "xp_reward_bonus": 20,
+      "rarity": "uncommon"
+    }
+  ]
+}

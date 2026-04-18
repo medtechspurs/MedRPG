@@ -1,0 +1,191 @@
+{
+  "category": "Analgesics",
+  "category_id": "analgesics",
+  "description": "Pain management medications including opioids, NSAIDs, and non-opioid analgesics.",
+  "medications": [
+    {
+      "id": "morphine",
+      "name": "Morphine",
+      "class": "Opioid Analgesic",
+      "routes": ["IV", "IM", "PO", "SQ", "epidural"],
+      "allergy_class": "opioids",
+      "semantic_tags": ["pain", "opioid", "narcotic", "analgesic", "morphine"]
+    },
+    {
+      "id": "hydromorphone",
+      "name": "Hydromorphone (Dilaudid)",
+      "class": "Opioid Analgesic",
+      "routes": ["IV", "IM", "PO", "SQ"],
+      "allergy_class": "opioids",
+      "semantic_tags": ["pain", "opioid", "narcotic", "dilaudid", "hydromorphone", "analgesic"]
+    },
+    {
+      "id": "fentanyl",
+      "name": "Fentanyl",
+      "class": "Opioid Analgesic",
+      "routes": ["IV", "IM", "transdermal", "intranasal", "buccal"],
+      "allergy_class": "opioids",
+      "semantic_tags": ["pain", "opioid", "narcotic", "fentanyl", "analgesic", "patch"]
+    },
+    {
+      "id": "oxycodone",
+      "name": "Oxycodone",
+      "class": "Opioid Analgesic",
+      "routes": ["PO"],
+      "allergy_class": "opioids",
+      "semantic_tags": ["pain", "opioid", "narcotic", "oxycodone", "percocet", "analgesic"]
+    },
+    {
+      "id": "oxycodone_acetaminophen",
+      "name": "Oxycodone / Acetaminophen (Percocet)",
+      "class": "Opioid Combination Analgesic",
+      "routes": ["PO"],
+      "allergy_class": "opioids",
+      "semantic_tags": ["pain", "opioid", "percocet", "oxycodone", "acetaminophen", "narcotic"]
+    },
+    {
+      "id": "hydrocodone_acetaminophen",
+      "name": "Hydrocodone / Acetaminophen (Norco, Vicodin)",
+      "class": "Opioid Combination Analgesic",
+      "routes": ["PO"],
+      "allergy_class": "opioids",
+      "semantic_tags": ["pain", "opioid", "norco", "vicodin", "hydrocodone", "narcotic", "analgesic"]
+    },
+    {
+      "id": "tramadol",
+      "name": "Tramadol",
+      "class": "Opioid Analgesic (atypical)",
+      "routes": ["PO"],
+      "allergy_class": "opioids",
+      "semantic_tags": ["pain", "tramadol", "opioid", "analgesic", "ultram"]
+    },
+    {
+      "id": "codeine",
+      "name": "Codeine",
+      "class": "Opioid Analgesic",
+      "routes": ["PO", "IM"],
+      "allergy_class": "opioids",
+      "semantic_tags": ["pain", "opioid", "codeine", "narcotic", "cough", "analgesic"]
+    },
+    {
+      "id": "methadone",
+      "name": "Methadone",
+      "class": "Opioid Analgesic / MAT",
+      "routes": ["PO", "IV"],
+      "allergy_class": "opioids",
+      "semantic_tags": ["pain", "opioid", "methadone", "addiction", "maintenance", "analgesic"]
+    },
+    {
+      "id": "buprenorphine",
+      "name": "Buprenorphine (Suboxone, Buprenex)",
+      "class": "Partial Opioid Agonist",
+      "routes": ["sublingual", "transdermal", "IV", "IM"],
+      "allergy_class": "opioids",
+      "semantic_tags": ["pain", "opioid", "suboxone", "buprenorphine", "addiction", "partial agonist"]
+    },
+    {
+      "id": "acetaminophen",
+      "name": "Acetaminophen (Tylenol)",
+      "class": "Non-opioid Analgesic / Antipyretic",
+      "routes": ["PO", "IV", "PR"],
+      "allergy_class": "acetaminophen",
+      "semantic_tags": ["pain", "fever", "tylenol", "acetaminophen", "paracetamol", "analgesic", "antipyretic"]
+    },
+    {
+      "id": "ibuprofen",
+      "name": "Ibuprofen (Advil, Motrin)",
+      "class": "NSAID",
+      "routes": ["PO", "IV"],
+      "allergy_class": "nsaids",
+      "semantic_tags": ["pain", "fever", "inflammation", "nsaid", "ibuprofen", "advil", "motrin", "analgesic"]
+    },
+    {
+      "id": "naproxen",
+      "name": "Naproxen (Aleve, Naprosyn)",
+      "class": "NSAID",
+      "routes": ["PO"],
+      "allergy_class": "nsaids",
+      "semantic_tags": ["pain", "inflammation", "nsaid", "naproxen", "aleve", "analgesic"]
+    },
+    {
+      "id": "ketorolac",
+      "name": "Ketorolac (Toradol)",
+      "class": "NSAID",
+      "routes": ["IV", "IM", "PO"],
+      "allergy_class": "nsaids",
+      "semantic_tags": ["pain", "nsaid", "ketorolac", "toradol", "analgesic", "anti-inflammatory"]
+    },
+    {
+      "id": "celecoxib",
+      "name": "Celecoxib (Celebrex)",
+      "class": "COX-2 Inhibitor NSAID",
+      "routes": ["PO"],
+      "allergy_class": "nsaids",
+      "semantic_tags": ["pain", "nsaid", "celecoxib", "celebrex", "cox2", "analgesic", "arthritis"]
+    },
+    {
+      "id": "aspirin",
+      "name": "Aspirin (ASA)",
+      "class": "NSAID / Antiplatelet",
+      "routes": ["PO", "PR"],
+      "allergy_class": "nsaids",
+      "semantic_tags": ["pain", "fever", "aspirin", "asa", "nsaid", "antiplatelet", "cardiac", "analgesic"]
+    },
+    {
+      "id": "gabapentin",
+      "name": "Gabapentin (Neurontin)",
+      "class": "Neuropathic Analgesic / Anticonvulsant",
+      "routes": ["PO"],
+      "allergy_class": "gabapentinoids",
+      "semantic_tags": ["pain", "neuropathic", "gabapentin", "neurontin", "nerve pain", "analgesic"]
+    },
+    {
+      "id": "pregabalin",
+      "name": "Pregabalin (Lyrica)",
+      "class": "Neuropathic Analgesic / Anticonvulsant",
+      "routes": ["PO"],
+      "allergy_class": "gabapentinoids",
+      "semantic_tags": ["pain", "neuropathic", "pregabalin", "lyrica", "nerve pain", "fibromyalgia", "analgesic"]
+    },
+    {
+      "id": "lidocaine_patch",
+      "name": "Lidocaine Patch (Lidoderm)",
+      "class": "Topical Local Anesthetic / Analgesic",
+      "routes": ["topical"],
+      "allergy_class": "local_anesthetics",
+      "semantic_tags": ["pain", "topical", "lidocaine", "patch", "lidoderm", "local", "analgesic"]
+    },
+    {
+      "id": "capsaicin",
+      "name": "Capsaicin Cream",
+      "class": "Topical Analgesic",
+      "routes": ["topical"],
+      "allergy_class": null,
+      "semantic_tags": ["pain", "topical", "capsaicin", "neuropathic", "analgesic", "cream"]
+    },
+    {
+      "id": "cyclobenzaprine",
+      "name": "Cyclobenzaprine (Flexeril)",
+      "class": "Muscle Relaxant",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["muscle", "spasm", "cyclobenzaprine", "flexeril", "muscle relaxant", "pain"]
+    },
+    {
+      "id": "methocarbamol",
+      "name": "Methocarbamol (Robaxin)",
+      "class": "Muscle Relaxant",
+      "routes": ["PO", "IV", "IM"],
+      "allergy_class": null,
+      "semantic_tags": ["muscle", "spasm", "methocarbamol", "robaxin", "muscle relaxant", "pain"]
+    },
+    {
+      "id": "diclofenac",
+      "name": "Diclofenac (Voltaren)",
+      "class": "NSAID",
+      "routes": ["PO", "topical", "IV"],
+      "allergy_class": "nsaids",
+      "semantic_tags": ["pain", "nsaid", "diclofenac", "voltaren", "topical", "gel", "analgesic"]
+    }
+  ]
+}

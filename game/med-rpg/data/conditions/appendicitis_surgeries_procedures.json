@@ -1,0 +1,241 @@
+{
+  "condition_id": "appendicitis",
+  "category": "Surgeries & Procedures",
+  "description": "Surgical and procedural interventions available during the appendicitis encounter. Accessible via Icon 8 (Surgeries & Procedures) and Icon 10 (Airway).",
+
+  "procedures": [
+
+    {
+      "id": "intubation",
+      "name": "Intubation (RSI)",
+      "ap_cost": 5,
+      "checklist_cost": 0,
+      "description": "Endotracheal intubation via rapid sequence intubation protocol. Player must give sedative and paralytic via medication browser before confirming.",
+      "access": "Icon 10 — Airway menu",
+
+      "rsi_checklist": {
+        "description": "MEDDY presents a safety checklist before intubation is confirmed. Player checks boxes manually. MEDDY does not verify — engine checks reality after confirmation.",
+        "items": [
+          { "id": "equipment_ready", "label": "Equipment ready (bag-mask, laryngoscope, ET tube, stylet)" },
+          { "id": "ventilator_nearby", "label": "Ventilator nearby" },
+          { "id": "oxygen_ready", "label": "Oxygen ready" },
+          { "id": "suction_ready", "label": "Suction ready" },
+          { "id": "sedative_given", "label": "Sedative given" },
+          { "id": "paralytic_given", "label": "Paralytic given" }
+        ],
+        "note": "Checklist is for player awareness only. Engine independently verifies sedative and paralytic were actually ordered via medication browser."
+      },
+
+      "engine_verification": {
+        "checks": [
+          {
+            "id": "check_sedative",
+            "condition": "sedative_given_via_med_browser",
+            "failure_harm_points": 5,
+            "failure_ongoing": {
+              "harm_per_action": 5,
+              "stops_when": "sedative_given_post_intubation",
+              "note": "Giving sedation after intubation stops further accrual immediately. All previously accrued harm points remain."
+            },
+            "meddy_feedback_failure": "Oh no — the patient wasn't sedated before intubation! They are awake and aware. This is causing serious harm. Give a sedative NOW to stop further damage!"
+          },
+          {
+            "id": "check_paralytic",
+            "condition": "paralytic_given_via_med_browser",
+            "failure_harm_points": 2,
+            "meddy_feedback_failure": "No paralytic was given before intubation. The patient wasn't fully relaxed — this caused harm. Always give a paralytic before intubating!"
+          },
+          {
+            "id": "check_patient_state",
+            "condition": "patient_state_is_septic_shock",
+            "pass_harm_points": 0,
+            "fail_harm_points": 2,
+            "meddy_feedback_failure": "Intubating this patient right now caused harm — they didn't need their airway secured yet. Intubation is appropriate in septic shock with respiratory compromise, not before.",
+            "meddy_feedback_pass": "Good call securing the airway in septic shock. Intubation is appropriate here."
+          }
+        ],
+        "note": "All checks are independent. Harm points from each failed check stack."
+      },
+
+      "harm_point_summary": {
+        "intubate_in_stable_or_perforated": 2,
+        "intubate_in_septic_shock": 0,
+        "no_paralytic": 2,
+        "no_sedation_immediate": 5,
+        "no_sedation_per_action_ongoing": 5
+      },
+
+      "on_success": {
+        "establishes": "intubated",
+        "auto_ventilator": true,
+        "ventilator_settings": {
+          "mode": "VC-AC",
+          "tidal_volume_ml": 500,
+          "rate": 14,
+          "peep": 5,
+          "fio2_percent": 40
+        },
+        "triggers_auto_bed": true,
+        "meddy_feedback": "Intubation successful. Patient is on the ventilator. Check your settings and keep an eye on those vitals."
+      },
+
+      "bonus_points": 0,
+      "repeatable": false
+    },
+
+    {
+      "id": "appendectomy",
+      "name": "Appendectomy",
+      "ap_cost": 10,
+      "description": "Surgical removal of the appendix. This is the definitive treatment and win condition for appendicitis.",
+      "access": "Icon 8 — Surgeries & Procedures",
+
+      "prerequisites": {
+        "require_any": [
+          "ct_abdomen_pelvis_completed",
+          "xray_abdomen_completed",
+          "ultrasound_abdomen_completed",
+          "consult_general_surgery_completed"
+        ],
+        "note": "At least one imaging study OR a general surgery consult must be completed before appendectomy is available.",
+        "missing_prerequisite_popup": "You'll need imaging or a surgery consult before heading to the OR. Talk to General Surgery or get a CT first."
+      },
+
+      "state_rules": {
+        "stable": {
+          "allowed": true,
+          "harm_points": 0,
+          "meddy_feedback": "Off to the OR! The appendix is coming out. Great work getting here efficiently."
+        },
+        "perforated": {
+          "allowed": true,
+          "harm_points": 0,
+          "meddy_feedback": "The appendix has already perforated, but we're getting it out now. Expect a longer recovery, but this was the right call."
+        },
+        "septic_shock": {
+          "allowed": true,
+          "requires_resuscitation": true,
+          "resuscitation_definition": "IV fluids and at least one vasopressor ordered",
+          "without_resuscitation_harm_points": 2,
+          "without_resuscitation_popup": "The patient is in septic shock — going straight to the OR without resuscitation first is dangerous. Stabilize with fluids and vasopressors first.",
+          "with_resuscitation_harm_points": 0,
+          "meddy_feedback_resuscitated": "Good — you stabilized the patient before the OR. This is the right approach in septic shock.",
+          "meddy_feedback_not_resuscitated": "Taking a septic shock patient to the OR without resuscitation caused harm. Always stabilize first!"
+        },
+        "coma_fail": {
+          "allowed": false,
+          "popup": "It's too late. The patient has deteriorated beyond the point where surgery can help."
+        }
+      },
+
+      "on_success": {
+        "resolves_condition": true,
+        "triggers_end_condition": "win",
+        "meddy_feedback_stable": "Appendectomy complete! The patient is going to make a full recovery. Excellent work, Doctor!",
+        "meddy_feedback_perforated": "Appendectomy complete. It was a tough case — the appendix had already ruptured — but you got there. Well done.",
+        "meddy_feedback_septic_shock": "Appendectomy complete. This was a critically ill patient and you pulled it off. Outstanding work."
+      },
+
+      "bonus_points": 0,
+      "repeatable": false
+    },
+
+    {
+      "id": "central_line",
+      "name": "Central Line Placement",
+      "ap_cost": 5,
+      "description": "Placement of a central venous catheter. Useful in septic shock for vasopressor administration and monitoring.",
+      "access": "Icon 8 — Surgeries & Procedures",
+      "effects": {
+        "establishes": "central_line",
+        "clinical_note": "Appropriate in septic shock. Required for certain vasopressors in some protocols. No direct effect on appendicitis progression."
+      },
+      "bonus_points": 0,
+      "repeatable": false
+    },
+
+    {
+      "id": "arterial_line",
+      "name": "Arterial Line Placement",
+      "ap_cost": 4,
+      "description": "Placement of an arterial catheter for continuous beat-to-beat blood pressure monitoring and frequent blood draws.",
+      "access": "Icon 8 — Surgeries & Procedures",
+
+      "effects": {
+        "establishes": "arterial_line",
+        "clinical_note": "Appropriate in septic shock. Enables continuous BP monitoring and cheap ABG draws.",
+
+        "unlocks": [
+          {
+            "id": "abg_discount",
+            "description": "ABG now costs 1 AP instead of 6 AP for the remainder of the encounter.",
+            "overrides_action": "abg",
+            "new_ap_cost": 1,
+            "meddy_feedback": "Arterial line is in! ABG draws are now quick and easy — only 1 AP from here on."
+          }
+        ],
+
+        "new_vital_sign": {
+          "id": "arterial_line_waveform",
+          "name": "Continuous Arterial Pressure",
+          "display": "A-line waveform on patient monitor",
+          "description": "Beat-to-beat arterial pressure tracing replaces intermittent cuff BP on the monitor. Shows characteristic waveform shape, amplitude, and heart rate.",
+          "state_appearances": {
+            "stable": "Normal amplitude waveform, regular rate ~105 bpm",
+            "perforated": "Slightly reduced amplitude, tachycardic ~122 bpm",
+            "septic_shock": "Low amplitude, wide pulse pressure, tachycardic ~135 bpm — classic septic shock pattern"
+          }
+        }
+      },
+
+      "bonus_points": 0,
+      "repeatable": false
+    },
+
+    {
+      "id": "thoracentesis",
+      "name": "Thoracentesis",
+      "ap_cost": 6,
+      "description": "Needle aspiration of pleural fluid.",
+      "access": "Icon 8 — Surgeries & Procedures",
+      "effects": {
+        "clinical_note": "No indication in appendicitis. No effect. Costs AP."
+      },
+      "harm_points": 0,
+      "bonus_points": 0,
+      "repeatable": false
+    },
+
+    {
+      "id": "paracentesis",
+      "name": "Paracentesis",
+      "ap_cost": 6,
+      "description": "Needle aspiration of peritoneal fluid.",
+      "access": "Icon 8 — Surgeries & Procedures",
+      "effects": {
+        "clinical_note": "No primary indication in appendicitis. No significant effect. Costs AP."
+      },
+      "harm_points": 0,
+      "bonus_points": 0,
+      "repeatable": false
+    },
+
+    {
+      "id": "lumbar_puncture",
+      "name": "Lumbar Puncture",
+      "ap_cost": 6,
+      "description": "CSF sampling via spinal needle.",
+      "access": "Icon 8 — Surgeries & Procedures",
+      "effects": {
+        "clinical_note": "No indication in appendicitis. No effect. Costs AP."
+      },
+      "harm_points": 0,
+      "bonus_points": 0,
+      "repeatable": false
+    }
+
+  ],
+
+  "total_available_bonus_points": 0,
+  "note": "No bonus points available from surgeries and procedures in the appendicitis case."
+}

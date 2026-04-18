@@ -1,0 +1,135 @@
+{
+  "category": "Allergy",
+  "category_id": "allergy",
+  "description": "Medications for allergic conditions including antihistamines, decongestants, mast cell stabilizers, and emergency allergy treatment.",
+  "medications": [
+    {
+      "id": "epinephrine_allergy",
+      "name": "Epinephrine (EpiPen, Auvi-Q)",
+      "class": "Sympathomimetic — First-line Anaphylaxis Treatment",
+      "routes": ["IM", "IV", "SQ"],
+      "allergy_class": "catecholamines",
+      "semantic_tags": ["allergy", "anaphylaxis", "epinephrine", "epipen", "auvi-Q", "anaphylactic shock", "emergency", "first line", "IM", "allergic reaction"]
+    },
+    {
+      "id": "diphenhydramine",
+      "name": "Diphenhydramine (Benadryl)",
+      "class": "First-generation H1 Antihistamine",
+      "routes": ["PO", "IV", "IM", "topical"],
+      "allergy_class": "antihistamines",
+      "semantic_tags": ["allergy", "antihistamine", "diphenhydramine", "benadryl", "hives", "urticaria", "allergic reaction", "itching", "sedation", "first generation"]
+    },
+    {
+      "id": "cetirizine",
+      "name": "Cetirizine (Zyrtec)",
+      "class": "Second-generation H1 Antihistamine",
+      "routes": ["PO"],
+      "allergy_class": "antihistamines",
+      "semantic_tags": ["allergy", "antihistamine", "cetirizine", "zyrtec", "allergic rhinitis", "hives", "urticaria", "itching", "second generation", "non-sedating"]
+    },
+    {
+      "id": "fexofenadine",
+      "name": "Fexofenadine (Allegra)",
+      "class": "Second-generation H1 Antihistamine",
+      "routes": ["PO"],
+      "allergy_class": "antihistamines",
+      "semantic_tags": ["allergy", "antihistamine", "fexofenadine", "allegra", "allergic rhinitis", "hives", "urticaria", "second generation", "non-sedating"]
+    },
+    {
+      "id": "loratadine",
+      "name": "Loratadine (Claritin)",
+      "class": "Second-generation H1 Antihistamine",
+      "routes": ["PO"],
+      "allergy_class": "antihistamines",
+      "semantic_tags": ["allergy", "antihistamine", "loratadine", "claritin", "allergic rhinitis", "hives", "second generation", "non-sedating", "OTC"]
+    },
+    {
+      "id": "levocetirizine",
+      "name": "Levocetirizine (Xyzal)",
+      "class": "Second-generation H1 Antihistamine",
+      "routes": ["PO"],
+      "allergy_class": "antihistamines",
+      "semantic_tags": ["allergy", "antihistamine", "levocetirizine", "xyzal", "allergic rhinitis", "hives", "second generation"]
+    },
+    {
+      "id": "hydroxyzine",
+      "name": "Hydroxyzine (Vistaril, Atarax)",
+      "class": "First-generation H1 Antihistamine / Anxiolytic",
+      "routes": ["PO", "IV", "IM"],
+      "allergy_class": "antihistamines",
+      "semantic_tags": ["allergy", "psychiatry", "antihistamine", "hydroxyzine", "vistaril", "atarax", "hives", "urticaria", "anxiety", "pruritus", "sedation"]
+    },
+    {
+      "id": "ranitidine_allergy",
+      "name": "Famotidine (Pepcid) — H2 antihistamine for allergy",
+      "class": "H2 Receptor Antagonist — used as adjunct antihistamine",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["allergy", "H2 blocker", "famotidine", "pepcid", "anaphylaxis adjunct", "H2 antihistamine", "hives", "urticaria"]
+    },
+    {
+      "id": "pseudoephedrine",
+      "name": "Pseudoephedrine (Sudafed)",
+      "class": "Decongestant (Alpha Agonist)",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["allergy", "decongestant", "pseudoephedrine", "sudafed", "nasal congestion", "sinus", "rhinitis"]
+    },
+    {
+      "id": "oxymetazoline",
+      "name": "Oxymetazoline (Afrin)",
+      "class": "Topical Decongestant",
+      "routes": ["intranasal"],
+      "allergy_class": null,
+      "semantic_tags": ["allergy", "decongestant", "oxymetazoline", "afrin", "nasal congestion", "topical", "intranasal", "rebound congestion"]
+    },
+    {
+      "id": "montelukast_allergy",
+      "name": "Montelukast (Singulair)",
+      "class": "Leukotriene Receptor Antagonist",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["allergy", "respiratory", "montelukast", "singulair", "allergic rhinitis", "asthma", "leukotriene", "seasonal allergy"]
+    },
+    {
+      "id": "cromolyn",
+      "name": "Cromolyn Sodium (NasalCrom)",
+      "class": "Mast Cell Stabilizer",
+      "routes": ["intranasal", "inhaled", "ophthalmic"],
+      "allergy_class": null,
+      "semantic_tags": ["allergy", "mast cell stabilizer", "cromolyn", "nasalcrom", "allergic rhinitis", "asthma", "prophylaxis", "intranasal"]
+    },
+    {
+      "id": "omalizumab",
+      "name": "Omalizumab (Xolair)",
+      "class": "Anti-IgE Biologic",
+      "routes": ["SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["allergy", "biologic", "omalizumab", "xolair", "severe asthma", "chronic urticaria", "anti-IgE", "IgE"]
+    },
+    {
+      "id": "dupilumab",
+      "name": "Dupilumab (Dupixent)",
+      "class": "Anti-IL-4/IL-13 Biologic",
+      "routes": ["SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["allergy", "dermatology", "biologic", "dupilumab", "dupixent", "atopic dermatitis", "eczema", "asthma", "chronic rhinosinusitis", "IL-4 IL-13 inhibitor"]
+    },
+    {
+      "id": "azelastine",
+      "name": "Azelastine (Astelin, Astepro)",
+      "class": "Intranasal H1 Antihistamine",
+      "routes": ["intranasal", "ophthalmic"],
+      "allergy_class": "antihistamines",
+      "semantic_tags": ["allergy", "antihistamine", "azelastine", "astelin", "astepro", "allergic rhinitis", "intranasal", "nasal spray", "ophthalmic"]
+    },
+    {
+      "id": "ketotifen",
+      "name": "Ketotifen (Zaditor, Alaway)",
+      "class": "Ophthalmic Antihistamine / Mast Cell Stabilizer",
+      "routes": ["ophthalmic"],
+      "allergy_class": "antihistamines",
+      "semantic_tags": ["allergy", "ophthalmic", "antihistamine", "ketotifen", "zaditor", "alaway", "allergic conjunctivitis", "eye drops", "itchy eyes"]
+    }
+  ]
+}

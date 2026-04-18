@@ -1,0 +1,239 @@
+{
+  "category": "Other",
+  "category_id": "other",
+  "description": "Miscellaneous medications not covered by other categories, including ophthalmics, otics, urologic agents, oncologic supportive care, and smoking cessation.",
+  "medications": [
+    {
+      "id": "tamsulosin",
+      "name": "Tamsulosin (Flomax)",
+      "class": "Alpha-1 Blocker (urologic)",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["urologic", "tamsulosin", "flomax", "BPH", "benign prostatic hyperplasia", "urinary retention", "alpha blocker", "kidney stone passage"]
+    },
+    {
+      "id": "finasteride",
+      "name": "Finasteride (Proscar, Propecia)",
+      "class": "5-Alpha Reductase Inhibitor",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["urologic", "finasteride", "proscar", "propecia", "BPH", "benign prostatic hyperplasia", "hair loss", "androgenetic alopecia", "5ARI"]
+    },
+    {
+      "id": "oxybutynin",
+      "name": "Oxybutynin (Ditropan)",
+      "class": "Anticholinergic (bladder)",
+      "routes": ["PO", "transdermal"],
+      "allergy_class": null,
+      "semantic_tags": ["urologic", "anticholinergic", "oxybutynin", "ditropan", "overactive bladder", "urinary incontinence", "OAB"]
+    },
+    {
+      "id": "mirabegron",
+      "name": "Mirabegron (Myrbetriq)",
+      "class": "Beta-3 Adrenergic Agonist (bladder)",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["urologic", "mirabegron", "myrbetriq", "overactive bladder", "urinary incontinence", "OAB", "beta-3 agonist"]
+    },
+    {
+      "id": "sildenafil_ed",
+      "name": "Sildenafil (Viagra) — erectile dysfunction",
+      "class": "PDE5 Inhibitor",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["urologic", "sildenafil", "viagra", "erectile dysfunction", "ED", "PDE5 inhibitor", "sexual health"]
+    },
+    {
+      "id": "tadalafil_ed",
+      "name": "Tadalafil (Cialis) — erectile dysfunction",
+      "class": "PDE5 Inhibitor",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["urologic", "tadalafil", "cialis", "erectile dysfunction", "ED", "PDE5 inhibitor", "BPH", "sexual health"]
+    },
+    {
+      "id": "bethanechol",
+      "name": "Bethanechol (Urecholine)",
+      "class": "Cholinergic Agonist (bladder)",
+      "routes": ["PO", "SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["urologic", "bethanechol", "urecholine", "urinary retention", "neurogenic bladder", "cholinergic"]
+    },
+    {
+      "id": "phenazopyridine",
+      "name": "Phenazopyridine (Pyridium, AZO)",
+      "class": "Urinary Analgesic",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["urologic", "phenazopyridine", "pyridium", "AZO", "UTI", "urinary pain", "dysuria", "urinary analgesic", "OTC"]
+    },
+    {
+      "id": "timolol_eye",
+      "name": "Timolol Eye Drops",
+      "class": "Beta-blocker (ophthalmic)",
+      "routes": ["ophthalmic"],
+      "allergy_class": "beta_blockers",
+      "semantic_tags": ["ophthalmic", "glaucoma", "timolol", "beta blocker", "eye drops", "intraocular pressure", "IOP"]
+    },
+    {
+      "id": "latanoprost",
+      "name": "Latanoprost (Xalatan)",
+      "class": "Prostaglandin Analogue (ophthalmic)",
+      "routes": ["ophthalmic"],
+      "allergy_class": null,
+      "semantic_tags": ["ophthalmic", "glaucoma", "latanoprost", "xalatan", "prostaglandin", "eye drops", "intraocular pressure", "IOP"]
+    },
+    {
+      "id": "brimonidine",
+      "name": "Brimonidine (Alphagan)",
+      "class": "Alpha-2 Agonist (ophthalmic)",
+      "routes": ["ophthalmic"],
+      "allergy_class": null,
+      "semantic_tags": ["ophthalmic", "glaucoma", "brimonidine", "alphagan", "eye drops", "intraocular pressure", "IOP", "alpha-2 agonist"]
+    },
+    {
+      "id": "dorzolamide",
+      "name": "Dorzolamide (Trusopt)",
+      "class": "Carbonic Anhydrase Inhibitor (ophthalmic)",
+      "routes": ["ophthalmic"],
+      "allergy_class": "sulfonamides",
+      "semantic_tags": ["ophthalmic", "glaucoma", "dorzolamide", "trusopt", "carbonic anhydrase inhibitor", "eye drops", "intraocular pressure", "IOP"]
+    },
+    {
+      "id": "acetazolamide",
+      "name": "Acetazolamide (Diamox)",
+      "class": "Carbonic Anhydrase Inhibitor (systemic)",
+      "routes": ["PO", "IV"],
+      "allergy_class": "sulfonamides",
+      "semantic_tags": ["ophthalmic", "neurology", "acetazolamide", "diamox", "glaucoma", "altitude sickness", "ICP", "epilepsy", "carbonic anhydrase inhibitor"]
+    },
+    {
+      "id": "artificial_tears",
+      "name": "Artificial Tears (various)",
+      "class": "Ophthalmic Lubricant",
+      "routes": ["ophthalmic"],
+      "allergy_class": null,
+      "semantic_tags": ["ophthalmic", "artificial tears", "dry eye", "lubricant", "eye drops", "OTC", "ocular surface"]
+    },
+    {
+      "id": "prednisolone_eye",
+      "name": "Prednisolone Eye Drops (Pred Forte)",
+      "class": "Ophthalmic Corticosteroid",
+      "routes": ["ophthalmic"],
+      "allergy_class": "corticosteroids",
+      "semantic_tags": ["ophthalmic", "steroid", "prednisolone", "pred forte", "eye drops", "uveitis", "conjunctivitis", "post-operative", "ophthalmic steroid"]
+    },
+    {
+      "id": "varenicline",
+      "name": "Varenicline (Chantix)",
+      "class": "Nicotinic Receptor Partial Agonist (smoking cessation)",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["smoking cessation", "varenicline", "chantix", "quit smoking", "nicotine", "partial agonist", "tobacco"]
+    },
+    {
+      "id": "nicotine_replacement",
+      "name": "Nicotine Replacement Therapy (patch, gum, lozenge)",
+      "class": "Nicotinic Receptor Agonist (smoking cessation)",
+      "routes": ["transdermal", "PO"],
+      "allergy_class": null,
+      "semantic_tags": ["smoking cessation", "nicotine replacement", "nicotine patch", "nicotine gum", "nicotine lozenge", "quit smoking", "NRT", "OTC"]
+    },
+    {
+      "id": "bupropion_smoking",
+      "name": "Bupropion (Zyban) — smoking cessation",
+      "class": "NDRI (smoking cessation)",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["smoking cessation", "bupropion", "zyban", "wellbutrin", "quit smoking", "NDRI", "tobacco"]
+    },
+    {
+      "id": "naltrexone",
+      "name": "Naltrexone (Vivitrol, Revia)",
+      "class": "Opioid Antagonist (addiction medicine)",
+      "routes": ["PO", "IM"],
+      "allergy_class": null,
+      "semantic_tags": ["addiction", "naltrexone", "vivitrol", "revia", "opioid use disorder", "alcohol use disorder", "opioid antagonist", "MAT"]
+    },
+    {
+      "id": "acamprosate",
+      "name": "Acamprosate (Campral)",
+      "class": "Alcohol Use Disorder Treatment",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["addiction", "acamprosate", "campral", "alcohol use disorder", "AUD", "sobriety maintenance"]
+    },
+    {
+      "id": "disulfiram",
+      "name": "Disulfiram (Antabuse)",
+      "class": "Alcohol Deterrent (Aldehyde Dehydrogenase Inhibitor)",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["addiction", "disulfiram", "antabuse", "alcohol use disorder", "AUD", "alcohol deterrent", "aversion therapy"]
+    },
+    {
+      "id": "ondansetron_alc",
+      "name": "Ondansetron — alcohol use disorder (off-label)",
+      "class": "5-HT3 Antagonist (off-label AUD)",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["addiction", "ondansetron", "alcohol use disorder", "AUD", "off-label", "craving reduction"]
+    },
+    {
+      "id": "desmopressin_di",
+      "name": "Desmopressin (DDAVP) — diabetes insipidus",
+      "class": "Synthetic ADH Analogue",
+      "routes": ["intranasal", "PO", "IV", "SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["endocrine", "desmopressin", "DDAVP", "diabetes insipidus", "DI", "ADH", "nocturnal enuresis", "von Willebrand"]
+    },
+    {
+      "id": "granulocyte_csf",
+      "name": "Filgrastim / G-CSF (Neupogen, Zarxio)",
+      "class": "Colony-stimulating Factor",
+      "routes": ["SQ", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["oncology", "supportive care", "filgrastim", "neupogen", "zarxio", "G-CSF", "neutropenia", "febrile neutropenia", "bone marrow stimulation"]
+    },
+    {
+      "id": "erythropoietin",
+      "name": "Erythropoietin (Epogen, Aranesp)",
+      "class": "Erythropoiesis-stimulating Agent",
+      "routes": ["SQ", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["oncology", "supportive care", "hematology", "erythropoietin", "epogen", "aranesp", "anemia", "CKD anemia", "chemotherapy anemia", "ESA"]
+    },
+    {
+      "id": "ondansetron_chemo",
+      "name": "Ondansetron — chemotherapy-induced nausea",
+      "class": "5-HT3 Antagonist (antiemetic)",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["oncology", "antiemetic", "ondansetron", "zofran", "chemotherapy", "CINV", "nausea", "vomiting", "IV", "supportive care"]
+    },
+    {
+      "id": "leucovorin",
+      "name": "Leucovorin (Folinic Acid)",
+      "class": "Folate Rescue / Chemotherapy Adjunct",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["oncology", "leucovorin", "folinic acid", "methotrexate rescue", "5-FU adjunct", "folic acid rescue", "chemotherapy adjunct", "IV"]
+    },
+    {
+      "id": "allopurinol_onc",
+      "name": "Allopurinol — tumor lysis syndrome prophylaxis",
+      "class": "Xanthine Oxidase Inhibitor",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["oncology", "allopurinol", "tumor lysis syndrome", "TLS", "uric acid", "prophylaxis", "chemotherapy", "IV"]
+    },
+    {
+      "id": "rasburicase",
+      "name": "Rasburicase (Elitek)",
+      "class": "Uricase Enzyme",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["oncology", "rasburicase", "elitek", "tumor lysis syndrome", "TLS", "uric acid", "hyperuricemia", "IV"]
+    }
+  ]
+}

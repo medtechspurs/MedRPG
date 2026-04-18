@@ -1,0 +1,151 @@
+{
+  "category": "Antiparasitics",
+  "category_id": "antiparasitics",
+  "description": "Antiparasitic medications including antiprotozoals, anthelmintics, and ectoparasiticides. Note: Metronidazole also appears in the Antibiotics category.",
+  "medications": [
+    {
+      "id": "metronidazole_antiparasitic",
+      "name": "Metronidazole (Flagyl)",
+      "class": "Nitroimidazole",
+      "routes": ["PO", "IV"],
+      "allergy_class": "nitroimidazoles",
+      "semantic_tags": ["antiparasitic", "antibiotic", "metronidazole", "flagyl", "giardia", "entamoeba", "trichomonas", "anaerobic", "protozoal"]
+    },
+    {
+      "id": "tinidazole",
+      "name": "Tinidazole (Tindamax)",
+      "class": "Nitroimidazole",
+      "routes": ["PO"],
+      "allergy_class": "nitroimidazoles",
+      "semantic_tags": ["antiparasitic", "tinidazole", "tindamax", "giardia", "trichomonas", "BV", "nitroimidazole"]
+    },
+    {
+      "id": "albendazole",
+      "name": "Albendazole (Albenza)",
+      "class": "Benzimidazole",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antiparasitic", "albendazole", "albenza", "worm", "helminth", "pinworm", "tapeworm", "neurocysticercosis"]
+    },
+    {
+      "id": "mebendazole",
+      "name": "Mebendazole (Emverm)",
+      "class": "Benzimidazole",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antiparasitic", "mebendazole", "emverm", "pinworm", "roundworm", "hookworm", "helminth"]
+    },
+    {
+      "id": "ivermectin",
+      "name": "Ivermectin (Stromectol)",
+      "class": "Macrocyclic Lactone",
+      "routes": ["PO", "topical"],
+      "allergy_class": null,
+      "semantic_tags": ["antiparasitic", "ivermectin", "stromectol", "scabies", "lice", "strongyloides", "onchocerciasis", "river blindness"]
+    },
+    {
+      "id": "permethrin",
+      "name": "Permethrin (Elimite, Nix)",
+      "class": "Pyrethroid (ectoparasiticide)",
+      "routes": ["topical"],
+      "allergy_class": null,
+      "semantic_tags": ["antiparasitic", "permethrin", "elimite", "nix", "scabies", "lice", "pediculosis", "topical"]
+    },
+    {
+      "id": "hydroxychloroquine",
+      "name": "Hydroxychloroquine (Plaquenil)",
+      "class": "Aminoquinoline",
+      "routes": ["PO"],
+      "allergy_class": "quinolines",
+      "semantic_tags": ["antiparasitic", "antimalarial", "hydroxychloroquine", "plaquenil", "malaria", "lupus", "rheumatoid arthritis"]
+    },
+    {
+      "id": "chloroquine",
+      "name": "Chloroquine",
+      "class": "Aminoquinoline",
+      "routes": ["PO", "IV"],
+      "allergy_class": "quinolines",
+      "semantic_tags": ["antiparasitic", "antimalarial", "chloroquine", "malaria", "prophylaxis"]
+    },
+    {
+      "id": "atovaquone_proguanil",
+      "name": "Atovaquone / Proguanil (Malarone)",
+      "class": "Antimalarial Combination",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antiparasitic", "antimalarial", "atovaquone", "proguanil", "malarone", "malaria", "prophylaxis", "treatment"]
+    },
+    {
+      "id": "quinine",
+      "name": "Quinine",
+      "class": "Quinoline",
+      "routes": ["PO"],
+      "allergy_class": "quinolines",
+      "semantic_tags": ["antiparasitic", "antimalarial", "quinine", "malaria", "severe malaria", "leg cramps"]
+    },
+    {
+      "id": "artemether_lumefantrine",
+      "name": "Artemether / Lumefantrine (Coartem)",
+      "class": "Artemisinin Combination",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antiparasitic", "antimalarial", "artemether", "lumefantrine", "coartem", "malaria", "artemisinin"]
+    },
+    {
+      "id": "pyrimethamine",
+      "name": "Pyrimethamine (Daraprim)",
+      "class": "Antifolate",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antiparasitic", "pyrimethamine", "daraprim", "toxoplasma", "malaria", "antifolate"]
+    },
+    {
+      "id": "atovaquone",
+      "name": "Atovaquone (Mepron)",
+      "class": "Antiprotozoal",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antiparasitic", "atovaquone", "mepron", "PCP", "pneumocystis", "toxoplasma", "babesia"]
+    },
+    {
+      "id": "nitazoxanide",
+      "name": "Nitazoxanide (Alinia)",
+      "class": "Thiazolide",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antiparasitic", "nitazoxanide", "alinia", "giardia", "cryptosporidium", "c diff", "diarrhea"]
+    },
+    {
+      "id": "pentamidine",
+      "name": "Pentamidine",
+      "class": "Antiprotozoal",
+      "routes": ["IV", "IM", "inhaled"],
+      "allergy_class": null,
+      "semantic_tags": ["antiparasitic", "pentamidine", "PCP", "pneumocystis", "leishmaniasis", "trypanosomiasis", "prophylaxis"]
+    },
+    {
+      "id": "praziquantel",
+      "name": "Praziquantel (Biltricide)",
+      "class": "Anthelmintic",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antiparasitic", "praziquantel", "biltricide", "schistosomiasis", "tapeworm", "cysticercosis", "fluke"]
+    },
+    {
+      "id": "pyrantel_pamoate",
+      "name": "Pyrantel Pamoate (Pin-X)",
+      "class": "Anthelmintic",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antiparasitic", "pyrantel", "pin-x", "pinworm", "roundworm", "hookworm", "OTC"]
+    },
+    {
+      "id": "lindane",
+      "name": "Lindane",
+      "class": "Organochloride (ectoparasiticide)",
+      "routes": ["topical"],
+      "allergy_class": null,
+      "semantic_tags": ["antiparasitic", "lindane", "scabies", "lice", "topical", "second line"]
+    }
+  ]
+}

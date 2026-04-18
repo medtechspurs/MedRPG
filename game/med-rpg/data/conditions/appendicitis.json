@@ -1,0 +1,1493 @@
+{
+  "id": "appendicitis",
+  "name": "Appendicitis",
+  "difficulty": 3,
+  "tier_description": "A classic surgical emergency. Common but time-sensitive. Teaches focused abdominal exam and knowing when to act rather than over-investigate.",
+  "specialty": "surgery",
+  "tags": ["abdominal", "surgical", "emergency", "common"],
+
+  "patient_info": {
+    "age": 22,
+    "sex": "male",
+    "height_ft": "6'0\"",
+    "height_cm": 183,
+    "weight_kg": 84,
+    "weight_lbs": 185,
+    "bmi": 25.1,
+    "description_plain": "A young man sitting hunched over, clutching his right side. He looks uncomfortable but is awake and able to talk to you."
+  },
+
+  "patient_states": {
+    "stable": {
+      "ap_threshold": 0,
+      "label": "Stable",
+      "description_plain": "The patient is uncomfortable but alert and talking to you.",
+      "description_clinical": "Patient alert and oriented x3. Mild to moderate distress. Hemodynamically stable.",
+      "vitals": {
+        "temperature": "100.8°F",
+        "heart_rate": "105",
+        "heart_rate_variability": 3,
+        "blood_pressure": "120/85",
+        "respiratory_rate": "16",
+        "oxygen_saturation": "99"
+      }
+    },
+    "perforated": {
+      "ap_threshold": 50,
+      "label": "Critical — Perforation",
+      "description_plain": "The patient suddenly cries out. His belly has become rigid and hard. He says the pain briefly got a little better — which is actually a very bad sign. He is now much sicker.",
+      "description_clinical": "Suspected perforation. Classic transient pain relief followed by diffuse peritonitis. Rigid abdomen. Sepsis developing. Immediate surgical intervention required.",
+      "vitals": {
+        "temperature": "102.1°F",
+        "heart_rate": "122",
+        "heart_rate_variability": 4,
+        "blood_pressure": "106/70",
+        "respiratory_rate": "24",
+        "oxygen_saturation": "98"
+      },
+      "monitor_alert": "DETERIORATION — Patient condition worsening"
+    },
+    "septic_shock": {
+      "ap_threshold": 70,
+      "label": "Septic Shock",
+      "description_plain": "The patient is barely conscious. His skin is cold and clammy. His blood pressure has dropped dangerously. This has gone too far.",
+      "description_clinical": "Septic shock. Altered mental status. Cold, clammy peripheries. Refractory hypotension. Requires immediate ICU-level resuscitation. Surgical window rapidly closing.",
+      "vitals": {
+        "temperature": "103.4°F",
+        "heart_rate": "135",
+        "heart_rate_variability": 6,
+        "blood_pressure": "100/60",
+        "respiratory_rate": "28",
+        "oxygen_saturation": "95"
+      },
+      "monitor_alert": "CRITICAL — Septic Shock"
+    },
+    "coma": {
+      "ap_threshold": 100,
+      "label": "Encounter Failed",
+      "description_plain": "The patient has lost consciousness. Emergency services rush in and take him to the central hospital. You were too slow.",
+      "description_clinical": "Patient unresponsive. GCS critically low. Emergent transfer to Central Hospital initiated. Encounter failed.",
+      "vitals": {
+        "temperature": "104.2°F",
+        "heart_rate": "148",
+        "heart_rate_variability": 2,
+        "blood_pressure": "80/40",
+        "respiratory_rate": "32",
+        "oxygen_saturation": "88"
+      },
+      "monitor_alert": "CRITICAL — Patient Unresponsive"
+    }
+  },
+
+  "action_points": {
+    "total": 100,
+    "description": "Total Action Points available for this encounter. Spend wisely — the patient deteriorates as AP are consumed."
+  },
+
+  "point_gain_opportunities": {
+    "description": "Player gains AP by demonstrating clinical reasoning with targeted questions BEFORE asking the general version. These opportunities expire once the general question is asked.",
+    "opportunities": [
+      {
+        "id": "gain_jumping",
+        "trigger_phrases": ["does jumping hurt", "does jumping worsen", "pain with jumping", "jump"],
+        "must_ask_before": "history_aggravating",
+        "ap_gain": 1,
+        "patient_response": {
+          "plain": "Yes! How did you know that? Every time I jumped or went over a bump on the way here it was awful."
+        }
+      },
+      {
+        "id": "gain_bumpy_road",
+        "trigger_phrases": ["bumpy road", "going over bumps", "bumps in the road", "rough road", "car ride"],
+        "must_ask_before": "history_aggravating",
+        "ap_gain": 1,
+        "patient_response": {
+          "plain": "Yes, the car ride here was terrible. Every bump felt like someone was stabbing me."
+        }
+      }
+    ]
+  },
+
+  "history_findings": {
+    "history_hpi": {
+      "ap_cost": 5,
+      "label": "Ask for History of Present Illness",
+      "patient_response": {
+        "plain": "So yesterday morning I started feeling this dull ache around my belly button. I thought it was just gas or something. But over the next several hours the pain moved down to the lower right side of my stomach and it just kept getting worse. Right now I'd say it's about a 7 out of 10. It's a constant sharp pain — it never really lets up. I feel nauseous and I threw up once this morning. I haven't felt like eating anything at all. And I've had a bit of a fever."
+      },
+      "unlocks": ["chief_complaint", "onset", "location", "character", "radiation", "severity", "timing"]
+    },
+    "history_aggravating": {
+      "ap_cost": 5,
+      "label": "Ask what makes it worse",
+      "patient_response": {
+        "plain": "Moving around makes it so much worse. The car ride here was horrible — every bump in the road was agony. And when I got out of the car and had to jump down from the seat I nearly cried."
+      },
+      "expires_point_gain_opportunities": ["gain_jumping", "gain_bumpy_road"]
+    },
+    "history_relieving": {
+      "ap_cost": 1,
+      "label": "Ask what makes it better",
+      "patient_response": {
+        "plain": "Lying really still helps a little. I took some Tylenol earlier but honestly it barely touched the pain."
+      }
+    },
+    "history_associated_symptoms": {
+      "ap_cost": 2,
+      "label": "Ask about associated symptoms",
+      "patient_response": {
+        "plain": "My stomach really hurts, I feel sick to my stomach, and I threw up once this morning. I've also had a fever — I checked and it was about 100 degrees at home."
+      }
+    },
+    "history_past_medical_surgical": {
+      "ap_cost": 1,
+      "label": "Ask about past medical and surgical history",
+      "patient_response": {
+        "plain": "I'm pretty healthy actually. No major medical problems and I've never had surgery."
+      }
+    },
+    "history_medications_current": {
+      "ap_cost": 2,
+      "label": "Ask about current medications",
+      "patient_response": {
+        "plain": "Just Tylenol that I took earlier for the pain. That's it."
+      }
+    },
+    "history_allergies": {
+      "ap_cost": 1,
+      "label": "Ask about allergies",
+      "patient_response": {
+        "plain": "No allergies to any medications that I know of."
+      }
+    },
+    "history_family": {
+      "ap_cost": 1,
+      "label": "Ask about family history",
+      "patient_response": {
+        "plain": "Nothing really runs in my family that seems relevant. My parents are healthy."
+      }
+    },
+    "history_smoking_drinking": {
+      "ap_cost": 1,
+      "label": "Ask about smoking and drinking",
+      "trigger_phrases": ["do you smoke", "do you drink", "smoking", "alcohol", "drinking", "tobacco"],
+      "patient_response": {
+        "plain": "No, I don't smoke and I barely drink — maybe a glass of wine on a special occasion."
+      }
+    }
+  },
+
+  "exam_bonus_points": {
+    "description": "Player gains AP by asking targeted exam questions BEFORE requesting the general exam section. Opportunities expire once the general section is examined.",
+    "opportunities": [
+      {
+        "id": "bonus_mcburney",
+        "trigger_phrases": ["mcburney", "mcburney's point", "right lower quadrant point", "rlq point", "point tenderness"],
+        "must_ask_before": "exam_abdominal",
+        "ap_gain": 1,
+        "patient_response": {
+          "plain": "Ow! Yes — right there! That's exactly where it hurts the most.",
+          "clinical": "Positive McBurney's point. Exquisite tenderness at 1/3 distance from ASIS to umbilicus."
+        }
+      },
+      {
+        "id": "bonus_rovsing",
+        "trigger_phrases": ["rovsing", "rovsing's sign", "press left side", "push left lower quadrant", "llq pressure", "pain on right when pressing left"],
+        "must_ask_before": "exam_abdominal",
+        "ap_gain": 1,
+        "patient_response": {
+          "plain": "That's weird — when you press on my left side, I feel it on the right. Why does that happen?",
+          "clinical": "Positive Rovsing's sign. LLQ palpation elicits RLQ pain. Indicates peritoneal irritation localizing to RLQ."
+        }
+      },
+      {
+        "id": "bonus_psoas",
+        "trigger_phrases": ["psoas", "psoas sign", "extend right hip", "straighten right leg against resistance", "hip extension", "flex right thigh against hand"],
+        "must_ask_before": "exam_abdominal",
+        "ap_gain": 1,
+        "patient_response": {
+          "plain": "Ouch — yes, straightening my leg out like that makes the pain much worse.",
+          "clinical": "Positive psoas sign. Pain with right hip extension against resistance. Suggests retrocecal appendix."
+        }
+      },
+      {
+        "id": "bonus_stability_perforated",
+        "trigger_icon": "stability_assessment",
+        "applies_in_state": "perforated",
+        "ap_gain": 1,
+        "expires_if_any_of_these_ordered_first": ["exam_general", "exam_respiratory", "exam_skin", "exam_mental_status"],
+        "bonus_reason": "Good clinical instinct — reassessing stability when a patient deteriorates is exactly the right move."
+      },
+      {
+        "id": "bonus_stability_septic_shock",
+        "trigger_icon": "stability_assessment",
+        "applies_in_state": "septic_shock",
+        "ap_gain": 1,
+        "expires_if_any_of_these_ordered_first": ["exam_general", "exam_respiratory", "exam_skin", "exam_mental_status"],
+        "bonus_reason": "Excellent — rapid stability reassessment is the first thing to do when a patient crashes."
+      }
+    ]
+  },
+
+  "stability_assessment": {
+    "ap_cost": 2,
+    "label": "Rapid Stability Assessment",
+    "description": "Quick head-to-toe assessment of mental status, perfusion, and respiratory effort. Separate icon from physical exam.",
+    "by_state": {
+      "stable": {
+        "plain": "He's alert and talking to you normally. His hands are warm and pink with a normal capillary refill. His breathing is comfortable and unlabored. He looks sick but stable.",
+        "clinical": "Alert and oriented. Warm extremities. Capillary refill under 2 seconds. No respiratory distress. Hemodynamically stable. No immediate threat to life."
+      },
+      "perforated": {
+        "plain": "He looks more unwell than before. He's still responding to you but seems more distracted by the pain. His skin feels slightly cool and his capillary refill is a little slow. He's breathing faster than normal but not struggling.",
+        "clinical": "Alert but distressed. Mild peripheral vasoconstriction — cool extremities, capillary refill 2-3 seconds. Tachypnea developing. Early signs of hemodynamic compromise. Warrants urgent reassessment and intervention."
+      },
+      "septic_shock": {
+        "plain": "Something is very wrong. He's drowsy and hard to rouse — not the alert young man from before. His skin is flushed and hot, and when you press on his fingernail the color rushes back almost instantly. He's breathing fast but not using his neck or chest muscles to do it.",
+        "clinical": "Altered mental status — lethargic, difficult to rouse. Warm flushed skin with flash capillary refill — vasodilatory septic shock physiology. Tachypnea present without accessory muscle use or retractions. Consistent with early septic shock — distributive pattern. Immediate resuscitation required."
+      }
+    }
+  },
+
+  "exam_findings": {
+    "exam_general": {
+      "ap_cost": 2,
+      "label": "General Appearance",
+      "expires_stability_bonus": true,
+      "by_state": {
+        "stable": {
+          "plain": "He's sitting hunched forward with his hand pressed against his right side. He's clearly in pain but he's awake, alert, and able to talk to you normally.",
+          "clinical": "Patient in mild-moderate distress. Antalgic posture splinting RLQ. Alert and oriented x3. No acute respiratory distress."
+        },
+        "perforated": {
+          "plain": "He looks considerably worse. He's pale and sweating, barely moving to avoid aggravating the pain. He can still answer your questions but looks frightened.",
+          "clinical": "Patient in severe distress. Diaphoretic and pale. Rigid posture. Still alert but marked deterioration from baseline. Peritonitis developing."
+        },
+        "septic_shock": {
+          "plain": "He looks critically ill. He's barely keeping his eyes open and only responds slowly when you speak to him. His skin is flushed and he's breathing rapidly.",
+          "clinical": "Patient critically ill. Altered mental status — lethargic and difficult to rouse. Flushed, vasodilated appearance. Tachypneic. Consistent with septic shock."
+        }
+      }
+    },
+    "exam_skin": {
+      "ap_cost": 2,
+      "label": "Skin",
+      "expires_stability_bonus": true,
+      "by_state": {
+        "stable": {
+          "plain": "His skin looks normal in color. He's a little sweaty but there's no rash or unusual markings.",
+          "clinical": "Mild diaphoresis. No jaundice, cyanosis, pallor, or rash. Skin warm to touch. No lesions."
+        },
+        "perforated": {
+          "plain": "His skin is pale and clammy. He's sweating more than before. No rash.",
+          "clinical": "Pallor and diaphoresis. Cool, clammy skin. Early peripheral vasoconstriction. No rash or jaundice."
+        },
+        "septic_shock": {
+          "plain": "His skin is flushed and hot. When you press on his fingernail the color comes back almost instantly — much faster than normal. He's sweating heavily.",
+          "clinical": "Warm, flushed skin. Flash capillary refill — vasodilatory septic shock. Marked diaphoresis. No rash. Consistent with distributive shock physiology."
+        }
+      }
+    },
+    "exam_heent": {
+      "ap_cost": 2,
+      "label": "Head / Eyes / Ears / Nose / Throat",
+      "by_state": {
+        "stable": {
+          "plain": "Eyes look normal and respond to light. His mouth is a little dry — he probably hasn't had much to drink.",
+          "clinical": "PERRL. Sclerae anicteric. Conjunctivae clear. Mucous membranes mildly dry consistent with poor oral intake. Oropharynx clear."
+        },
+        "perforated": {
+          "plain": "Eyes still respond to light. His mouth is quite dry now. He looks pale.",
+          "clinical": "PERRL. Mucous membranes dry. Conjunctival pallor developing. Consistent with dehydration and early hemodynamic compromise."
+        },
+        "septic_shock": {
+          "plain": "His eyes are partially closed and slow to respond. His mouth is very dry. He looks ashen.",
+          "clinical": "Sluggish pupillary response. Severely dry mucous membranes. Icteric sclerae beginning. Consistent with septic encephalopathy and multi-organ involvement."
+        }
+      }
+    },
+    "exam_neck": {
+      "ap_cost": 2,
+      "label": "Neck",
+      "by_state": {
+        "stable": {
+          "plain": "His neck moves freely in all directions. No swollen lymph nodes.",
+          "clinical": "Supple. Full range of motion. No meningismus. No cervical or supraclavicular lymphadenopathy. JVP not elevated."
+        },
+        "perforated": {
+          "plain": "Neck is still supple. No swollen glands. No stiffness.",
+          "clinical": "Supple. No meningismus. No lymphadenopathy. JVP difficult to assess in distressed patient."
+        },
+        "septic_shock": {
+          "plain": "Neck is still loose. No stiffness.",
+          "clinical": "Supple. No meningismus. JVP flat — consistent with vasodilatory septic shock and volume depletion."
+        }
+      }
+    },
+    "exam_cardiovascular": {
+      "ap_cost": 2,
+      "label": "Cardiovascular",
+      "by_state": {
+        "stable": {
+          "plain": "Heart sounds normal. His heart is beating a little fast, which makes sense given the pain and fever. No unusual sounds.",
+          "clinical": "Regular rhythm, mildly tachycardic at 105 bpm. S1/S2 present and normal. No murmurs, rubs, or gallops. Peripheral pulses intact bilaterally."
+        },
+        "perforated": {
+          "plain": "Heart is beating fast. Pulses feel a little weaker than before. No abnormal heart sounds.",
+          "clinical": "Tachycardic at 122 bpm. S1/S2 present. No murmurs. Peripheral pulses diminished bilaterally. Consistent with early hemodynamic compromise."
+        },
+        "septic_shock": {
+          "plain": "Heart is racing. The pulses in his wrists are weak and hard to feel. No abnormal heart sounds but the picture is alarming.",
+          "clinical": "Tachycardic at 135 bpm. Weak, thready peripheral pulses. S1/S2 present. No murmurs. Consistent with septic shock — reduced effective circulating volume despite vasodilation."
+        }
+      }
+    },
+    "exam_respiratory": {
+      "ap_cost": 2,
+      "label": "Respiratory",
+      "expires_stability_bonus": true,
+      "by_state": {
+        "stable": {
+          "plain": "Lungs sound completely clear on both sides. His breathing is normal.",
+          "clinical": "Clear to auscultation bilaterally. No crackles, wheezes, or rhonchi. Chest expansion symmetric. Respiratory rate 16 — unlabored."
+        },
+        "perforated": {
+          "plain": "He's breathing faster than normal but the lungs still sound clear. He's not struggling to breathe.",
+          "clinical": "Tachypneic at 24 breaths per minute. Clear to auscultation bilaterally. No accessory muscle use. Respiratory compensation for metabolic acidosis beginning."
+        },
+        "septic_shock": {
+          "plain": "He's breathing fast — noticeably so. The lungs sound mostly clear but there's a hint of crackling at the bases. Importantly, he's not using his neck or chest muscles to breathe despite the fast rate.",
+          "clinical": "Tachypneic at 28 breaths per minute. Mild bibasilar crackles developing. No accessory muscle use or retractions. Kussmaul-like breathing pattern — respiratory compensation for severe metabolic acidosis. Early ARDS developing."
+        }
+      }
+    },
+    "exam_abdominal": {
+      "ap_cost": 2,
+      "label": "Abdominal",
+      "by_state": {
+        "stable": {
+          "plain": "His belly isn't swollen or distended. He tenses up when you get near the lower right side. When you press there he winces and pulls away — that area is very tender. When you press the lower left side, he feels pain on the right — strange but telling. When you quickly release your hand after pressing, he gets a sharp jolt of pain. Gut sounds are quiet but present. When you have him try to straighten his right leg against your hand, the right sided pain gets worse. Rotating his right hip inward also causes pain in the right lower belly.",
+          "clinical": "Abdomen flat, non-distended. Hypoactive bowel sounds. Focal RLQ tenderness with voluntary and involuntary guarding. Positive rebound tenderness. Positive McBurney's point. Positive Rovsing's sign. Positive psoas sign. Positive obturator sign. No hepatosplenomegaly. No surgical scars."
+        },
+        "perforated": {
+          "plain": "His belly is now rigid — hard as a board when you press anywhere. He cries out even with light touch. The whole abdomen is tender, not just the right side. There are almost no gut sounds.",
+          "clinical": "Abdomen rigid — involuntary guarding throughout. Diffuse peritoneal tenderness. Absent bowel sounds. Generalized rebound tenderness. Consistent with diffuse peritonitis from perforation."
+        },
+        "septic_shock": {
+          "plain": "His abdomen is grossly distended and board-like. He barely reacts to your pressing — which is actually a bad sign at this stage, as his altered mental status is blunting his pain response. No bowel sounds at all.",
+          "clinical": "Distended, rigid abdomen. Diffuse peritonitis. Absent bowel sounds. Reduced pain response secondary to septic encephalopathy. Consistent with catastrophic intraabdominal sepsis."
+        }
+      },
+      "expires_bonus_opportunities": ["bonus_mcburney", "bonus_rovsing", "bonus_psoas"]
+    },
+    "exam_genitourinary": {
+      "ap_cost": 2,
+      "label": "Genitourinary",
+      "by_state": {
+        "all_states": {
+          "plain": "No abnormalities noted on external genitourinary exam.",
+          "clinical": "GU exam unremarkable. No costovertebral angle tenderness. No suprapubic tenderness beyond that attributable to peritoneal irritation."
+        }
+      }
+    },
+    "exam_musculoskeletal": {
+      "ap_cost": 2,
+      "label": "Musculoskeletal",
+      "by_state": {
+        "stable": {
+          "plain": "Arms and legs look normal. No swelling or deformity. He's moving carefully to avoid aggravating his belly pain.",
+          "clinical": "No peripheral joint swelling or deformity. Antalgic movement pattern secondary to abdominal pain. Strength grossly intact."
+        },
+        "perforated": {
+          "plain": "He's barely moving at all now — every movement aggravates the abdominal pain. No joint swelling.",
+          "clinical": "Markedly reduced movement secondary to peritonitis. No joint swelling or deformity. Strength difficult to assess in this state."
+        },
+        "septic_shock": {
+          "plain": "He's not moving voluntarily. His arms and legs feel cool and look mottled.",
+          "clinical": "No voluntary movement. Cool, mottled extremities — peripheral hypoperfusion. Consistent with septic shock physiology."
+        }
+      }
+    },
+    "exam_neurological": {
+      "ap_cost": 2,
+      "label": "Neurological",
+      "by_state": {
+        "stable": {
+          "plain": "He's fully alert, thinking clearly, and answering all your questions without any trouble.",
+          "clinical": "Alert and oriented x3. GCS 15. Speech fluent. No focal neurological deficits. Cranial nerves grossly intact."
+        },
+        "perforated": {
+          "plain": "He's still alert and answering questions but looks frightened and distracted by the worsening pain.",
+          "clinical": "Alert and oriented x3. GCS 15. Anxious. No focal neurological deficits. Cognition intact."
+        },
+        "septic_shock": {
+          "plain": "He's confused and slow to respond. He knows his name but isn't sure where he is. This is new and alarming.",
+          "clinical": "Altered mental status. GCS 12 (E3V4M5). Disoriented to place and time. No focal neurological deficits. Septic encephalopathy."
+        }
+      }
+    },
+    "exam_mental_status": {
+      "ap_cost": 2,
+      "label": "Mental Status",
+      "expires_stability_bonus": true,
+      "by_state": {
+        "stable": {
+          "plain": "He's anxious about his pain but thinking clearly and cooperating fully.",
+          "clinical": "Alert and oriented x3. Appropriate affect. Anxious but cooperative. No evidence of thought disorder or altered sensorium. GCS 15."
+        },
+        "perforated": {
+          "plain": "He's more distressed and frightened now, but still thinking clearly and responding appropriately.",
+          "clinical": "Alert and oriented x3. Markedly anxious. Affect appropriate to clinical situation. No confusion. GCS 15."
+        },
+        "septic_shock": {
+          "plain": "He's drowsy and confused. He opens his eyes when you call his name but drifts off quickly. He's not the same alert young man from the start of this encounter.",
+          "clinical": "Altered mental status. Lethargic — eyes open to voice. Confused and disoriented. GCS 12. Consistent with septic encephalopathy. Urgent intervention required."
+        }
+      }
+    },
+    "exam_rectal": {
+      "ap_cost": 0,
+      "label": "Rectal Examination",
+      "by_state": {
+        "all_states": {
+          "plain": "The patient shakes his head. 'I'd really rather not,' he says. You respect his wishes.",
+          "clinical": "Patient declines rectal examination. No AP charged.",
+          "declined": true
+        }
+      }
+    }
+  },
+
+  "lab_findings": {
+
+    "lab_cbc": {
+      "ap_cost": 2,
+      "label": "CBC (Complete Blood Count)",
+      "generate_once": true,
+      "by_state": {
+        "stable": {
+          "wbc": { "type": "normal_distribution", "mean": 15.0, "std_dev": 1.8, "min": 12.0, "max": 19.0, "units": "K/µL", "flag_above": 11.0 },
+          "hgb": { "type": "fixed", "value": "14.8", "units": "g/dL" },
+          "hct": { "type": "fixed", "value": "44", "units": "%" },
+          "plt": { "type": "fixed", "value": "245", "units": "K/µL" },
+          "differential": {
+            "neutrophils": { "type": "normal_distribution", "mean": 78, "std_dev": 4, "min": 72, "max": 85, "units": "%", "flag_above": 70 },
+            "bands": { "type": "normal_distribution", "mean": 6, "std_dev": 2, "min": 3, "max": 10, "units": "%", "flag_above": 5 },
+            "lymphocytes": { "type": "normal_distribution", "mean": 12, "std_dev": 2, "min": 8, "max": 16, "units": "%" },
+            "monocytes": { "type": "normal_distribution", "mean": 4, "std_dev": 1, "min": 2, "max": 6, "units": "%" }
+          },
+          "interpretation": {
+            "plain": "The white blood cell count is elevated — the body is clearly fighting something. The type of white cells suggest a bacterial infection is brewing.",
+            "clinical": "Leukocytosis with neutrophilia and bandemia (left shift). Strongly supports acute bacterial inflammation. Classic CBC finding in appendicitis."
+          }
+        },
+        "perforated": {
+          "wbc": { "type": "normal_distribution", "mean": 19.0, "std_dev": 2.0, "min": 16.0, "max": 24.0, "units": "K/µL", "flag_above": 11.0 },
+          "hgb": { "type": "fixed", "value": "14.2", "units": "g/dL" },
+          "hct": { "type": "fixed", "value": "42", "units": "%" },
+          "plt": { "type": "fixed", "value": "310", "units": "K/µL" },
+          "differential": {
+            "neutrophils": { "type": "normal_distribution", "mean": 82, "std_dev": 3, "min": 76, "max": 88, "units": "%", "flag_above": 70 },
+            "bands": { "type": "normal_distribution", "mean": 12, "std_dev": 2, "min": 8, "max": 16, "units": "%", "flag_above": 5 },
+            "lymphocytes": { "type": "normal_distribution", "mean": 6, "std_dev": 2, "min": 4, "max": 10, "units": "%" },
+            "monocytes": { "type": "normal_distribution", "mean": 2, "std_dev": 1, "min": 1, "max": 4, "units": "%" }
+          },
+          "interpretation": {
+            "plain": "The white count has climbed significantly. The infection is spreading. The pattern of white cells shows the body is working very hard to fight something serious.",
+            "clinical": "Worsening leukocytosis with pronounced left shift. Bandemia increasing. Consistent with perforated appendicitis and developing peritonitis."
+          }
+        },
+        "septic_shock": {
+          "wbc": { "type": "normal_distribution", "mean": 24.0, "std_dev": 3.0, "min": 18.0, "max": 30.0, "units": "K/µL", "flag_above": 11.0 },
+          "hgb": { "type": "fixed", "value": "13.1", "units": "g/dL" },
+          "hct": { "type": "fixed", "value": "39", "units": "%" },
+          "plt": { "type": "fixed", "value": "148", "units": "K/µL", "flag_below": 150 },
+          "differential": {
+            "neutrophils": { "type": "normal_distribution", "mean": 84, "std_dev": 3, "min": 78, "max": 90, "units": "%", "flag_above": 70 },
+            "bands": { "type": "normal_distribution", "mean": 18, "std_dev": 3, "min": 12, "max": 24, "units": "%", "flag_above": 5 },
+            "lymphocytes": { "type": "normal_distribution", "mean": 4, "std_dev": 1, "min": 2, "max": 7, "units": "%" },
+            "monocytes": { "type": "normal_distribution", "mean": 2, "std_dev": 1, "min": 1, "max": 3, "units": "%" }
+          },
+          "interpretation": {
+            "plain": "The white count is critically elevated. The platelets are dropping — a very concerning sign. The body's defenses are being overwhelmed.",
+            "clinical": "Severe leukocytosis with marked bandemia. Thrombocytopenia developing — early DIC possible. Consistent with septic shock from perforated appendicitis."
+          }
+        }
+      }
+    },
+
+    "lab_bmp": {
+      "ap_cost": 2,
+      "label": "BMP (Basic Metabolic Panel)",
+      "generate_once": true,
+      "by_state": {
+        "stable": {
+          "values": {
+            "sodium": "138", "potassium": "3.9", "chloride": "101",
+            "bicarb": "24", "bun": "18", "creatinine": "0.9",
+            "glucose": "106", "calcium": "9.4"
+          },
+          "interpretation": {
+            "plain": "Kidney function and electrolytes are normal. He's a little dehydrated from not eating or drinking but nothing alarming.",
+            "clinical": "BMP within normal limits. Mild prerenal picture consistent with poor oral intake. No electrolyte or renal derangement."
+          }
+        },
+        "perforated": {
+          "values": {
+            "sodium": "135", "potassium": "3.6", "chloride": "99",
+            "bicarb": "19", "bun": "24", "creatinine": "1.2",
+            "glucose": "118", "calcium": "9.0"
+          },
+          "interpretation": {
+            "plain": "Kidney function is starting to slip. The bicarbonate is low — the blood is becoming slightly more acidic. The body is under stress.",
+            "clinical": "Mild acute kidney injury developing. Low bicarbonate consistent with early metabolic acidosis. Stress hyperglycemia. Prerenal azotemia from dehydration and third spacing."
+          }
+        },
+        "septic_shock": {
+          "values": {
+            "sodium": "131", "potassium": "4.8", "chloride": "96",
+            "bicarb": "12", "bun": "38", "creatinine": "2.1",
+            "glucose": "142", "calcium": "8.2"
+          },
+          "interpretation": {
+            "plain": "The kidneys are struggling badly. The blood is becoming dangerously acidic. Multiple systems are starting to fail.",
+            "clinical": "Significant AKI. Severe metabolic acidosis — bicarb critically low. Hyperkalemia developing. Hyponatremia. Hypocalcemia. Consistent with multi-organ dysfunction in septic shock."
+          }
+        }
+      }
+    },
+
+    "lab_lft": {
+      "ap_cost": 1,
+      "label": "Liver Function Tests",
+      "generate_once": true,
+      "by_state": {
+        "stable": {
+          "values": { "alt": "22", "ast": "19", "alp": "68", "bilirubin": "0.8", "albumin": "4.1", "total_protein": "7.2" },
+          "interpretation": {
+            "plain": "Liver tests are completely normal. The liver is not involved.",
+            "clinical": "LFTs within normal limits. No hepatic involvement. Albumin normal — adequate nutritional status."
+          }
+        },
+        "perforated": {
+          "values": { "alt": "48", "ast": "52", "alp": "88", "bilirubin": "1.4", "albumin": "3.6", "total_protein": "6.8" },
+          "interpretation": {
+            "plain": "Liver enzymes are mildly elevated — the spreading infection is starting to stress the liver.",
+            "clinical": "Mild transaminase elevation. Mild hyperbilirubinemia. Mild hypoalbuminemia from acute phase response. Consistent with hepatic stress from systemic inflammation."
+          }
+        },
+        "septic_shock": {
+          "values": { "alt": "142", "ast": "168", "alp": "145", "bilirubin": "3.2", "albumin": "2.4", "total_protein": "5.1" },
+          "interpretation": {
+            "plain": "Liver function is significantly impaired. Multiple organ systems including the liver are now failing.",
+            "clinical": "Significant transaminase elevation. Hyperbilirubinemia. Critical hypoalbuminemia. Consistent with sepsis-induced hepatic dysfunction and multi-organ failure."
+          }
+        }
+      }
+    },
+
+    "lab_cmp": {
+      "ap_cost": 3,
+      "label": "CMP (Comprehensive Metabolic Panel)",
+      "description": "Combines BMP + LFTs. Charged as single order.",
+      "generate_once": true,
+      "combines": ["lab_bmp", "lab_lft"]
+    },
+
+    "lab_lipase": {
+      "ap_cost": 1,
+      "label": "Lipase",
+      "generate_once": true,
+      "by_state": {
+        "stable": {
+          "values": { "lipase": { "type": "normal_distribution", "mean": 42, "std_dev": 8, "min": 28, "max": 58, "units": "U/L", "flag_above": 60 } },
+          "interpretation": {
+            "plain": "The pancreas enzyme is normal. This is not a pancreas problem.",
+            "clinical": "Lipase within normal limits. Pancreatitis effectively excluded."
+          }
+        },
+        "perforated": {
+          "values": { "lipase": { "type": "normal_distribution", "mean": 55, "std_dev": 10, "min": 38, "max": 75, "units": "U/L", "flag_above": 60 } },
+          "interpretation": {
+            "plain": "The pancreas enzyme is borderline. This is likely from the widespread abdominal inflammation rather than a pancreas problem.",
+            "clinical": "Borderline lipase elevation. Likely bystander effect from peritoneal inflammation. Clinical context argues against primary pancreatitis."
+          }
+        },
+        "septic_shock": {
+          "values": { "lipase": { "type": "normal_distribution", "mean": 85, "std_dev": 15, "min": 60, "max": 115, "units": "U/L", "flag_above": 60 } },
+          "interpretation": {
+            "plain": "The pancreas enzyme is mildly elevated, but given how sick this patient is, this is almost certainly due to the severe systemic infection rather than a separate pancreas problem.",
+            "clinical": "Mild lipase elevation in context of septic shock. Likely secondary to multi-organ stress rather than primary pancreatitis. Amylase/lipase elevation common in critical illness."
+          }
+        }
+      }
+    },
+
+    "lab_crp": {
+      "ap_cost": 2,
+      "label": "C-Reactive Protein (CRP)",
+      "generate_once": true,
+      "by_state": {
+        "stable": {
+          "values": { "crp": { "type": "normal_distribution", "mean": 4.5, "std_dev": 1.5, "min": 2.0, "max": 8.0, "units": "mg/dL", "flag_above": 1.0 } },
+          "interpretation": {
+            "plain": "The inflammation marker is elevated — the body is responding to something. Not dramatically high but clearly abnormal.",
+            "clinical": "CRP elevated. Consistent with acute inflammatory process. Supports diagnosis of appendicitis though not specific."
+          }
+        },
+        "perforated": {
+          "values": { "crp": { "type": "normal_distribution", "mean": 14.0, "std_dev": 3.0, "min": 9.0, "max": 20.0, "units": "mg/dL", "flag_above": 1.0 } },
+          "interpretation": {
+            "plain": "The inflammation marker has risen significantly. The body is in the middle of a serious inflammatory battle.",
+            "clinical": "Markedly elevated CRP. Consistent with perforated appendicitis and developing peritonitis. CRP >10 mg/dL associated with perforation risk."
+          }
+        },
+        "septic_shock": {
+          "values": { "crp": { "type": "normal_distribution", "mean": 28.0, "std_dev": 5.0, "min": 18.0, "max": 38.0, "units": "mg/dL", "flag_above": 1.0 } },
+          "interpretation": {
+            "plain": "The inflammation marker is critically elevated. This reflects a body-wide inflammatory crisis.",
+            "clinical": "Critically elevated CRP. Consistent with septic shock from perforated appendicitis. Severe systemic inflammatory response."
+          }
+        }
+      }
+    },
+
+    "lab_esr": {
+      "ap_cost": 2,
+      "label": "ESR (Erythrocyte Sedimentation Rate)",
+      "generate_once": true,
+      "by_state": {
+        "stable": {
+          "values": { "esr": { "type": "normal_distribution", "mean": 35, "std_dev": 8, "min": 20, "max": 55, "units": "mm/hr", "flag_above": 20 } },
+          "interpretation": {
+            "plain": "The ESR is elevated, showing inflammation is present. It's a non-specific marker — useful context but doesn't pinpoint the cause.",
+            "clinical": "ESR elevated. Non-specific inflammatory marker. Supportive of acute inflammatory process but low specificity for appendicitis."
+          }
+        },
+        "perforated": {
+          "values": { "esr": { "type": "normal_distribution", "mean": 65, "std_dev": 12, "min": 45, "max": 90, "units": "mm/hr", "flag_above": 20 } },
+          "interpretation": {
+            "plain": "The ESR has risen further, reflecting a more intense inflammatory process.",
+            "clinical": "Significantly elevated ESR. Consistent with ongoing severe inflammation and developing peritonitis."
+          }
+        },
+        "septic_shock": {
+          "values": { "esr": { "type": "normal_distribution", "mean": 90, "std_dev": 12, "min": 70, "max": 120, "units": "mm/hr", "flag_above": 20 } },
+          "interpretation": {
+            "plain": "The ESR is very high. The body is in the grip of a severe systemic inflammatory response.",
+            "clinical": "Critically elevated ESR. Consistent with septic shock and severe systemic inflammatory response syndrome (SIRS)."
+          }
+        }
+      }
+    },
+
+    "lab_procalcitonin": {
+      "ap_cost": 2,
+      "label": "Procalcitonin",
+      "generate_once": true,
+      "by_state": {
+        "stable": {
+          "values": { "procalcitonin": { "type": "normal_distribution", "mean": 0.4, "std_dev": 0.15, "min": 0.2, "max": 0.8, "units": "ng/mL", "flag_above": 0.25 } },
+          "interpretation": {
+            "plain": "The procalcitonin is mildly elevated. This marker rises with bacterial infections and suggests something bacterial is going on.",
+            "clinical": "Mildly elevated procalcitonin. Consistent with localized bacterial infection. Values below 2 ng/mL suggest infection without systemic sepsis."
+          }
+        },
+        "perforated": {
+          "values": { "procalcitonin": { "type": "normal_distribution", "mean": 2.1, "std_dev": 0.8, "min": 1.2, "max": 4.0, "units": "ng/mL", "flag_above": 0.25 } },
+          "interpretation": {
+            "plain": "The procalcitonin has jumped significantly — this level suggests the infection is becoming systemic.",
+            "clinical": "Significantly elevated procalcitonin. Values above 2 ng/mL suggest systemic sepsis. Consistent with perforated appendicitis with early bacteremia."
+          }
+        },
+        "septic_shock": {
+          "values": { "procalcitonin": { "type": "normal_distribution", "mean": 18.0, "std_dev": 6.0, "min": 8.0, "max": 35.0, "units": "ng/mL", "flag_above": 0.25 } },
+          "interpretation": {
+            "plain": "The procalcitonin is critically elevated — this is one of the highest levels seen, indicating life-threatening sepsis.",
+            "clinical": "Critically elevated procalcitonin. Values above 10 ng/mL highly associated with severe sepsis and septic shock. Correlates with mortality risk."
+          }
+        }
+      }
+    },
+
+    "lab_lactate": {
+      "ap_cost": 2,
+      "label": "Lactate",
+      "generate_once": true,
+      "note": "Same value used if lactate is included in VBG or ABG order.",
+      "by_state": {
+        "stable": {
+          "values": { "lactate": { "type": "normal_distribution", "mean": 1.2, "std_dev": 0.3, "min": 0.8, "max": 1.8, "units": "mmol/L", "flag_above": 2.0 } },
+          "interpretation": {
+            "plain": "Lactate is normal. The body's tissues are getting enough oxygen and energy.",
+            "clinical": "Lactate within normal limits. No evidence of tissue hypoperfusion or anaerobic metabolism."
+          }
+        },
+        "perforated": {
+          "values": { "lactate": { "type": "normal_distribution", "mean": 2.4, "std_dev": 0.5, "min": 1.8, "max": 3.2, "units": "mmol/L", "flag_above": 2.0 } },
+          "interpretation": {
+            "plain": "Lactate is mildly elevated — the body's tissues are starting to struggle with oxygen delivery.",
+            "clinical": "Mild hyperlactatemia. Suggests early tissue hypoperfusion. Lactate 2-4 mmol/L associated with increased mortality risk. Warrants close monitoring and fluid resuscitation."
+          }
+        },
+        "septic_shock": {
+          "values": { "lactate": { "type": "normal_distribution", "mean": 6.2, "std_dev": 1.5, "min": 4.0, "max": 9.5, "units": "mmol/L", "flag_above": 2.0 } },
+          "interpretation": {
+            "plain": "Lactate is critically elevated. The body's tissues are severely oxygen-starved. This is a life-threatening emergency.",
+            "clinical": "Severe hyperlactatemia. Lactate >4 mmol/L defines septic shock by Sepsis-3 criteria. Indicates severe tissue hypoperfusion. Associated with high mortality. Aggressive resuscitation required immediately."
+          }
+        }
+      }
+    },
+
+    "lab_vbg": {
+      "ap_cost": 4,
+      "label": "VBG (Venous Blood Gas)",
+      "generate_once": true,
+      "includes_lactate": true,
+      "note": "Lactate value is shared with standalone lactate order. No additional AP charged for lactate if already ordered.",
+      "by_state": {
+        "stable": {
+          "values": {
+            "ph": { "type": "normal_distribution", "mean": 7.38, "std_dev": 0.02, "min": 7.35, "max": 7.42, "units": "" },
+            "pco2": { "type": "normal_distribution", "mean": 38, "std_dev": 2, "min": 35, "max": 42, "units": "mmHg" },
+            "hco3": { "type": "normal_distribution", "mean": 23, "std_dev": 1, "min": 21, "max": 25, "units": "mEq/L" },
+            "lactate": "shared_with_lab_lactate"
+          },
+          "interpretation": {
+            "plain": "The blood gas is normal. Acid-base balance is intact.",
+            "clinical": "VBG within normal limits. No acid-base disturbance. Normal pH, pCO2, and bicarbonate."
+          }
+        },
+        "perforated": {
+          "values": {
+            "ph": { "type": "normal_distribution", "mean": 7.32, "std_dev": 0.02, "min": 7.28, "max": 7.36, "units": "" },
+            "pco2": { "type": "normal_distribution", "mean": 34, "std_dev": 2, "min": 30, "max": 38, "units": "mmHg" },
+            "hco3": { "type": "normal_distribution", "mean": 18, "std_dev": 2, "min": 15, "max": 21, "units": "mEq/L" },
+            "lactate": "shared_with_lab_lactate"
+          },
+          "interpretation": {
+            "plain": "The blood is becoming acidic. The body is trying to compensate by breathing faster to blow off CO2. This is a warning sign.",
+            "clinical": "Mild metabolic acidosis with early respiratory compensation. Low bicarb, low pCO2. Consistent with early sepsis physiology from perforated appendicitis."
+          }
+        },
+        "septic_shock": {
+          "values": {
+            "ph": { "type": "normal_distribution", "mean": 7.22, "std_dev": 0.05, "min": 7.10, "max": 7.30, "units": "" },
+            "pco2": { "type": "normal_distribution", "mean": 28, "std_dev": 3, "min": 22, "max": 34, "units": "mmHg" },
+            "hco3": { "type": "normal_distribution", "mean": 12, "std_dev": 2, "min": 8, "max": 16, "units": "mEq/L" },
+            "lactate": "shared_with_lab_lactate"
+          },
+          "interpretation": {
+            "plain": "The blood is dangerously acidic. Despite the body's best efforts to compensate, the acid is overwhelming the system. This is critical.",
+            "clinical": "Severe metabolic acidosis with partial respiratory compensation. pH critically low. Bicarbonate severely depleted. Consistent with septic shock and severe tissue hypoperfusion."
+          }
+        }
+      }
+    },
+
+    "lab_abg": {
+      "ap_cost": 6,
+      "label": "ABG (Arterial Blood Gas)",
+      "generate_once": true,
+      "includes_lactate": true,
+      "note": "Lactate value shared with standalone lactate order. Includes pO2 unlike VBG.",
+      "by_state": {
+        "stable": {
+          "values": {
+            "ph": { "type": "normal_distribution", "mean": 7.38, "std_dev": 0.02, "min": 7.35, "max": 7.42, "units": "" },
+            "pco2": { "type": "normal_distribution", "mean": 38, "std_dev": 2, "min": 35, "max": 42, "units": "mmHg" },
+            "po2": { "type": "normal_distribution", "mean": 96, "std_dev": 3, "min": 90, "max": 100, "units": "mmHg" },
+            "hco3": { "type": "normal_distribution", "mean": 23, "std_dev": 1, "min": 21, "max": 25, "units": "mEq/L" },
+            "lactate": "shared_with_lab_lactate"
+          },
+          "interpretation": {
+            "plain": "The arterial blood gas is normal. Oxygen levels are good, the blood is the right acidity, and the lungs are working well.",
+            "clinical": "ABG within normal limits. Normal pH, pCO2, pO2, and bicarbonate. No acid-base disturbance. Adequate oxygenation on room air."
+          }
+        },
+        "perforated": {
+          "values": {
+            "ph": { "type": "normal_distribution", "mean": 7.32, "std_dev": 0.02, "min": 7.28, "max": 7.36, "units": "" },
+            "pco2": { "type": "normal_distribution", "mean": 34, "std_dev": 2, "min": 30, "max": 38, "units": "mmHg" },
+            "po2": { "type": "normal_distribution", "mean": 92, "std_dev": 3, "min": 86, "max": 96, "units": "mmHg" },
+            "hco3": { "type": "normal_distribution", "mean": 18, "std_dev": 2, "min": 15, "max": 21, "units": "mEq/L" },
+            "lactate": "shared_with_lab_lactate"
+          },
+          "interpretation": {
+            "plain": "The blood gas shows early acidosis. The body is compensating by breathing faster. Oxygen levels are still adequate but the trend is worrying.",
+            "clinical": "Mild metabolic acidosis with respiratory compensation. pO2 adequate on room air. Consistent with early sepsis physiology. Requires urgent intervention."
+          }
+        },
+        "septic_shock": {
+          "values": {
+            "ph": { "type": "normal_distribution", "mean": 7.22, "std_dev": 0.05, "min": 7.10, "max": 7.30, "units": "" },
+            "pco2": { "type": "normal_distribution", "mean": 28, "std_dev": 3, "min": 22, "max": 34, "units": "mmHg" },
+            "po2": { "type": "normal_distribution", "mean": 82, "std_dev": 5, "min": 70, "max": 90, "units": "mmHg" },
+            "hco3": { "type": "normal_distribution", "mean": 12, "std_dev": 2, "min": 8, "max": 16, "units": "mEq/L" },
+            "lactate": "shared_with_lab_lactate"
+          },
+          "interpretation": {
+            "plain": "The blood gas is critically abnormal. The blood is dangerously acidic, oxygen delivery is compromised, and the lungs are struggling to compensate. This patient needs immediate intensive intervention.",
+            "clinical": "Severe mixed metabolic and early respiratory acidosis. Critical hyperlactatemia. Declining pO2 — respiratory fatigue developing. Consistent with septic shock with impending respiratory failure. Consider intubation."
+          }
+        }
+      }
+    },
+
+    "lab_urinalysis": {
+      "ap_cost": 2,
+      "label": "Urinalysis (UA)",
+      "generate_once": true,
+      "probabilistic": true,
+      "outcomes": [
+        {
+          "chance": 0.70,
+          "id": "ua_normal",
+          "values": { "ua_wbc": "0-2", "ua_rbc": "0-1", "ua_bacteria": "None", "ua_nitrites": "Negative", "ua_leukocyte_esterase": "Negative", "ua_protein": "Trace", "ua_glucose": "Negative" },
+          "interpretation": {
+            "plain": "Urine is completely normal. No sign of a urinary infection. This helps rule out a kidney stone or UTI as the cause of the pain.",
+            "clinical": "UA within normal limits. No pyuria, bacteriuria, or nitrites. UTI and nephrolithiasis effectively excluded."
+          }
+        },
+        {
+          "chance": 0.30,
+          "id": "ua_sterile_pyuria",
+          "values": { "ua_wbc": "5-10", "ua_rbc": "0-2", "ua_bacteria": "None", "ua_nitrites": "Negative", "ua_leukocyte_esterase": "Trace", "ua_protein": "Trace", "ua_glucose": "Negative" },
+          "interpretation": {
+            "plain": "There are a small number of white cells in the urine but no bacteria and no sign of infection. This can happen when something inflamed nearby irritates the urinary tract.",
+            "clinical": "Sterile pyuria — WBCs without bacteriuria or nitrites. Can occur with adjacent appendiceal inflammation irritating the ureter or bladder. Does not indicate UTI. Culture expected to be negative."
+          }
+        }
+      ]
+    },
+
+    "lab_cultures_blood": {
+      "ap_cost": 0,
+      "label": "Blood Cultures",
+      "generate_once": true,
+      "by_state": {
+        "stable": {
+          "probabilistic": false,
+          "result": "Pending — no growth at 24 hours",
+          "interpretation": {
+            "plain": "Blood cultures are processing. Results take 48 hours. Ordering these now is premature — blood cultures are most useful when sepsis is suspected.",
+            "clinical": "Blood cultures sent. Results pending. Low clinical yield in uncomplicated appendicitis without systemic sepsis. Consider reserving for septic presentations."
+          },
+          "bonus_points": 0
+        },
+        "perforated": {
+          "probabilistic": false,
+          "result": "Pending — no growth at 24 hours",
+          "interpretation": {
+            "plain": "Blood cultures are processing. Good thinking to order these — perforation increases the risk of bacteria entering the bloodstream.",
+            "clinical": "Blood cultures appropriately ordered given suspected perforation. Results pending. Yield higher in perforated vs uncomplicated appendicitis."
+          },
+          "bonus_points": 0
+        },
+        "septic_shock": {
+          "probabilistic": true,
+          "bonus_points": 1,
+          "bonus_reason": "Excellent clinical decision — blood cultures are indicated in septic shock before antibiotics if possible.",
+          "outcomes": [
+            {
+              "chance": 0.20,
+              "result": "PRELIMINARY GROWTH — Gram negative rods. Speciation and sensitivities pending.",
+              "interpretation": {
+                "plain": "The blood culture is showing bacterial growth — gram negative rods, likely from the gut. This confirms bacteria have entered the bloodstream. Antibiotic sensitivities are being processed.",
+                "clinical": "Gram negative bacteremia confirmed. Most likely E. coli or Bacteroides from GI source. Await speciation and sensitivities to guide antibiotic narrowing. Consistent with septic shock from perforated appendicitis."
+              }
+            },
+            {
+              "chance": 0.80,
+              "result": "No growth at 48 hours — cultures pending final read",
+              "interpretation": {
+                "plain": "No bacteria growing in the blood cultures yet. This doesn't rule out a blood infection — many cultures never grow even in severe sepsis.",
+                "clinical": "No growth at 48 hours. Culture-negative sepsis is common — sensitivity of blood cultures in septic shock is only 30-40%. Clinical diagnosis of septic shock stands regardless of culture result."
+              }
+            }
+          ]
+        }
+      }
+    }
+
+  },
+
+
+
+  "imaging_settings": {
+    "free_air_roll": {
+      "description": "One roll per encounter, shared across all imaging modalities. Roll happens first time any imaging is ordered in perforated or septic_shock state.",
+      "outcomes": [
+        { "chance": 0.35, "id": "free_air_xray_and_ct", "xray_positive": true, "ct_positive": true },
+        { "chance": 0.20, "id": "free_air_ct_only", "xray_positive": false, "ct_positive": true },
+        { "chance": 0.45, "id": "no_free_air", "xray_positive": false, "ct_positive": false }
+      ]
+    },
+    "confirmation_popup": true,
+    "note": "All imaging requires confirmation popup showing modality, body part, and AP cost before proceeding."
+  },
+
+  "imaging_ui": {
+    "categories": ["CT", "MRI", "X-Ray", "Ultrasound", "Echocardiogram"],
+    "input_method": "category_select_then_free_text_body_part",
+    "llm_routes_body_part": true,
+    "unavailable_response": "That imaging is not available for this case.",
+    "mri_note": "All MRI orders route to fast noncontrast MRI regardless of contrast requested."
+  },
+
+  "imaging_findings": {
+
+    "imaging_ct_abdomen_pelvis": {
+      "ap_cost": 8,
+      "label": "CT Abdomen / Pelvis",
+      "views": "axial with coronal and sagittal reconstructions",
+      "by_state": {
+        "stable": {
+          "plain": "The CT scan clearly shows a swollen, inflamed appendix. It measures about 10mm across — almost double the normal size. The fatty tissue surrounding it is inflamed and irritated. There is no sign that it has burst. This confirms the diagnosis.",
+          "clinical": "CT abdomen/pelvis noncontrast: Distended appendix measuring 10mm in diameter (normal <6mm). Periappendiceal fat stranding and inflammatory changes. No pneumoperitoneum. No abscess identified. Findings diagnostic of acute appendicitis. Sensitivity >95%."
+        },
+        "perforated": {
+          "free_air_positive": {
+            "plain": "The CT scan shows a severely inflamed, ruptured appendix. There is air visible in places it should never be — outside of the bowel, under the diaphragm. The surrounding tissues are severely inflamed. This is a surgical emergency.",
+            "clinical": "CT abdomen/pelvis: Perforated appendix. Pneumoperitoneum identified — free air consistent with bowel perforation. Periappendiceal abscess forming. Diffuse peritoneal inflammatory changes. Emergent surgical intervention required."
+          },
+          "free_air_negative": {
+            "plain": "The CT scan shows a severely inflamed, ruptured appendix with significant surrounding inflammation. The tissues are badly affected. No free air is visible on this study, but perforation is still likely given the clinical picture.",
+            "clinical": "CT abdomen/pelvis: Perforated appendix with periappendiceal phlegmon. No pneumoperitoneum identified on CT — however CT sensitivity for free air is not 100%. Clinical findings remain consistent with perforation. Urgent surgical consultation required."
+          }
+        },
+        "septic_shock": {
+          "free_air_positive": {
+            "plain": "The CT shows catastrophic abdominal findings. The appendix has ruptured, there is free air throughout the abdomen, and significant fluid has accumulated everywhere. The infection has spread widely.",
+            "clinical": "CT abdomen/pelvis: Perforated appendix with gross pneumoperitoneum. Diffuse peritonitis. Large volume intraperitoneal free fluid. Findings consistent with septic shock from perforated appendicitis. Immediate surgical and ICU intervention required."
+          },
+          "free_air_negative": {
+            "plain": "The CT shows a ruptured appendix with severe widespread abdominal infection and fluid accumulation. No free air is visible but the infection has clearly spread throughout the abdomen.",
+            "clinical": "CT abdomen/pelvis: Perforated appendix. Diffuse peritonitis with large volume free fluid. No pneumoperitoneum on this study. Severe intraabdominal sepsis. Immediate intervention required."
+          }
+        }
+      }
+    },
+
+    "imaging_ct_chest": {
+      "ap_cost": 8,
+      "label": "CT Chest",
+      "views": "axial with coronal reconstructions",
+      "by_state": {
+        "stable": {
+          "plain": "The CT chest is completely normal. Lungs look clear, heart looks normal, no abnormalities seen. Not particularly useful for this patient's problem.",
+          "clinical": "CT chest: No acute cardiopulmonary pathology. Clear lung fields. No pulmonary embolism. No pneumonia. Normal mediastinum. Study not contributory to current presentation."
+        },
+        "perforated": {
+          "free_air_positive": {
+            "plain": "The CT chest itself is normal, but there is free air visible just beneath the diaphragm — air that has escaped from a perforated bowel. This is a significant finding.",
+            "clinical": "CT chest: Lung fields clear. Subdiaphragmatic free air identified — consistent with pneumoperitoneum from bowel perforation. This finding alone confirms perforation has occurred."
+          },
+          "free_air_negative": {
+            "plain": "The CT chest is normal. No free air visible on this study.",
+            "clinical": "CT chest: No acute cardiopulmonary pathology. No subdiaphragmatic free air identified on this study."
+          }
+        },
+        "septic_shock": {
+          "free_air_positive": {
+            "plain": "Free air is visible under the diaphragm on the CT chest, confirming bowel perforation. The lung bases show early fluid accumulation consistent with the severe systemic infection.",
+            "clinical": "CT chest: Subdiaphragmatic free air confirmed — pneumoperitoneum. Bilateral basilar atelectasis and early pleural effusions — consistent with septic shock physiology. ARDS developing."
+          },
+          "free_air_negative": {
+            "plain": "No free air seen on the CT chest. The lower lungs show fluid accumulation from the severe systemic infection.",
+            "clinical": "CT chest: No subdiaphragmatic free air. Bilateral basilar atelectasis and small pleural effusions. Consistent with sepsis-related pulmonary changes. Early ARDS pattern."
+          }
+        }
+      }
+    },
+
+    "imaging_ct_head": {
+      "ap_cost": 8,
+      "label": "CT Head",
+      "views": "axial noncontrast",
+      "by_state": {
+        "all_states": {
+          "plain": "The CT head is completely normal. Brain looks normal. No bleeding, no swelling, no abnormalities. This test was not needed for this patient.",
+          "clinical": "CT head noncontrast: No acute intracranial pathology. No hemorrhage, infarct, mass, or midline shift. Study not contributory to current presentation."
+        }
+      }
+    },
+
+    "imaging_mri_abdomen_pelvis": {
+      "ap_cost": 12,
+      "label": "MRI Abdomen / Pelvis (fast noncontrast)",
+      "note": "All MRI orders route here regardless of body part or contrast requested.",
+      "by_state": {
+        "stable": {
+          "plain": "The MRI clearly shows an inflamed, swollen appendix. The surrounding tissues are irritated. This confirms appendicitis. The MRI took longer than a CT and cost more time, but the findings are the same.",
+          "clinical": "MRI abdomen/pelvis fast noncontrast: Distended appendix with periappendiceal inflammatory changes. No perforation identified. Findings consistent with acute appendicitis. Note: CT preferred in acute setting due to speed and availability — MRI reserved for pregnancy or radiation-sensitive patients."
+        },
+        "perforated": {
+          "plain": "The MRI shows a ruptured appendix with significant surrounding infection and fluid. The study took considerable time — time this patient did not have to spare.",
+          "clinical": "MRI abdomen/pelvis: Perforated appendix with periappendiceal abscess and free fluid. Diffuse peritoneal inflammation. Note: Significant time cost in obtaining MRI in acute surgical emergency — CT strongly preferred."
+        },
+        "septic_shock": {
+          "plain": "The MRI shows catastrophic abdominal infection from the ruptured appendix. However, this study took a very long time to obtain. The patient's condition worsened significantly during the scan.",
+          "clinical": "MRI abdomen/pelvis: Perforated appendix with gross peritonitis and large volume free fluid. Critical note: MRI is contraindicated in hemodynamically unstable patients. Time to diagnosis unacceptably delayed. CT or direct surgical intervention should have been pursued."
+        }
+      }
+    },
+
+    "imaging_mri_brain": {
+      "ap_cost": 12,
+      "label": "MRI Brain (fast noncontrast)",
+      "by_state": {
+        "all_states": {
+          "plain": "The MRI brain is completely normal. No abnormalities found. This was not a useful test for this patient.",
+          "clinical": "MRI brain noncontrast: No acute intracranial pathology. No infarct, hemorrhage, mass, or abnormal signal. Study not contributory to current presentation."
+        }
+      }
+    },
+
+    "imaging_ultrasound": {
+      "ap_cost": 8,
+      "label": "Ultrasound",
+      "by_state": {
+        "stable": {
+          "probabilistic": true,
+          "outcomes": [
+            {
+              "chance": 0.50,
+              "id": "us_diagnostic",
+              "plain": "The ultrasound successfully finds the appendix. It looks swollen and inflamed, measuring about 9mm across. The surrounding tissue is irritated. This is consistent with appendicitis.",
+              "clinical": "Ultrasound: Appendix visualized. Diameter 9mm (>6mm abnormal). Non-compressible. Periappendiceal fat stranding. Findings consistent with acute appendicitis. Sensitivity ~75-85% when appendix visualized."
+            },
+            {
+              "chance": 0.50,
+              "id": "us_nondiagnostic",
+              "plain": "The ultrasound technician was unable to clearly see the appendix. Too much bowel gas is in the way. The study is nondiagnostic — you will need another imaging test to make the diagnosis.",
+              "clinical": "Ultrasound: Appendix not visualized. Nondiagnostic study. Limited by bowel gas and body habitus. CT abdomen/pelvis recommended for definitive diagnosis."
+            }
+          ]
+        },
+        "perforated": {
+          "plain": "The ultrasound shows free fluid throughout the abdomen — fluid that should not be there. The individual structures are too obscured by fluid and inflammation to identify clearly. This finding is consistent with a serious abdominal emergency.",
+          "clinical": "Ultrasound: Large volume intraperitoneal free fluid (ascites) identified. Individual structures poorly visualized due to fluid and inflammation. Findings consistent with perforation and peritonitis. CT required for definitive assessment."
+        },
+        "septic_shock": {
+          "plain": "The ultrasound shows large amounts of free fluid throughout the entire abdomen. Normal structures cannot be identified. This reflects a catastrophic abdominal process.",
+          "clinical": "Ultrasound: Gross intraperitoneal free fluid throughout abdomen and pelvis. No discrete structures identifiable. Consistent with diffuse peritonitis in septic shock. Immediate surgical intervention required — further imaging not indicated."
+        }
+      }
+    },
+
+    "imaging_xray_abdomen": {
+      "ap_cost": 3,
+      "label": "X-Ray Abdomen (2 view: supine and upright)",
+      "by_state": {
+        "stable": {
+          "plain": "The abdominal X-ray looks normal. No blockage, no free air, no obvious abnormalities. X-rays are not very sensitive for appendicitis and rarely change management.",
+          "clinical": "KUB 2-view (supine and upright): No pneumoperitoneum. No obstruction. No fecalith visualized. Nonspecific bowel gas pattern. Plain films have low sensitivity for appendicitis — not the imaging of choice."
+        },
+        "perforated": {
+          "free_air_positive": {
+            "plain": "There is free air visible under the diaphragm on the upright view — air that has escaped from a perforated bowel. This is an unmistakable sign that something has ruptured inside the abdomen.",
+            "clinical": "KUB 2-view: Pneumoperitoneum identified — free air under the right hemidiaphragm on upright view. Pathognomonic for bowel perforation. Emergent surgical consultation required."
+          },
+          "free_air_negative": {
+            "plain": "The X-ray does not show free air. However, X-rays miss free air in many cases of perforation. A normal X-ray does not rule out a rupture.",
+            "clinical": "KUB 2-view: No pneumoperitoneum identified. Note: Plain film sensitivity for free air is only 50-70% — a negative X-ray does not exclude perforation. CT recommended."
+          }
+        },
+        "septic_shock": {
+          "free_air_positive": {
+            "plain": "Free air is clearly visible under the diaphragm, confirming bowel perforation. The bowel gas pattern looks severely abnormal.",
+            "clinical": "KUB 2-view: Pneumoperitoneum confirmed. Diffuse ileus pattern. Free air under right hemidiaphragm. Consistent with perforated appendicitis in septic shock."
+          },
+          "free_air_negative": {
+            "plain": "No free air visible, but the bowel looks paralyzed and distended throughout — a sign of severe abdominal catastrophe.",
+            "clinical": "KUB 2-view: No pneumoperitoneum identified. Diffuse ileus. Generalized bowel distension consistent with severe peritonitis and septic shock."
+          }
+        }
+      }
+    },
+
+    "imaging_xray_chest": {
+      "ap_cost": 3,
+      "label": "X-Ray Chest (2 view: PA and lateral)",
+      "by_state": {
+        "stable": {
+          "plain": "The chest X-ray looks completely normal. Lungs are clear, heart size is normal, no free air visible under the diaphragm.",
+          "clinical": "CXR 2-view (PA and lateral): Clear lung fields bilaterally. Normal cardiac silhouette. No subdiaphragmatic free air. No acute cardiopulmonary pathology."
+        },
+        "perforated": {
+          "free_air_positive": {
+            "plain": "The chest X-ray is otherwise normal, but there is free air visible under the diaphragm — air that has escaped from a perforation inside the abdomen. This is a critical finding.",
+            "clinical": "CXR 2-view: Subdiaphragmatic free air identified under the right hemidiaphragm on PA view. Confirms pneumoperitoneum from bowel perforation. Lung fields otherwise clear."
+          },
+          "free_air_negative": {
+            "plain": "The chest X-ray looks normal. No free air visible under the diaphragm on this study.",
+            "clinical": "CXR 2-view: No subdiaphragmatic free air identified. Clear lung fields. Normal cardiac silhouette. Plain film sensitivity for free air is limited — does not exclude perforation."
+          }
+        },
+        "septic_shock": {
+          "free_air_positive": {
+            "plain": "Free air is visible under the diaphragm confirming bowel rupture. The lower portions of the lungs show fluid accumulation from the severe infection.",
+            "clinical": "CXR 2-view: Subdiaphragmatic free air confirmed. Bilateral basilar atelectasis and early pleural effusions — consistent with sepsis physiology. Early ARDS pattern developing."
+          },
+          "free_air_negative": {
+            "plain": "No free air visible, but the lungs show early fluid from the severe systemic infection.",
+            "clinical": "CXR 2-view: No subdiaphragmatic free air. Bilateral basilar atelectasis. Small pleural effusions. Consistent with sepsis-related pulmonary changes."
+          }
+        }
+      }
+    },
+
+    "imaging_echocardiogram": {
+      "ap_cost": 8,
+      "label": "Echocardiogram",
+      "by_state": {
+        "all_states": {
+          "plain": "The echocardiogram shows a completely normal heart. Good pumping function, normal valves, no fluid around the heart. This test was not needed for this patient.",
+          "clinical": "Echocardiogram: Normal left ventricular systolic function. EF estimated 60-65%. No wall motion abnormalities. No valvular pathology. No pericardial effusion. Study not contributory to current presentation."
+        }
+      }
+    },
+
+    "misc_ekg": {
+      "ap_cost": 5,
+      "label": "EKG (12-lead)",
+      "ui_category": "miscellaneous",
+      "by_state": {
+        "stable": {
+          "plain": "The EKG shows a normal heart rhythm, slightly fast due to pain and fever. No signs of any heart problem.",
+          "clinical": "12-lead EKG: Sinus tachycardia at 105 bpm. Normal axis. Normal intervals. No ischemic changes. No arrhythmia. Appropriate for pre-operative clearance."
+        },
+        "perforated": {
+          "plain": "The EKG shows the heart beating fast — a response to the worsening infection. No other abnormalities.",
+          "clinical": "12-lead EKG: Sinus tachycardia at 122 bpm. No ischemic changes. Nonspecific ST changes consistent with systemic illness. No arrhythmia."
+        },
+        "septic_shock": {
+          "plain": "The EKG shows a very fast heart rate and some nonspecific changes from the severe infection. No primary heart problem identified.",
+          "clinical": "12-lead EKG: Sinus tachycardia at 135 bpm. Nonspecific ST-T wave changes consistent with septic cardiomyopathy. No acute ischemia. Continuous cardiac monitoring recommended."
+        }
+      }
+    },
+
+    "misc_eeg": {
+      "ap_cost": 8,
+      "label": "EEG (Electroencephalogram)",
+      "ui_category": "miscellaneous",
+      "by_state": {
+        "stable": {
+          "plain": "The EEG shows normal brain wave activity. No seizure activity, no abnormalities. This test was not indicated for this patient.",
+          "clinical": "EEG: Normal background rhythm. No epileptiform discharges. No focal slowing. Study not contributory to current presentation."
+        },
+        "perforated": {
+          "plain": "The EEG shows mildly slowed brain activity, likely from the fever and systemic inflammation. No seizure activity.",
+          "clinical": "EEG: Mild diffuse slowing — nonspecific finding consistent with metabolic encephalopathy from systemic illness. No epileptiform activity."
+        },
+        "septic_shock": {
+          "plain": "The EEG shows significant slowing of brain activity consistent with the severe systemic infection affecting brain function. No seizure activity.",
+          "clinical": "EEG: Moderate diffuse slowing consistent with septic encephalopathy. No epileptiform discharges. Findings reflect global cerebral dysfunction from septic shock."
+        }
+      }
+    }
+
+  },
+
+  "consults": {
+    "description": "Player selects specialty from list, then chooses which results to share. AP charged on confirmation popup.",
+    "ap_costs": {
+      "first_consult": 7,
+      "return_consult_same_specialty": 1,
+      "wrong_specialty_refused": 1,
+      "surgery_or_gi_refused_exam_not_done": 7
+    },
+    "exam_gate": {
+      "description": "General Surgery and Gastroenterology require at least one of these before consulting",
+      "satisfied_by": ["exam_abdominal", "exam_mcburney", "exam_rovsing", "exam_psoas"]
+    },
+    "available_specialties": {
+      "general_surgery": {
+        "label": "General Surgery",
+        "available": true,
+        "exam_gate_required": true,
+        "responses": {
+          "exam_not_done": {
+            "plain": "The surgical fellow looks up from their notes. 'I appreciate the call, but I need you to examine the patient properly before I can help. Get me a thorough abdominal exam and then we'll talk.'",
+            "clinical": "General Surgery declines consult. Insufficient clinical data — abdominal examination not performed. Examine patient before consulting."
+          },
+          "abdominal_exam_only": {
+            "plain": "The surgeon listens carefully. 'Those exam findings are very concerning for appendicitis. Before I come down, I need imaging — get a CT abdomen and pelvis. Call me back when you have it.'",
+            "clinical": "General Surgery recommends CT abdomen/pelvis prior to surgical evaluation. Exam findings consistent with acute appendicitis but imaging required for operative planning."
+          },
+          "free_fluid_ultrasound_only": {
+            "plain": "The surgeon pauses. 'Free fluid on ultrasound with that exam? You need a CT — the ultrasound isn't giving us enough. Get a CT abdomen/pelvis and call me right back.'",
+            "clinical": "General Surgery recommends CT abdomen/pelvis. Nondiagnostic ultrasound with free fluid and positive exam findings requires cross-sectional imaging for definitive diagnosis."
+          },
+          "imaging_confirms_appendicitis": {
+            "plain": "The surgeon doesn't hesitate. 'That's appendicitis. Get the patient NPO if you haven't already, start IV antibiotics, and I'll meet you in the OR. Good catch.'",
+            "clinical": "General Surgery confirms diagnosis of acute appendicitis based on imaging. Recommends: NPO, IV antibiotics, appendectomy. Proceeding to OR.",
+            "bonus_points": 1,
+            "bonus_reason": "Excellent — sharing confirmatory imaging with Surgery is the right clinical decision and directly leads to definitive treatment."
+          },
+          "abdominal_exam_and_imaging_confirms": {
+            "plain": "The surgeon reviews everything you've sent. 'Perfect workup. That's appendicitis — classic presentation, confirmed on CT. Let's get him to the OR. Make sure he's NPO and get broad spectrum antibiotics running.'",
+            "clinical": "General Surgery confirms appendicitis. Complete workup shared. Recommends: NPO, IV antibiotics, appendectomy. Proceeding to OR.",
+            "bonus_points": 1,
+            "bonus_reason": "Well done — thorough workup shared with Surgery, leading directly to operative management."
+          },
+          "septic_shock_state": {
+            "plain": "The surgeon's tone shifts immediately. 'This patient is in septic shock — you need to resuscitate him before I can operate. Get fluids running wide open, start vasopressors if his pressure doesn't come up, and call the ICU. Once he's stabilized we'll take him to the OR. Do NOT bring him to surgery like this.'",
+            "clinical": "General Surgery advises against immediate surgery in septic shock. Recommends aggressive resuscitation first: IV fluids, vasopressors, ICU consultation. Surgery to follow once hemodynamically stable."
+          }
+        }
+      },
+      "gastroenterology": {
+        "label": "Gastroenterology",
+        "available": true,
+        "exam_gate_required": true,
+        "responses": {
+          "exam_not_done": {
+            "plain": "The gastroenterologist sounds polite but firm. 'I'd be happy to help, but I really need you to examine the patient first. Do a proper abdominal exam and then let's talk.'",
+            "clinical": "Gastroenterology declines consult. Insufficient clinical data — abdominal examination not performed."
+          },
+          "abdominal_exam_only": {
+            "plain": "The gastroenterologist listens carefully. 'Those exam findings are worrying — I'm concerned about a possible surgical abdomen here. Honestly, I think you need to get General Surgery involved. This may be beyond what we can manage medically. Get some imaging too.'",
+            "clinical": "Gastroenterology concerned for acute surgical abdomen based on exam findings. Recommends General Surgery consultation and imaging. Defers to surgical management."
+          },
+          "imaging_confirms_appendicitis": {
+            "plain": "The gastroenterologist doesn't hesitate. 'That's appendicitis on imaging — this is a surgical problem, not a GI one. You need General Surgery, not us. Call them now.'",
+            "clinical": "Gastroenterology defers to General Surgery. Imaging-confirmed appendicitis is a surgical diagnosis requiring operative management. GI not the appropriate primary consultant."
+          },
+          "any_other": {
+            "plain": "The gastroenterologist listens and then sighs. 'Look, given what you've told me, I really think General Surgery is who you need here. This sounds surgical. I'm happy to follow along but they need to be leading this.'",
+            "clinical": "Gastroenterology defers to General Surgery as primary consultant for suspected appendicitis."
+          }
+        }
+      },
+      "other_specialties": {
+        "label": "All Other Specialties",
+        "available": true,
+        "ap_cost_override": 1,
+        "responses": {
+          "default": {
+            "plain": "The specialist listens politely and then declines. 'I appreciate you thinking of us, but this really isn't in our wheelhouse. You need someone else for this one — we can't help you here.'",
+            "clinical": "Specialty declines consult — outside scope of practice for this presentation. 1 AP charged."
+          }
+        }
+      }
+    }
+  },
+
+  "treatment_effects": {
+    "surgery_appendectomy": {
+      "valid_states": ["stable", "pain_crisis", "perforated"],
+      "invalid_states": ["septic_shock"],
+      "effect": "resolves",
+      "result_plain": "The appendix is successfully removed. The patient immediately begins to improve. You have cured them.",
+      "result_clinical": "Laparoscopic appendectomy performed. Appendix removed without complication. Patient recovering well. Encounter resolved successfully.",
+      "win": true,
+      "xp_reward": 120
+    },
+    "surgery_appendectomy_septic_shock": {
+      "valid_states": ["septic_shock"],
+      "effect": "fails",
+      "result_plain": "The patient is too unstable for surgery. They need resuscitation first. The surgical team cannot safely operate.",
+      "result_clinical": "Patient hemodynamically unstable. Surgical intervention contraindicated until resuscitation achieved. Initiate aggressive fluid resuscitation, vasopressors, and antibiotics first.",
+      "win": false
+    },
+    "medications_antibiotics_broad": {
+      "valid_states": ["stable", "pain_crisis", "perforated", "septic_shock"],
+      "effect": "stabilizes",
+      "delays_progression_turns": 5,
+      "result_plain": "The antibiotics are helping to slow the infection down. This buys some time but is not a cure — the appendix still needs to come out.",
+      "result_clinical": "Broad spectrum antibiotics initiated. Periappendiceal inflammation partially controlled. Progression delayed. Definitive treatment (appendectomy) still required."
+    },
+    "medications_ibuprofen": {
+      "valid_states": ["stable", "pain_crisis"],
+      "effect": "neutral_negative",
+      "accelerates_progression_turns": 0,
+      "result_plain": "The ibuprofen takes the edge off the pain slightly but doesn't really help. You've used up a turn and the underlying problem is unchanged.",
+      "result_clinical": "NSAID administered. No effect on disease progression. Suboptimal analgesic choice in suspected appendicitis — opioid analgesia preferred as it provides superior pain control without meaningfully masking peritoneal signs. Turn spent without clinical benefit."
+    },
+    "medications_morphine": {
+      "valid_states": ["stable", "pain_crisis", "perforated"],
+      "effect": "neutral_positive",
+      "result_plain": "The patient gets some pain relief and looks a little more comfortable. This doesn't treat the underlying problem but makes the patient more comfortable while you work.",
+      "result_clinical": "Opioid analgesia provided. Patient comfort improved. Contrary to historical teaching, opioid analgesia does not mask peritoneal signs sufficiently to impair diagnosis. Appropriate and recommended."
+    },
+    "treatment_iv_fluids_ns": {
+      "valid_states": ["stable", "pain_crisis", "perforated", "septic_shock"],
+      "effect": "supportive",
+      "result_plain": "The IV fluids help rehydrate the patient. They look a little better.",
+      "result_clinical": "IV fluid resuscitation initiated with normal saline. Appropriate supportive care. Essential prior to surgical intervention."
+    },
+    "treatment_npo": {
+      "valid_states": ["stable", "pain_crisis", "perforated"],
+      "effect": "supportive",
+      "result_plain": "You put the patient on nothing by mouth. This is important before any possible surgery.",
+      "result_clinical": "NPO status established. Appropriate pre-operative preparation. Reduces aspiration risk."
+    },
+    "treatment_iv_access": {
+      "valid_states": ["stable", "pain_crisis", "perforated", "septic_shock"],
+      "effect": "supportive",
+      "result_plain": "You establish IV access. The patient now has a line in their arm for fluids and medications.",
+      "result_clinical": "Peripheral IV access established. Essential for fluid resuscitation and medication administration."
+    },
+    "treatment_consult": {
+      "valid_states": ["stable", "pain_crisis", "perforated"],
+      "effect": "positive",
+      "result_plain": "You call in the surgical team. They agree with your assessment and begin preparing for the operating room.",
+      "result_clinical": "General Surgery consulted. Surgical team agrees with diagnosis of acute appendicitis. OR being arranged. Excellent clinical decision."
+    }
+  },
+
+  "diagnosis_system": {
+    "description": "Player can attempt diagnosis at any time via the Diagnosis icon. LLM evaluates free text input leniently against accepted diagnoses. Correct diagnosis awards bonus points but does NOT end the encounter — treatment still required.",
+    "ap_cost_incorrect": 2,
+    "ap_cost_correct": 0,
+    "llm_instruction": "Be lenient with terminology. Accept common synonyms, abbreviations, and clinical shorthand. Match the intent of the diagnosis, not the exact wording.",
+    "multiple_attempts_allowed": true,
+    "bonus_points_still_awarded_after_wrong_guess": true,
+
+    "accepted_diagnoses": [
+      {
+        "id": "diagnosis_appendicitis",
+        "bonus_points": 10,
+        "accepted_terms": [
+          "appendicitis",
+          "acute appendicitis",
+          "perforated appendicitis",
+          "ruptured appendicitis",
+          "ruptured appendix",
+          "inflamed appendix",
+          "appy",
+          "appendix infection",
+          "infected appendix",
+          "appendiceal inflammation",
+          "hot appendix"
+        ],
+        "response_correct": {
+          "plain": "Correct! You've identified appendicitis. The patient still needs an appendectomy to resolve the encounter. +10 bonus points.",
+          "clinical": "Diagnosis confirmed: Acute Appendicitis. Definitive treatment (appendectomy) still required to complete the encounter. +10 bonus points awarded."
+        }
+      },
+      {
+        "id": "diagnosis_septic_shock",
+        "bonus_points": 3,
+        "valid_in_states": ["septic_shock"],
+        "accepted_terms": [
+          "septic shock",
+          "sepsis",
+          "severe sepsis",
+          "distributive shock",
+          "septic",
+          "blood poisoning",
+          "systemic infection",
+          "bacteremia with shock",
+          "gram negative sepsis"
+        ],
+        "response_correct": {
+          "plain": "Correct — this patient is in septic shock. Recognizing this is critical. +3 bonus points. You still need to treat the underlying cause.",
+          "clinical": "Diagnosis confirmed: Septic Shock. Consistent with perforated appendicitis with systemic sepsis. +3 bonus points awarded. Treat underlying cause — appendectomy after resuscitation."
+        },
+        "response_correct_if_already_diagnosed_appendicitis": {
+          "plain": "Correct — and you've already identified the underlying cause. This patient has appendicitis complicated by septic shock. +3 bonus points. 13 total bonus points earned for dual diagnosis.",
+          "clinical": "Dual diagnosis confirmed: Acute Appendicitis with Septic Shock. +3 bonus points. 13 total bonus points for complete diagnostic picture."
+        }
+      }
+    ],
+
+    "incorrect_diagnosis": {
+      "ap_cost": 2,
+      "response": {
+        "plain": "That diagnosis doesn't fit this patient's presentation. You've spent 2 AP on an incorrect diagnosis. Keep working through the case.",
+        "clinical": "Incorrect diagnosis. 2 AP deducted. Review the clinical findings and reconsider. You may attempt another diagnosis at any time."
+      },
+      "examples_of_incorrect": [
+        "UTI",
+        "kidney stone",
+        "ovarian cyst",
+        "pancreatitis",
+        "Crohn's disease",
+        "bowel obstruction",
+        "mesenteric ischemia",
+        "gastroenteritis"
+      ]
+    }
+  },
+
+  "win_conditions": [
+    {
+      "id": "win_appendectomy",
+      "description": "Appendectomy performed before septic shock state",
+      "required_actions": ["surgery_appendectomy"],
+      "forbidden_states": ["septic_shock", "coma"]
+    }
+  ],
+
+  "fail_conditions": [
+    {
+      "id": "fail_coma",
+      "description": "Patient reached coma state — too many turns taken",
+      "trigger_state": "coma"
+    },
+    {
+      "id": "fail_wrong_surgery",
+      "description": "Wrong surgical procedure performed",
+      "trigger_actions": ["surgery_cholecystectomy", "surgery_exploratory_laparotomy"]
+    }
+  ],
+
+  "harm_points": {
+    "threshold": 7,
+    "description": "Accumulating 7 harm points forces patient immediately into septic shock and reduces AP to 30 regardless of current AP total.",
+    "triggers": [
+      {
+        "action": "medications_ibuprofen",
+        "harm": 1,
+        "reason_plain": "NSAIDs are a suboptimal choice here — opioids are safer and more effective for this type of pain.",
+        "reason_clinical": "NSAID use in suspected appendicitis. Suboptimal analgesia — opioids preferred. Minor harm."
+      },
+      {
+        "action": "surgery_wrong",
+        "harm": 3,
+        "reason_plain": "That was the wrong operation. The patient's actual problem was not addressed.",
+        "reason_clinical": "Incorrect surgical procedure performed. Significant patient harm. Appendicitis unresolved."
+      },
+      {
+        "action": "medication_allergy_violation",
+        "harm": 5,
+        "reason_plain": "You gave the patient a medication they are allergic to. This is a serious error.",
+        "reason_clinical": "Medication administered despite documented allergy. Serious adverse event. Potential anaphylaxis."
+      },
+      {
+        "action": "surgery_in_septic_shock_without_resuscitation",
+        "harm": 2,
+        "reason_plain": "The patient is too unstable for surgery right now. He needs fluids and stabilization first.",
+        "reason_clinical": "Surgical intervention attempted in hemodynamically unstable septic shock without adequate resuscitation. Contraindicated."
+      }
+    ]
+  },
+
+  "scoring": {
+    "base_xp": 120,
+    "ap_remaining_multiplier": 1,
+    "bonus_point_multiplier": 3,
+    "harm_point_penalty_multiplier": 10,
+    "description": "Final XP = base_xp + (remaining AP × 1) + (banked bonus points × 3) - (harm points × 10)",
+    "efficiency_bonuses": {
+      "under_30_ap_spent": 50,
+      "under_50_ap_spent": 25,
+      "under_70_ap_spent": 10
+    }
+  },
+
+  "teaching_points": [
+    "Classic presentation: periumbilical pain migrating to RLQ over 12-24 hours.",
+    "McBurney's point, Rovsing's sign, psoas sign, and obturator sign are all specific exam findings.",
+    "Leukocytosis with left shift strongly supports the diagnosis.",
+    "CT abdomen/pelvis is the most sensitive imaging (>95%). Ultrasound is first line in children and pregnant patients.",
+    "NSAIDs should be avoided — opioid analgesia is safe and does not mask peritoneal signs.",
+    "Broad spectrum antibiotics buy time but appendectomy is the definitive treatment.",
+    "Surgery is contraindicated in septic shock until resuscitation is achieved."
+  ]
+}

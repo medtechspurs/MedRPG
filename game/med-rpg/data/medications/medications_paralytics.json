@@ -1,0 +1,71 @@
+{
+  "category": "Paralytics",
+  "category_id": "paralytics",
+  "description": "Neuromuscular blocking agents used for intubation, mechanical ventilation, and surgical procedures.",
+  "medications": [
+    {
+      "id": "succinylcholine",
+      "name": "Succinylcholine (Anectine, Quelicin)",
+      "class": "Depolarizing Neuromuscular Blocker",
+      "routes": ["IV", "IM"],
+      "allergy_class": null,
+      "semantic_tags": ["paralytic", "neuromuscular blocker", "succinylcholine", "anectine", "quelicin", "RSI", "rapid sequence intubation", "depolarizing", "short acting", "intubation"]
+    },
+    {
+      "id": "rocuronium",
+      "name": "Rocuronium (Zemuron)",
+      "class": "Non-depolarizing Neuromuscular Blocker",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["paralytic", "neuromuscular blocker", "rocuronium", "zemuron", "RSI", "rapid sequence intubation", "intubation", "non-depolarizing", "intermediate acting", "IV"]
+    },
+    {
+      "id": "vecuronium",
+      "name": "Vecuronium (Norcuron)",
+      "class": "Non-depolarizing Neuromuscular Blocker",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["paralytic", "neuromuscular blocker", "vecuronium", "norcuron", "intubation", "non-depolarizing", "intermediate acting", "ventilation", "IV"]
+    },
+    {
+      "id": "cisatracurium",
+      "name": "Cisatracurium (Nimbex)",
+      "class": "Non-depolarizing Neuromuscular Blocker",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["paralytic", "neuromuscular blocker", "cisatracurium", "nimbex", "ICU", "ARDS", "continuous infusion", "non-depolarizing", "Hofmann elimination", "IV"]
+    },
+    {
+      "id": "atracurium",
+      "name": "Atracurium (Tracrium)",
+      "class": "Non-depolarizing Neuromuscular Blocker",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["paralytic", "neuromuscular blocker", "atracurium", "tracrium", "non-depolarizing", "Hofmann elimination", "renal failure safe", "IV"]
+    },
+    {
+      "id": "pancuronium",
+      "name": "Pancuronium (Pavulon)",
+      "class": "Non-depolarizing Neuromuscular Blocker",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["paralytic", "neuromuscular blocker", "pancuronium", "pavulon", "long acting", "non-depolarizing", "mechanical ventilation", "IV"]
+    },
+    {
+      "id": "sugammadex",
+      "name": "Sugammadex (Bridion)",
+      "class": "Neuromuscular Reversal Agent (rocuronium/vecuronium)",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "neuromuscular reversal", "sugammadex", "bridion", "rocuronium reversal", "vecuronium reversal", "paralytic reversal", "IV"]
+    },
+    {
+      "id": "neostigmine",
+      "name": "Neostigmine",
+      "class": "Acetylcholinesterase Inhibitor / Neuromuscular Reversal Agent",
+      "routes": ["IV", "IM", "SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "neuromuscular reversal", "neostigmine", "paralytic reversal", "acetylcholinesterase inhibitor", "myasthenia gravis", "IV"]
+    }
+  ]
+}

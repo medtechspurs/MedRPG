@@ -1,0 +1,880 @@
+{
+  "version": "1.1",
+  "description": "Master registry of all valid player actions. LLM maps free text input to action IDs in this file. Actions are grouped by category matching the nine UI icon buttons.",
+
+  "categories": {
+    "history": {
+      "label": "History",
+      "icon": "icon_history.png",
+      "input_method": "free_text",
+      "llm_parses": true
+    },
+    "physical_exam": {
+      "label": "Physical Exam",
+      "icon": "icon_exam.png",
+      "input_method": "free_text",
+      "llm_parses": true
+    },
+    "labs": {
+      "label": "Labs",
+      "icon": "icon_labs.png",
+      "input_method": "category_browser_and_search",
+      "llm_parses": true,
+      "llm_parses_note": "LLM used only for semantic free text queries e.g. 'kidney labs'. Plain text search is string-matching only.",
+      "lab_ui_categories": [
+        "Basic Labs",
+        "Urine Tests",
+        "Blood Gas Tests",
+        "Blood Culture",
+        "Inflammatory Markers",
+        "Endocrine Labs",
+        "Rheumatological Labs",
+        "Allergy Labs",
+        "Genetic Tests",
+        "Other"
+      ]
+    },
+    "imaging": {
+      "label": "Imaging",
+      "icon": "icon_imaging.png",
+      "input_method": "list",
+      "llm_parses": false
+    },
+    "medications": {
+      "label": "Medications",
+      "icon": "icon_medications.png",
+      "input_method": "free_text_search",
+      "llm_parses": true
+    },
+    "surgeries": {
+      "label": "Surgeries",
+      "icon": "icon_surgeries.png",
+      "input_method": "contextual_list",
+      "llm_parses": false
+    },
+    "other_treatments": {
+      "label": "Other Treatments",
+      "icon": "icon_other.png",
+      "input_method": "contextual_list",
+      "llm_parses": false
+    },
+    "pathology": {
+      "label": "Pathology / Biopsy",
+      "icon": "icon_pathology.png",
+      "input_method": "contextual_list",
+      "llm_parses": false
+    },
+    "miscellaneous_tests": {
+      "label": "Miscellaneous Tests",
+      "icon": "icon_misc.png",
+      "input_method": "category_browser_and_search",
+      "llm_parses": false
+    },
+    "stability_assessment": {
+      "label": "Rapid Stability Assessment",
+      "icon": "icon_stability.png",
+      "input_method": "single_button",
+      "llm_parses": false,
+      "ap_cost": 2,
+      "note": "Quick assessment of mental status, perfusion, and respiratory effort. Single click — no sub-options. Bonus point available in perforated and septic shock states if clicked before expiry exam components."
+    },
+    "diagnosis": {
+      "label": "Diagnosis",
+      "icon": "icon_diagnosis.png",
+      "input_method": "free_text",
+      "llm_parses": true,
+      "llm_instruction": "Evaluate player diagnosis leniently. Match clinical intent, not exact wording. Accept synonyms, abbreviations, and common clinical shorthand.",
+      "ap_cost_correct": 0,
+      "ap_cost_incorrect": 2,
+      "note": "Available at any time. Correct diagnosis awards bonus points but does not end encounter — treatment still required. Multiple attempts allowed — bonus points still awarded after incorrect guesses."
+    }
+  },
+
+  "actions": [
+
+    // ─────────────────────────────────────────────
+    // HISTORY
+    // ─────────────────────────────────────────────
+
+    {
+      "id": "history_chief_complaint",
+      "category": "history",
+      "label": "Chief Complaint",
+      "ap_cost": 1,
+      "aliases": ["chief complaint", "what brings you in", "what's wrong", "main problem", "why are you here"]
+    },
+    {
+      "id": "history_onset",
+      "category": "history",
+      "label": "Onset",
+      "ap_cost": 1,
+      "aliases": ["when did it start", "onset", "how long", "when did this begin", "duration"]
+    },
+    {
+      "id": "history_location",
+      "category": "history",
+      "label": "Location",
+      "ap_cost": 1,
+      "aliases": ["where does it hurt", "location", "where is the pain", "point to where"]
+    },
+    {
+      "id": "history_character",
+      "category": "history",
+      "label": "Character of Symptom",
+      "ap_cost": 1,
+      "aliases": ["what does it feel like", "describe the pain", "sharp or dull", "character", "quality of pain", "burning", "aching", "stabbing"]
+    },
+    {
+      "id": "history_radiation",
+      "category": "history",
+      "label": "Radiation",
+      "ap_cost": 1,
+      "aliases": ["does it spread", "radiation", "does it go anywhere", "radiate", "travel"]
+    },
+    {
+      "id": "history_severity",
+      "category": "history",
+      "label": "Severity",
+      "ap_cost": 1,
+      "aliases": ["pain scale", "how bad", "severity", "rate the pain", "1 to 10", "how severe"]
+    },
+    {
+      "id": "history_timing",
+      "category": "history",
+      "label": "Timing",
+      "ap_cost": 1,
+      "aliases": ["constant or intermittent", "timing", "comes and goes", "always there", "frequency"]
+    },
+    {
+      "id": "history_aggravating",
+      "category": "history",
+      "label": "Aggravating Factors",
+      "ap_cost": 1,
+      "aliases": ["what makes it worse", "aggravating", "worse with", "triggers"]
+    },
+    {
+      "id": "history_relieving",
+      "category": "history",
+      "label": "Relieving Factors",
+      "ap_cost": 1,
+      "aliases": ["what makes it better", "relieving", "better with", "relief"]
+    },
+    {
+      "id": "history_associated_symptoms",
+      "category": "history",
+      "label": "Associated Symptoms",
+      "ap_cost": 1,
+      "aliases": ["other symptoms", "associated symptoms", "anything else", "fever", "nausea", "vomiting", "diarrhea", "chills", "sweating"]
+    },
+    {
+      "id": "history_past_medical",
+      "category": "history",
+      "label": "Past Medical History",
+      "ap_cost": 1,
+      "aliases": ["past medical history", "pmh", "medical history", "previous conditions", "past illnesses", "chronic conditions"]
+    },
+    {
+      "id": "history_surgical",
+      "category": "history",
+      "label": "Surgical History",
+      "ap_cost": 1,
+      "aliases": ["surgical history", "past surgeries", "previous operations", "ever had surgery"]
+    },
+    {
+      "id": "history_medications_current",
+      "category": "history",
+      "label": "Current Medications",
+      "ap_cost": 1,
+      "aliases": ["current medications", "what medications", "what drugs", "taking any medicine", "meds"]
+    },
+    {
+      "id": "history_allergies",
+      "category": "history",
+      "label": "Allergies",
+      "ap_cost": 1,
+      "aliases": ["allergies", "drug allergies", "allergic to", "any allergies"]
+    },
+    {
+      "id": "history_family",
+      "category": "history",
+      "label": "Family History",
+      "ap_cost": 1,
+      "aliases": ["family history", "fh", "runs in the family", "parents", "siblings health"]
+    },
+    {
+      "id": "history_social",
+      "category": "history",
+      "label": "Social History",
+      "ap_cost": 1,
+      "aliases": ["social history", "smoking", "alcohol", "drugs", "occupation", "where do you live", "work"]
+    },
+    {
+      "id": "history_review_of_systems",
+      "category": "history",
+      "label": "Review of Systems",
+      "ap_cost": 2,
+      "aliases": ["review of systems", "ros", "full review", "head to toe", "systems review"]
+    },
+
+    // ─────────────────────────────────────────────
+    // PHYSICAL EXAM
+    // ─────────────────────────────────────────────
+
+    {
+      "id": "exam_general",
+      "category": "physical_exam",
+      "label": "General Appearance",
+      "ap_cost": 1,
+      "aliases": ["general appearance", "how do they look", "general", "overall appearance", "distress"]
+    },
+    {
+      "id": "exam_vitals",
+      "category": "physical_exam",
+      "label": "Vital Signs",
+      "ap_cost": 1,
+      "aliases": ["vitals", "vital signs", "temperature", "blood pressure", "heart rate", "pulse", "respiratory rate", "oxygen saturation", "sats", "bp", "hr", "temp"]
+    },
+    {
+      "id": "exam_heent",
+      "category": "physical_exam",
+      "label": "Head / Eyes / Ears / Nose / Throat",
+      "ap_cost": 1,
+      "aliases": ["heent", "head", "eyes", "ears", "nose", "throat", "pupils", "sclera", "conjunctiva", "mucous membranes"]
+    },
+    {
+      "id": "exam_neck",
+      "category": "physical_exam",
+      "label": "Neck",
+      "ap_cost": 1,
+      "aliases": ["neck", "lymph nodes", "jvd", "thyroid", "stiffness", "meningismus", "nuchal rigidity"]
+    },
+    {
+      "id": "exam_cardiac_auscultation",
+      "category": "physical_exam",
+      "label": "Cardiac Auscultation",
+      "ap_cost": 1,
+      "aliases": ["listen to heart", "auscultate heart", "heart sounds", "cardiac auscultation", "murmur", "stethoscope heart", "s1 s2"]
+    },
+    {
+      "id": "exam_lung_auscultation",
+      "category": "physical_exam",
+      "label": "Lung Auscultation",
+      "ap_cost": 1,
+      "aliases": ["listen to lungs", "auscultate lungs", "breath sounds", "lung sounds", "crackles", "wheezing", "stethoscope lungs", "rales", "rhonchi"]
+    },
+    {
+      "id": "exam_respiratory",
+      "category": "physical_exam",
+      "label": "Respiratory Exam",
+      "ap_cost": 1,
+      "aliases": ["respiratory exam", "breathing", "work of breathing", "chest expansion", "percussion chest", "tactile fremitus"]
+    },
+    {
+      "id": "exam_abdomen_inspection",
+      "category": "physical_exam",
+      "label": "Abdominal Inspection",
+      "ap_cost": 1,
+      "aliases": ["look at abdomen", "inspect abdomen", "abdominal inspection", "belly inspection", "distension", "scars"]
+    },
+    {
+      "id": "exam_abdomen_auscultation",
+      "category": "physical_exam",
+      "label": "Abdominal Auscultation",
+      "ap_cost": 1,
+      "aliases": ["bowel sounds", "listen to abdomen", "abdominal auscultation", "gut sounds"]
+    },
+    {
+      "id": "exam_abdomen_palpation",
+      "category": "physical_exam",
+      "label": "Abdominal Palpation",
+      "ap_cost": 1,
+      "aliases": ["palpate abdomen", "press on belly", "abdominal palpation", "tenderness", "guarding", "rigidity", "rebound"]
+    },
+    {
+      "id": "exam_mcburney",
+      "category": "physical_exam",
+      "label": "McBurney's Point",
+      "ap_cost": 1,
+      "aliases": ["mcburney", "mcburney's point", "right lower quadrant point", "rlq tenderness", "appendix point"]
+    },
+    {
+      "id": "exam_rovsing",
+      "category": "physical_exam",
+      "label": "Rovsing's Sign",
+      "ap_cost": 1,
+      "aliases": ["rovsing", "rovsing's sign", "contralateral palpation", "llq pressure rlq pain"]
+    },
+    {
+      "id": "exam_psoas",
+      "category": "physical_exam",
+      "label": "Psoas Sign",
+      "ap_cost": 1,
+      "aliases": ["psoas sign", "hip extension test", "iliopsoas test"]
+    },
+    {
+      "id": "exam_obturator",
+      "category": "physical_exam",
+      "label": "Obturator Sign",
+      "ap_cost": 1,
+      "aliases": ["obturator sign", "obturator test", "hip rotation test"]
+    },
+    {
+      "id": "exam_musculoskeletal",
+      "category": "physical_exam",
+      "label": "Musculoskeletal",
+      "ap_cost": 1,
+      "aliases": ["musculoskeletal", "joints", "range of motion", "muscles", "bones", "msk", "swelling", "deformity"]
+    },
+    {
+      "id": "exam_neurological",
+      "category": "physical_exam",
+      "label": "Neurological",
+      "ap_cost": 1,
+      "aliases": ["neuro exam", "neurological", "reflexes", "strength", "sensation", "cranial nerves", "coordination", "mental status", "gcs"]
+    },
+    {
+      "id": "exam_skin",
+      "category": "physical_exam",
+      "label": "Skin",
+      "ap_cost": 1,
+      "aliases": ["skin", "rash", "jaundice", "pallor", "cyanosis", "diaphoresis", "turgor", "lesions"]
+    },
+    {
+      "id": "exam_extremities",
+      "category": "physical_exam",
+      "label": "Extremities",
+      "ap_cost": 1,
+      "aliases": ["extremities", "legs", "arms", "edema", "pulses", "capillary refill", "calf tenderness", "dvt"]
+    },
+
+    // ─────────────────────────────────────────────
+    // LABS
+    // ─────────────────────────────────────────────
+
+    {
+      "id": "lab_cbc",
+      "category": "labs",
+      "lab_ui_category": "Basic Labs",
+      "label": "CBC (Complete Blood Count)",
+      "ap_cost": 2,
+      "semantic_tags": ["cbc", "complete blood count", "blood count", "white cells", "white blood cells", "wbc", "hemoglobin", "hgb", "platelets", "infection", "anemia", "blood"],
+      "reveals": ["wbc", "hgb", "hct", "plt", "differential"]
+    },
+    {
+      "id": "lab_bmp",
+      "category": "labs",
+      "lab_ui_category": "Basic Labs",
+      "label": "BMP (Basic Metabolic Panel)",
+      "ap_cost": 2,
+      "semantic_tags": ["bmp", "basic metabolic panel", "metabolic", "kidney", "renal", "electrolytes", "sodium", "potassium", "creatinine", "glucose", "bun"],
+      "reveals": ["sodium", "potassium", "chloride", "bicarb", "bun", "creatinine", "glucose", "calcium"]
+    },
+    {
+      "id": "lab_cmp",
+      "category": "labs",
+      "lab_ui_category": "Basic Labs",
+      "label": "CMP (Comprehensive Metabolic Panel)",
+      "ap_cost": 3,
+      "semantic_tags": ["cmp", "comprehensive metabolic panel", "kidney", "renal", "liver", "hepatic", "electrolytes", "metabolic", "full panel"],
+      "reveals": ["sodium", "potassium", "chloride", "bicarb", "bun", "creatinine", "glucose", "calcium", "albumin", "total_protein", "alt", "ast", "alp", "bilirubin"]
+    },
+    {
+      "id": "lab_lft",
+      "category": "labs",
+      "lab_ui_category": "Basic Labs",
+      "label": "LFTs (Liver Function Tests)",
+      "ap_cost": 1,
+      "semantic_tags": ["lft", "liver function", "liver labs", "liver panel", "hepatic", "alt", "ast", "bilirubin", "albumin", "jaundice", "liver"],
+      "reveals": ["alt", "ast", "alp", "bilirubin", "albumin", "total_protein", "ggt"]
+    },
+    {
+      "id": "lab_lipase",
+      "category": "labs",
+      "lab_ui_category": "Basic Labs",
+      "label": "Lipase",
+      "ap_cost": 1,
+      "semantic_tags": ["lipase", "pancreas", "pancreatic", "pancreatitis", "abdominal labs"],
+      "reveals": ["lipase"]
+    },
+    {
+      "id": "lab_coags",
+      "category": "labs",
+      "lab_ui_category": "Basic Labs",
+      "label": "Coagulation Panel (PT/INR/PTT)",
+      "ap_cost": 2,
+      "semantic_tags": ["coags", "coagulation", "pt", "inr", "ptt", "clotting", "bleeding", "anticoagulation", "warfarin"],
+      "reveals": ["pt", "inr", "ptt"]
+    },
+    {
+      "id": "lab_troponin",
+      "category": "labs",
+      "lab_ui_category": "Basic Labs",
+      "label": "Troponin",
+      "ap_cost": 2,
+      "semantic_tags": ["troponin", "cardiac", "heart attack", "mi", "myocardial infarction", "chest pain labs", "heart labs"],
+      "reveals": ["troponin_i", "troponin_t"]
+    },
+    {
+      "id": "lab_bnp",
+      "category": "labs",
+      "lab_ui_category": "Basic Labs",
+      "label": "BNP / NT-proBNP",
+      "ap_cost": 2,
+      "semantic_tags": ["bnp", "nt-probnp", "heart failure", "cardiac", "fluid overload", "heart labs"],
+      "reveals": ["bnp"]
+    },
+    {
+      "id": "lab_dimer",
+      "category": "labs",
+      "lab_ui_category": "Basic Labs",
+      "label": "D-Dimer",
+      "ap_cost": 2,
+      "semantic_tags": ["d-dimer", "ddimer", "clot", "dvt", "pe", "pulmonary embolism", "deep vein thrombosis", "clotting"],
+      "reveals": ["d_dimer"]
+    },
+    {
+      "id": "lab_lactate",
+      "category": "labs",
+      "lab_ui_category": "Blood Gas Tests",
+      "label": "Lactate",
+      "ap_cost": 2,
+      "semantic_tags": ["lactate", "lactic acid", "sepsis", "shock", "tissue perfusion", "oxygen", "hypoperfusion"],
+      "reveals": ["lactate"]
+    },
+    {
+      "id": "lab_vbg",
+      "category": "labs",
+      "lab_ui_category": "Blood Gas Tests",
+      "label": "VBG (Venous Blood Gas)",
+      "ap_cost": 4,
+      "semantic_tags": ["vbg", "venous blood gas", "acid base", "ph", "bicarbonate", "co2", "blood gas", "acidosis", "alkalosis"],
+      "reveals": ["ph", "pco2", "hco3", "lactate"],
+      "includes_lactate": true
+    },
+    {
+      "id": "lab_abg",
+      "category": "labs",
+      "lab_ui_category": "Blood Gas Tests",
+      "label": "ABG (Arterial Blood Gas)",
+      "ap_cost": 6,
+      "semantic_tags": ["abg", "arterial blood gas", "acid base", "ph", "oxygen", "pco2", "po2", "bicarbonate", "blood gas", "respiratory", "acidosis", "alkalosis", "ventilation"],
+      "reveals": ["ph", "pco2", "po2", "hco3", "lactate"],
+      "includes_lactate": true
+    },
+    {
+      "id": "lab_cultures_blood",
+      "category": "labs",
+      "lab_ui_category": "Blood Culture",
+      "label": "Blood Cultures",
+      "ap_cost": 0,
+      "semantic_tags": ["blood culture", "blood cultures", "bacteremia", "sepsis", "infection", "bacteria", "blood"],
+      "reveals": ["blood_culture"]
+    },
+    {
+      "id": "lab_cultures_urine",
+      "category": "labs",
+      "lab_ui_category": "Urine Tests",
+      "label": "Urine Culture",
+      "ap_cost": 2,
+      "semantic_tags": ["urine culture", "uti", "urinary tract infection", "urine infection", "bacteria urine"],
+      "reveals": ["urine_culture"]
+    },
+    {
+      "id": "lab_urinalysis",
+      "category": "labs",
+      "lab_ui_category": "Urine Tests",
+      "label": "Urinalysis (UA)",
+      "ap_cost": 2,
+      "semantic_tags": ["urinalysis", "ua", "urine", "urine test", "urine labs", "uti", "kidney", "urinary"],
+      "reveals": ["ua_wbc", "ua_rbc", "ua_bacteria", "ua_nitrites", "ua_leukocyte_esterase", "ua_protein", "ua_glucose", "ua_ketones"]
+    },
+    {
+      "id": "lab_crp",
+      "category": "labs",
+      "lab_ui_category": "Inflammatory Markers",
+      "label": "CRP (C-Reactive Protein)",
+      "ap_cost": 2,
+      "semantic_tags": ["crp", "c-reactive protein", "inflammation", "inflammation labs", "inflammatory markers", "infection", "sepsis"],
+      "reveals": ["crp"]
+    },
+    {
+      "id": "lab_esr",
+      "category": "labs",
+      "lab_ui_category": "Inflammatory Markers",
+      "label": "ESR (Erythrocyte Sedimentation Rate)",
+      "ap_cost": 2,
+      "semantic_tags": ["esr", "sed rate", "sedimentation rate", "inflammation", "inflammation labs", "inflammatory markers", "autoimmune"],
+      "reveals": ["esr"]
+    },
+    {
+      "id": "lab_procalcitonin",
+      "category": "labs",
+      "lab_ui_category": "Inflammatory Markers",
+      "label": "Procalcitonin",
+      "ap_cost": 2,
+      "semantic_tags": ["procalcitonin", "pct", "sepsis", "bacterial infection", "inflammation labs", "inflammatory markers", "infection"],
+      "reveals": ["procalcitonin"]
+    },
+    {
+      "id": "lab_thyroid",
+      "category": "labs",
+      "lab_ui_category": "Endocrine Labs",
+      "label": "Thyroid Panel (TSH / Free T4)",
+      "ap_cost": 2,
+      "semantic_tags": ["thyroid", "tsh", "t4", "free t4", "thyroid labs", "endocrine", "hypothyroid", "hyperthyroid"],
+      "reveals": ["tsh", "free_t4"]
+    },
+    {
+      "id": "lab_hba1c",
+      "category": "labs",
+      "lab_ui_category": "Endocrine Labs",
+      "label": "HbA1c",
+      "ap_cost": 2,
+      "semantic_tags": ["hba1c", "hemoglobin a1c", "a1c", "diabetes", "glucose control", "endocrine", "diabetic labs"],
+      "reveals": ["hba1c"]
+    },
+    {
+      "id": "lab_pregnancy",
+      "category": "labs",
+      "lab_ui_category": "Other",
+      "label": "Pregnancy Test (urine hCG)",
+      "ap_cost": 1,
+      "semantic_tags": ["pregnancy test", "hcg", "pregnant", "pregnancy", "urine hcg", "beta hcg"],
+      "reveals": ["pregnancy_test"]
+    },
+    {
+      "id": "lab_mono",
+      "category": "labs",
+      "lab_ui_category": "Other",
+      "label": "Monospot / EBV",
+      "ap_cost": 2,
+      "semantic_tags": ["monospot", "mono", "ebv", "epstein barr", "mononucleosis", "viral"],
+      "reveals": ["monospot"]
+    },
+    {
+      "id": "lab_strep",
+      "category": "labs",
+      "lab_ui_category": "Other",
+      "label": "Rapid Strep Test",
+      "ap_cost": 1,
+      "semantic_tags": ["strep", "strep test", "strep throat", "rapid strep", "throat culture", "group a strep"],
+      "reveals": ["strep_antigen"]
+    },
+    {
+      "id": "lab_flu",
+      "category": "labs",
+      "lab_ui_category": "Other",
+      "label": "Rapid Flu Test",
+      "ap_cost": 1,
+      "semantic_tags": ["flu", "influenza", "rapid flu", "flu test", "viral"],
+      "reveals": ["flu_antigen"]
+    },
+
+    // ─────────────────────────────────────────────
+    // IMAGING
+    // UI: category select (CT/MRI/X-Ray/Ultrasound/Echo) → free text body part → LLM routes
+    // Confirmation popup required for all imaging
+    // ─────────────────────────────────────────────
+
+    {
+      "id": "imaging_ct",
+      "category": "imaging",
+      "label": "CT Scan",
+      "ap_cost_default": 8,
+      "input": "free_text_body_part",
+      "llm_routes_body_part": true,
+      "semantic_tags": ["ct", "cat scan", "computed tomography"]
+    },
+    {
+      "id": "imaging_mri",
+      "category": "imaging",
+      "label": "MRI",
+      "ap_cost_default": 12,
+      "input": "free_text_body_part",
+      "llm_routes_body_part": true,
+      "note": "All MRI orders route to fast noncontrast MRI regardless of contrast requested.",
+      "semantic_tags": ["mri", "magnetic resonance", "mri with contrast", "mri without contrast"]
+    },
+    {
+      "id": "imaging_xray",
+      "category": "imaging",
+      "label": "X-Ray",
+      "ap_cost_default": 3,
+      "views": "2 view standard",
+      "input": "free_text_body_part",
+      "llm_routes_body_part": true,
+      "semantic_tags": ["x-ray", "xray", "plain film", "radiograph"]
+    },
+    {
+      "id": "imaging_ultrasound",
+      "category": "imaging",
+      "label": "Ultrasound",
+      "ap_cost_default": 8,
+      "input": "free_text_body_part",
+      "llm_routes_body_part": true,
+      "semantic_tags": ["ultrasound", "us", "sonogram", "echo abdomen", "sono"]
+    },
+    {
+      "id": "imaging_echocardiogram",
+      "category": "imaging",
+      "label": "Echocardiogram",
+      "ap_cost_default": 8,
+      "input": "direct_select",
+      "semantic_tags": ["echo", "echocardiogram", "cardiac ultrasound", "heart ultrasound"]
+    },
+
+    // ─────────────────────────────────────────────
+    // MISCELLANEOUS TESTS
+    // ─────────────────────────────────────────────
+
+    {
+      "id": "misc_ekg",
+      "category": "miscellaneous_tests",
+      "label": "EKG (12-lead)",
+      "ap_cost": 5,
+      "semantic_tags": ["ekg", "ecg", "electrocardiogram", "heart tracing", "cardiac rhythm", "12 lead"]
+    },
+    {
+      "id": "misc_eeg",
+      "category": "miscellaneous_tests",
+      "label": "EEG (Electroencephalogram)",
+      "ap_cost": 8,
+      "semantic_tags": ["eeg", "electroencephalogram", "brain waves", "seizure test", "brain activity"]
+    },
+
+    // ─────────────────────────────────────────────
+    // SURGERIES
+    // (populated contextually per condition — these are global possibilities)
+    // ─────────────────────────────────────────────
+
+    {
+      "id": "surgery_appendectomy",
+      "category": "surgeries",
+      "label": "Appendectomy",
+      "ap_cost": 2,
+      "condition_specific": ["appendicitis"]
+    },
+    {
+      "id": "surgery_cholecystectomy",
+      "category": "surgeries",
+      "label": "Cholecystectomy",
+      "ap_cost": 2,
+      "condition_specific": ["cholecystitis"]
+    },
+    {
+      "id": "surgery_exploratory_laparotomy",
+      "category": "surgeries",
+      "label": "Exploratory Laparotomy",
+      "ap_cost": 3,
+      "condition_specific": []
+    },
+    {
+      "id": "surgery_incision_drainage",
+      "category": "surgeries",
+      "label": "Incision & Drainage",
+      "ap_cost": 1,
+      "condition_specific": ["abscess"]
+    },
+    {
+      "id": "surgery_reduction_fracture",
+      "category": "surgeries",
+      "label": "Fracture Reduction",
+      "ap_cost": 2,
+      "condition_specific": ["fracture"]
+    },
+    {
+      "id": "surgery_chest_tube",
+      "category": "surgeries",
+      "label": "Chest Tube Insertion",
+      "ap_cost": 2,
+      "condition_specific": ["pneumothorax", "hemothorax", "pleural_effusion"]
+    },
+    {
+      "id": "surgery_intubation",
+      "category": "surgeries",
+      "label": "Intubation / Airway Management",
+      "ap_cost": 2,
+      "condition_specific": []
+    },
+
+    // ─────────────────────────────────────────────
+    // OTHER TREATMENTS
+    // ─────────────────────────────────────────────
+
+    {
+      "id": "treatment_iv_access",
+      "category": "other_treatments",
+      "label": "Establish IV Access",
+      "ap_cost": 1,
+      "reveals": []
+    },
+    {
+      "id": "treatment_iv_fluids_ns",
+      "category": "other_treatments",
+      "label": "IV Fluids — Normal Saline",
+      "ap_cost": 1,
+      "reveals": []
+    },
+    {
+      "id": "treatment_iv_fluids_lr",
+      "category": "other_treatments",
+      "label": "IV Fluids — Lactated Ringer's",
+      "ap_cost": 1,
+      "reveals": []
+    },
+    {
+      "id": "treatment_oxygen",
+      "category": "other_treatments",
+      "label": "Supplemental Oxygen",
+      "ap_cost": 1,
+      "reveals": []
+    },
+    {
+      "id": "treatment_npo",
+      "category": "other_treatments",
+      "label": "NPO (Nothing by Mouth)",
+      "ap_cost": 1,
+      "reveals": []
+    },
+    {
+      "id": "treatment_foley",
+      "category": "other_treatments",
+      "label": "Foley Catheter",
+      "ap_cost": 1,
+      "reveals": []
+    },
+    {
+      "id": "treatment_ng_tube",
+      "category": "other_treatments",
+      "label": "Nasogastric Tube",
+      "ap_cost": 1,
+      "reveals": []
+    },
+    {
+      "id": "treatment_wound_care",
+      "category": "other_treatments",
+      "label": "Wound Care / Dressing",
+      "ap_cost": 1,
+      "reveals": []
+    },
+    {
+      "id": "treatment_splint",
+      "category": "other_treatments",
+      "label": "Splinting",
+      "ap_cost": 1,
+      "reveals": []
+    },
+    {
+      "id": "treatment_ice_elevation",
+      "category": "other_treatments",
+      "label": "Ice & Elevation",
+      "ap_cost": 1,
+      "reveals": []
+    },
+    {
+      "id": "treatment_cardiac_monitor",
+      "category": "other_treatments",
+      "label": "Cardiac Monitor",
+      "ap_cost": 1,
+      "reveals": []
+    },
+    {
+      "id": "treatment_transfer",
+      "category": "other_treatments",
+      "label": "Transfer to Central Hospital",
+      "ap_cost": 1,
+      "reveals": []
+    },
+
+    // ─────────────────────────────────────────────
+    // PATHOLOGY / BIOPSY
+    // (populated contextually per condition)
+    // ─────────────────────────────────────────────
+
+    {
+      "id": "pathology_appendix",
+      "category": "pathology",
+      "label": "Appendix Pathology",
+      "ap_cost": 2,
+      "condition_specific": ["appendicitis"],
+      "note": "Sent automatically after appendectomy. Results confirm diagnosis post-operatively."
+    },
+    {
+      "id": "pathology_lymph_node_biopsy",
+      "category": "pathology",
+      "label": "Lymph Node Biopsy",
+      "ap_cost": 4,
+      "condition_specific": ["lymphoma", "metastatic_cancer"]
+    },
+    {
+      "id": "pathology_liver_biopsy",
+      "category": "pathology",
+      "label": "Liver Biopsy",
+      "ap_cost": 5,
+      "condition_specific": ["hepatitis", "cirrhosis", "liver_mass"]
+    },
+    {
+      "id": "pathology_skin_biopsy",
+      "category": "pathology",
+      "label": "Skin Biopsy",
+      "ap_cost": 3,
+      "condition_specific": ["melanoma", "skin_lesion", "dermatitis"]
+    },
+
+    // ─────────────────────────────────────────────
+    // CONSULTS
+    // (populated contextually per condition)
+    // ─────────────────────────────────────────────
+
+    {
+      "id": "consult_general_surgery",
+      "category": "consults",
+      "label": "General Surgery",
+      "ap_cost": 2,
+      "condition_specific": ["appendicitis", "cholecystitis", "bowel_obstruction", "abscess"]
+    },
+    {
+      "id": "consult_cardiology",
+      "category": "consults",
+      "label": "Cardiology",
+      "ap_cost": 2,
+      "condition_specific": ["myocardial_infarction", "heart_failure", "arrhythmia", "endocarditis"]
+    },
+    {
+      "id": "consult_pulmonology",
+      "category": "consults",
+      "label": "Pulmonology",
+      "ap_cost": 2,
+      "condition_specific": ["pneumonia", "pe", "copd", "asthma"]
+    },
+    {
+      "id": "consult_nephrology",
+      "category": "consults",
+      "label": "Nephrology",
+      "ap_cost": 2,
+      "condition_specific": ["aki", "ckd", "glomerulonephritis"]
+    },
+    {
+      "id": "consult_neurology",
+      "category": "consults",
+      "label": "Neurology",
+      "ap_cost": 2,
+      "condition_specific": ["stroke", "meningitis", "seizure", "ms"]
+    },
+    {
+      "id": "consult_infectious_disease",
+      "category": "consults",
+      "label": "Infectious Disease",
+      "ap_cost": 2,
+      "condition_specific": ["sepsis", "endocarditis", "osteomyelitis", "hiv"]
+    },
+    {
+      "id": "consult_icu",
+      "category": "consults",
+      "label": "ICU / Critical Care",
+      "ap_cost": 2,
+      "condition_specific": ["septic_shock", "respiratory_failure", "multi_organ_failure"]
+    }
+
+  ]
+}

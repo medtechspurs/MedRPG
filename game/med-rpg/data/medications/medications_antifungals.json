@@ -1,0 +1,135 @@
+{
+  "category": "Antifungals",
+  "category_id": "antifungals",
+  "description": "Antifungal medications for systemic and topical fungal infections.",
+  "medications": [
+    {
+      "id": "fluconazole",
+      "name": "Fluconazole (Diflucan)",
+      "class": "Triazole",
+      "routes": ["PO", "IV"],
+      "allergy_class": "azole_antifungals",
+      "semantic_tags": ["antifungal", "fluconazole", "diflucan", "candida", "yeast", "thrush", "vaginal", "triazole"]
+    },
+    {
+      "id": "itraconazole",
+      "name": "Itraconazole (Sporanox)",
+      "class": "Triazole",
+      "routes": ["PO"],
+      "allergy_class": "azole_antifungals",
+      "semantic_tags": ["antifungal", "itraconazole", "sporanox", "aspergillus", "histoplasma", "blastomyces", "triazole"]
+    },
+    {
+      "id": "voriconazole",
+      "name": "Voriconazole (Vfend)",
+      "class": "Triazole",
+      "routes": ["PO", "IV"],
+      "allergy_class": "azole_antifungals",
+      "semantic_tags": ["antifungal", "voriconazole", "vfend", "aspergillus", "invasive fungal", "triazole", "IV"]
+    },
+    {
+      "id": "posaconazole",
+      "name": "Posaconazole (Noxafil)",
+      "class": "Triazole",
+      "routes": ["PO", "IV"],
+      "allergy_class": "azole_antifungals",
+      "semantic_tags": ["antifungal", "posaconazole", "noxafil", "aspergillus", "mucor", "prophylaxis", "triazole"]
+    },
+    {
+      "id": "isavuconazole",
+      "name": "Isavuconazole (Cresemba)",
+      "class": "Triazole",
+      "routes": ["PO", "IV"],
+      "allergy_class": "azole_antifungals",
+      "semantic_tags": ["antifungal", "isavuconazole", "cresemba", "aspergillus", "mucor", "triazole", "IV"]
+    },
+    {
+      "id": "micafungin",
+      "name": "Micafungin (Mycamine)",
+      "class": "Echinocandin",
+      "routes": ["IV"],
+      "allergy_class": "echinocandins",
+      "semantic_tags": ["antifungal", "micafungin", "mycamine", "candida", "echinocandin", "IV", "invasive candidiasis"]
+    },
+    {
+      "id": "caspofungin",
+      "name": "Caspofungin (Cancidas)",
+      "class": "Echinocandin",
+      "routes": ["IV"],
+      "allergy_class": "echinocandins",
+      "semantic_tags": ["antifungal", "caspofungin", "cancidas", "candida", "aspergillus", "echinocandin", "IV"]
+    },
+    {
+      "id": "anidulafungin",
+      "name": "Anidulafungin (Eraxis)",
+      "class": "Echinocandin",
+      "routes": ["IV"],
+      "allergy_class": "echinocandins",
+      "semantic_tags": ["antifungal", "anidulafungin", "eraxis", "candida", "echinocandin", "IV"]
+    },
+    {
+      "id": "amphotericin_b",
+      "name": "Amphotericin B (Fungizone)",
+      "class": "Polyene",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["antifungal", "amphotericin", "fungizone", "broad spectrum", "fungicidal", "IV", "cryptococcus", "aspergillus", "severe fungal"]
+    },
+    {
+      "id": "amphotericin_b_liposomal",
+      "name": "Liposomal Amphotericin B (AmBisome)",
+      "class": "Polyene (liposomal formulation)",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["antifungal", "amphotericin", "ambisome", "liposomal", "broad spectrum", "IV", "less nephrotoxic", "cryptococcus"]
+    },
+    {
+      "id": "nystatin",
+      "name": "Nystatin",
+      "class": "Polyene",
+      "routes": ["PO", "topical"],
+      "allergy_class": null,
+      "semantic_tags": ["antifungal", "nystatin", "candida", "thrush", "oral", "swish and swallow", "topical", "diaper rash"]
+    },
+    {
+      "id": "clotrimazole",
+      "name": "Clotrimazole (Lotrimin, Mycelex)",
+      "class": "Imidazole (topical)",
+      "routes": ["topical", "vaginal", "troche"],
+      "allergy_class": "azole_antifungals",
+      "semantic_tags": ["antifungal", "clotrimazole", "lotrimin", "mycelex", "topical", "tinea", "athletes foot", "ringworm", "thrush", "vaginal"]
+    },
+    {
+      "id": "miconazole",
+      "name": "Miconazole (Monistat)",
+      "class": "Imidazole (topical)",
+      "routes": ["topical", "vaginal"],
+      "allergy_class": "azole_antifungals",
+      "semantic_tags": ["antifungal", "miconazole", "monistat", "topical", "vaginal", "yeast infection", "tinea"]
+    },
+    {
+      "id": "terbinafine",
+      "name": "Terbinafine (Lamisil)",
+      "class": "Allylamine",
+      "routes": ["PO", "topical"],
+      "allergy_class": null,
+      "semantic_tags": ["antifungal", "terbinafine", "lamisil", "onychomycosis", "nail fungus", "tinea", "athletes foot", "ringworm"]
+    },
+    {
+      "id": "flucytosine",
+      "name": "Flucytosine (Ancobon)",
+      "class": "Fluorinated Pyrimidine",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antifungal", "flucytosine", "ancobon", "cryptococcus", "candida", "combination therapy"]
+    },
+    {
+      "id": "ketoconazole",
+      "name": "Ketoconazole",
+      "class": "Imidazole",
+      "routes": ["topical", "shampoo"],
+      "allergy_class": "azole_antifungals",
+      "semantic_tags": ["antifungal", "ketoconazole", "topical", "shampoo", "dandruff", "seborrheic dermatitis", "tinea versicolor"]
+    }
+  ]
+}

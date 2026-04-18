@@ -1,0 +1,423 @@
+{
+  "category": "Antibiotics",
+  "category_id": "antibiotics",
+  "description": "Antibacterial agents including IV, oral, topical, and ophthalmic preparations.",
+  "medications": [
+    {
+      "id": "amoxicillin",
+      "name": "Amoxicillin",
+      "class": "Penicillin",
+      "routes": ["PO"],
+      "allergy_class": "penicillins",
+      "semantic_tags": ["antibiotic", "penicillin", "amoxicillin", "bacterial", "infection", "strep", "ear infection"]
+    },
+    {
+      "id": "amoxicillin_clavulanate",
+      "name": "Amoxicillin / Clavulanate (Augmentin)",
+      "class": "Penicillin + Beta-lactamase Inhibitor",
+      "routes": ["PO"],
+      "allergy_class": "penicillins",
+      "semantic_tags": ["antibiotic", "penicillin", "augmentin", "amoxicillin", "clavulanate", "broad spectrum", "infection"]
+    },
+    {
+      "id": "ampicillin",
+      "name": "Ampicillin",
+      "class": "Penicillin",
+      "routes": ["IV", "IM", "PO"],
+      "allergy_class": "penicillins",
+      "semantic_tags": ["antibiotic", "penicillin", "ampicillin", "IV", "bacterial", "infection"]
+    },
+    {
+      "id": "ampicillin_sulbactam",
+      "name": "Ampicillin / Sulbactam (Unasyn)",
+      "class": "Penicillin + Beta-lactamase Inhibitor",
+      "routes": ["IV", "IM"],
+      "allergy_class": "penicillins",
+      "semantic_tags": ["antibiotic", "penicillin", "unasyn", "ampicillin", "sulbactam", "broad spectrum", "IV"]
+    },
+    {
+      "id": "piperacillin_tazobactam",
+      "name": "Piperacillin / Tazobactam (Zosyn)",
+      "class": "Extended-spectrum Penicillin + Beta-lactamase Inhibitor",
+      "routes": ["IV"],
+      "allergy_class": "penicillins",
+      "semantic_tags": ["antibiotic", "penicillin", "zosyn", "pip-tazo", "piperacillin", "tazobactam", "broad spectrum", "IV", "sepsis"]
+    },
+    {
+      "id": "nafcillin",
+      "name": "Nafcillin",
+      "class": "Antistaphylococcal Penicillin",
+      "routes": ["IV"],
+      "allergy_class": "penicillins",
+      "semantic_tags": ["antibiotic", "penicillin", "nafcillin", "staph", "MSSA", "IV"]
+    },
+    {
+      "id": "oxacillin",
+      "name": "Oxacillin",
+      "class": "Antistaphylococcal Penicillin",
+      "routes": ["IV"],
+      "allergy_class": "penicillins",
+      "semantic_tags": ["antibiotic", "penicillin", "oxacillin", "staph", "MSSA", "IV"]
+    },
+    {
+      "id": "cephalexin",
+      "name": "Cephalexin (Keflex)",
+      "class": "First-generation Cephalosporin",
+      "routes": ["PO"],
+      "allergy_class": "cephalosporins",
+      "semantic_tags": ["antibiotic", "cephalosporin", "cephalexin", "keflex", "skin", "infection", "cellulitis"]
+    },
+    {
+      "id": "cefazolin",
+      "name": "Cefazolin (Ancef)",
+      "class": "First-generation Cephalosporin",
+      "routes": ["IV", "IM"],
+      "allergy_class": "cephalosporins",
+      "semantic_tags": ["antibiotic", "cephalosporin", "cefazolin", "ancef", "IV", "surgical prophylaxis", "skin"]
+    },
+    {
+      "id": "cefuroxime",
+      "name": "Cefuroxime (Ceftin, Zinacef)",
+      "class": "Second-generation Cephalosporin",
+      "routes": ["PO", "IV", "IM"],
+      "allergy_class": "cephalosporins",
+      "semantic_tags": ["antibiotic", "cephalosporin", "cefuroxime", "ceftin", "respiratory", "infection"]
+    },
+    {
+      "id": "ceftriaxone",
+      "name": "Ceftriaxone (Rocephin)",
+      "class": "Third-generation Cephalosporin",
+      "routes": ["IV", "IM"],
+      "allergy_class": "cephalosporins",
+      "semantic_tags": ["antibiotic", "cephalosporin", "ceftriaxone", "rocephin", "broad spectrum", "IV", "meningitis", "pneumonia", "sepsis"]
+    },
+    {
+      "id": "cefdinir",
+      "name": "Cefdinir (Omnicef)",
+      "class": "Third-generation Cephalosporin",
+      "routes": ["PO"],
+      "allergy_class": "cephalosporins",
+      "semantic_tags": ["antibiotic", "cephalosporin", "cefdinir", "omnicef", "respiratory", "ear infection", "strep"]
+    },
+    {
+      "id": "cefepime",
+      "name": "Cefepime (Maxipime)",
+      "class": "Fourth-generation Cephalosporin",
+      "routes": ["IV", "IM"],
+      "allergy_class": "cephalosporins",
+      "semantic_tags": ["antibiotic", "cephalosporin", "cefepime", "maxipime", "pseudomonas", "broad spectrum", "IV", "febrile neutropenia"]
+    },
+    {
+      "id": "ceftazidime",
+      "name": "Ceftazidime",
+      "class": "Third-generation Cephalosporin (anti-pseudomonal)",
+      "routes": ["IV", "IM"],
+      "allergy_class": "cephalosporins",
+      "semantic_tags": ["antibiotic", "cephalosporin", "ceftazidime", "pseudomonas", "IV", "broad spectrum"]
+    },
+    {
+      "id": "ceftaroline",
+      "name": "Ceftaroline (Teflaro)",
+      "class": "Fifth-generation Cephalosporin",
+      "routes": ["IV"],
+      "allergy_class": "cephalosporins",
+      "semantic_tags": ["antibiotic", "cephalosporin", "ceftaroline", "teflaro", "MRSA", "IV"]
+    },
+    {
+      "id": "meropenem",
+      "name": "Meropenem",
+      "class": "Carbapenem",
+      "routes": ["IV"],
+      "allergy_class": "carbapenems",
+      "semantic_tags": ["antibiotic", "carbapenem", "meropenem", "broad spectrum", "IV", "sepsis", "resistant organisms"]
+    },
+    {
+      "id": "imipenem_cilastatin",
+      "name": "Imipenem / Cilastatin (Primaxin)",
+      "class": "Carbapenem",
+      "routes": ["IV"],
+      "allergy_class": "carbapenems",
+      "semantic_tags": ["antibiotic", "carbapenem", "imipenem", "primaxin", "broad spectrum", "IV", "sepsis"]
+    },
+    {
+      "id": "ertapenem",
+      "name": "Ertapenem (Invanz)",
+      "class": "Carbapenem",
+      "routes": ["IV", "IM"],
+      "allergy_class": "carbapenems",
+      "semantic_tags": ["antibiotic", "carbapenem", "ertapenem", "invanz", "broad spectrum", "IV", "once daily"]
+    },
+    {
+      "id": "aztreonam",
+      "name": "Aztreonam",
+      "class": "Monobactam",
+      "routes": ["IV", "IM"],
+      "allergy_class": "monobactams",
+      "semantic_tags": ["antibiotic", "monobactam", "aztreonam", "gram negative", "penicillin allergy", "IV"]
+    },
+    {
+      "id": "vancomycin",
+      "name": "Vancomycin",
+      "class": "Glycopeptide",
+      "routes": ["IV", "PO"],
+      "allergy_class": "glycopeptides",
+      "semantic_tags": ["antibiotic", "vancomycin", "MRSA", "glycopeptide", "IV", "gram positive", "sepsis", "c diff"]
+    },
+    {
+      "id": "daptomycin",
+      "name": "Daptomycin (Cubicin)",
+      "class": "Lipopeptide",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["antibiotic", "daptomycin", "cubicin", "MRSA", "gram positive", "IV", "bacteremia"]
+    },
+    {
+      "id": "linezolid",
+      "name": "Linezolid (Zyvox)",
+      "class": "Oxazolidinone",
+      "routes": ["IV", "PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antibiotic", "linezolid", "zyvox", "MRSA", "VRE", "gram positive", "IV"]
+    },
+    {
+      "id": "azithromycin",
+      "name": "Azithromycin (Zithromax, Z-Pack)",
+      "class": "Macrolide",
+      "routes": ["PO", "IV"],
+      "allergy_class": "macrolides",
+      "semantic_tags": ["antibiotic", "macrolide", "azithromycin", "zithromax", "z-pack", "atypical", "pneumonia", "respiratory"]
+    },
+    {
+      "id": "clarithromycin",
+      "name": "Clarithromycin (Biaxin)",
+      "class": "Macrolide",
+      "routes": ["PO"],
+      "allergy_class": "macrolides",
+      "semantic_tags": ["antibiotic", "macrolide", "clarithromycin", "biaxin", "respiratory", "H pylori"]
+    },
+    {
+      "id": "erythromycin",
+      "name": "Erythromycin",
+      "class": "Macrolide",
+      "routes": ["PO", "IV", "topical", "ophthalmic"],
+      "allergy_class": "macrolides",
+      "semantic_tags": ["antibiotic", "macrolide", "erythromycin", "ophthalmic", "eye", "ointment", "topical", "GI motility"]
+    },
+    {
+      "id": "doxycycline",
+      "name": "Doxycycline",
+      "class": "Tetracycline",
+      "routes": ["PO", "IV"],
+      "allergy_class": "tetracyclines",
+      "semantic_tags": ["antibiotic", "tetracycline", "doxycycline", "atypical", "STI", "lyme", "MRSA", "acne"]
+    },
+    {
+      "id": "minocycline",
+      "name": "Minocycline",
+      "class": "Tetracycline",
+      "routes": ["PO", "IV"],
+      "allergy_class": "tetracyclines",
+      "semantic_tags": ["antibiotic", "tetracycline", "minocycline", "acne", "MRSA", "skin"]
+    },
+    {
+      "id": "ciprofloxacin",
+      "name": "Ciprofloxacin (Cipro)",
+      "class": "Fluoroquinolone",
+      "routes": ["PO", "IV", "ophthalmic", "otic"],
+      "allergy_class": "fluoroquinolones",
+      "semantic_tags": ["antibiotic", "fluoroquinolone", "ciprofloxacin", "cipro", "UTI", "gram negative", "traveler's diarrhea", "ophthalmic"]
+    },
+    {
+      "id": "levofloxacin",
+      "name": "Levofloxacin (Levaquin)",
+      "class": "Fluoroquinolone",
+      "routes": ["PO", "IV"],
+      "allergy_class": "fluoroquinolones",
+      "semantic_tags": ["antibiotic", "fluoroquinolone", "levofloxacin", "levaquin", "pneumonia", "UTI", "respiratory", "broad spectrum"]
+    },
+    {
+      "id": "moxifloxacin",
+      "name": "Moxifloxacin (Avelox)",
+      "class": "Fluoroquinolone",
+      "routes": ["PO", "IV"],
+      "allergy_class": "fluoroquinolones",
+      "semantic_tags": ["antibiotic", "fluoroquinolone", "moxifloxacin", "avelox", "pneumonia", "respiratory", "anaerobic"]
+    },
+    {
+      "id": "trimethoprim_sulfamethoxazole",
+      "name": "Trimethoprim / Sulfamethoxazole (Bactrim, Septra)",
+      "class": "Sulfonamide",
+      "routes": ["PO", "IV"],
+      "allergy_class": "sulfonamides",
+      "semantic_tags": ["antibiotic", "sulfonamide", "bactrim", "septra", "TMP-SMX", "UTI", "MRSA", "PCP prophylaxis"]
+    },
+    {
+      "id": "trimethoprim_polymyxin_eye",
+      "name": "Trimethoprim / Polymyxin B Eye Drops (Polytrim)",
+      "class": "Ophthalmic Antibiotic",
+      "routes": ["ophthalmic"],
+      "allergy_class": "sulfonamides",
+      "semantic_tags": ["antibiotic", "ophthalmic", "eye drops", "conjunctivitis", "pink eye", "polytrim", "trimethoprim", "polymyxin"]
+    },
+    {
+      "id": "clindamycin",
+      "name": "Clindamycin (Cleocin)",
+      "class": "Lincosamide",
+      "routes": ["PO", "IV", "topical"],
+      "allergy_class": null,
+      "semantic_tags": ["antibiotic", "clindamycin", "cleocin", "anaerobic", "skin", "MRSA", "dental", "topical", "acne"]
+    },
+    {
+      "id": "metronidazole",
+      "name": "Metronidazole (Flagyl)",
+      "class": "Nitroimidazole",
+      "routes": ["PO", "IV", "topical", "vaginal"],
+      "allergy_class": "nitroimidazoles",
+      "semantic_tags": ["antibiotic", "antiparasitic", "metronidazole", "flagyl", "anaerobic", "c diff", "BV", "trichomonas", "H pylori", "abscess"]
+    },
+    {
+      "id": "nitrofurantoin",
+      "name": "Nitrofurantoin (Macrobid)",
+      "class": "Nitrofuran",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antibiotic", "nitrofurantoin", "macrobid", "UTI", "urinary tract infection"]
+    },
+    {
+      "id": "fosfomycin",
+      "name": "Fosfomycin (Monurol)",
+      "class": "Phosphonic Acid Antibiotic",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["antibiotic", "fosfomycin", "monurol", "UTI", "single dose", "urinary tract infection"]
+    },
+    {
+      "id": "gentamicin",
+      "name": "Gentamicin",
+      "class": "Aminoglycoside",
+      "routes": ["IV", "IM", "ophthalmic", "otic"],
+      "allergy_class": "aminoglycosides",
+      "semantic_tags": ["antibiotic", "aminoglycoside", "gentamicin", "gram negative", "IV", "synergy", "ophthalmic"]
+    },
+    {
+      "id": "tobramycin",
+      "name": "Tobramycin",
+      "class": "Aminoglycoside",
+      "routes": ["IV", "IM", "inhaled", "ophthalmic"],
+      "allergy_class": "aminoglycosides",
+      "semantic_tags": ["antibiotic", "aminoglycoside", "tobramycin", "pseudomonas", "CF", "cystic fibrosis", "inhaled", "ophthalmic"]
+    },
+    {
+      "id": "amikacin",
+      "name": "Amikacin",
+      "class": "Aminoglycoside",
+      "routes": ["IV", "IM"],
+      "allergy_class": "aminoglycosides",
+      "semantic_tags": ["antibiotic", "aminoglycoside", "amikacin", "gram negative", "resistant", "IV"]
+    },
+    {
+      "id": "rifampin",
+      "name": "Rifampin (Rifadin)",
+      "class": "Rifamycin",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["antibiotic", "rifampin", "rifadin", "TB", "tuberculosis", "meningitis", "staph", "combination therapy"]
+    },
+    {
+      "id": "isoniazid",
+      "name": "Isoniazid (INH)",
+      "class": "Antitubercular",
+      "routes": ["PO", "IM"],
+      "allergy_class": null,
+      "semantic_tags": ["antibiotic", "isoniazid", "INH", "tuberculosis", "TB", "antitubercular"]
+    },
+    {
+      "id": "ethambutol",
+      "name": "Ethambutol",
+      "class": "Antitubercular",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antibiotic", "ethambutol", "tuberculosis", "TB", "antitubercular"]
+    },
+    {
+      "id": "pyrazinamide",
+      "name": "Pyrazinamide",
+      "class": "Antitubercular",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antibiotic", "pyrazinamide", "tuberculosis", "TB", "antitubercular"]
+    },
+    {
+      "id": "fidaxomicin",
+      "name": "Fidaxomicin (Dificid)",
+      "class": "Macrocyclic Antibiotic",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antibiotic", "fidaxomicin", "dificid", "c diff", "clostridioides difficile", "CDI"]
+    },
+    {
+      "id": "vancomycin_po",
+      "name": "Vancomycin (oral — for C. diff)",
+      "class": "Glycopeptide (oral use only for GI)",
+      "routes": ["PO"],
+      "allergy_class": "glycopeptides",
+      "semantic_tags": ["antibiotic", "vancomycin", "oral", "c diff", "clostridioides difficile", "CDI", "colitis"]
+    },
+    {
+      "id": "mupirocin",
+      "name": "Mupirocin (Bactroban)",
+      "class": "Topical Antibiotic",
+      "routes": ["topical", "intranasal"],
+      "allergy_class": null,
+      "semantic_tags": ["antibiotic", "topical", "mupirocin", "bactroban", "MRSA", "skin", "nasal decolonization", "impetigo"]
+    },
+    {
+      "id": "bacitracin",
+      "name": "Bacitracin",
+      "class": "Topical Antibiotic",
+      "routes": ["topical"],
+      "allergy_class": null,
+      "semantic_tags": ["antibiotic", "topical", "bacitracin", "wound", "skin", "ointment"]
+    },
+    {
+      "id": "neomycin_polymyxin_bacitracin",
+      "name": "Neomycin / Polymyxin / Bacitracin (Neosporin)",
+      "class": "Topical Antibiotic Combination",
+      "routes": ["topical"],
+      "allergy_class": "aminoglycosides",
+      "semantic_tags": ["antibiotic", "topical", "neosporin", "neomycin", "polymyxin", "bacitracin", "wound", "skin"]
+    },
+    {
+      "id": "silver_sulfadiazine",
+      "name": "Silver Sulfadiazine (Silvadene)",
+      "class": "Topical Antibiotic",
+      "routes": ["topical"],
+      "allergy_class": "sulfonamides",
+      "semantic_tags": ["antibiotic", "topical", "silvadene", "silver sulfadiazine", "burn", "wound"]
+    },
+    {
+      "id": "colistin",
+      "name": "Colistin (Polymyxin E)",
+      "class": "Polymyxin",
+      "routes": ["IV", "inhaled"],
+      "allergy_class": null,
+      "semantic_tags": ["antibiotic", "colistin", "polymyxin", "resistant", "MDR", "gram negative", "last resort"]
+    },
+    {
+      "id": "dalbavancin",
+      "name": "Dalbavancin (Dalvance)",
+      "class": "Lipoglycopeptide",
+      "routes": ["IV"],
+      "allergy_class": "glycopeptides",
+      "semantic_tags": ["antibiotic", "dalbavancin", "dalvance", "MRSA", "gram positive", "long acting", "IV", "once weekly"]
+    },
+    {
+      "id": "tedizolid",
+      "name": "Tedizolid (Sivextro)",
+      "class": "Oxazolidinone",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["antibiotic", "tedizolid", "sivextro", "MRSA", "gram positive", "skin", "SSTI"]
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "category": "Transfusions",
+  "category_id": "transfusions",
+  "description": "Blood products and transfusion-related medications.",
+  "medications": [
+    {
+      "id": "packed_rbcs",
+      "name": "Packed Red Blood Cells (pRBCs)",
+      "class": "Blood Product",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["transfusion", "blood product", "pRBCs", "packed red blood cells", "anemia", "blood transfusion", "hemorrhage", "IV"]
+    },
+    {
+      "id": "fresh_frozen_plasma",
+      "name": "Fresh Frozen Plasma (FFP)",
+      "class": "Blood Product",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["transfusion", "blood product", "FFP", "fresh frozen plasma", "coagulopathy", "bleeding", "INR reversal", "liver failure", "DIC", "IV"]
+    },
+    {
+      "id": "platelets",
+      "name": "Platelets (Pooled or Apheresis)",
+      "class": "Blood Product",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["transfusion", "blood product", "platelets", "thrombocytopenia", "bleeding", "platelet transfusion", "DIC", "IV"]
+    },
+    {
+      "id": "cryoprecipitate",
+      "name": "Cryoprecipitate",
+      "class": "Blood Product",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["transfusion", "blood product", "cryoprecipitate", "fibrinogen", "von Willebrand", "factor VIII", "DIC", "bleeding", "IV"]
+    },
+    {
+      "id": "factor_viii",
+      "name": "Factor VIII Concentrate",
+      "class": "Clotting Factor Concentrate",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["transfusion", "clotting factor", "factor VIII", "hemophilia A", "bleeding", "IV"]
+    },
+    {
+      "id": "factor_ix",
+      "name": "Factor IX Concentrate",
+      "class": "Clotting Factor Concentrate",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["transfusion", "clotting factor", "factor IX", "hemophilia B", "Christmas disease", "bleeding", "IV"]
+    },
+    {
+      "id": "four_factor_pcc",
+      "name": "4-Factor PCC (Kcentra, Beriplex)",
+      "class": "Prothrombin Complex Concentrate",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["transfusion", "reversal", "PCC", "prothrombin complex concentrate", "kcentra", "beriplex", "warfarin reversal", "factor reversal", "bleeding", "IV"]
+    },
+    {
+      "id": "recombinant_factor_viia",
+      "name": "Recombinant Factor VIIa (NovoSeven)",
+      "class": "Clotting Factor Concentrate",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["transfusion", "clotting factor", "factor VIIa", "novoseven", "refractory bleeding", "hemophilia", "IV"]
+    },
+    {
+      "id": "desmopressin",
+      "name": "Desmopressin (DDAVP)",
+      "class": "Synthetic ADH Analogue / Hemostatic",
+      "routes": ["IV", "SQ", "intranasal", "PO"],
+      "allergy_class": null,
+      "semantic_tags": ["transfusion", "hemostasis", "desmopressin", "DDAVP", "von Willebrand", "platelet dysfunction", "uremic bleeding", "diabetes insipidus", "IV"]
+    },
+    {
+      "id": "tranexamic_acid",
+      "name": "Tranexamic Acid (TXA, Cyklokapron, Lysteda)",
+      "class": "Antifibrinolytic",
+      "routes": ["IV", "PO", "topical"],
+      "allergy_class": null,
+      "semantic_tags": ["transfusion", "hemostasis", "antifibrinolytic", "tranexamic acid", "TXA", "cyklokapron", "lysteda", "bleeding", "trauma", "menorrhagia", "IV"]
+    },
+    {
+      "id": "aminocaproic_acid",
+      "name": "Aminocaproic Acid (Amicar)",
+      "class": "Antifibrinolytic",
+      "routes": ["IV", "PO"],
+      "allergy_class": null,
+      "semantic_tags": ["transfusion", "hemostasis", "antifibrinolytic", "aminocaproic acid", "amicar", "bleeding", "fibrinolysis", "IV"]
+    },
+    {
+      "id": "rho_d_immune_globulin",
+      "name": "Rho(D) Immune Globulin (RhoGAM)",
+      "class": "Immunoglobulin",
+      "routes": ["IM", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["transfusion", "immunoglobulin", "RhoGAM", "Rh factor", "Rh incompatibility", "pregnancy", "IM"]
+    }
+  ]
+}

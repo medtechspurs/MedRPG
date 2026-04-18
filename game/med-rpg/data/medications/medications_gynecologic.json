@@ -1,0 +1,199 @@
+{
+  "category": "Gynecologic",
+  "category_id": "gynecologic",
+  "description": "Medications for gynecologic conditions including contraception, menstrual disorders, pregnancy, and reproductive health.",
+  "medications": [
+    {
+      "id": "combined_oral_contraceptive",
+      "name": "Combined Oral Contraceptive (estrogen + progestin)",
+      "class": "Combined Hormonal Contraceptive",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["gynecology", "contraception", "oral contraceptive", "birth control", "OCP", "COC", "estrogen", "progestin", "combined pill", "menstrual regulation"]
+    },
+    {
+      "id": "progestin_only_pill",
+      "name": "Progestin-only Pill (Minipill, Slynd, Norethindrone)",
+      "class": "Progestin-only Oral Contraceptive",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["gynecology", "contraception", "progestin", "minipill", "slynd", "norethindrone", "birth control", "breastfeeding safe", "progestin only"]
+    },
+    {
+      "id": "levonorgestrel_iud",
+      "name": "Levonorgestrel IUD (Mirena, Kyleena, Liletta)",
+      "class": "Intrauterine Progestin",
+      "routes": ["intrauterine"],
+      "allergy_class": null,
+      "semantic_tags": ["gynecology", "contraception", "IUD", "levonorgestrel", "mirena", "kyleena", "liletta", "long acting contraception", "LARC", "menorrhagia"]
+    },
+    {
+      "id": "copper_iud",
+      "name": "Copper IUD (Paragard)",
+      "class": "Non-hormonal Intrauterine Device",
+      "routes": ["intrauterine"],
+      "allergy_class": null,
+      "semantic_tags": ["gynecology", "contraception", "IUD", "paragard", "copper IUD", "non-hormonal", "LARC", "emergency contraception", "long acting"]
+    },
+    {
+      "id": "etonogestrel_implant",
+      "name": "Etonogestrel Implant (Nexplanon)",
+      "class": "Subdermal Progestin Implant",
+      "routes": ["subdermal"],
+      "allergy_class": null,
+      "semantic_tags": ["gynecology", "contraception", "nexplanon", "etonogestrel", "implant", "LARC", "long acting", "subdermal"]
+    },
+    {
+      "id": "depot_medroxyprogesterone",
+      "name": "Medroxyprogesterone Acetate (Depo-Provera)",
+      "class": "Injectable Progestin Contraceptive",
+      "routes": ["IM", "SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["gynecology", "contraception", "depo-provera", "medroxyprogesterone", "injectable contraceptive", "progestin", "quarterly injection", "DMPA"]
+    },
+    {
+      "id": "levonorgestrel_ec",
+      "name": "Levonorgestrel (Plan B, Take Action)",
+      "class": "Emergency Contraceptive",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["gynecology", "contraception", "emergency contraception", "plan B", "levonorgestrel", "morning after pill", "take action", "OTC"]
+    },
+    {
+      "id": "ulipristal",
+      "name": "Ulipristal Acetate (ella)",
+      "class": "Selective Progesterone Receptor Modulator — Emergency Contraceptive",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["gynecology", "contraception", "emergency contraception", "ulipristal", "ella", "progesterone receptor modulator", "5 day window"]
+    },
+    {
+      "id": "mifepristone",
+      "name": "Mifepristone (Mifeprex)",
+      "class": "Antiprogestin / Progesterone Receptor Blocker",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["gynecology", "mifepristone", "mifeprex", "medication abortion", "progesterone blocker", "antiprogestin", "Cushing's syndrome"]
+    },
+    {
+      "id": "misoprostol_gyn",
+      "name": "Misoprostol — gynecologic use",
+      "class": "Prostaglandin E1 Analogue",
+      "routes": ["vaginal", "sublingual", "PO", "buccal"],
+      "allergy_class": null,
+      "semantic_tags": ["gynecology", "misoprostol", "cytotec", "cervical ripening", "labor induction", "medication abortion", "postpartum hemorrhage", "prostaglandin"]
+    },
+    {
+      "id": "oxytocin",
+      "name": "Oxytocin (Pitocin)",
+      "class": "Uterotonic",
+      "routes": ["IV", "IM"],
+      "allergy_class": null,
+      "semantic_tags": ["gynecology", "oxytocin", "pitocin", "labor induction", "uterotonic", "postpartum hemorrhage", "augmentation", "IV", "obstetrics"]
+    },
+    {
+      "id": "methylergonovine",
+      "name": "Methylergonovine (Methergine)",
+      "class": "Ergot Alkaloid Uterotonic",
+      "routes": ["PO", "IM", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["gynecology", "uterotonic", "methylergonovine", "methergine", "postpartum hemorrhage", "uterine atony", "ergot"]
+    },
+    {
+      "id": "carboprost",
+      "name": "Carboprost (Hemabate)",
+      "class": "Prostaglandin F2α Uterotonic",
+      "routes": ["IM"],
+      "allergy_class": null,
+      "semantic_tags": ["gynecology", "uterotonic", "carboprost", "hemabate", "postpartum hemorrhage", "uterine atony", "prostaglandin", "IM"]
+    },
+    {
+      "id": "tranexamic_acid_gyn",
+      "name": "Tranexamic Acid (TXA) — gynecologic use",
+      "class": "Antifibrinolytic",
+      "routes": ["IV", "PO"],
+      "allergy_class": null,
+      "semantic_tags": ["gynecology", "tranexamic acid", "TXA", "postpartum hemorrhage", "menorrhagia", "heavy menstrual bleeding", "antifibrinolytic", "lysteda"]
+    },
+    {
+      "id": "estradiol",
+      "name": "Estradiol (Estrace, Vivelle, Climara)",
+      "class": "Estrogen (HRT)",
+      "routes": ["PO", "transdermal", "vaginal", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["gynecology", "endocrine", "estrogen", "estradiol", "estrace", "vivelle", "climara", "HRT", "hormone replacement", "menopause", "hypogonadism"]
+    },
+    {
+      "id": "progesterone",
+      "name": "Progesterone (Prometrium, Crinone)",
+      "class": "Progestogen (HRT / luteal support)",
+      "routes": ["PO", "vaginal", "IM"],
+      "allergy_class": null,
+      "semantic_tags": ["gynecology", "endocrine", "progesterone", "prometrium", "crinone", "HRT", "hormone replacement", "menopause", "luteal phase", "IVF", "preterm birth prevention"]
+    },
+    {
+      "id": "clomiphene",
+      "name": "Clomiphene Citrate (Clomid, Serophene)",
+      "class": "Selective Estrogen Receptor Modulator (SERM) — Fertility",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["gynecology", "fertility", "clomiphene", "clomid", "serophene", "ovulation induction", "PCOS", "infertility", "SERM"]
+    },
+    {
+      "id": "letrozole_fertility",
+      "name": "Letrozole (Femara) — fertility use",
+      "class": "Aromatase Inhibitor (off-label ovulation induction)",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["gynecology", "fertility", "letrozole", "femara", "ovulation induction", "PCOS", "aromatase inhibitor", "infertility"]
+    },
+    {
+      "id": "metformin_pcos",
+      "name": "Metformin — PCOS use",
+      "class": "Biguanide (off-label for PCOS)",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["gynecology", "endocrine", "metformin", "PCOS", "polycystic ovary syndrome", "insulin resistance", "ovulation", "off-label"]
+    },
+    {
+      "id": "danazol",
+      "name": "Danazol (Danocrine)",
+      "class": "Androgen / Gonadotropin Inhibitor",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["gynecology", "danazol", "danocrine", "endometriosis", "fibroids", "hereditary angioedema", "androgen", "gonadotropin inhibitor"]
+    },
+    {
+      "id": "leuprolide",
+      "name": "Leuprolide (Lupron)",
+      "class": "GnRH Agonist",
+      "routes": ["IM", "SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["gynecology", "endocrine", "oncology", "leuprolide", "lupron", "endometriosis", "fibroids", "prostate cancer", "GnRH agonist", "precocious puberty"]
+    },
+    {
+      "id": "fluconazole_gyn",
+      "name": "Fluconazole — vaginal yeast infection",
+      "class": "Triazole Antifungal",
+      "routes": ["PO"],
+      "allergy_class": "azole_antifungals",
+      "semantic_tags": ["gynecology", "antifungal", "fluconazole", "diflucan", "vaginal yeast infection", "candidiasis", "single dose", "OTC"]
+    },
+    {
+      "id": "metronidazole_bv",
+      "name": "Metronidazole — bacterial vaginosis",
+      "class": "Nitroimidazole",
+      "routes": ["PO", "vaginal"],
+      "allergy_class": "nitroimidazoles",
+      "semantic_tags": ["gynecology", "antibiotic", "metronidazole", "flagyl", "bacterial vaginosis", "BV", "vaginal gel", "trichomonas"]
+    },
+    {
+      "id": "rho_d_immune_globulin_gyn",
+      "name": "Rho(D) Immune Globulin (RhoGAM)",
+      "class": "Immunoglobulin",
+      "routes": ["IM"],
+      "allergy_class": null,
+      "semantic_tags": ["gynecology", "immunoglobulin", "RhoGAM", "Rh negative", "Rh incompatibility", "pregnancy", "sensitization prevention", "IM"]
+    }
+  ]
+}

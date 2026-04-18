@@ -1,0 +1,167 @@
+{
+  "category": "Antivirals",
+  "category_id": "antivirals",
+  "description": "Antiviral medications for viral infections including herpes, influenza, HIV, hepatitis, and COVID-19.",
+  "medications": [
+    {
+      "id": "acyclovir",
+      "name": "Acyclovir (Zovirax)",
+      "class": "Nucleoside Analogue",
+      "routes": ["PO", "IV", "topical"],
+      "allergy_class": null,
+      "semantic_tags": ["antiviral", "acyclovir", "zovirax", "herpes", "HSV", "VZV", "varicella", "shingles", "encephalitis"]
+    },
+    {
+      "id": "valacyclovir",
+      "name": "Valacyclovir (Valtrex)",
+      "class": "Nucleoside Analogue (prodrug of acyclovir)",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antiviral", "valacyclovir", "valtrex", "herpes", "HSV", "VZV", "shingles", "cold sore"]
+    },
+    {
+      "id": "famciclovir",
+      "name": "Famciclovir (Famvir)",
+      "class": "Nucleoside Analogue",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antiviral", "famciclovir", "famvir", "herpes", "HSV", "VZV", "shingles"]
+    },
+    {
+      "id": "ganciclovir",
+      "name": "Ganciclovir (Cytovene)",
+      "class": "Nucleoside Analogue",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["antiviral", "ganciclovir", "cytovene", "CMV", "cytomegalovirus", "transplant", "immunocompromised", "IV"]
+    },
+    {
+      "id": "valganciclovir",
+      "name": "Valganciclovir (Valcyte)",
+      "class": "Nucleoside Analogue (prodrug of ganciclovir)",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antiviral", "valganciclovir", "valcyte", "CMV", "cytomegalovirus", "transplant", "prophylaxis"]
+    },
+    {
+      "id": "oseltamivir",
+      "name": "Oseltamivir (Tamiflu)",
+      "class": "Neuraminidase Inhibitor",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antiviral", "oseltamivir", "tamiflu", "influenza", "flu", "neuraminidase inhibitor"]
+    },
+    {
+      "id": "zanamivir",
+      "name": "Zanamivir (Relenza)",
+      "class": "Neuraminidase Inhibitor",
+      "routes": ["inhaled"],
+      "allergy_class": null,
+      "semantic_tags": ["antiviral", "zanamivir", "relenza", "influenza", "flu", "inhaled"]
+    },
+    {
+      "id": "baloxavir",
+      "name": "Baloxavir (Xofluza)",
+      "class": "Cap-dependent Endonuclease Inhibitor",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antiviral", "baloxavir", "xofluza", "influenza", "flu", "single dose"]
+    },
+    {
+      "id": "remdesivir",
+      "name": "Remdesivir (Veklury)",
+      "class": "Nucleotide Analogue",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["antiviral", "remdesivir", "veklury", "COVID", "COVID-19", "SARS-CoV-2", "IV"]
+    },
+    {
+      "id": "nirmatrelvir_ritonavir",
+      "name": "Nirmatrelvir / Ritonavir (Paxlovid)",
+      "class": "Protease Inhibitor Combination",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antiviral", "paxlovid", "nirmatrelvir", "ritonavir", "COVID", "COVID-19", "oral", "protease inhibitor"]
+    },
+    {
+      "id": "ribavirin",
+      "name": "Ribavirin",
+      "class": "Nucleoside Analogue",
+      "routes": ["PO", "inhaled", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["antiviral", "ribavirin", "hepatitis C", "RSV", "viral hemorrhagic fever"]
+    },
+    {
+      "id": "sofosbuvir_velpatasvir",
+      "name": "Sofosbuvir / Velpatasvir (Epclusa)",
+      "class": "Direct-acting Antiviral (HCV)",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antiviral", "sofosbuvir", "velpatasvir", "epclusa", "hepatitis C", "HCV", "direct acting antiviral"]
+    },
+    {
+      "id": "ledipasvir_sofosbuvir",
+      "name": "Ledipasvir / Sofosbuvir (Harvoni)",
+      "class": "Direct-acting Antiviral (HCV)",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antiviral", "ledipasvir", "sofosbuvir", "harvoni", "hepatitis C", "HCV"]
+    },
+    {
+      "id": "tenofovir_emtricitabine",
+      "name": "Tenofovir / Emtricitabine (Truvada, Descovy)",
+      "class": "NRTI Combination (HIV/PrEP)",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antiviral", "HIV", "PrEP", "truvada", "descovy", "tenofovir", "emtricitabine", "antiretroviral", "NRTI"]
+    },
+    {
+      "id": "bictegravir_combo",
+      "name": "Bictegravir / Emtricitabine / Tenofovir (Biktarvy)",
+      "class": "Integrase Inhibitor Combination (HIV)",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antiviral", "HIV", "biktarvy", "bictegravir", "antiretroviral", "integrase inhibitor", "single tablet regimen"]
+    },
+    {
+      "id": "dolutegravir",
+      "name": "Dolutegravir (Tivicay)",
+      "class": "Integrase Inhibitor (HIV)",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antiviral", "HIV", "dolutegravir", "tivicay", "integrase inhibitor", "antiretroviral"]
+    },
+    {
+      "id": "entecavir",
+      "name": "Entecavir (Baraclude)",
+      "class": "Nucleoside Analogue (HBV)",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antiviral", "entecavir", "baraclude", "hepatitis B", "HBV"]
+    },
+    {
+      "id": "tenofovir",
+      "name": "Tenofovir (Viread)",
+      "class": "Nucleotide Analogue (HBV/HIV)",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antiviral", "tenofovir", "viread", "hepatitis B", "HBV", "HIV", "antiretroviral"]
+    },
+    {
+      "id": "cidofovir",
+      "name": "Cidofovir",
+      "class": "Nucleotide Analogue",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["antiviral", "cidofovir", "CMV", "cytomegalovirus", "resistant", "IV"]
+    },
+    {
+      "id": "foscarnet",
+      "name": "Foscarnet",
+      "class": "Pyrophosphate Analogue",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["antiviral", "foscarnet", "CMV", "HSV", "resistant", "IV", "acyclovir resistant"]
+    }
+  ]
+}

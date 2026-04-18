@@ -1,0 +1,151 @@
+{
+  "category": "Vaccines & Immune Globulins",
+  "category_id": "vaccines_immunoglobulins",
+  "description": "Vaccines for disease prevention and immune globulin preparations for passive immunization.",
+  "medications": [
+    {
+      "id": "influenza_vaccine",
+      "name": "Influenza Vaccine (Flu Shot)",
+      "class": "Inactivated Vaccine",
+      "routes": ["IM", "intranasal"],
+      "allergy_class": "egg_based_vaccines",
+      "semantic_tags": ["vaccine", "influenza", "flu shot", "flu vaccine", "annual vaccine", "prevention", "IM"]
+    },
+    {
+      "id": "covid_mrna_vaccine",
+      "name": "COVID-19 mRNA Vaccine (Pfizer/Moderna)",
+      "class": "mRNA Vaccine",
+      "routes": ["IM"],
+      "allergy_class": null,
+      "semantic_tags": ["vaccine", "COVID", "COVID-19", "mRNA vaccine", "SARS-CoV-2", "Pfizer", "Moderna", "prevention", "IM"]
+    },
+    {
+      "id": "tetanus_toxoid",
+      "name": "Tetanus Toxoid (Td, Tdap)",
+      "class": "Toxoid Vaccine",
+      "routes": ["IM"],
+      "allergy_class": null,
+      "semantic_tags": ["vaccine", "tetanus", "Td", "Tdap", "wound prophylaxis", "booster", "diphtheria", "pertussis", "IM"]
+    },
+    {
+      "id": "tetanus_immune_globulin",
+      "name": "Tetanus Immune Globulin (TIG)",
+      "class": "Passive Immunization / Immune Globulin",
+      "routes": ["IM"],
+      "allergy_class": null,
+      "semantic_tags": ["vaccine", "immune globulin", "tetanus", "TIG", "tetanus immune globulin", "wound", "passive immunization", "unvaccinated", "IM"]
+    },
+    {
+      "id": "pneumococcal_vaccine",
+      "name": "Pneumococcal Vaccine (Prevnar, Pneumovax)",
+      "class": "Conjugate/Polysaccharide Vaccine",
+      "routes": ["IM", "SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["vaccine", "pneumococcal", "pneumonia", "prevnar", "pneumovax", "PCV", "PPSV", "prevention", "elderly", "immunocompromised", "IM"]
+    },
+    {
+      "id": "mmr_vaccine",
+      "name": "MMR Vaccine (Measles, Mumps, Rubella)",
+      "class": "Live Attenuated Vaccine",
+      "routes": ["SQ", "IM"],
+      "allergy_class": "egg_based_vaccines",
+      "semantic_tags": ["vaccine", "MMR", "measles", "mumps", "rubella", "live attenuated", "childhood vaccine", "prevention", "SQ"]
+    },
+    {
+      "id": "varicella_vaccine",
+      "name": "Varicella Vaccine (Varivax)",
+      "class": "Live Attenuated Vaccine",
+      "routes": ["SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["vaccine", "varicella", "chickenpox", "varivax", "VZV", "live attenuated", "prevention", "SQ"]
+    },
+    {
+      "id": "zoster_vaccine",
+      "name": "Zoster Vaccine (Shingrix, Zostavax)",
+      "class": "Recombinant/Live Attenuated Vaccine",
+      "routes": ["IM", "SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["vaccine", "shingles", "zoster", "shingrix", "zostavax", "VZV", "herpes zoster", "prevention", "elderly", "IM"]
+    },
+    {
+      "id": "hepatitis_a_vaccine",
+      "name": "Hepatitis A Vaccine (Havrix, Vaqta)",
+      "class": "Inactivated Vaccine",
+      "routes": ["IM"],
+      "allergy_class": null,
+      "semantic_tags": ["vaccine", "hepatitis A", "HAV", "havrix", "vaqta", "prevention", "travel", "IM"]
+    },
+    {
+      "id": "hepatitis_b_vaccine",
+      "name": "Hepatitis B Vaccine (Engerix-B, Recombivax)",
+      "class": "Recombinant Vaccine",
+      "routes": ["IM"],
+      "allergy_class": null,
+      "semantic_tags": ["vaccine", "hepatitis B", "HBV", "engerix", "recombivax", "prevention", "needlestick prophylaxis", "IM"]
+    },
+    {
+      "id": "hepatitis_b_immune_globulin",
+      "name": "Hepatitis B Immune Globulin (HBIG)",
+      "class": "Passive Immunization / Immune Globulin",
+      "routes": ["IM"],
+      "allergy_class": null,
+      "semantic_tags": ["immune globulin", "hepatitis B", "HBIG", "needlestick", "passive immunization", "post-exposure prophylaxis", "newborn", "IM"]
+    },
+    {
+      "id": "rabies_vaccine",
+      "name": "Rabies Vaccine (RabAvert, Imovax)",
+      "class": "Inactivated Vaccine",
+      "routes": ["IM"],
+      "allergy_class": null,
+      "semantic_tags": ["vaccine", "rabies", "rabAvert", "imovax", "animal bite", "post-exposure prophylaxis", "prevention", "IM"]
+    },
+    {
+      "id": "rabies_immune_globulin",
+      "name": "Rabies Immune Globulin (RIG, Imogam)",
+      "class": "Passive Immunization / Immune Globulin",
+      "routes": ["IM", "wound infiltration"],
+      "allergy_class": null,
+      "semantic_tags": ["immune globulin", "rabies", "RIG", "imogam", "passive immunization", "animal bite", "post-exposure prophylaxis", "IM"]
+    },
+    {
+      "id": "ivig",
+      "name": "Intravenous Immune Globulin (IVIG)",
+      "class": "Immune Globulin",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["immune globulin", "IVIG", "intravenous immunoglobulin", "immune deficiency", "Kawasaki", "GBS", "ITP", "autoimmune", "IV"]
+    },
+    {
+      "id": "subcutaneous_igg",
+      "name": "Subcutaneous Immune Globulin (SCIG)",
+      "class": "Immune Globulin",
+      "routes": ["SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["immune globulin", "SCIG", "subcutaneous immunoglobulin", "immune deficiency", "SQ", "home therapy"]
+    },
+    {
+      "id": "hpv_vaccine",
+      "name": "HPV Vaccine (Gardasil)",
+      "class": "Recombinant Vaccine",
+      "routes": ["IM"],
+      "allergy_class": null,
+      "semantic_tags": ["vaccine", "HPV", "gardasil", "human papillomavirus", "cervical cancer", "prevention", "IM"]
+    },
+    {
+      "id": "meningococcal_vaccine",
+      "name": "Meningococcal Vaccine (Menactra, Menveo, Bexsero)",
+      "class": "Conjugate/Recombinant Vaccine",
+      "routes": ["IM"],
+      "allergy_class": null,
+      "semantic_tags": ["vaccine", "meningococcal", "meningitis", "menactra", "menveo", "bexsero", "ACYW", "MenB", "prevention", "college", "asplenia", "IM"]
+    },
+    {
+      "id": "typhoid_vaccine",
+      "name": "Typhoid Vaccine (Vivotif, Typhim Vi)",
+      "class": "Live/Inactivated Vaccine",
+      "routes": ["PO", "IM"],
+      "allergy_class": null,
+      "semantic_tags": ["vaccine", "typhoid", "vivotif", "typhim vi", "Salmonella typhi", "travel vaccine", "prevention"]
+    }
+  ]
+}

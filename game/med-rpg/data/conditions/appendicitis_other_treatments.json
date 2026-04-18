@@ -1,0 +1,168 @@
+{
+  "condition_id": "appendicitis",
+  "category": "Other Treatments",
+  "description": "Supportive care actions available during the appendicitis encounter. Accessible via Icon 9 (Other Treatments menu) or via quick-access IV and O2 icons on the main UI.",
+
+  "quick_access_icons": {
+    "description": "IV and O2 icons are always visible on the main encounter UI as shortcuts. They trigger the identical action and cost as using the Other Treatments menu.",
+    "icons": [
+      {
+        "id": "quick_iv",
+        "label": "IV",
+        "action_id": "iv_access",
+        "description": "Shortcut to establish IV access. Same effect and cost as using Other Treatments menu."
+      },
+      {
+        "id": "quick_o2",
+        "label": "O2",
+        "action_id": "supplemental_oxygen",
+        "description": "Shortcut to start supplemental oxygen. Same effect and cost as using Other Treatments menu."
+      }
+    ]
+  },
+
+  "auto_bed_triggers": {
+    "description": "Patient automatically transitions to hospital bed sprite when any of these conditions are met. No player action required.",
+    "triggers": [
+      "iv_access_established",
+      "supplemental_oxygen_started",
+      "patient_state_septic_shock"
+    ]
+  },
+
+  "iv_without_access_popup": {
+    "description": "If player attempts to order an IV medication without IV access established, this popup fires.",
+    "popup_text_normal": "You haven't placed an IV yet. Giving this medication will require IV access first. Total cost: {med_ap} AP (medication) + 1 AP (IV access). Proceed?",
+    "popup_text_difficult_stick": "IV access is proving difficult. Giving this medication will require IV access first. Total cost: {med_ap} AP (medication) + 2 AP (IV access). Proceed?",
+    "auto_places_iv": true,
+    "bonus_point_eligible": false,
+    "note": "IV placed via this popup never earns a bonus point regardless of patient state."
+  },
+
+  "treatments": [
+    {
+      "id": "iv_access",
+      "name": "IV Access",
+      "description": "Establish peripheral intravenous access.",
+      "ap_cost": {
+        "normal": 2,
+        "via_popup_no_badge": 1,
+        "difficult_stick_badge": 2,
+        "via_popup_difficult_stick": 2
+      },
+      "bonus_points": {
+        "before_septic_shock": 1,
+        "after_septic_shock": 0,
+        "via_popup": 0,
+        "note": "Bonus point only awarded when IV is placed proactively before septic shock. Never awarded via popup regardless of timing."
+      },
+      "effects": {
+        "establishes": "iv_access",
+        "triggers_auto_bed": true,
+        "unlocks": "all_iv_medications"
+      },
+      "difficult_stick_badge_rules": {
+        "placement_cost": 2,
+        "infiltration_check": {
+          "enabled": true,
+          "every_ap_spent": 5,
+          "infiltration_chance": 0.15,
+          "infiltration_popup_text": "The IV has infiltrated. A new line is needed.",
+          "on_infiltration": {
+            "iv_access_status": "reset",
+            "player_must_replace_iv": true,
+            "replacement_cost_ap": 2
+          }
+        }
+      },
+      "repeatable": false,
+      "repeat_note": "Can be re-placed after infiltration if Difficult Stick badge is active."
+    },
+    {
+      "id": "supplemental_oxygen",
+      "name": "Supplemental Oxygen",
+      "description": "Apply supplemental oxygen via nasal cannula.",
+      "ap_cost": 1,
+      "bonus_points": 0,
+      "effects": {
+        "establishes": "supplemental_oxygen",
+        "triggers_auto_bed": true,
+        "clinical_note": "Appropriate supportive care. No direct effect on appendicitis progression."
+      },
+      "repeatable": false
+    },
+    {
+      "id": "npo",
+      "name": "NPO (Nothing by Mouth)",
+      "description": "Make the patient NPO in preparation for surgery.",
+      "ap_cost": {
+        "before_septic_shock": 2,
+        "after_septic_shock": 1
+      },
+      "bonus_points": {
+        "before_septic_shock": 1,
+        "after_septic_shock": 0,
+        "note": "Bonus point only awarded when NPO is ordered before septic shock state."
+      },
+      "effects": {
+        "establishes": "npo_status",
+        "clinical_note": "Required pre-operatively. Correct clinical practice."
+      },
+      "repeatable": false
+    },
+    {
+      "id": "foley_catheter",
+      "name": "Foley Catheter",
+      "description": "Insert urinary catheter for urine output monitoring.",
+      "ap_cost": 1,
+      "bonus_points": 0,
+      "effects": {
+        "establishes": "foley_catheter",
+        "clinical_note": "Appropriate for monitoring in septic shock. No direct effect on progression."
+      },
+      "repeatable": false
+    },
+    {
+      "id": "ng_tube",
+      "name": "NG Tube (Nasogastric Tube)",
+      "description": "Insert nasogastric tube for gastric decompression.",
+      "ap_cost": 1,
+      "bonus_points": 0,
+      "effects": {
+        "establishes": "ng_tube",
+        "clinical_note": "Appropriate for bowel rest and decompression."
+      },
+      "repeatable": false
+    },
+    {
+      "id": "fall_precautions",
+      "name": "Fall Precautions",
+      "description": "Initiate fall precautions protocol.",
+      "ap_cost": 1,
+      "bonus_points": 0,
+      "effects": {
+        "establishes": "fall_precautions",
+        "clinical_note": "Standard safety measure. No direct effect on progression."
+      },
+      "repeatable": false
+    },
+    {
+      "id": "strict_ios",
+      "name": "Strict I&Os",
+      "description": "Begin strict intake and output monitoring.",
+      "ap_cost": 1,
+      "bonus_points": 0,
+      "effects": {
+        "establishes": "strict_ios",
+        "clinical_note": "Appropriate for monitoring fluid status, especially in septic shock."
+      },
+      "repeatable": false
+    }
+  ],
+
+  "total_available_bonus_points": 2,
+  "bonus_point_breakdown": {
+    "npo_before_septic_shock": 1,
+    "iv_access_before_septic_shock": 1
+  }
+}

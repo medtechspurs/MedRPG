@@ -1,0 +1,311 @@
+{
+  "category": "Neurological & Psychiatric",
+  "category_id": "neuro_psych",
+  "description": "Medications for neurological conditions including seizures, stroke, headache, Parkinson's, dementia, and psychiatric disorders.",
+  "medications": [
+    {
+      "id": "levetiracetam",
+      "name": "Levetiracetam (Keppra)",
+      "class": "Anticonvulsant",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["neurology", "anticonvulsant", "levetiracetam", "keppra", "seizure", "epilepsy", "IV", "status epilepticus"]
+    },
+    {
+      "id": "phenytoin",
+      "name": "Phenytoin (Dilantin)",
+      "class": "Anticonvulsant",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["neurology", "anticonvulsant", "phenytoin", "dilantin", "seizure", "epilepsy", "IV", "status epilepticus", "narrow therapeutic index"]
+    },
+    {
+      "id": "fosphenytoin",
+      "name": "Fosphenytoin (Cerebyx)",
+      "class": "Anticonvulsant (phenytoin prodrug)",
+      "routes": ["IV", "IM"],
+      "allergy_class": null,
+      "semantic_tags": ["neurology", "anticonvulsant", "fosphenytoin", "cerebyx", "seizure", "status epilepticus", "IV", "phenytoin prodrug"]
+    },
+    {
+      "id": "valproic_acid",
+      "name": "Valproic Acid (Depakote, Depacon)",
+      "class": "Anticonvulsant / Mood Stabilizer",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["neurology", "psychiatry", "anticonvulsant", "valproic acid", "depakote", "depacon", "seizure", "bipolar", "migraine prophylaxis", "mood stabilizer"]
+    },
+    {
+      "id": "lacosamide",
+      "name": "Lacosamide (Vimpat)",
+      "class": "Anticonvulsant",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["neurology", "anticonvulsant", "lacosamide", "vimpat", "seizure", "epilepsy", "IV"]
+    },
+    {
+      "id": "carbamazepine",
+      "name": "Carbamazepine (Tegretol)",
+      "class": "Anticonvulsant / Mood Stabilizer",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["neurology", "psychiatry", "anticonvulsant", "carbamazepine", "tegretol", "seizure", "trigeminal neuralgia", "bipolar", "mood stabilizer"]
+    },
+    {
+      "id": "lorazepam",
+      "name": "Lorazepam (Ativan)",
+      "class": "Benzodiazepine",
+      "routes": ["IV", "IM", "PO"],
+      "allergy_class": "benzodiazepines",
+      "semantic_tags": ["neurology", "psychiatry", "benzodiazepine", "lorazepam", "ativan", "seizure", "status epilepticus", "anxiety", "alcohol withdrawal", "sedation", "IV"]
+    },
+    {
+      "id": "diazepam",
+      "name": "Diazepam (Valium)",
+      "class": "Benzodiazepine",
+      "routes": ["IV", "IM", "PO", "PR", "intranasal"],
+      "allergy_class": "benzodiazepines",
+      "semantic_tags": ["neurology", "psychiatry", "benzodiazepine", "diazepam", "valium", "seizure", "anxiety", "alcohol withdrawal", "muscle relaxant", "status epilepticus"]
+    },
+    {
+      "id": "midazolam",
+      "name": "Midazolam (Versed)",
+      "class": "Benzodiazepine",
+      "routes": ["IV", "IM", "intranasal", "PO", "buccal"],
+      "allergy_class": "benzodiazepines",
+      "semantic_tags": ["neurology", "psychiatry", "anesthesia", "benzodiazepine", "midazolam", "versed", "seizure", "sedation", "procedural sedation", "IV", "status epilepticus"]
+    },
+    {
+      "id": "phenobarbital",
+      "name": "Phenobarbital",
+      "class": "Barbiturate Anticonvulsant",
+      "routes": ["PO", "IV", "IM"],
+      "allergy_class": "barbiturates",
+      "semantic_tags": ["neurology", "anticonvulsant", "phenobarbital", "barbiturate", "seizure", "status epilepticus", "alcohol withdrawal", "neonatal seizure"]
+    },
+    {
+      "id": "alteplase_stroke",
+      "name": "Alteplase (tPA) — stroke use",
+      "class": "Thrombolytic",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["neurology", "thrombolytic", "alteplase", "tPA", "stroke", "ischemic stroke", "IV", "clot busting"]
+    },
+    {
+      "id": "mannitol",
+      "name": "Mannitol",
+      "class": "Osmotic Diuretic",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["neurology", "mannitol", "cerebral edema", "ICP", "intracranial pressure", "osmotic diuretic", "herniation", "IV"]
+    },
+    {
+      "id": "hypertonic_saline",
+      "name": "Hypertonic Saline (3% NaCl)",
+      "class": "Osmotic Agent",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["neurology", "fluids", "hypertonic saline", "3% saline", "cerebral edema", "ICP", "hyponatremia", "IV"]
+    },
+    {
+      "id": "sumatriptan",
+      "name": "Sumatriptan (Imitrex)",
+      "class": "Triptan (5-HT1B/1D Agonist)",
+      "routes": ["PO", "SQ", "intranasal"],
+      "allergy_class": "triptans",
+      "semantic_tags": ["neurology", "triptan", "sumatriptan", "imitrex", "migraine", "cluster headache", "abortive therapy"]
+    },
+    {
+      "id": "rizatriptan",
+      "name": "Rizatriptan (Maxalt)",
+      "class": "Triptan",
+      "routes": ["PO", "ODT"],
+      "allergy_class": "triptans",
+      "semantic_tags": ["neurology", "triptan", "rizatriptan", "maxalt", "migraine", "headache"]
+    },
+    {
+      "id": "topiramate",
+      "name": "Topiramate (Topamax)",
+      "class": "Anticonvulsant / Migraine Prophylaxis",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["neurology", "anticonvulsant", "topiramate", "topamax", "migraine prophylaxis", "seizure", "weight loss"]
+    },
+    {
+      "id": "levodopa_carbidopa",
+      "name": "Levodopa / Carbidopa (Sinemet)",
+      "class": "Dopaminergic (Parkinson's)",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["neurology", "parkinson's", "levodopa", "carbidopa", "sinemet", "dopamine", "movement disorder"]
+    },
+    {
+      "id": "donepezil",
+      "name": "Donepezil (Aricept)",
+      "class": "Acetylcholinesterase Inhibitor",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["neurology", "dementia", "donepezil", "aricept", "Alzheimer's", "cholinesterase inhibitor", "cognitive"]
+    },
+    {
+      "id": "memantine",
+      "name": "Memantine (Namenda)",
+      "class": "NMDA Receptor Antagonist",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["neurology", "dementia", "memantine", "namenda", "Alzheimer's", "NMDA antagonist", "cognitive"]
+    },
+    {
+      "id": "sertraline",
+      "name": "Sertraline (Zoloft)",
+      "class": "SSRI",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["psychiatry", "SSRI", "antidepressant", "sertraline", "zoloft", "depression", "anxiety", "PTSD", "OCD", "panic"]
+    },
+    {
+      "id": "escitalopram",
+      "name": "Escitalopram (Lexapro)",
+      "class": "SSRI",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["psychiatry", "SSRI", "antidepressant", "escitalopram", "lexapro", "depression", "anxiety", "GAD"]
+    },
+    {
+      "id": "fluoxetine",
+      "name": "Fluoxetine (Prozac)",
+      "class": "SSRI",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["psychiatry", "SSRI", "antidepressant", "fluoxetine", "prozac", "depression", "anxiety", "bulimia", "OCD"]
+    },
+    {
+      "id": "duloxetine",
+      "name": "Duloxetine (Cymbalta)",
+      "class": "SNRI",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["psychiatry", "SNRI", "antidepressant", "duloxetine", "cymbalta", "depression", "anxiety", "neuropathic pain", "fibromyalgia"]
+    },
+    {
+      "id": "venlafaxine",
+      "name": "Venlafaxine (Effexor)",
+      "class": "SNRI",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["psychiatry", "SNRI", "antidepressant", "venlafaxine", "effexor", "depression", "anxiety", "GAD", "hot flashes"]
+    },
+    {
+      "id": "bupropion",
+      "name": "Bupropion (Wellbutrin, Zyban)",
+      "class": "NDRI Antidepressant / Smoking Cessation",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["psychiatry", "antidepressant", "bupropion", "wellbutrin", "zyban", "depression", "smoking cessation", "ADHD", "NDRI"]
+    },
+    {
+      "id": "mirtazapine",
+      "name": "Mirtazapine (Remeron)",
+      "class": "NaSSA Antidepressant",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["psychiatry", "antidepressant", "mirtazapine", "remeron", "depression", "insomnia", "appetite stimulation", "weight gain"]
+    },
+    {
+      "id": "quetiapine",
+      "name": "Quetiapine (Seroquel)",
+      "class": "Atypical Antipsychotic",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["psychiatry", "antipsychotic", "quetiapine", "seroquel", "schizophrenia", "bipolar", "depression", "insomnia", "agitation"]
+    },
+    {
+      "id": "olanzapine",
+      "name": "Olanzapine (Zyprexa)",
+      "class": "Atypical Antipsychotic",
+      "routes": ["PO", "IM"],
+      "allergy_class": null,
+      "semantic_tags": ["psychiatry", "antipsychotic", "olanzapine", "zyprexa", "schizophrenia", "bipolar", "agitation", "delirium", "antiemetic"]
+    },
+    {
+      "id": "haloperidol",
+      "name": "Haloperidol (Haldol)",
+      "class": "Typical Antipsychotic",
+      "routes": ["PO", "IV", "IM"],
+      "allergy_class": "phenothiazines",
+      "semantic_tags": ["psychiatry", "antipsychotic", "haloperidol", "haldol", "delirium", "agitation", "schizophrenia", "IV", "ICU delirium"]
+    },
+    {
+      "id": "risperidone",
+      "name": "Risperidone (Risperdal)",
+      "class": "Atypical Antipsychotic",
+      "routes": ["PO", "IM"],
+      "allergy_class": null,
+      "semantic_tags": ["psychiatry", "antipsychotic", "risperidone", "risperdal", "schizophrenia", "bipolar", "autism", "agitation"]
+    },
+    {
+      "id": "lithium",
+      "name": "Lithium (Lithobid)",
+      "class": "Mood Stabilizer",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["psychiatry", "mood stabilizer", "lithium", "lithobid", "bipolar", "mania", "narrow therapeutic index"]
+    },
+    {
+      "id": "alprazolam",
+      "name": "Alprazolam (Xanax)",
+      "class": "Benzodiazepine",
+      "routes": ["PO"],
+      "allergy_class": "benzodiazepines",
+      "semantic_tags": ["psychiatry", "benzodiazepine", "alprazolam", "xanax", "anxiety", "panic disorder", "sedation"]
+    },
+    {
+      "id": "clonazepam",
+      "name": "Clonazepam (Klonopin)",
+      "class": "Benzodiazepine / Anticonvulsant",
+      "routes": ["PO"],
+      "allergy_class": "benzodiazepines",
+      "semantic_tags": ["neurology", "psychiatry", "benzodiazepine", "clonazepam", "klonopin", "anxiety", "panic disorder", "seizure", "RLS"]
+    },
+    {
+      "id": "buspirone",
+      "name": "Buspirone (Buspar)",
+      "class": "Azapirone Anxiolytic",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["psychiatry", "anxiolytic", "buspirone", "buspar", "anxiety", "GAD", "non-benzodiazepine"]
+    },
+    {
+      "id": "zolpidem",
+      "name": "Zolpidem (Ambien)",
+      "class": "Non-benzodiazepine Sedative-Hypnotic",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["psychiatry", "sedative", "hypnotic", "zolpidem", "ambien", "insomnia", "sleep", "Z-drug"]
+    },
+    {
+      "id": "melatonin",
+      "name": "Melatonin",
+      "class": "Sleep Aid / Chronobiotic",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["psychiatry", "sleep", "melatonin", "insomnia", "circadian rhythm", "OTC", "jet lag"]
+    },
+    {
+      "id": "methylphenidate",
+      "name": "Methylphenidate (Ritalin, Concerta)",
+      "class": "CNS Stimulant",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["psychiatry", "neurology", "stimulant", "methylphenidate", "ritalin", "concerta", "ADHD", "narcolepsy"]
+    },
+    {
+      "id": "amphetamine_salts",
+      "name": "Amphetamine Salts (Adderall)",
+      "class": "CNS Stimulant",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["psychiatry", "neurology", "stimulant", "amphetamine", "adderall", "ADHD", "narcolepsy"]
+    }
+  ]
+}

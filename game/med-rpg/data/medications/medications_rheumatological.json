@@ -1,0 +1,207 @@
+{
+  "category": "Rheumatological",
+  "category_id": "rheumatological",
+  "description": "Medications for rheumatological conditions including rheumatoid arthritis, lupus, gout, and inflammatory conditions. Steroids also appear in the Endocrine category.",
+  "medications": [
+    {
+      "id": "prednisone_rheum",
+      "name": "Prednisone",
+      "class": "Systemic Corticosteroid",
+      "routes": ["PO"],
+      "allergy_class": "corticosteroids",
+      "semantic_tags": ["rheumatological", "endocrine", "steroid", "corticosteroid", "prednisone", "inflammation", "autoimmune", "immunosuppression", "RA", "lupus", "vasculitis"]
+    },
+    {
+      "id": "methylprednisolone_rheum",
+      "name": "Methylprednisolone (Solu-Medrol)",
+      "class": "Systemic Corticosteroid",
+      "routes": ["IV", "IM", "PO"],
+      "allergy_class": "corticosteroids",
+      "semantic_tags": ["rheumatological", "endocrine", "steroid", "corticosteroid", "methylprednisolone", "solu-medrol", "pulse steroids", "autoimmune", "inflammation", "IV steroid"]
+    },
+    {
+      "id": "methotrexate",
+      "name": "Methotrexate (Rheumatrex, Trexall)",
+      "class": "DMARD / Antifolate",
+      "routes": ["PO", "SQ", "IM", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["rheumatological", "DMARD", "methotrexate", "rheumatrex", "trexall", "rheumatoid arthritis", "RA", "psoriasis", "lupus", "antifolate", "chemotherapy"]
+    },
+    {
+      "id": "hydroxychloroquine_rheum",
+      "name": "Hydroxychloroquine (Plaquenil)",
+      "class": "Aminoquinoline DMARD",
+      "routes": ["PO"],
+      "allergy_class": "quinolines",
+      "semantic_tags": ["rheumatological", "antiparasitic", "DMARD", "hydroxychloroquine", "plaquenil", "lupus", "SLE", "rheumatoid arthritis", "RA", "Sjogren's"]
+    },
+    {
+      "id": "sulfasalazine_rheum",
+      "name": "Sulfasalazine (Azulfidine)",
+      "class": "DMARD / 5-ASA + Sulfonamide",
+      "routes": ["PO"],
+      "allergy_class": "sulfonamides",
+      "semantic_tags": ["rheumatological", "GI", "DMARD", "sulfasalazine", "azulfidine", "rheumatoid arthritis", "RA", "IBD", "ulcerative colitis"]
+    },
+    {
+      "id": "leflunomide",
+      "name": "Leflunomide (Arava)",
+      "class": "DMARD",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["rheumatological", "DMARD", "leflunomide", "arava", "rheumatoid arthritis", "RA", "psoriatic arthritis"]
+    },
+    {
+      "id": "adalimumab_rheum",
+      "name": "Adalimumab (Humira)",
+      "class": "Anti-TNF Biologic",
+      "routes": ["SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["rheumatological", "GI", "biologic", "anti-TNF", "adalimumab", "humira", "rheumatoid arthritis", "RA", "psoriasis", "Crohn's", "IBD", "ankylosing spondylitis"]
+    },
+    {
+      "id": "etanercept",
+      "name": "Etanercept (Enbrel)",
+      "class": "Anti-TNF Biologic",
+      "routes": ["SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["rheumatological", "biologic", "anti-TNF", "etanercept", "enbrel", "rheumatoid arthritis", "RA", "psoriasis", "ankylosing spondylitis"]
+    },
+    {
+      "id": "infliximab_rheum",
+      "name": "Infliximab (Remicade)",
+      "class": "Anti-TNF Biologic",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["rheumatological", "GI", "biologic", "anti-TNF", "infliximab", "remicade", "rheumatoid arthritis", "RA", "IBD", "Crohn's", "IV"]
+    },
+    {
+      "id": "rituximab",
+      "name": "Rituximab (Rituxan)",
+      "class": "Anti-CD20 Biologic",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["rheumatological", "biologic", "rituximab", "rituxan", "rheumatoid arthritis", "RA", "lupus", "vasculitis", "lymphoma", "anti-CD20", "IV"]
+    },
+    {
+      "id": "tocilizumab",
+      "name": "Tocilizumab (Actemra)",
+      "class": "Anti-IL-6 Biologic",
+      "routes": ["IV", "SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["rheumatological", "biologic", "tocilizumab", "actemra", "rheumatoid arthritis", "RA", "cytokine storm", "IL-6 inhibitor", "giant cell arteritis"]
+    },
+    {
+      "id": "abatacept",
+      "name": "Abatacept (Orencia)",
+      "class": "T-cell Costimulation Inhibitor Biologic",
+      "routes": ["IV", "SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["rheumatological", "biologic", "abatacept", "orencia", "rheumatoid arthritis", "RA", "T cell inhibitor"]
+    },
+    {
+      "id": "secukinumab",
+      "name": "Secukinumab (Cosentyx)",
+      "class": "Anti-IL-17A Biologic",
+      "routes": ["SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["rheumatological", "biologic", "secukinumab", "cosentyx", "psoriasis", "ankylosing spondylitis", "psoriatic arthritis", "IL-17 inhibitor"]
+    },
+    {
+      "id": "ixekizumab",
+      "name": "Ixekizumab (Taltz)",
+      "class": "Anti-IL-17A Biologic",
+      "routes": ["SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["rheumatological", "biologic", "ixekizumab", "taltz", "psoriasis", "ankylosing spondylitis", "psoriatic arthritis", "IL-17 inhibitor"]
+    },
+    {
+      "id": "tofacitinib",
+      "name": "Tofacitinib (Xeljanz)",
+      "class": "JAK Inhibitor",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["rheumatological", "JAK inhibitor", "tofacitinib", "xeljanz", "rheumatoid arthritis", "RA", "ulcerative colitis", "psoriatic arthritis"]
+    },
+    {
+      "id": "baricitinib",
+      "name": "Baricitinib (Olumiant)",
+      "class": "JAK Inhibitor",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["rheumatological", "JAK inhibitor", "baricitinib", "olumiant", "rheumatoid arthritis", "RA", "COVID-19", "alopecia areata"]
+    },
+    {
+      "id": "colchicine",
+      "name": "Colchicine (Colcrys)",
+      "class": "Anti-inflammatory (gout)",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["rheumatological", "gout", "colchicine", "colcrys", "uric acid", "pericarditis", "acute gout", "anti-inflammatory"]
+    },
+    {
+      "id": "allopurinol",
+      "name": "Allopurinol (Zyloprim)",
+      "class": "Xanthine Oxidase Inhibitor",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["rheumatological", "gout", "allopurinol", "zyloprim", "uric acid", "hyperuricemia", "xanthine oxidase inhibitor", "gout prophylaxis"]
+    },
+    {
+      "id": "febuxostat",
+      "name": "Febuxostat (Uloric)",
+      "class": "Xanthine Oxidase Inhibitor",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["rheumatological", "gout", "febuxostat", "uloric", "uric acid", "hyperuricemia", "gout prophylaxis"]
+    },
+    {
+      "id": "probenecid",
+      "name": "Probenecid",
+      "class": "Uricosuric Agent",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["rheumatological", "gout", "probenecid", "uric acid", "uricosuric", "hyperuricemia"]
+    },
+    {
+      "id": "indomethacin",
+      "name": "Indomethacin (Indocin)",
+      "class": "NSAID",
+      "routes": ["PO", "PR", "IV"],
+      "allergy_class": "nsaids",
+      "semantic_tags": ["rheumatological", "NSAID", "indomethacin", "indocin", "gout", "pericarditis", "ankylosing spondylitis", "PDA closure", "anti-inflammatory"]
+    },
+    {
+      "id": "azathioprine",
+      "name": "Azathioprine (Imuran)",
+      "class": "Thiopurine Immunosuppressant",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["rheumatological", "GI", "immunosuppressant", "azathioprine", "imuran", "lupus", "IBD", "transplant", "myasthenia gravis"]
+    },
+    {
+      "id": "mycophenolate",
+      "name": "Mycophenolate (CellCept, Myfortic)",
+      "class": "Immunosuppressant",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["rheumatological", "immunosuppressant", "mycophenolate", "cellcept", "myfortic", "lupus", "transplant", "glomerulonephritis"]
+    },
+    {
+      "id": "cyclosporine",
+      "name": "Cyclosporine (Sandimmune, Neoral)",
+      "class": "Calcineurin Inhibitor Immunosuppressant",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["rheumatological", "immunosuppressant", "cyclosporine", "sandimmune", "neoral", "transplant", "psoriasis", "rheumatoid arthritis", "calcineurin inhibitor"]
+    },
+    {
+      "id": "tacrolimus",
+      "name": "Tacrolimus (Prograf, Astagraf)",
+      "class": "Calcineurin Inhibitor Immunosuppressant",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["rheumatological", "immunosuppressant", "tacrolimus", "prograf", "astagraf", "transplant", "calcineurin inhibitor", "narrow therapeutic index"]
+    }
+  ]
+}

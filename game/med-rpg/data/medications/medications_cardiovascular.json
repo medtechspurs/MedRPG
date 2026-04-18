@@ -1,0 +1,311 @@
+{
+  "category": "Cardiovascular",
+  "category_id": "cardiovascular",
+  "description": "Medications for heart disease, hypertension, arrhythmias, heart failure, and lipid management. Does not include vasopressors/inotropes (see separate category).",
+  "medications": [
+    {
+      "id": "metoprolol",
+      "name": "Metoprolol (Lopressor, Toprol XL)",
+      "class": "Beta-1 Selective Beta-blocker",
+      "routes": ["PO", "IV"],
+      "allergy_class": "beta_blockers",
+      "semantic_tags": ["cardiovascular", "beta blocker", "metoprolol", "lopressor", "toprol", "hypertension", "heart rate", "heart failure", "MI", "angina"]
+    },
+    {
+      "id": "carvedilol",
+      "name": "Carvedilol (Coreg)",
+      "class": "Non-selective Beta-blocker / Alpha-blocker",
+      "routes": ["PO"],
+      "allergy_class": "beta_blockers",
+      "semantic_tags": ["cardiovascular", "beta blocker", "carvedilol", "coreg", "heart failure", "hypertension", "cardiomyopathy"]
+    },
+    {
+      "id": "atenolol",
+      "name": "Atenolol (Tenormin)",
+      "class": "Beta-1 Selective Beta-blocker",
+      "routes": ["PO"],
+      "allergy_class": "beta_blockers",
+      "semantic_tags": ["cardiovascular", "beta blocker", "atenolol", "tenormin", "hypertension", "angina", "heart rate"]
+    },
+    {
+      "id": "propranolol",
+      "name": "Propranolol (Inderal)",
+      "class": "Non-selective Beta-blocker",
+      "routes": ["PO", "IV"],
+      "allergy_class": "beta_blockers",
+      "semantic_tags": ["cardiovascular", "beta blocker", "propranolol", "inderal", "hypertension", "tremor", "migraine", "anxiety", "thyroid storm"]
+    },
+    {
+      "id": "labetalol",
+      "name": "Labetalol (Trandate)",
+      "class": "Non-selective Beta-blocker / Alpha-blocker",
+      "routes": ["PO", "IV"],
+      "allergy_class": "beta_blockers",
+      "semantic_tags": ["cardiovascular", "beta blocker", "labetalol", "trandate", "hypertension", "hypertensive emergency", "IV"]
+    },
+    {
+      "id": "lisinopril",
+      "name": "Lisinopril (Prinivil, Zestril)",
+      "class": "ACE Inhibitor",
+      "routes": ["PO"],
+      "allergy_class": "ace_inhibitors",
+      "semantic_tags": ["cardiovascular", "ACE inhibitor", "lisinopril", "prinivil", "zestril", "hypertension", "heart failure", "diabetes", "kidney protection"]
+    },
+    {
+      "id": "enalapril",
+      "name": "Enalapril (Vasotec)",
+      "class": "ACE Inhibitor",
+      "routes": ["PO", "IV"],
+      "allergy_class": "ace_inhibitors",
+      "semantic_tags": ["cardiovascular", "ACE inhibitor", "enalapril", "vasotec", "hypertension", "heart failure", "IV"]
+    },
+    {
+      "id": "ramipril",
+      "name": "Ramipril (Altace)",
+      "class": "ACE Inhibitor",
+      "routes": ["PO"],
+      "allergy_class": "ace_inhibitors",
+      "semantic_tags": ["cardiovascular", "ACE inhibitor", "ramipril", "altace", "hypertension", "heart failure", "post MI"]
+    },
+    {
+      "id": "losartan",
+      "name": "Losartan (Cozaar)",
+      "class": "ARB (Angiotensin Receptor Blocker)",
+      "routes": ["PO"],
+      "allergy_class": "arbs",
+      "semantic_tags": ["cardiovascular", "ARB", "losartan", "cozaar", "hypertension", "heart failure", "kidney protection", "ACE inhibitor alternative"]
+    },
+    {
+      "id": "valsartan",
+      "name": "Valsartan (Diovan)",
+      "class": "ARB",
+      "routes": ["PO"],
+      "allergy_class": "arbs",
+      "semantic_tags": ["cardiovascular", "ARB", "valsartan", "diovan", "hypertension", "heart failure"]
+    },
+    {
+      "id": "sacubitril_valsartan",
+      "name": "Sacubitril / Valsartan (Entresto)",
+      "class": "ARNI (ARB + Neprilysin Inhibitor)",
+      "routes": ["PO"],
+      "allergy_class": "arbs",
+      "semantic_tags": ["cardiovascular", "ARNI", "sacubitril", "valsartan", "entresto", "heart failure", "HFrEF"]
+    },
+    {
+      "id": "amlodipine",
+      "name": "Amlodipine (Norvasc)",
+      "class": "Dihydropyridine Calcium Channel Blocker",
+      "routes": ["PO"],
+      "allergy_class": "calcium_channel_blockers",
+      "semantic_tags": ["cardiovascular", "calcium channel blocker", "amlodipine", "norvasc", "hypertension", "angina", "CCB"]
+    },
+    {
+      "id": "diltiazem",
+      "name": "Diltiazem (Cardizem, Tiazac)",
+      "class": "Non-dihydropyridine Calcium Channel Blocker",
+      "routes": ["PO", "IV"],
+      "allergy_class": "calcium_channel_blockers",
+      "semantic_tags": ["cardiovascular", "calcium channel blocker", "diltiazem", "cardizem", "rate control", "atrial fibrillation", "SVT", "angina", "CCB"]
+    },
+    {
+      "id": "verapamil",
+      "name": "Verapamil (Calan, Isoptin)",
+      "class": "Non-dihydropyridine Calcium Channel Blocker",
+      "routes": ["PO", "IV"],
+      "allergy_class": "calcium_channel_blockers",
+      "semantic_tags": ["cardiovascular", "calcium channel blocker", "verapamil", "calan", "rate control", "SVT", "atrial fibrillation", "CCB"]
+    },
+    {
+      "id": "hydralazine",
+      "name": "Hydralazine (Apresoline)",
+      "class": "Direct Vasodilator",
+      "routes": ["PO", "IV", "IM"],
+      "allergy_class": null,
+      "semantic_tags": ["cardiovascular", "vasodilator", "hydralazine", "apresoline", "hypertension", "hypertensive emergency", "heart failure", "pregnancy"]
+    },
+    {
+      "id": "nitroprusside",
+      "name": "Sodium Nitroprusside (Nipride)",
+      "class": "Direct Vasodilator",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["cardiovascular", "vasodilator", "nitroprusside", "nipride", "hypertensive emergency", "IV", "afterload reduction"]
+    },
+    {
+      "id": "nitroglycerin",
+      "name": "Nitroglycerin (NTG)",
+      "class": "Nitrate",
+      "routes": ["sublingual", "IV", "topical", "transdermal"],
+      "allergy_class": null,
+      "semantic_tags": ["cardiovascular", "nitrate", "nitroglycerin", "NTG", "angina", "chest pain", "MI", "heart failure", "preload reduction"]
+    },
+    {
+      "id": "isosorbide_mononitrate",
+      "name": "Isosorbide Mononitrate (Imdur)",
+      "class": "Nitrate",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["cardiovascular", "nitrate", "isosorbide", "imdur", "angina", "chest pain", "long acting nitrate"]
+    },
+    {
+      "id": "digoxin",
+      "name": "Digoxin (Lanoxin)",
+      "class": "Cardiac Glycoside",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["cardiovascular", "digoxin", "lanoxin", "heart failure", "atrial fibrillation", "rate control", "narrow therapeutic index"]
+    },
+    {
+      "id": "amiodarone",
+      "name": "Amiodarone (Cordarone, Pacerone)",
+      "class": "Class III Antiarrhythmic",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["cardiovascular", "antiarrhythmic", "amiodarone", "cordarone", "atrial fibrillation", "ventricular tachycardia", "VT", "VF", "ACLS"]
+    },
+    {
+      "id": "sotalol",
+      "name": "Sotalol (Betapace)",
+      "class": "Class III Antiarrhythmic / Beta-blocker",
+      "routes": ["PO", "IV"],
+      "allergy_class": "beta_blockers",
+      "semantic_tags": ["cardiovascular", "antiarrhythmic", "sotalol", "betapace", "atrial fibrillation", "ventricular arrhythmia"]
+    },
+    {
+      "id": "flecainide",
+      "name": "Flecainide (Tambocor)",
+      "class": "Class IC Antiarrhythmic",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["cardiovascular", "antiarrhythmic", "flecainide", "tambocor", "atrial fibrillation", "SVT", "rhythm control"]
+    },
+    {
+      "id": "adenosine",
+      "name": "Adenosine (Adenocard)",
+      "class": "Antiarrhythmic",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["cardiovascular", "antiarrhythmic", "adenosine", "adenocard", "SVT", "PSVT", "rapid push", "IV", "ACLS"]
+    },
+    {
+      "id": "atropine",
+      "name": "Atropine",
+      "class": "Anticholinergic / Antiarrhythmic",
+      "routes": ["IV", "IM", "ET"],
+      "allergy_class": null,
+      "semantic_tags": ["cardiovascular", "anticholinergic", "atropine", "bradycardia", "ACLS", "heart block", "organophosphate"]
+    },
+    {
+      "id": "furosemide",
+      "name": "Furosemide (Lasix)",
+      "class": "Loop Diuretic",
+      "routes": ["PO", "IV"],
+      "allergy_class": "sulfonamides",
+      "semantic_tags": ["cardiovascular", "diuretic", "furosemide", "lasix", "heart failure", "edema", "fluid overload", "hypertension", "loop diuretic"]
+    },
+    {
+      "id": "bumetanide",
+      "name": "Bumetanide (Bumex)",
+      "class": "Loop Diuretic",
+      "routes": ["PO", "IV"],
+      "allergy_class": "sulfonamides",
+      "semantic_tags": ["cardiovascular", "diuretic", "bumetanide", "bumex", "heart failure", "edema", "loop diuretic"]
+    },
+    {
+      "id": "hydrochlorothiazide",
+      "name": "Hydrochlorothiazide (HCTZ)",
+      "class": "Thiazide Diuretic",
+      "routes": ["PO"],
+      "allergy_class": "sulfonamides",
+      "semantic_tags": ["cardiovascular", "diuretic", "hydrochlorothiazide", "HCTZ", "hypertension", "thiazide", "edema"]
+    },
+    {
+      "id": "chlorthalidone",
+      "name": "Chlorthalidone",
+      "class": "Thiazide-like Diuretic",
+      "routes": ["PO"],
+      "allergy_class": "sulfonamides",
+      "semantic_tags": ["cardiovascular", "diuretic", "chlorthalidone", "hypertension", "thiazide"]
+    },
+    {
+      "id": "spironolactone",
+      "name": "Spironolactone (Aldactone)",
+      "class": "Potassium-sparing Diuretic / Aldosterone Antagonist",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["cardiovascular", "diuretic", "spironolactone", "aldactone", "heart failure", "hyperaldosteronism", "ascites", "potassium sparing", "anti-androgenic"]
+    },
+    {
+      "id": "eplerenone",
+      "name": "Eplerenone (Inspra)",
+      "class": "Aldosterone Antagonist",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["cardiovascular", "diuretic", "eplerenone", "inspra", "heart failure", "post MI", "aldosterone antagonist"]
+    },
+    {
+      "id": "atorvastatin",
+      "name": "Atorvastatin (Lipitor)",
+      "class": "HMG-CoA Reductase Inhibitor (Statin)",
+      "routes": ["PO"],
+      "allergy_class": "statins",
+      "semantic_tags": ["cardiovascular", "statin", "atorvastatin", "lipitor", "cholesterol", "lipid", "hyperlipidemia", "cardiovascular prevention"]
+    },
+    {
+      "id": "rosuvastatin",
+      "name": "Rosuvastatin (Crestor)",
+      "class": "HMG-CoA Reductase Inhibitor (Statin)",
+      "routes": ["PO"],
+      "allergy_class": "statins",
+      "semantic_tags": ["cardiovascular", "statin", "rosuvastatin", "crestor", "cholesterol", "lipid", "hyperlipidemia"]
+    },
+    {
+      "id": "simvastatin",
+      "name": "Simvastatin (Zocor)",
+      "class": "HMG-CoA Reductase Inhibitor (Statin)",
+      "routes": ["PO"],
+      "allergy_class": "statins",
+      "semantic_tags": ["cardiovascular", "statin", "simvastatin", "zocor", "cholesterol", "lipid", "hyperlipidemia"]
+    },
+    {
+      "id": "ezetimibe",
+      "name": "Ezetimibe (Zetia)",
+      "class": "Cholesterol Absorption Inhibitor",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["cardiovascular", "ezetimibe", "zetia", "cholesterol", "lipid", "hyperlipidemia", "statin adjunct"]
+    },
+    {
+      "id": "ivabradine",
+      "name": "Ivabradine (Corlanor)",
+      "class": "If Channel Inhibitor",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["cardiovascular", "ivabradine", "corlanor", "heart failure", "heart rate reduction", "HFrEF"]
+    },
+    {
+      "id": "dofetilide",
+      "name": "Dofetilide (Tikosyn)",
+      "class": "Class III Antiarrhythmic",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["cardiovascular", "antiarrhythmic", "dofetilide", "tikosyn", "atrial fibrillation", "rhythm control"]
+    },
+    {
+      "id": "nifedipine",
+      "name": "Nifedipine (Procardia, Adalat)",
+      "class": "Dihydropyridine Calcium Channel Blocker",
+      "routes": ["PO"],
+      "allergy_class": "calcium_channel_blockers",
+      "semantic_tags": ["cardiovascular", "calcium channel blocker", "nifedipine", "procardia", "adalat", "hypertension", "angina", "preterm labor", "CCB"]
+    },
+    {
+      "id": "clonidine",
+      "name": "Clonidine (Catapres)",
+      "class": "Central Alpha-2 Agonist",
+      "routes": ["PO", "transdermal", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["cardiovascular", "antihypertensive", "clonidine", "catapres", "hypertension", "opioid withdrawal", "ADHD", "sedation"]
+    }
+  ]
+}

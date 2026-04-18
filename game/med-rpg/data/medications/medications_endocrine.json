@@ -1,0 +1,231 @@
+{
+  "category": "Endocrine",
+  "category_id": "endocrine",
+  "description": "Medications for endocrine disorders including diabetes, thyroid disease, adrenal conditions, and steroids.",
+  "medications": [
+    {
+      "id": "insulin_regular",
+      "name": "Insulin Regular (Humulin R, Novolin R)",
+      "class": "Short-acting Insulin",
+      "routes": ["IV", "SQ", "IM"],
+      "allergy_class": "insulins",
+      "semantic_tags": ["endocrine", "insulin", "diabetes", "regular insulin", "humulin R", "novolin R", "hyperglycemia", "DKA", "short acting"]
+    },
+    {
+      "id": "insulin_lispro",
+      "name": "Insulin Lispro (Humalog)",
+      "class": "Rapid-acting Insulin Analogue",
+      "routes": ["SQ", "IV"],
+      "allergy_class": "insulins",
+      "semantic_tags": ["endocrine", "insulin", "diabetes", "rapid acting", "humalog", "lispro", "mealtime insulin", "hyperglycemia"]
+    },
+    {
+      "id": "insulin_aspart",
+      "name": "Insulin Aspart (NovoLog)",
+      "class": "Rapid-acting Insulin Analogue",
+      "routes": ["SQ", "IV"],
+      "allergy_class": "insulins",
+      "semantic_tags": ["endocrine", "insulin", "diabetes", "rapid acting", "novolog", "aspart", "mealtime insulin"]
+    },
+    {
+      "id": "insulin_glargine",
+      "name": "Insulin Glargine (Lantus, Basaglar)",
+      "class": "Long-acting Insulin Analogue",
+      "routes": ["SQ"],
+      "allergy_class": "insulins",
+      "semantic_tags": ["endocrine", "insulin", "diabetes", "long acting", "lantus", "basaglar", "glargine", "basal insulin", "once daily"]
+    },
+    {
+      "id": "insulin_detemir",
+      "name": "Insulin Detemir (Levemir)",
+      "class": "Long-acting Insulin Analogue",
+      "routes": ["SQ"],
+      "allergy_class": "insulins",
+      "semantic_tags": ["endocrine", "insulin", "diabetes", "long acting", "levemir", "detemir", "basal insulin"]
+    },
+    {
+      "id": "insulin_nph",
+      "name": "Insulin NPH (Humulin N, Novolin N)",
+      "class": "Intermediate-acting Insulin",
+      "routes": ["SQ"],
+      "allergy_class": "insulins",
+      "semantic_tags": ["endocrine", "insulin", "diabetes", "intermediate acting", "NPH", "humulin N", "novolin N"]
+    },
+    {
+      "id": "metformin",
+      "name": "Metformin (Glucophage)",
+      "class": "Biguanide",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["endocrine", "diabetes", "metformin", "glucophage", "type 2 diabetes", "biguanide", "first line", "T2DM"]
+    },
+    {
+      "id": "glipizide",
+      "name": "Glipizide (Glucotrol)",
+      "class": "Sulfonylurea",
+      "routes": ["PO"],
+      "allergy_class": "sulfonamides",
+      "semantic_tags": ["endocrine", "diabetes", "glipizide", "glucotrol", "sulfonylurea", "type 2 diabetes", "T2DM"]
+    },
+    {
+      "id": "glimepiride",
+      "name": "Glimepiride (Amaryl)",
+      "class": "Sulfonylurea",
+      "routes": ["PO"],
+      "allergy_class": "sulfonamides",
+      "semantic_tags": ["endocrine", "diabetes", "glimepiride", "amaryl", "sulfonylurea", "type 2 diabetes"]
+    },
+    {
+      "id": "sitagliptin",
+      "name": "Sitagliptin (Januvia)",
+      "class": "DPP-4 Inhibitor",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["endocrine", "diabetes", "sitagliptin", "januvia", "DPP-4 inhibitor", "type 2 diabetes", "T2DM"]
+    },
+    {
+      "id": "empagliflozin",
+      "name": "Empagliflozin (Jardiance)",
+      "class": "SGLT2 Inhibitor",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["endocrine", "cardiovascular", "diabetes", "empagliflozin", "jardiance", "SGLT2 inhibitor", "heart failure", "kidney protection", "T2DM"]
+    },
+    {
+      "id": "dapagliflozin",
+      "name": "Dapagliflozin (Farxiga)",
+      "class": "SGLT2 Inhibitor",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["endocrine", "cardiovascular", "diabetes", "dapagliflozin", "farxiga", "SGLT2 inhibitor", "heart failure", "T2DM"]
+    },
+    {
+      "id": "semaglutide",
+      "name": "Semaglutide (Ozempic, Wegovy, Rybelsus)",
+      "class": "GLP-1 Receptor Agonist",
+      "routes": ["SQ", "PO"],
+      "allergy_class": null,
+      "semantic_tags": ["endocrine", "diabetes", "weight loss", "semaglutide", "ozempic", "wegovy", "rybelsus", "GLP-1", "type 2 diabetes", "obesity"]
+    },
+    {
+      "id": "liraglutide",
+      "name": "Liraglutide (Victoza, Saxenda)",
+      "class": "GLP-1 Receptor Agonist",
+      "routes": ["SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["endocrine", "diabetes", "weight loss", "liraglutide", "victoza", "saxenda", "GLP-1", "type 2 diabetes", "obesity"]
+    },
+    {
+      "id": "pioglitazone",
+      "name": "Pioglitazone (Actos)",
+      "class": "Thiazolidinedione",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["endocrine", "diabetes", "pioglitazone", "actos", "thiazolidinedione", "insulin resistance", "T2DM"]
+    },
+    {
+      "id": "levothyroxine",
+      "name": "Levothyroxine (Synthroid, Levoxyl)",
+      "class": "Synthetic Thyroid Hormone (T4)",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["endocrine", "thyroid", "levothyroxine", "synthroid", "levoxyl", "hypothyroidism", "thyroid replacement", "T4"]
+    },
+    {
+      "id": "methimazole",
+      "name": "Methimazole (Tapazole)",
+      "class": "Thionamide (antithyroid)",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["endocrine", "thyroid", "methimazole", "tapazole", "hyperthyroidism", "Graves disease", "thyroid storm", "antithyroid"]
+    },
+    {
+      "id": "propylthiouracil",
+      "name": "Propylthiouracil (PTU)",
+      "class": "Thionamide (antithyroid)",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["endocrine", "thyroid", "PTU", "propylthiouracil", "hyperthyroidism", "thyroid storm", "pregnancy", "antithyroid"]
+    },
+    {
+      "id": "prednisone",
+      "name": "Prednisone",
+      "class": "Systemic Corticosteroid",
+      "routes": ["PO"],
+      "allergy_class": "corticosteroids",
+      "semantic_tags": ["endocrine", "rheumatological", "steroid", "corticosteroid", "prednisone", "inflammation", "autoimmune", "allergy", "asthma", "immunosuppression"]
+    },
+    {
+      "id": "methylprednisolone",
+      "name": "Methylprednisolone (Solu-Medrol, Medrol)",
+      "class": "Systemic Corticosteroid",
+      "routes": ["IV", "IM", "PO"],
+      "allergy_class": "corticosteroids",
+      "semantic_tags": ["endocrine", "rheumatological", "steroid", "corticosteroid", "methylprednisolone", "solu-medrol", "inflammation", "autoimmune", "IV steroid", "pulse steroids"]
+    },
+    {
+      "id": "dexamethasone",
+      "name": "Dexamethasone (Decadron)",
+      "class": "Systemic Corticosteroid",
+      "routes": ["PO", "IV", "IM"],
+      "allergy_class": "corticosteroids",
+      "semantic_tags": ["endocrine", "rheumatological", "steroid", "corticosteroid", "dexamethasone", "decadron", "cerebral edema", "croup", "antiemetic", "COVID", "meningitis", "airway edema"]
+    },
+    {
+      "id": "hydrocortisone",
+      "name": "Hydrocortisone (Solu-Cortef)",
+      "class": "Systemic Corticosteroid",
+      "routes": ["IV", "IM", "PO", "topical"],
+      "allergy_class": "corticosteroids",
+      "semantic_tags": ["endocrine", "rheumatological", "steroid", "corticosteroid", "hydrocortisone", "solu-cortef", "adrenal insufficiency", "septic shock", "stress dose steroids"]
+    },
+    {
+      "id": "fludrocortisone",
+      "name": "Fludrocortisone (Florinef)",
+      "class": "Mineralocorticoid",
+      "routes": ["PO"],
+      "allergy_class": "corticosteroids",
+      "semantic_tags": ["endocrine", "mineralocorticoid", "fludrocortisone", "florinef", "adrenal insufficiency", "Addison's disease", "orthostatic hypotension"]
+    },
+    {
+      "id": "glucagon",
+      "name": "Glucagon",
+      "class": "Hyperglycemic Agent / Beta-blocker Antidote",
+      "routes": ["IV", "IM", "SQ", "intranasal"],
+      "allergy_class": null,
+      "semantic_tags": ["endocrine", "reversal", "glucagon", "hypoglycemia", "beta blocker overdose", "antidote", "emergency"]
+    },
+    {
+      "id": "dextrose_50",
+      "name": "Dextrose 50% (D50)",
+      "class": "Hyperglycemic Agent",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["endocrine", "fluids", "dextrose", "D50", "hypoglycemia", "emergency", "glucose", "IV"]
+    },
+    {
+      "id": "cabergoline",
+      "name": "Cabergoline (Dostinex)",
+      "class": "Dopamine Agonist",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["endocrine", "cabergoline", "dostinex", "prolactinoma", "hyperprolactinemia", "dopamine agonist"]
+    },
+    {
+      "id": "octreotide_endocrine",
+      "name": "Octreotide (Sandostatin) — endocrine use",
+      "class": "Somatostatin Analogue",
+      "routes": ["SQ", "IV", "IM"],
+      "allergy_class": null,
+      "semantic_tags": ["endocrine", "octreotide", "sandostatin", "acromegaly", "carcinoid", "VIPoma", "insulinoma", "somatostatin"]
+    },
+    {
+      "id": "testosterone",
+      "name": "Testosterone",
+      "class": "Androgen",
+      "routes": ["IM", "transdermal", "SQ", "buccal"],
+      "allergy_class": null,
+      "semantic_tags": ["endocrine", "testosterone", "androgen", "hypogonadism", "TRT", "testosterone replacement"]
+    }
+  ]
+}

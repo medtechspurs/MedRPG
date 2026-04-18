@@ -1,0 +1,127 @@
+{
+  "category": "Anesthetics",
+  "category_id": "anesthetics",
+  "description": "General and local anesthetic agents used for procedural sedation, induction, and maintenance of anesthesia.",
+  "medications": [
+    {
+      "id": "propofol",
+      "name": "Propofol (Diprivan)",
+      "class": "IV General Anesthetic / Sedative",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["anesthetic", "sedative", "propofol", "diprivan", "general anesthesia", "ICU sedation", "procedural sedation", "IV", "induction", "TIVA"]
+    },
+    {
+      "id": "ketamine",
+      "name": "Ketamine (Ketalar)",
+      "class": "Dissociative Anesthetic / Analgesic",
+      "routes": ["IV", "IM", "PO", "intranasal"],
+      "allergy_class": null,
+      "semantic_tags": ["anesthetic", "analgesic", "ketamine", "ketalar", "dissociative", "procedural sedation", "pain", "depression", "intubation", "IV", "IM", "induction"]
+    },
+    {
+      "id": "etomidate",
+      "name": "Etomidate (Amidate)",
+      "class": "IV General Anesthetic (induction)",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["anesthetic", "etomidate", "amidate", "RSI", "rapid sequence intubation", "induction", "hemodynamically stable", "IV"]
+    },
+    {
+      "id": "fentanyl_anesthesia",
+      "name": "Fentanyl — anesthetic use",
+      "class": "Opioid Analgesic / Anesthetic Adjunct",
+      "routes": ["IV", "IM"],
+      "allergy_class": "opioids",
+      "semantic_tags": ["anesthetic", "opioid", "fentanyl", "procedural sedation", "analgesia", "intubation", "IV"]
+    },
+    {
+      "id": "midazolam_anesthesia",
+      "name": "Midazolam — anesthetic use",
+      "class": "Benzodiazepine Anesthetic Adjunct",
+      "routes": ["IV", "IM"],
+      "allergy_class": "benzodiazepines",
+      "semantic_tags": ["anesthetic", "benzodiazepine", "midazolam", "versed", "procedural sedation", "pre-medication", "anxiolysis", "amnesia", "IV"]
+    },
+    {
+      "id": "dexmedetomidine",
+      "name": "Dexmedetomidine (Precedex)",
+      "class": "Alpha-2 Agonist Sedative",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["anesthetic", "sedative", "dexmedetomidine", "precedex", "ICU sedation", "cooperative sedation", "procedural sedation", "opioid sparing", "IV"]
+    },
+    {
+      "id": "lidocaine_local",
+      "name": "Lidocaine (local anesthetic)",
+      "class": "Amide Local Anesthetic",
+      "routes": ["injection", "topical", "IV"],
+      "allergy_class": "local_anesthetics",
+      "semantic_tags": ["anesthetic", "local anesthetic", "lidocaine", "amide", "nerve block", "infiltration", "topical", "IV antiarrhythmic", "numbing"]
+    },
+    {
+      "id": "bupivacaine",
+      "name": "Bupivacaine (Marcaine, Exparel)",
+      "class": "Amide Local Anesthetic",
+      "routes": ["injection", "epidural", "spinal"],
+      "allergy_class": "local_anesthetics",
+      "semantic_tags": ["anesthetic", "local anesthetic", "bupivacaine", "marcaine", "exparel", "epidural", "spinal", "nerve block", "long acting"]
+    },
+    {
+      "id": "ropivacaine",
+      "name": "Ropivacaine (Naropin)",
+      "class": "Amide Local Anesthetic",
+      "routes": ["injection", "epidural"],
+      "allergy_class": "local_anesthetics",
+      "semantic_tags": ["anesthetic", "local anesthetic", "ropivacaine", "naropin", "epidural", "nerve block", "long acting", "less cardiotoxic"]
+    },
+    {
+      "id": "mepivacaine",
+      "name": "Mepivacaine (Carbocaine)",
+      "class": "Amide Local Anesthetic",
+      "routes": ["injection"],
+      "allergy_class": "local_anesthetics",
+      "semantic_tags": ["anesthetic", "local anesthetic", "mepivacaine", "carbocaine", "dental", "nerve block", "intermediate acting"]
+    },
+    {
+      "id": "benzocaine",
+      "name": "Benzocaine (Orajel, Americaine)",
+      "class": "Ester Local Anesthetic (topical)",
+      "routes": ["topical"],
+      "allergy_class": "local_anesthetics",
+      "semantic_tags": ["anesthetic", "local anesthetic", "benzocaine", "orajel", "americaine", "topical", "ester", "dental", "mouth pain", "throat spray"]
+    },
+    {
+      "id": "sevoflurane",
+      "name": "Sevoflurane",
+      "class": "Inhalational General Anesthetic",
+      "routes": ["inhaled"],
+      "allergy_class": null,
+      "semantic_tags": ["anesthetic", "inhalational", "sevoflurane", "volatile anesthetic", "general anesthesia", "OR", "inhaled anesthetic", "maintenance"]
+    },
+    {
+      "id": "isoflurane",
+      "name": "Isoflurane",
+      "class": "Inhalational General Anesthetic",
+      "routes": ["inhaled"],
+      "allergy_class": null,
+      "semantic_tags": ["anesthetic", "inhalational", "isoflurane", "volatile anesthetic", "general anesthesia", "OR", "inhaled anesthetic", "maintenance"]
+    },
+    {
+      "id": "desflurane",
+      "name": "Desflurane (Suprane)",
+      "class": "Inhalational General Anesthetic",
+      "routes": ["inhaled"],
+      "allergy_class": null,
+      "semantic_tags": ["anesthetic", "inhalational", "desflurane", "suprane", "volatile anesthetic", "general anesthesia", "rapid emergence", "maintenance"]
+    },
+    {
+      "id": "nitrous_oxide",
+      "name": "Nitrous Oxide (N2O)",
+      "class": "Inhalational Anesthetic / Analgesic",
+      "routes": ["inhaled"],
+      "allergy_class": null,
+      "semantic_tags": ["anesthetic", "analgesic", "nitrous oxide", "laughing gas", "N2O", "procedural sedation", "dental", "labor analgesia", "inhaled"]
+    }
+  ]
+}

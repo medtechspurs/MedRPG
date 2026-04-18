@@ -1,0 +1,223 @@
+{
+  "category": "Dermatologic",
+  "category_id": "dermatologic",
+  "description": "Topical and systemic medications for skin conditions including eczema, psoriasis, acne, infections, and wound care.",
+  "medications": [
+    {
+      "id": "triamcinolone_topical",
+      "name": "Triamcinolone (Kenalog cream/ointment)",
+      "class": "Topical Corticosteroid (medium potency)",
+      "routes": ["topical", "intralesional"],
+      "allergy_class": "corticosteroids",
+      "semantic_tags": ["dermatology", "topical steroid", "corticosteroid", "triamcinolone", "kenalog", "eczema", "dermatitis", "inflammation", "rash"]
+    },
+    {
+      "id": "hydrocortisone_topical",
+      "name": "Hydrocortisone Cream (1%, 2.5%)",
+      "class": "Topical Corticosteroid (low potency)",
+      "routes": ["topical"],
+      "allergy_class": "corticosteroids",
+      "semantic_tags": ["dermatology", "topical steroid", "corticosteroid", "hydrocortisone", "eczema", "dermatitis", "rash", "itching", "OTC", "mild"]
+    },
+    {
+      "id": "clobetasol",
+      "name": "Clobetasol (Temovate)",
+      "class": "Topical Corticosteroid (super high potency)",
+      "routes": ["topical"],
+      "allergy_class": "corticosteroids",
+      "semantic_tags": ["dermatology", "topical steroid", "corticosteroid", "clobetasol", "temovate", "psoriasis", "severe eczema", "high potency", "inflammation"]
+    },
+    {
+      "id": "betamethasone_topical",
+      "name": "Betamethasone (Diprolene, Luxíq)",
+      "class": "Topical Corticosteroid (high potency)",
+      "routes": ["topical"],
+      "allergy_class": "corticosteroids",
+      "semantic_tags": ["dermatology", "topical steroid", "corticosteroid", "betamethasone", "diprolene", "eczema", "psoriasis", "high potency", "inflammation"]
+    },
+    {
+      "id": "tacrolimus_topical",
+      "name": "Tacrolimus Ointment (Protopic)",
+      "class": "Topical Calcineurin Inhibitor",
+      "routes": ["topical"],
+      "allergy_class": null,
+      "semantic_tags": ["dermatology", "tacrolimus", "protopic", "eczema", "atopic dermatitis", "calcineurin inhibitor", "steroid sparing", "topical immunomodulator"]
+    },
+    {
+      "id": "pimecrolimus",
+      "name": "Pimecrolimus (Elidel)",
+      "class": "Topical Calcineurin Inhibitor",
+      "routes": ["topical"],
+      "allergy_class": null,
+      "semantic_tags": ["dermatology", "pimecrolimus", "elidel", "eczema", "atopic dermatitis", "calcineurin inhibitor", "steroid sparing", "topical"]
+    },
+    {
+      "id": "dupilumab_derm",
+      "name": "Dupilumab (Dupixent)",
+      "class": "Anti-IL-4/IL-13 Biologic",
+      "routes": ["SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["dermatology", "biologic", "dupilumab", "dupixent", "atopic dermatitis", "eczema", "IL-4 IL-13 inhibitor", "moderate to severe eczema"]
+    },
+    {
+      "id": "calcipotriene",
+      "name": "Calcipotriene (Dovonex)",
+      "class": "Vitamin D Analogue (topical)",
+      "routes": ["topical"],
+      "allergy_class": null,
+      "semantic_tags": ["dermatology", "calcipotriene", "dovonex", "psoriasis", "vitamin D analogue", "topical", "plaque psoriasis"]
+    },
+    {
+      "id": "tazarotene",
+      "name": "Tazarotene (Tazorac)",
+      "class": "Topical Retinoid",
+      "routes": ["topical"],
+      "allergy_class": null,
+      "semantic_tags": ["dermatology", "retinoid", "tazarotene", "tazorac", "psoriasis", "acne", "topical retinoid"]
+    },
+    {
+      "id": "tretinoin",
+      "name": "Tretinoin (Retin-A)",
+      "class": "Topical Retinoid",
+      "routes": ["topical"],
+      "allergy_class": null,
+      "semantic_tags": ["dermatology", "retinoid", "tretinoin", "retin-A", "acne", "anti-aging", "photoaging", "topical retinoid"]
+    },
+    {
+      "id": "isotretinoin",
+      "name": "Isotretinoin (Accutane, Claravis)",
+      "class": "Systemic Retinoid",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["dermatology", "retinoid", "isotretinoin", "accutane", "claravis", "severe acne", "cystic acne", "systemic retinoid", "iPLEDGE"]
+    },
+    {
+      "id": "benzoyl_peroxide",
+      "name": "Benzoyl Peroxide",
+      "class": "Topical Antibacterial / Keratolytic",
+      "routes": ["topical"],
+      "allergy_class": null,
+      "semantic_tags": ["dermatology", "acne", "benzoyl peroxide", "topical", "antibacterial", "keratolytic", "OTC", "gel", "wash"]
+    },
+    {
+      "id": "clindamycin_topical",
+      "name": "Clindamycin (topical gel/lotion)",
+      "class": "Topical Antibiotic",
+      "routes": ["topical"],
+      "allergy_class": null,
+      "semantic_tags": ["dermatology", "acne", "antibiotic", "clindamycin", "topical", "gel", "lotion", "antibacterial"]
+    },
+    {
+      "id": "adapalene",
+      "name": "Adapalene (Differin)",
+      "class": "Topical Retinoid",
+      "routes": ["topical"],
+      "allergy_class": null,
+      "semantic_tags": ["dermatology", "retinoid", "adapalene", "differin", "acne", "OTC", "topical retinoid"]
+    },
+    {
+      "id": "salicylic_acid",
+      "name": "Salicylic Acid",
+      "class": "Keratolytic",
+      "routes": ["topical"],
+      "allergy_class": "nsaids",
+      "semantic_tags": ["dermatology", "salicylic acid", "keratolytic", "acne", "wart", "psoriasis", "seborrheic dermatitis", "topical", "OTC"]
+    },
+    {
+      "id": "fluorouracil_topical",
+      "name": "Fluorouracil Cream (Efudex, Carac)",
+      "class": "Topical Antineoplastic",
+      "routes": ["topical"],
+      "allergy_class": null,
+      "semantic_tags": ["dermatology", "fluorouracil", "5-FU", "efudex", "carac", "actinic keratosis", "superficial BCC", "topical antineoplastic"]
+    },
+    {
+      "id": "imiquimod",
+      "name": "Imiquimod (Aldara, Zyclara)",
+      "class": "Topical Immune Modulator",
+      "routes": ["topical"],
+      "allergy_class": null,
+      "semantic_tags": ["dermatology", "imiquimod", "aldara", "zyclara", "genital warts", "actinic keratosis", "superficial BCC", "topical immunomodulator"]
+    },
+    {
+      "id": "podophyllin",
+      "name": "Podophyllin / Podofilox (Condylox)",
+      "class": "Topical Antimitotic",
+      "routes": ["topical"],
+      "allergy_class": null,
+      "semantic_tags": ["dermatology", "podophyllin", "podofilox", "condylox", "genital warts", "HPV", "topical antimitotic"]
+    },
+    {
+      "id": "zinc_oxide",
+      "name": "Zinc Oxide",
+      "class": "Topical Protective / Astringent",
+      "routes": ["topical"],
+      "allergy_class": null,
+      "semantic_tags": ["dermatology", "zinc oxide", "diaper rash", "sunscreen", "protective", "topical", "barrier cream", "OTC"]
+    },
+    {
+      "id": "coal_tar",
+      "name": "Coal Tar (T-Gel, Denorex)",
+      "class": "Topical Antipruritic / Antipsoriatic",
+      "routes": ["topical", "shampoo"],
+      "allergy_class": null,
+      "semantic_tags": ["dermatology", "coal tar", "T-gel", "psoriasis", "seborrheic dermatitis", "dandruff", "shampoo", "antipruritic"]
+    },
+    {
+      "id": "lidocaine_prilocaine",
+      "name": "Lidocaine / Prilocaine (EMLA Cream)",
+      "class": "Topical Local Anesthetic Combination",
+      "routes": ["topical"],
+      "allergy_class": "local_anesthetics",
+      "semantic_tags": ["dermatology", "anesthetic", "EMLA", "lidocaine", "prilocaine", "topical anesthetic", "procedural", "numbing cream"]
+    },
+    {
+      "id": "collagenase",
+      "name": "Collagenase (Santyl)",
+      "class": "Enzymatic Debriding Agent",
+      "routes": ["topical"],
+      "allergy_class": null,
+      "semantic_tags": ["dermatology", "wound care", "collagenase", "santyl", "debridement", "wound", "chronic wound", "enzymatic"]
+    },
+    {
+      "id": "silver_dressing",
+      "name": "Silver Wound Dressing (Mepilex Ag, Aquacel Ag)",
+      "class": "Antimicrobial Wound Dressing",
+      "routes": ["topical"],
+      "allergy_class": null,
+      "semantic_tags": ["dermatology", "wound care", "silver dressing", "mepilex", "aquacel", "antimicrobial", "wound", "infected wound", "chronic wound"]
+    },
+    {
+      "id": "doxycycline_derm",
+      "name": "Doxycycline — dermatologic use",
+      "class": "Tetracycline (systemic)",
+      "routes": ["PO"],
+      "allergy_class": "tetracyclines",
+      "semantic_tags": ["dermatology", "antibiotic", "doxycycline", "acne", "rosacea", "skin infection", "systemic"]
+    },
+    {
+      "id": "minocycline_derm",
+      "name": "Minocycline — dermatologic use",
+      "class": "Tetracycline (systemic)",
+      "routes": ["PO"],
+      "allergy_class": "tetracyclines",
+      "semantic_tags": ["dermatology", "antibiotic", "minocycline", "acne", "rosacea", "skin infection", "systemic"]
+    },
+    {
+      "id": "metronidazole_topical",
+      "name": "Metronidazole (Metrogel, Noritate)",
+      "class": "Topical Antibiotic",
+      "routes": ["topical"],
+      "allergy_class": "nitroimidazoles",
+      "semantic_tags": ["dermatology", "antibiotic", "metronidazole", "metrogel", "noritate", "rosacea", "topical", "gel", "cream"]
+    },
+    {
+      "id": "azelaic_acid",
+      "name": "Azelaic Acid (Azelex, Finacea)",
+      "class": "Topical Dicarboxylic Acid",
+      "routes": ["topical"],
+      "allergy_class": null,
+      "semantic_tags": ["dermatology", "azelaic acid", "azelex", "finacea", "rosacea", "acne", "hyperpigmentation", "topical"]
+    }
+  ]
+}

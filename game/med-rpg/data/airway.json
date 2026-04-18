@@ -1,0 +1,299 @@
+{
+  "category": "Airway",
+  "category_id": "airway",
+  "description": "Airway management actions including basic maneuvers, adjuncts, intubation, surgical airway, ventilator management, and extubation. Accessible via the dedicated Airway icon on the main encounter UI. Time-critical actions are top-level for fast access.",
+  "default_ap_cost": 2,
+  "note": "Most airway actions have no meaningful effect in appendicitis unless the patient reaches septic shock with respiratory failure. They are always available and always cost AP. Condition files define specific effects.",
+
+  "subcategories": [
+
+    {
+      "id": "basic_maneuvers",
+      "name": "Basic Airway Maneuvers",
+      "description": "Non-invasive positional and manual techniques to open and maintain the airway.",
+      "actions": [
+        {
+          "id": "jaw_thrust",
+          "name": "Jaw Thrust",
+          "ap_cost": 1,
+          "description": "Forward displacement of the mandible to open the airway. Preferred in suspected C-spine injury.",
+          "semantic_tags": ["airway", "jaw thrust", "manual", "basic", "C-spine"]
+        },
+        {
+          "id": "chin_lift",
+          "name": "Chin Lift",
+          "ap_cost": 1,
+          "description": "Lift the chin to open the airway.",
+          "semantic_tags": ["airway", "chin lift", "manual", "basic"]
+        },
+        {
+          "id": "head_tilt_chin_lift",
+          "name": "Head Tilt / Chin Lift",
+          "ap_cost": 1,
+          "description": "Combined head tilt and chin lift. Standard BLS airway opening maneuver.",
+          "semantic_tags": ["airway", "head tilt", "chin lift", "BLS", "basic", "manual"]
+        },
+        {
+          "id": "repositioning",
+          "name": "Repositioning",
+          "ap_cost": 1,
+          "description": "Reposition the patient to optimize airway patency (e.g. sniffing position, lateral decubitus).",
+          "semantic_tags": ["airway", "repositioning", "sniffing position", "positioning", "basic"]
+        },
+        {
+          "id": "sniffing_position",
+          "name": "Sniffing Position",
+          "ap_cost": 1,
+          "description": "Align ear to sternal notch to optimize laryngoscopy view.",
+          "semantic_tags": ["airway", "sniffing position", "positioning", "intubation prep", "laryngoscopy"]
+        }
+      ]
+    },
+
+    {
+      "id": "airway_adjuncts",
+      "name": "Airway Adjuncts",
+      "description": "Devices to maintain airway patency without definitive airway.",
+      "actions": [
+        {
+          "id": "npa",
+          "name": "Nasopharyngeal Airway (NPA)",
+          "ap_cost": 2,
+          "description": "Soft rubber airway inserted nasally. Tolerated in semi-conscious patients.",
+          "semantic_tags": ["airway", "NPA", "nasopharyngeal", "adjunct", "trumpet", "semi-conscious"]
+        },
+        {
+          "id": "opa",
+          "name": "Oropharyngeal Airway (OPA)",
+          "ap_cost": 2,
+          "description": "Rigid oral airway. Only for unconscious patients without gag reflex.",
+          "semantic_tags": ["airway", "OPA", "oropharyngeal", "adjunct", "guedel", "unconscious", "no gag"]
+        },
+        {
+          "id": "lma",
+          "name": "Laryngeal Mask Airway (LMA)",
+          "ap_cost": 3,
+          "description": "Supraglottic airway device. Useful as rescue airway or bridge to definitive airway.",
+          "semantic_tags": ["airway", "LMA", "laryngeal mask", "supraglottic", "rescue airway", "adjunct"]
+        }
+      ]
+    },
+
+    {
+      "id": "bag_mask_ventilation",
+      "name": "Bag-Mask Ventilation (BMV)",
+      "description": "Manual ventilation with bag-valve-mask. Used before intubation or as rescue.",
+      "actions": [
+        {
+          "id": "bmv_one_person",
+          "name": "Bag-Mask Ventilation (1-person)",
+          "ap_cost": 2,
+          "description": "Single-provider BVM ventilation. EC clamp technique.",
+          "semantic_tags": ["airway", "BMV", "bag mask", "ventilation", "BVM", "one person", "pre-oxygenation"]
+        },
+        {
+          "id": "bmv_two_person",
+          "name": "Bag-Mask Ventilation (2-person)",
+          "ap_cost": 2,
+          "description": "Two-provider BVM ventilation. Better seal, preferred for difficult airways.",
+          "semantic_tags": ["airway", "BMV", "bag mask", "ventilation", "BVM", "two person", "difficult airway"]
+        }
+      ]
+    },
+
+    {
+      "id": "intubation",
+      "name": "Intubation",
+      "description": "Definitive airway management via endotracheal intubation.",
+      "note": "RSI requires paralytic and sedation to be selected from medication browser before confirmation. Selecting RSI will open medication browser filtered to paralytics and sedatives.",
+      "actions": [
+        {
+          "id": "rsi",
+          "name": "Rapid Sequence Intubation (RSI)",
+          "ap_cost": 8,
+          "description": "Simultaneous administration of sedative and paralytic followed by intubation. Standard emergency intubation method.",
+          "requires": ["iv_access", "sedative_selected", "paralytic_selected"],
+          "triggers_med_browser": true,
+          "med_browser_filter": ["sedatives", "paralytics"],
+          "semantic_tags": ["airway", "RSI", "rapid sequence intubation", "intubation", "definitive airway", "paralytic", "sedative", "emergency"]
+        },
+        {
+          "id": "video_laryngoscopy",
+          "name": "Video Laryngoscopy",
+          "ap_cost": 6,
+          "description": "Intubation using video laryngoscope. Improved view, preferred for anticipated difficult airway.",
+          "requires": ["iv_access"],
+          "semantic_tags": ["airway", "video laryngoscopy", "intubation", "glidescope", "difficult airway", "definitive airway"]
+        },
+        {
+          "id": "direct_laryngoscopy",
+          "name": "Direct Laryngoscopy",
+          "ap_cost": 5,
+          "description": "Standard intubation using direct laryngoscope (MAC or Miller blade).",
+          "requires": ["iv_access"],
+          "semantic_tags": ["airway", "direct laryngoscopy", "intubation", "MAC", "Miller", "laryngoscope", "definitive airway"]
+        },
+        {
+          "id": "fiberoptic_intubation",
+          "name": "Fiberoptic Intubation",
+          "ap_cost": 10,
+          "description": "Awake fiberoptic intubation. Used for known or anticipated difficult airway in a conscious patient.",
+          "semantic_tags": ["airway", "fiberoptic", "awake intubation", "difficult airway", "flexible bronchoscope", "definitive airway"]
+        },
+        {
+          "id": "nasotracheal_intubation",
+          "name": "Nasotracheal Intubation",
+          "ap_cost": 7,
+          "description": "Blind nasal intubation. Used when oral intubation is not possible.",
+          "semantic_tags": ["airway", "nasotracheal", "nasal intubation", "blind nasal", "definitive airway"]
+        }
+      ]
+    },
+
+    {
+      "id": "surgical_airway",
+      "name": "Surgical Airway",
+      "description": "Last-resort surgical airway access when intubation has failed.",
+      "actions": [
+        {
+          "id": "cricothyrotomy",
+          "name": "Cricothyrotomy",
+          "ap_cost": 10,
+          "description": "Emergency surgical airway via incision through the cricothyroid membrane. Used in cannot-intubate cannot-oxygenate (CICO) situations.",
+          "semantic_tags": ["airway", "cricothyrotomy", "surgical airway", "CICO", "emergency", "cric", "cannot intubate", "last resort"]
+        },
+        {
+          "id": "tracheostomy",
+          "name": "Tracheostomy",
+          "ap_cost": 12,
+          "description": "Surgical creation of a tracheostomy for long-term airway management.",
+          "semantic_tags": ["airway", "tracheostomy", "trach", "surgical airway", "long term", "ventilator"]
+        },
+        {
+          "id": "needle_cricothyrotomy",
+          "name": "Needle Cricothyrotomy",
+          "ap_cost": 6,
+          "description": "Emergency percutaneous needle decompression through cricothyroid membrane. Temporary measure.",
+          "semantic_tags": ["airway", "needle cric", "cricothyrotomy", "percutaneous", "emergency", "temporary", "CICO"]
+        }
+      ]
+    },
+
+    {
+      "id": "ventilator_management",
+      "name": "Ventilator Settings",
+      "description": "Mechanical ventilator management for intubated patients. Only available after intubation is established.",
+      "requires": ["intubated"],
+      "actions": [
+        {
+          "id": "vent_mode_vc",
+          "name": "Set Mode: Volume Control (VC-AC)",
+          "ap_cost": 2,
+          "description": "Volume control assist-control ventilation. Set tidal volume, rate, PEEP, FiO2.",
+          "semantic_tags": ["ventilator", "volume control", "VC-AC", "AC", "mode", "mechanical ventilation"]
+        },
+        {
+          "id": "vent_mode_pc",
+          "name": "Set Mode: Pressure Control (PC-AC)",
+          "ap_cost": 2,
+          "description": "Pressure control assist-control ventilation. Set inspiratory pressure, rate, PEEP, FiO2.",
+          "semantic_tags": ["ventilator", "pressure control", "PC-AC", "mode", "mechanical ventilation"]
+        },
+        {
+          "id": "vent_mode_simv",
+          "name": "Set Mode: SIMV",
+          "ap_cost": 2,
+          "description": "Synchronized intermittent mandatory ventilation. Allows spontaneous breaths between mandatory breaths.",
+          "semantic_tags": ["ventilator", "SIMV", "mode", "mechanical ventilation", "weaning"]
+        },
+        {
+          "id": "vent_mode_pressure_support",
+          "name": "Set Mode: Pressure Support (PSV)",
+          "ap_cost": 2,
+          "description": "Pressure support ventilation. Patient triggers all breaths, vent provides pressure boost. Used for weaning.",
+          "semantic_tags": ["ventilator", "pressure support", "PSV", "mode", "weaning", "spontaneous"]
+        },
+        {
+          "id": "vent_tidal_volume",
+          "name": "Adjust Tidal Volume",
+          "ap_cost": 1,
+          "description": "Adjust delivered tidal volume (mL). Lung protective: 6 mL/kg IBW.",
+          "semantic_tags": ["ventilator", "tidal volume", "Vt", "lung protective", "adjust", "mechanical ventilation"]
+        },
+        {
+          "id": "vent_rate",
+          "name": "Adjust Respiratory Rate",
+          "ap_cost": 1,
+          "description": "Adjust ventilator respiratory rate (breaths per minute).",
+          "semantic_tags": ["ventilator", "respiratory rate", "RR", "rate", "adjust", "mechanical ventilation"]
+        },
+        {
+          "id": "vent_peep",
+          "name": "Adjust PEEP",
+          "ap_cost": 1,
+          "description": "Adjust positive end-expiratory pressure (cmH2O). Improves oxygenation, prevents alveolar collapse.",
+          "semantic_tags": ["ventilator", "PEEP", "positive end expiratory pressure", "oxygenation", "adjust", "ARDS"]
+        },
+        {
+          "id": "vent_fio2",
+          "name": "Adjust FiO2",
+          "ap_cost": 1,
+          "description": "Adjust fraction of inspired oxygen (21-100%). Wean to lowest FiO2 maintaining SpO2 >92%.",
+          "semantic_tags": ["ventilator", "FiO2", "oxygen", "fraction inspired oxygen", "adjust", "oxygenation"]
+        },
+        {
+          "id": "vent_ie_ratio",
+          "name": "Adjust I:E Ratio",
+          "ap_cost": 2,
+          "description": "Adjust inspiratory to expiratory ratio. Normal 1:2. Inverse ratio used in severe ARDS.",
+          "semantic_tags": ["ventilator", "IE ratio", "inspiratory expiratory", "ratio", "ARDS", "adjust"]
+        },
+        {
+          "id": "vent_plateau_pressure",
+          "name": "Check Plateau Pressure",
+          "ap_cost": 2,
+          "description": "Perform inspiratory hold to measure plateau pressure. Goal <30 cmH2O for lung protection.",
+          "semantic_tags": ["ventilator", "plateau pressure", "Pplat", "lung protection", "inspiratory hold", "compliance"]
+        },
+        {
+          "id": "vent_lung_protective",
+          "name": "Lung Protective Ventilation (Preset)",
+          "ap_cost": 3,
+          "description": "Apply ARDSnet lung protective settings: Vt 6 mL/kg IBW, Pplat <30, PEEP per FiO2 table.",
+          "semantic_tags": ["ventilator", "lung protective", "ARDSnet", "ARDS", "protocol", "low tidal volume", "preset"]
+        },
+        {
+          "id": "vent_prone_positioning",
+          "name": "Prone Positioning",
+          "ap_cost": 5,
+          "description": "Place intubated patient prone for 16+ hours. Improves V/Q matching in severe ARDS.",
+          "semantic_tags": ["ventilator", "prone", "proning", "ARDS", "positioning", "severe ARDS", "oxygenation"]
+        }
+      ]
+    },
+
+    {
+      "id": "extubation",
+      "name": "Extubation",
+      "description": "Weaning from mechanical ventilation and removal of endotracheal tube.",
+      "requires": ["intubated"],
+      "actions": [
+        {
+          "id": "spontaneous_breathing_trial",
+          "name": "Spontaneous Breathing Trial (SBT)",
+          "ap_cost": 3,
+          "description": "Trial of pressure support or T-piece breathing to assess readiness for extubation.",
+          "semantic_tags": ["airway", "SBT", "spontaneous breathing trial", "weaning", "extubation readiness", "T-piece"]
+        },
+        {
+          "id": "extubation",
+          "name": "Extubation",
+          "ap_cost": 4,
+          "description": "Remove endotracheal tube. Patient must pass SBT and meet extubation criteria.",
+          "requires": ["spontaneous_breathing_trial_passed"],
+          "semantic_tags": ["airway", "extubation", "extubate", "remove tube", "wean", "liberation from ventilator"]
+        }
+      ]
+    }
+  ]
+}

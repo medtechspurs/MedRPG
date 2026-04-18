@@ -1,0 +1,314 @@
+[gd_scene format=3 uid="uid://dwbpdfux0lbeu"]
+
+[ext_resource type="Script" uid="uid://c3dmtfjt2apsq" path="res://scenes/clinical_engine.gd" id="1_nmkfv"]
+
+[node name="ClinicalEncounter" type="Node2D" unique_id=1121298204]
+script = ExtResource("1_nmkfv")
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=342636894]
+layer = 10
+
+[node name="APBar" type="HBoxContainer" parent="HUD" unique_id=1964261684]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 77.0
+offset_bottom = 60.0
+
+[node name="APLabel" type="Label" parent="HUD/APBar" unique_id=1606057239]
+layout_mode = 2
+text = "AP:"
+
+[node name="APValue" type="Label" parent="HUD/APBar" unique_id=609863651]
+layout_mode = 2
+text = "100"
+
+[node name="BonusPoints" type="HBoxContainer" parent="HUD" unique_id=1089073682]
+offset_left = 20.0
+offset_top = 50.0
+offset_right = 87.0
+offset_bottom = 90.0
+
+[node name="BonusLabel" type="Label" parent="HUD/BonusPoints" unique_id=633587367]
+layout_mode = 2
+text = "Bonus:"
+
+[node name="BonusValue" type="Label" parent="HUD/BonusPoints" unique_id=679409824]
+layout_mode = 2
+text = "0"
+
+[node name="HarmPoints" type="HBoxContainer" parent="HUD" unique_id=595853405]
+offset_left = 20.0
+offset_top = 80.0
+offset_right = 82.0
+offset_bottom = 120.0
+
+[node name="HarmLabel" type="Label" parent="HUD/HarmPoints" unique_id=153481385]
+layout_mode = 2
+text = "Harm:"
+
+[node name="HarmValue" type="Label" parent="HUD/HarmPoints" unique_id=2125487136]
+layout_mode = 2
+text = "0"
+
+[node name="IconBar" type="CanvasLayer" parent="." unique_id=1710263548]
+
+[node name="IconContainer" type="HBoxContainer" parent="IconBar" unique_id=624556492]
+custom_minimum_size = Vector2(1100, 50)
+offset_left = 10.0
+offset_top = 645.0
+offset_right = 1010.0
+offset_bottom = 695.0
+theme_override_constants/separation = 10
+
+[node name="HistoryBtn" type="Button" parent="IconBar/IconContainer" unique_id=472252365]
+custom_minimum_size = Vector2(75, 50)
+layout_mode = 2
+text = "Hx"
+
+[node name="StabilityBtn" type="Button" parent="IconBar/IconContainer" unique_id=961089362]
+custom_minimum_size = Vector2(75, 50)
+layout_mode = 2
+text = "Stab"
+
+[node name="ExamBtn" type="Button" parent="IconBar/IconContainer" unique_id=66079040]
+custom_minimum_size = Vector2(75, 50)
+layout_mode = 2
+text = "Exam"
+
+[node name="LabsBtn" type="Button" parent="IconBar/IconContainer" unique_id=495873425]
+custom_minimum_size = Vector2(75, 50)
+layout_mode = 2
+text = "Labs"
+
+[node name="ImagingBtn" type="Button" parent="IconBar/IconContainer" unique_id=1803824178]
+custom_minimum_size = Vector2(75, 50)
+layout_mode = 2
+text = "Ima"
+
+[node name="MedsBtn" type="Button" parent="IconBar/IconContainer" unique_id=1396249817]
+custom_minimum_size = Vector2(75, 50)
+layout_mode = 2
+text = "Med"
+
+[node name="ConsultsBtn" type="Button" parent="IconBar/IconContainer" unique_id=95615187]
+custom_minimum_size = Vector2(75, 50)
+layout_mode = 2
+text = "Con"
+
+[node name="SurgeriesBtn" type="Button" parent="IconBar/IconContainer" unique_id=1801762089]
+custom_minimum_size = Vector2(75, 50)
+layout_mode = 2
+text = "Sur"
+
+[node name="OtherTxBtn" type="Button" parent="IconBar/IconContainer" unique_id=1102786953]
+custom_minimum_size = Vector2(75, 50)
+layout_mode = 2
+text = "Oth"
+
+[node name="AirwayBtn" type="Button" parent="IconBar/IconContainer" unique_id=771975602]
+custom_minimum_size = Vector2(75, 50)
+layout_mode = 2
+text = "Air"
+
+[node name="PathologyBtn" type="Button" parent="IconBar/IconContainer" unique_id=1247990121]
+custom_minimum_size = Vector2(75, 50)
+layout_mode = 2
+text = "Path"
+
+[node name="MiscTestBtn" type="Button" parent="IconBar/IconContainer" unique_id=1235784493]
+custom_minimum_size = Vector2(75, 50)
+layout_mode = 2
+text = "Misc"
+
+[node name="DiagnosisBtn" type="Button" parent="IconBar/IconContainer" unique_id=1912575179]
+custom_minimum_size = Vector2(75, 50)
+layout_mode = 2
+text = "Dx"
+
+[node name="QuickAccess" type="HBoxContainer" parent="IconBar" unique_id=1089757854]
+offset_left = 1115.0
+offset_top = 645.0
+offset_right = 1275.0
+offset_bottom = 695.0
+theme_override_constants/separation = 10
+
+[node name="IVBtn" type="Button" parent="IconBar/QuickAccess" unique_id=822012500]
+custom_minimum_size = Vector2(75, 50)
+layout_mode = 2
+text = "IV"
+
+[node name="O2Btn" type="Button" parent="IconBar/QuickAccess" unique_id=1165897308]
+custom_minimum_size = Vector2(75, 50)
+layout_mode = 2
+text = "O2"
+
+[node name="InputArea" type="CanvasLayer" parent="." unique_id=1958153753]
+
+[node name="InputPanel" type="PanelContainer" parent="InputArea" unique_id=1747669107]
+offset_left = 10.0
+offset_top = 600.0
+offset_right = 661.0
+offset_bottom = 640.0
+
+[node name="InputRow" type="HBoxContainer" parent="InputArea/InputPanel" unique_id=1880362664]
+layout_mode = 2
+
+[node name="InputField" type="LineEdit" parent="InputArea/InputPanel/InputRow" unique_id=483824749]
+custom_minimum_size = Vector2(600, 40)
+layout_mode = 2
+
+[node name="SubmitBtn" type="Button" parent="InputArea/InputPanel/InputRow" unique_id=1946890997]
+layout_mode = 2
+text = "Send"
+
+[node name="PopupLayer" type="CanvasLayer" parent="." unique_id=252508960]
+
+[node name="PopupContent" type="PanelContainer" parent="PopupLayer" unique_id=470848328]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PopupMessage" type="Label" parent="PopupLayer/PopupContent" unique_id=11008815]
+layout_mode = 2
+text = "Are you sure?"
+
+[node name="PopupButtons" type="HBoxContainer" parent="PopupLayer/PopupContent" unique_id=1984008112]
+layout_mode = 2
+
+[node name="ConfirmBtn" type="Button" parent="PopupLayer/PopupContent/PopupButtons" unique_id=2040482602]
+layout_mode = 2
+text = "Confirm"
+
+[node name="CancelBtn" type="Button" parent="PopupLayer/PopupContent/PopupButtons" unique_id=1837745950]
+layout_mode = 2
+text = "Cancel"
+
+[node name="Background" type="Node2D" parent="." unique_id=352296938]
+
+[node name="PatientArea" type="Node2D" parent="." unique_id=1697206721]
+
+[node name="PatientSprite" type="Node2D" parent="PatientArea" unique_id=600947359]
+
+[node name="Body" type="Sprite2D" parent="PatientArea/PatientSprite" unique_id=594993678]
+
+[node name="Head" type="Sprite2D" parent="PatientArea/PatientSprite" unique_id=1207168034]
+
+[node name="Hair" type="Sprite2D" parent="PatientArea/PatientSprite" unique_id=54404886]
+
+[node name="Eyes" type="Sprite2D" parent="PatientArea/PatientSprite" unique_id=1743391448]
+
+[node name="Glasses" type="Sprite2D" parent="PatientArea/PatientSprite" unique_id=1567749848]
+
+[node name="Clothing" type="Sprite2D" parent="PatientArea/PatientSprite" unique_id=1016520015]
+
+[node name="Bed" type="Sprite2D" parent="PatientArea" unique_id=573642794]
+
+[node name="PlayerArea" type="Node2D" parent="." unique_id=620671719]
+
+[node name="PlayerSprite" type="Node2D" parent="PlayerArea" unique_id=1257536437]
+
+[node name="Body" type="Sprite2D" parent="PlayerArea/PlayerSprite" unique_id=1595882624]
+
+[node name="Head" type="Sprite2D" parent="PlayerArea/PlayerSprite" unique_id=1067176738]
+
+[node name="Hair" type="Sprite2D" parent="PlayerArea/PlayerSprite" unique_id=1440570185]
+
+[node name="Eyes" type="Sprite2D" parent="PlayerArea/PlayerSprite" unique_id=250913587]
+
+[node name="Glasses" type="Sprite2D" parent="PlayerArea/PlayerSprite" unique_id=118422324]
+
+[node name="Clothing" type="Sprite2D" parent="PlayerArea/PlayerSprite" unique_id=336659160]
+
+[node name="Meddy" type="Node2D" parent="PlayerArea" unique_id=1265485585]
+
+[node name="MeddySprite" type="Sprite2D" parent="PlayerArea/Meddy" unique_id=1845906834]
+
+[node name="MeddyPopup" type="CanvasLayer" parent="PlayerArea/Meddy" unique_id=45597603]
+visible = false
+
+[node name="PopupPanel" type="PanelContainer" parent="PlayerArea/Meddy/MeddyPopup" unique_id=1788952542]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PopupLabel" type="Label" parent="PlayerArea/Meddy/MeddyPopup/PopupPanel" unique_id=496702587]
+layout_mode = 2
+text = "..."
+
+[node name="Monitor" type="Node2D" parent="." unique_id=692977342]
+position = Vector2(900, 20)
+
+[node name="MonitorBackground" type="Sprite2D" parent="Monitor" unique_id=603780646]
+
+[node name="VitalsContainer" type="VBoxContainer" parent="Monitor" unique_id=711353330]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HRRow" type="HBoxContainer" parent="Monitor/VitalsContainer" unique_id=224966618]
+layout_mode = 2
+
+[node name="HRTitle" type="Label" parent="Monitor/VitalsContainer/HRRow" unique_id=1667092987]
+layout_mode = 2
+text = "HR:"
+
+[node name="HRValue" type="Label" parent="Monitor/VitalsContainer/HRRow" unique_id=1740765616]
+layout_mode = 2
+text = "105"
+
+[node name="BPRow" type="HBoxContainer" parent="Monitor/VitalsContainer" unique_id=1479153570]
+layout_mode = 2
+
+[node name="BPTitle" type="Label" parent="Monitor/VitalsContainer/BPRow" unique_id=1238036917]
+layout_mode = 2
+text = "BP:"
+
+[node name="BPValue" type="Label" parent="Monitor/VitalsContainer/BPRow" unique_id=1064812259]
+layout_mode = 2
+text = "120/85"
+
+[node name="RRRow" type="HBoxContainer" parent="Monitor/VitalsContainer" unique_id=847217645]
+layout_mode = 2
+
+[node name="RRTitle" type="Label" parent="Monitor/VitalsContainer/RRRow" unique_id=1164360056]
+layout_mode = 2
+text = "RR:"
+
+[node name="RRValue" type="Label" parent="Monitor/VitalsContainer/RRRow" unique_id=1839226015]
+layout_mode = 2
+text = "16"
+
+[node name="TempRow" type="HBoxContainer" parent="Monitor/VitalsContainer" unique_id=1574428727]
+layout_mode = 2
+
+[node name="TempTitle" type="Label" parent="Monitor/VitalsContainer/TempRow" unique_id=1396355764]
+layout_mode = 2
+text = "T:"
+
+[node name="TempValue" type="Label" parent="Monitor/VitalsContainer/TempRow" unique_id=2095313465]
+layout_mode = 2
+text = "100.8°F"
+
+[node name="SpO2Row" type="HBoxContainer" parent="Monitor/VitalsContainer" unique_id=736619003]
+layout_mode = 2
+
+[node name="SpO2Title" type="Label" parent="Monitor/VitalsContainer/SpO2Row" unique_id=1384969234]
+layout_mode = 2
+text = "Sp02:"
+
+[node name="SpO2Value" type="Label" parent="Monitor/VitalsContainer/SpO2Row" unique_id=822349377]
+layout_mode = 2
+text = "99%"
+
+[node name="ALineWaveform" type="HBoxContainer" parent="Monitor/VitalsContainer" unique_id=982513971]
+visible = false
+layout_mode = 2
+
+[node name="ALineRow" type="HBoxContainer" parent="Monitor/VitalsContainer/ALineWaveform" unique_id=1304145298]
+layout_mode = 2
+
+[node name="ALineTitle" type="Label" parent="Monitor/VitalsContainer/ALineWaveform/ALineRow" unique_id=689641621]
+layout_mode = 2
+text = "ABP:"
+
+[node name="ALineValue" type="Label" parent="Monitor/VitalsContainer/ALineWaveform/ALineRow" unique_id=1003164308]
+layout_mode = 2
+text = "120/85"

@@ -1,0 +1,239 @@
+{
+  "category": "Gastrointestinal",
+  "category_id": "gi",
+  "description": "Medications for gastrointestinal conditions including nausea, GERD, IBD, motility disorders, and liver disease.",
+  "medications": [
+    {
+      "id": "ondansetron",
+      "name": "Ondansetron (Zofran)",
+      "class": "5-HT3 Antagonist (Antiemetic)",
+      "routes": ["PO", "IV", "IM", "ODT"],
+      "allergy_class": null,
+      "semantic_tags": ["GI", "antiemetic", "ondansetron", "zofran", "nausea", "vomiting", "nausea vomiting", "chemotherapy"]
+    },
+    {
+      "id": "promethazine",
+      "name": "Promethazine (Phenergan)",
+      "class": "Phenothiazine Antiemetic / Antihistamine",
+      "routes": ["PO", "IV", "IM", "PR"],
+      "allergy_class": "phenothiazines",
+      "semantic_tags": ["GI", "antiemetic", "promethazine", "phenergan", "nausea", "vomiting", "antihistamine", "sedation"]
+    },
+    {
+      "id": "metoclopramide",
+      "name": "Metoclopramide (Reglan)",
+      "class": "Dopamine Antagonist / Prokinetic",
+      "routes": ["PO", "IV", "IM"],
+      "allergy_class": null,
+      "semantic_tags": ["GI", "antiemetic", "prokinetic", "metoclopramide", "reglan", "nausea", "gastroparesis", "motility"]
+    },
+    {
+      "id": "prochlorperazine",
+      "name": "Prochlorperazine (Compazine)",
+      "class": "Phenothiazine Antiemetic",
+      "routes": ["PO", "IV", "IM", "PR"],
+      "allergy_class": "phenothiazines",
+      "semantic_tags": ["GI", "antiemetic", "prochlorperazine", "compazine", "nausea", "vomiting", "migraine"]
+    },
+    {
+      "id": "granisetron",
+      "name": "Granisetron (Kytril)",
+      "class": "5-HT3 Antagonist (Antiemetic)",
+      "routes": ["PO", "IV", "transdermal"],
+      "allergy_class": null,
+      "semantic_tags": ["GI", "antiemetic", "granisetron", "kytril", "nausea", "chemotherapy", "5HT3 antagonist"]
+    },
+    {
+      "id": "aprepitant",
+      "name": "Aprepitant (Emend)",
+      "class": "NK1 Receptor Antagonist (Antiemetic)",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["GI", "antiemetic", "aprepitant", "emend", "NK1", "chemotherapy", "nausea", "PONV"]
+    },
+    {
+      "id": "omeprazole",
+      "name": "Omeprazole (Prilosec)",
+      "class": "Proton Pump Inhibitor (PPI)",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["GI", "PPI", "omeprazole", "prilosec", "GERD", "acid reflux", "ulcer", "proton pump inhibitor", "heartburn"]
+    },
+    {
+      "id": "pantoprazole",
+      "name": "Pantoprazole (Protonix)",
+      "class": "Proton Pump Inhibitor (PPI)",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["GI", "PPI", "pantoprazole", "protonix", "GERD", "acid reflux", "ulcer", "GI bleed", "IV PPI"]
+    },
+    {
+      "id": "esomeprazole",
+      "name": "Esomeprazole (Nexium)",
+      "class": "Proton Pump Inhibitor (PPI)",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["GI", "PPI", "esomeprazole", "nexium", "GERD", "acid reflux", "ulcer"]
+    },
+    {
+      "id": "famotidine",
+      "name": "Famotidine (Pepcid)",
+      "class": "H2 Receptor Antagonist",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["GI", "H2 blocker", "famotidine", "pepcid", "GERD", "heartburn", "ulcer", "acid"]
+    },
+    {
+      "id": "ranitidine",
+      "name": "Ranitidine (Zantac) — recalled",
+      "class": "H2 Receptor Antagonist (recalled)",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["GI", "H2 blocker", "ranitidine", "zantac", "GERD", "recalled", "historical"]
+    },
+    {
+      "id": "sucralfate",
+      "name": "Sucralfate (Carafate)",
+      "class": "Mucosal Protectant",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["GI", "sucralfate", "carafate", "ulcer", "stress ulcer", "mucosal protection", "GI bleed prophylaxis"]
+    },
+    {
+      "id": "misoprostol",
+      "name": "Misoprostol (Cytotec)",
+      "class": "Prostaglandin E1 Analogue",
+      "routes": ["PO", "vaginal", "sublingual", "PR"],
+      "allergy_class": null,
+      "semantic_tags": ["GI", "gynecologic", "misoprostol", "cytotec", "ulcer", "NSAID protection", "cervical ripening", "postpartum hemorrhage", "abortion"]
+    },
+    {
+      "id": "lactulose",
+      "name": "Lactulose",
+      "class": "Osmotic Laxative",
+      "routes": ["PO", "PR"],
+      "allergy_class": null,
+      "semantic_tags": ["GI", "laxative", "lactulose", "hepatic encephalopathy", "constipation", "ammonia", "osmotic laxative"]
+    },
+    {
+      "id": "polyethylene_glycol",
+      "name": "Polyethylene Glycol (MiraLax)",
+      "class": "Osmotic Laxative",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["GI", "laxative", "miralax", "polyethylene glycol", "PEG", "constipation", "bowel prep", "osmotic"]
+    },
+    {
+      "id": "senna",
+      "name": "Senna (Senokot)",
+      "class": "Stimulant Laxative",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["GI", "laxative", "senna", "senokot", "constipation", "stimulant laxative", "opioid induced constipation"]
+    },
+    {
+      "id": "docusate",
+      "name": "Docusate (Colace)",
+      "class": "Stool Softener",
+      "routes": ["PO", "PR"],
+      "allergy_class": null,
+      "semantic_tags": ["GI", "stool softener", "docusate", "colace", "constipation", "stool softener"]
+    },
+    {
+      "id": "bisacodyl",
+      "name": "Bisacodyl (Dulcolax)",
+      "class": "Stimulant Laxative",
+      "routes": ["PO", "PR"],
+      "allergy_class": null,
+      "semantic_tags": ["GI", "laxative", "bisacodyl", "dulcolax", "constipation", "stimulant", "suppository"]
+    },
+    {
+      "id": "loperamide",
+      "name": "Loperamide (Imodium)",
+      "class": "Antidiarrheal",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["GI", "antidiarrheal", "loperamide", "imodium", "diarrhea", "OTC"]
+    },
+    {
+      "id": "rifaximin",
+      "name": "Rifaximin (Xifaxan)",
+      "class": "Non-absorbed Antibiotic",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["GI", "antibiotic", "rifaximin", "xifaxan", "traveler's diarrhea", "hepatic encephalopathy", "IBS", "SBO"]
+    },
+    {
+      "id": "mesalamine",
+      "name": "Mesalamine (Asacol, Pentasa, Delzicol)",
+      "class": "5-Aminosalicylate (5-ASA)",
+      "routes": ["PO", "PR", "rectal suppository"],
+      "allergy_class": "sulfonamides",
+      "semantic_tags": ["GI", "5-ASA", "mesalamine", "asacol", "pentasa", "ulcerative colitis", "IBD", "Crohn's", "aminosalicylate"]
+    },
+    {
+      "id": "sulfasalazine",
+      "name": "Sulfasalazine (Azulfidine)",
+      "class": "5-ASA + Sulfonamide",
+      "routes": ["PO"],
+      "allergy_class": "sulfonamides",
+      "semantic_tags": ["GI", "rheumatological", "sulfasalazine", "azulfidine", "ulcerative colitis", "IBD", "rheumatoid arthritis"]
+    },
+    {
+      "id": "infliximab",
+      "name": "Infliximab (Remicade)",
+      "class": "Anti-TNF Biologic",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["GI", "rheumatological", "biologic", "infliximab", "remicade", "Crohn's", "ulcerative colitis", "IBD", "anti-TNF", "rheumatoid arthritis"]
+    },
+    {
+      "id": "adalimumab",
+      "name": "Adalimumab (Humira)",
+      "class": "Anti-TNF Biologic",
+      "routes": ["SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["GI", "rheumatological", "biologic", "adalimumab", "humira", "Crohn's", "ulcerative colitis", "IBD", "anti-TNF", "rheumatoid arthritis", "psoriasis"]
+    },
+    {
+      "id": "vedolizumab",
+      "name": "Vedolizumab (Entyvio)",
+      "class": "Anti-integrin Biologic",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["GI", "biologic", "vedolizumab", "entyvio", "Crohn's", "ulcerative colitis", "IBD", "anti-integrin"]
+    },
+    {
+      "id": "ustekinumab",
+      "name": "Ustekinumab (Stelara)",
+      "class": "Anti-IL-12/23 Biologic",
+      "routes": ["IV", "SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["GI", "rheumatological", "biologic", "ustekinumab", "stelara", "Crohn's", "ulcerative colitis", "psoriasis", "IBD"]
+    },
+    {
+      "id": "octreotide",
+      "name": "Octreotide (Sandostatin)",
+      "class": "Somatostatin Analogue",
+      "routes": ["IV", "SQ", "IM"],
+      "allergy_class": null,
+      "semantic_tags": ["GI", "octreotide", "sandostatin", "GI bleed", "variceal bleed", "carcinoid", "acromegaly", "diarrhea", "somatostatin"]
+    },
+    {
+      "id": "ursodiol",
+      "name": "Ursodiol (Actigall, UDCA)",
+      "class": "Bile Acid",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["GI", "ursodiol", "actigall", "UDCA", "gallstones", "primary biliary cholangitis", "bile acid"]
+    },
+    {
+      "id": "cholestyramine",
+      "name": "Cholestyramine (Prevalite)",
+      "class": "Bile Acid Sequestrant",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["GI", "cholestyramine", "prevalite", "bile acid", "pruritus", "cholestasis", "diarrhea", "cholesterol"]
+    }
+  ]
+}

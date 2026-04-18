@@ -1,0 +1,183 @@
+{
+  "category": "Reversal Agents & Antidotes",
+  "category_id": "reversal_antidotes",
+  "description": "Reversal agents and antidotes for drug toxicity, overdose, and poisoning.",
+  "medications": [
+    {
+      "id": "naloxone",
+      "name": "Naloxone (Narcan)",
+      "class": "Opioid Antagonist",
+      "routes": ["IV", "IM", "SQ", "intranasal"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "antidote", "naloxone", "narcan", "opioid reversal", "opioid overdose", "respiratory depression", "emergency", "intranasal", "IV"]
+    },
+    {
+      "id": "flumazenil",
+      "name": "Flumazenil (Romazicon)",
+      "class": "Benzodiazepine Antagonist",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "antidote", "flumazenil", "romazicon", "benzodiazepine reversal", "benzodiazepine overdose", "sedation reversal", "IV"]
+    },
+    {
+      "id": "glucagon_antidote",
+      "name": "Glucagon — beta-blocker/CCB antidote",
+      "class": "Beta-blocker / Calcium Channel Blocker Antidote",
+      "routes": ["IV", "IM", "SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "antidote", "glucagon", "beta blocker overdose", "calcium channel blocker overdose", "bradycardia", "hypotension", "IV"]
+    },
+    {
+      "id": "acetylcysteine",
+      "name": "N-Acetylcysteine (Mucomyst, Acetadote)",
+      "class": "Acetaminophen Antidote / Mucolytic",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "antidote", "acetylcysteine", "NAC", "mucomyst", "acetadote", "acetaminophen overdose", "tylenol overdose", "liver protection", "IV", "PO"]
+    },
+    {
+      "id": "atropine_antidote",
+      "name": "Atropine — organophosphate antidote",
+      "class": "Anticholinergic / Organophosphate Antidote",
+      "routes": ["IV", "IM"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "antidote", "atropine", "organophosphate", "nerve agent", "pesticide", "cholinergic toxidrome", "SLUDGE", "IV"]
+    },
+    {
+      "id": "pralidoxime",
+      "name": "Pralidoxime (2-PAM, Protopam)",
+      "class": "Cholinesterase Reactivator",
+      "routes": ["IV", "IM"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "antidote", "pralidoxime", "2-PAM", "protopam", "organophosphate", "nerve agent", "cholinesterase reactivator", "IV"]
+    },
+    {
+      "id": "digoxin_immune_fab",
+      "name": "Digoxin Immune Fab (Digibind, DigiFab)",
+      "class": "Digoxin Antidote",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "antidote", "digoxin immune fab", "digibind", "digifab", "digoxin toxicity", "digoxin overdose", "cardiac glycoside antidote", "IV"]
+    },
+    {
+      "id": "protamine_antidote",
+      "name": "Protamine Sulfate",
+      "class": "Heparin Reversal Agent",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "antidote", "protamine", "heparin reversal", "anticoagulant reversal", "bleeding", "IV"]
+    },
+    {
+      "id": "vitamin_k_antidote",
+      "name": "Vitamin K (Phytonadione)",
+      "class": "Warfarin Antidote",
+      "routes": ["PO", "IV", "SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "antidote", "vitamin K", "phytonadione", "warfarin reversal", "INR reversal", "bleeding", "coagulopathy"]
+    },
+    {
+      "id": "andexanet_alfa_antidote",
+      "name": "Andexanet Alfa (Andexxa)",
+      "class": "Factor Xa Inhibitor Antidote",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "antidote", "andexanet", "andexxa", "factor Xa reversal", "apixaban reversal", "rivaroxaban reversal", "DOAC reversal", "bleeding", "IV"]
+    },
+    {
+      "id": "idarucizumab_antidote",
+      "name": "Idarucizumab (Praxbind)",
+      "class": "Dabigatran Antidote",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "antidote", "idarucizumab", "praxbind", "dabigatran reversal", "DOAC reversal", "bleeding", "IV"]
+    },
+    {
+      "id": "calcium_gluconate",
+      "name": "Calcium Gluconate — antidote use",
+      "class": "Calcium Channel Blocker / Hyperkalemia Antidote",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "antidote", "calcium gluconate", "calcium channel blocker overdose", "hyperkalemia", "cardiac membrane stabilization", "fluoride poisoning", "IV"]
+    },
+    {
+      "id": "sodium_bicarbonate",
+      "name": "Sodium Bicarbonate — antidote use",
+      "class": "TCA Antidote / Urine Alkalinizer",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "antidote", "sodium bicarbonate", "bicarb", "TCA overdose", "tricyclic antidepressant", "salicylate overdose", "QRS widening", "IV"]
+    },
+    {
+      "id": "cyproheptadine",
+      "name": "Cyproheptadine (Periactin)",
+      "class": "Serotonin Antagonist — Serotonin Syndrome Antidote",
+      "routes": ["PO"],
+      "allergy_class": "antihistamines",
+      "semantic_tags": ["reversal", "antidote", "cyproheptadine", "periactin", "serotonin syndrome", "serotonin antagonist", "appetite stimulant"]
+    },
+    {
+      "id": "methylene_blue_antidote",
+      "name": "Methylene Blue — methemoglobin antidote",
+      "class": "Methemoglobinemia Antidote",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "antidote", "methylene blue", "methemoglobinemia", "methemoglobin", "dapsone toxicity", "IV"]
+    },
+    {
+      "id": "hydroxocobalamin",
+      "name": "Hydroxocobalamin (Cyanokit)",
+      "class": "Cyanide Antidote",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "antidote", "hydroxocobalamin", "cyanokit", "cyanide poisoning", "smoke inhalation", "cyanide antidote", "vitamin B12", "IV"]
+    },
+    {
+      "id": "physostigmine",
+      "name": "Physostigmine",
+      "class": "Anticholinergic Antidote",
+      "routes": ["IV", "IM"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "antidote", "physostigmine", "anticholinergic toxidrome", "anticholinergic overdose", "cholinesterase inhibitor", "IV"]
+    },
+    {
+      "id": "deferoxamine",
+      "name": "Deferoxamine (Desferal)",
+      "class": "Iron Chelator",
+      "routes": ["IV", "IM", "SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "antidote", "deferoxamine", "desferal", "iron overdose", "iron toxicity", "iron chelation", "IV"]
+    },
+    {
+      "id": "dimercaprol",
+      "name": "Dimercaprol (BAL)",
+      "class": "Heavy Metal Chelator",
+      "routes": ["IM"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "antidote", "dimercaprol", "BAL", "heavy metal", "arsenic", "mercury", "lead", "chelation", "IM"]
+    },
+    {
+      "id": "succimer",
+      "name": "Succimer (Chemet, DMSA)",
+      "class": "Heavy Metal Chelator",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "antidote", "succimer", "chemet", "DMSA", "lead poisoning", "arsenic", "mercury", "heavy metal chelation", "pediatric"]
+    },
+    {
+      "id": "sugammadex_reversal",
+      "name": "Sugammadex (Bridion)",
+      "class": "Neuromuscular Reversal Agent",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "antidote", "sugammadex", "bridion", "rocuronium reversal", "vecuronium reversal", "neuromuscular blockade reversal", "IV"]
+    },
+    {
+      "id": "neostigmine_reversal",
+      "name": "Neostigmine",
+      "class": "Neuromuscular Reversal Agent / Cholinesterase Inhibitor",
+      "routes": ["IV", "IM"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "antidote", "neostigmine", "neuromuscular reversal", "paralytic reversal", "myasthenia gravis", "IV"]
+    }
+  ]
+}

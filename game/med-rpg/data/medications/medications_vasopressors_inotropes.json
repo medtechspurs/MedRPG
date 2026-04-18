@@ -1,0 +1,87 @@
+{
+  "category": "Vasopressors & Inotropes",
+  "category_id": "vasopressors_inotropes",
+  "description": "Medications for shock, hypotension, and hemodynamic support. Used in ICU and emergency settings to restore blood pressure and cardiac output.",
+  "medications": [
+    {
+      "id": "norepinephrine",
+      "name": "Norepinephrine (Levophed)",
+      "class": "Vasopressor (Alpha-1 + Beta-1 Agonist)",
+      "routes": ["IV"],
+      "allergy_class": "catecholamines",
+      "semantic_tags": ["vasopressor", "norepinephrine", "levophed", "septic shock", "shock", "hypotension", "first line vasopressor", "IV", "ICU"]
+    },
+    {
+      "id": "epinephrine",
+      "name": "Epinephrine (Adrenaline, EpiPen)",
+      "class": "Vasopressor / Inotrope (Alpha + Beta Agonist)",
+      "routes": ["IV", "IM", "SQ", "ET", "inhaled"],
+      "allergy_class": "catecholamines",
+      "semantic_tags": ["vasopressor", "epinephrine", "adrenaline", "epipen", "anaphylaxis", "cardiac arrest", "ACLS", "shock", "anaphylactic shock", "bronchospasm"]
+    },
+    {
+      "id": "dopamine",
+      "name": "Dopamine",
+      "class": "Vasopressor / Inotrope (Dopaminergic + Adrenergic)",
+      "routes": ["IV"],
+      "allergy_class": "catecholamines",
+      "semantic_tags": ["vasopressor", "inotrope", "dopamine", "shock", "hypotension", "cardiogenic shock", "IV", "ICU"]
+    },
+    {
+      "id": "vasopressin",
+      "name": "Vasopressin (ADH)",
+      "class": "Vasopressor (V1 Receptor Agonist)",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["vasopressor", "vasopressin", "ADH", "septic shock", "shock", "hypotension", "IV", "adjunct vasopressor", "ICU"]
+    },
+    {
+      "id": "phenylephrine",
+      "name": "Phenylephrine (Neosynephrine)",
+      "class": "Vasopressor (Alpha-1 Agonist)",
+      "routes": ["IV", "IM", "SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["vasopressor", "phenylephrine", "neosynephrine", "hypotension", "pure alpha", "shock", "IV", "anesthesia", "spinal hypotension"]
+    },
+    {
+      "id": "dobutamine",
+      "name": "Dobutamine",
+      "class": "Inotrope (Beta-1 Agonist)",
+      "routes": ["IV"],
+      "allergy_class": "catecholamines",
+      "semantic_tags": ["inotrope", "dobutamine", "cardiogenic shock", "heart failure", "low cardiac output", "IV", "ICU"]
+    },
+    {
+      "id": "milrinone",
+      "name": "Milrinone (Primacor)",
+      "class": "Inotrope / Vasodilator (PDE3 Inhibitor)",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["inotrope", "milrinone", "primacor", "cardiogenic shock", "heart failure", "IV", "ICU", "low cardiac output", "pulmonary hypertension"]
+    },
+    {
+      "id": "angiotensin_ii",
+      "name": "Angiotensin II (Giapreza)",
+      "class": "Vasopressor (Angiotensin II Receptor Agonist)",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["vasopressor", "angiotensin II", "giapreza", "refractory shock", "septic shock", "IV", "adjunct vasopressor"]
+    },
+    {
+      "id": "methylene_blue",
+      "name": "Methylene Blue",
+      "class": "Vasopressor (Guanylate Cyclase Inhibitor)",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["vasopressor", "methylene blue", "refractory vasodilatory shock", "methemoglobinemia", "IV"]
+    },
+    {
+      "id": "levosimendan",
+      "name": "Levosimendan (Simdax)",
+      "class": "Inotrope / Vasodilator (Calcium Sensitizer)",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["inotrope", "levosimendan", "simdax", "heart failure", "cardiogenic shock", "IV", "calcium sensitizer"]
+    }
+  ]
+}

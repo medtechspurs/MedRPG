@@ -1,0 +1,167 @@
+{
+  "category": "Anticoagulants",
+  "category_id": "anticoagulants",
+  "description": "Anticoagulant and thrombolytic medications for clot prevention and treatment.",
+  "medications": [
+    {
+      "id": "heparin_unfractionated",
+      "name": "Heparin (Unfractionated)",
+      "class": "Anticoagulant (UFH)",
+      "routes": ["IV", "SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["anticoagulant", "heparin", "UFH", "DVT", "PE", "clot", "anticoagulation", "IV", "ACS", "bridging"]
+    },
+    {
+      "id": "enoxaparin",
+      "name": "Enoxaparin (Lovenox)",
+      "class": "Low Molecular Weight Heparin (LMWH)",
+      "routes": ["SQ", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["anticoagulant", "enoxaparin", "lovenox", "LMWH", "DVT", "PE", "prophylaxis", "ACS", "clot", "SQ"]
+    },
+    {
+      "id": "fondaparinux",
+      "name": "Fondaparinux (Arixtra)",
+      "class": "Factor Xa Inhibitor (indirect)",
+      "routes": ["SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["anticoagulant", "fondaparinux", "arixtra", "DVT", "PE", "HIT", "factor Xa", "SQ"]
+    },
+    {
+      "id": "warfarin",
+      "name": "Warfarin (Coumadin)",
+      "class": "Vitamin K Antagonist",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["anticoagulant", "warfarin", "coumadin", "INR", "atrial fibrillation", "DVT", "PE", "mechanical valve", "long term anticoagulation"]
+    },
+    {
+      "id": "apixaban",
+      "name": "Apixaban (Eliquis)",
+      "class": "Direct Factor Xa Inhibitor (DOAC)",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["anticoagulant", "apixaban", "eliquis", "DOAC", "NOAC", "atrial fibrillation", "DVT", "PE", "factor Xa"]
+    },
+    {
+      "id": "rivaroxaban",
+      "name": "Rivaroxaban (Xarelto)",
+      "class": "Direct Factor Xa Inhibitor (DOAC)",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["anticoagulant", "rivaroxaban", "xarelto", "DOAC", "NOAC", "atrial fibrillation", "DVT", "PE", "factor Xa"]
+    },
+    {
+      "id": "dabigatran",
+      "name": "Dabigatran (Pradaxa)",
+      "class": "Direct Thrombin Inhibitor (DOAC)",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["anticoagulant", "dabigatran", "pradaxa", "DOAC", "NOAC", "atrial fibrillation", "DVT", "PE", "direct thrombin inhibitor"]
+    },
+    {
+      "id": "edoxaban",
+      "name": "Edoxaban (Savaysa)",
+      "class": "Direct Factor Xa Inhibitor (DOAC)",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["anticoagulant", "edoxaban", "savaysa", "DOAC", "NOAC", "atrial fibrillation", "DVT", "PE"]
+    },
+    {
+      "id": "argatroban",
+      "name": "Argatroban",
+      "class": "Direct Thrombin Inhibitor (IV)",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["anticoagulant", "argatroban", "HIT", "heparin induced thrombocytopenia", "direct thrombin inhibitor", "IV"]
+    },
+    {
+      "id": "bivalirudin",
+      "name": "Bivalirudin (Angiomax)",
+      "class": "Direct Thrombin Inhibitor (IV)",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["anticoagulant", "bivalirudin", "angiomax", "HIT", "PCI", "cardiac catheterization", "IV"]
+    },
+    {
+      "id": "alteplase",
+      "name": "Alteplase (tPA, Activase)",
+      "class": "Thrombolytic (tPA)",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["thrombolytic", "alteplase", "tPA", "activase", "stroke", "PE", "MI", "STEMI", "clot busting", "IV", "massive PE"]
+    },
+    {
+      "id": "tenecteplase",
+      "name": "Tenecteplase (TNKase)",
+      "class": "Thrombolytic (tPA variant)",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["thrombolytic", "tenecteplase", "TNKase", "STEMI", "MI", "stroke", "IV", "bolus tPA"]
+    },
+    {
+      "id": "clopidogrel",
+      "name": "Clopidogrel (Plavix)",
+      "class": "P2Y12 Inhibitor / Antiplatelet",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antiplatelet", "clopidogrel", "plavix", "ACS", "MI", "stroke", "stent", "dual antiplatelet", "P2Y12"]
+    },
+    {
+      "id": "ticagrelor",
+      "name": "Ticagrelor (Brilinta)",
+      "class": "P2Y12 Inhibitor / Antiplatelet",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antiplatelet", "ticagrelor", "brilinta", "ACS", "MI", "stent", "dual antiplatelet", "P2Y12"]
+    },
+    {
+      "id": "prasugrel",
+      "name": "Prasugrel (Effient)",
+      "class": "P2Y12 Inhibitor / Antiplatelet",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["antiplatelet", "prasugrel", "effient", "ACS", "MI", "stent", "dual antiplatelet", "P2Y12"]
+    },
+    {
+      "id": "aspirin_antiplatelet",
+      "name": "Aspirin (antiplatelet use)",
+      "class": "COX-1 Inhibitor / Antiplatelet",
+      "routes": ["PO"],
+      "allergy_class": "nsaids",
+      "semantic_tags": ["antiplatelet", "aspirin", "ASA", "ACS", "MI", "stroke prevention", "cardiac", "antiplatelet", "81mg", "325mg"]
+    },
+    {
+      "id": "protamine",
+      "name": "Protamine Sulfate",
+      "class": "Heparin Reversal Agent",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "protamine", "heparin reversal", "anticoagulant reversal", "bleeding", "IV"]
+    },
+    {
+      "id": "andexanet_alfa",
+      "name": "Andexanet Alfa (Andexxa)",
+      "class": "Factor Xa Inhibitor Reversal Agent",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "andexanet", "andexxa", "factor Xa reversal", "apixaban reversal", "rivaroxaban reversal", "bleeding", "IV"]
+    },
+    {
+      "id": "idarucizumab",
+      "name": "Idarucizumab (Praxbind)",
+      "class": "Dabigatran Reversal Agent",
+      "routes": ["IV"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "idarucizumab", "praxbind", "dabigatran reversal", "bleeding", "IV"]
+    },
+    {
+      "id": "vitamin_k",
+      "name": "Vitamin K (Phytonadione)",
+      "class": "Warfarin Reversal Agent",
+      "routes": ["PO", "IV", "SQ"],
+      "allergy_class": null,
+      "semantic_tags": ["reversal", "vitamin K", "phytonadione", "warfarin reversal", "INR reversal", "bleeding", "coagulopathy"]
+    }
+  ]
+}

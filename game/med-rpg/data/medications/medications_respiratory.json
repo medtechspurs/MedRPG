@@ -1,0 +1,191 @@
+{
+  "category": "Respiratory",
+  "category_id": "respiratory",
+  "description": "Medications for respiratory conditions including asthma, COPD, pulmonary hypertension, and respiratory infections.",
+  "medications": [
+    {
+      "id": "albuterol",
+      "name": "Albuterol (Ventolin, ProAir)",
+      "class": "Short-acting Beta-2 Agonist (SABA)",
+      "routes": ["inhaled", "nebulized", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["respiratory", "bronchodilator", "albuterol", "ventolin", "proair", "asthma", "COPD", "bronchospasm", "SABA", "rescue inhaler"]
+    },
+    {
+      "id": "levalbuterol",
+      "name": "Levalbuterol (Xopenex)",
+      "class": "Short-acting Beta-2 Agonist (SABA)",
+      "routes": ["inhaled", "nebulized"],
+      "allergy_class": null,
+      "semantic_tags": ["respiratory", "bronchodilator", "levalbuterol", "xopenex", "asthma", "COPD", "SABA"]
+    },
+    {
+      "id": "ipratropium",
+      "name": "Ipratropium (Atrovent)",
+      "class": "Short-acting Muscarinic Antagonist (SAMA)",
+      "routes": ["inhaled", "nebulized"],
+      "allergy_class": null,
+      "semantic_tags": ["respiratory", "anticholinergic", "ipratropium", "atrovent", "COPD", "bronchospasm", "SAMA"]
+    },
+    {
+      "id": "albuterol_ipratropium",
+      "name": "Albuterol / Ipratropium (DuoNeb, Combivent)",
+      "class": "SABA + SAMA Combination",
+      "routes": ["inhaled", "nebulized"],
+      "allergy_class": null,
+      "semantic_tags": ["respiratory", "bronchodilator", "duoneb", "combivent", "albuterol", "ipratropium", "COPD", "asthma", "combination inhaler"]
+    },
+    {
+      "id": "tiotropium",
+      "name": "Tiotropium (Spiriva)",
+      "class": "Long-acting Muscarinic Antagonist (LAMA)",
+      "routes": ["inhaled"],
+      "allergy_class": null,
+      "semantic_tags": ["respiratory", "anticholinergic", "tiotropium", "spiriva", "COPD", "LAMA", "long acting", "maintenance"]
+    },
+    {
+      "id": "salmeterol",
+      "name": "Salmeterol (Serevent)",
+      "class": "Long-acting Beta-2 Agonist (LABA)",
+      "routes": ["inhaled"],
+      "allergy_class": null,
+      "semantic_tags": ["respiratory", "bronchodilator", "salmeterol", "serevent", "asthma", "COPD", "LABA", "long acting", "maintenance"]
+    },
+    {
+      "id": "formoterol",
+      "name": "Formoterol",
+      "class": "Long-acting Beta-2 Agonist (LABA)",
+      "routes": ["inhaled"],
+      "allergy_class": null,
+      "semantic_tags": ["respiratory", "bronchodilator", "formoterol", "asthma", "COPD", "LABA", "long acting"]
+    },
+    {
+      "id": "fluticasone",
+      "name": "Fluticasone (Flovent, Flonase)",
+      "class": "Inhaled Corticosteroid (ICS)",
+      "routes": ["inhaled", "intranasal"],
+      "allergy_class": null,
+      "semantic_tags": ["respiratory", "steroid", "corticosteroid", "fluticasone", "flovent", "flonase", "asthma", "ICS", "allergic rhinitis", "nasal spray", "maintenance"]
+    },
+    {
+      "id": "budesonide",
+      "name": "Budesonide (Pulmicort, Rhinocort)",
+      "class": "Inhaled Corticosteroid (ICS)",
+      "routes": ["inhaled", "nebulized", "intranasal"],
+      "allergy_class": null,
+      "semantic_tags": ["respiratory", "steroid", "corticosteroid", "budesonide", "pulmicort", "rhinocort", "asthma", "COPD", "ICS", "Crohn's"]
+    },
+    {
+      "id": "fluticasone_salmeterol",
+      "name": "Fluticasone / Salmeterol (Advair)",
+      "class": "ICS + LABA Combination",
+      "routes": ["inhaled"],
+      "allergy_class": null,
+      "semantic_tags": ["respiratory", "combination inhaler", "advair", "fluticasone", "salmeterol", "asthma", "COPD", "ICS LABA", "maintenance"]
+    },
+    {
+      "id": "budesonide_formoterol",
+      "name": "Budesonide / Formoterol (Symbicort)",
+      "class": "ICS + LABA Combination",
+      "routes": ["inhaled"],
+      "allergy_class": null,
+      "semantic_tags": ["respiratory", "combination inhaler", "symbicort", "budesonide", "formoterol", "asthma", "COPD", "ICS LABA", "maintenance"]
+    },
+    {
+      "id": "montelukast",
+      "name": "Montelukast (Singulair)",
+      "class": "Leukotriene Receptor Antagonist",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["respiratory", "montelukast", "singulair", "asthma", "allergic rhinitis", "leukotriene", "allergy"]
+    },
+    {
+      "id": "theophylline",
+      "name": "Theophylline",
+      "class": "Methylxanthine Bronchodilator",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["respiratory", "bronchodilator", "theophylline", "asthma", "COPD", "methylxanthine", "narrow therapeutic index"]
+    },
+    {
+      "id": "roflumilast",
+      "name": "Roflumilast (Daliresp)",
+      "class": "PDE4 Inhibitor",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["respiratory", "roflumilast", "daliresp", "COPD", "exacerbation prevention", "PDE4 inhibitor"]
+    },
+    {
+      "id": "sildenafil",
+      "name": "Sildenafil (Revatio, Viagra)",
+      "class": "PDE5 Inhibitor",
+      "routes": ["PO", "IV"],
+      "allergy_class": null,
+      "semantic_tags": ["respiratory", "pulmonary hypertension", "sildenafil", "revatio", "viagra", "PDE5 inhibitor", "erectile dysfunction"]
+    },
+    {
+      "id": "tadalafil",
+      "name": "Tadalafil (Adcirca, Cialis)",
+      "class": "PDE5 Inhibitor",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["respiratory", "pulmonary hypertension", "tadalafil", "adcirca", "cialis", "PDE5 inhibitor", "erectile dysfunction"]
+    },
+    {
+      "id": "epoprostenol",
+      "name": "Epoprostenol (Flolan)",
+      "class": "Prostacyclin Analogue",
+      "routes": ["IV", "inhaled"],
+      "allergy_class": null,
+      "semantic_tags": ["respiratory", "pulmonary hypertension", "epoprostenol", "flolan", "prostacyclin", "IV", "PAH"]
+    },
+    {
+      "id": "guaifenesin",
+      "name": "Guaifenesin (Mucinex)",
+      "class": "Expectorant",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["respiratory", "expectorant", "guaifenesin", "mucinex", "cough", "mucus", "congestion", "OTC"]
+    },
+    {
+      "id": "dextromethorphan",
+      "name": "Dextromethorphan (DXM)",
+      "class": "Antitussive",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["respiratory", "antitussive", "dextromethorphan", "cough suppressant", "DXM", "OTC", "cough"]
+    },
+    {
+      "id": "benzonatate",
+      "name": "Benzonatate (Tessalon)",
+      "class": "Antitussive",
+      "routes": ["PO"],
+      "allergy_class": null,
+      "semantic_tags": ["respiratory", "antitussive", "benzonatate", "tessalon", "cough suppressant", "cough"]
+    },
+    {
+      "id": "acetylcysteine_inhaled",
+      "name": "Acetylcysteine (inhaled, Mucomyst)",
+      "class": "Mucolytic",
+      "routes": ["inhaled", "nebulized"],
+      "allergy_class": null,
+      "semantic_tags": ["respiratory", "mucolytic", "acetylcysteine", "mucomyst", "CF", "cystic fibrosis", "mucus", "inhaled"]
+    },
+    {
+      "id": "heliox",
+      "name": "Heliox (Helium-Oxygen Mixture)",
+      "class": "Respiratory Gas",
+      "routes": ["inhaled"],
+      "allergy_class": null,
+      "semantic_tags": ["respiratory", "heliox", "helium", "oxygen", "upper airway obstruction", "stridor", "croup", "asthma"]
+    },
+    {
+      "id": "nitric_oxide",
+      "name": "Inhaled Nitric Oxide (iNO)",
+      "class": "Pulmonary Vasodilator",
+      "routes": ["inhaled"],
+      "allergy_class": null,
+      "semantic_tags": ["respiratory", "nitric oxide", "iNO", "pulmonary hypertension", "ARDS", "neonatal", "inhaled"]
+    }
+  ]
+}

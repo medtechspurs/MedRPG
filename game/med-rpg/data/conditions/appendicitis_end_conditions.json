@@ -1,0 +1,209 @@
+{
+  "condition_id": "appendicitis",
+  "category": "End Conditions",
+  "description": "Defines all ways the appendicitis encounter can end — win states, lose states, disposition decisions, and the Mega Hospital escape hatch.",
+
+  "win_conditions": [
+    {
+      "id": "appendectomy_win",
+      "name": "Appendectomy Completed",
+      "description": "Player successfully performs appendectomy with prerequisites met.",
+      "trigger": "appendectomy_completed",
+      "result": "win",
+      "bonus_points_awarded": 10,
+      "meddy_feedback": "Surgery complete! Now — where are we sending this patient?",
+      "next_step": "disposition_prompt"
+    }
+  ],
+
+  "lose_conditions": [
+    {
+      "id": "ap_depleted",
+      "name": "AP Depleted — Coma/Fail State",
+      "description": "Patient reaches 0 AP remaining without appendectomy. Patient enters coma/fail state.",
+      "trigger": "ap_reaches_zero",
+      "result": "lose",
+      "bonus_points_awarded": 0,
+      "meddy_feedback": "We've run out of time. The patient has deteriorated beyond recovery. An ambulance is on the way to transfer to Mega Hospital.",
+      "auto_action": "ambulance_called",
+      "note": "No disposition prompt. Encounter ends immediately."
+    },
+    {
+      "id": "mega_hospital_transfer",
+      "name": "Mega Hospital Transfer",
+      "description": "Player attempts an action they cannot afford. MEDDY offers ambulance transfer to Mega Hospital.",
+      "trigger": "player_attempts_unaffordable_action",
+      "result": "lose",
+      "popup": {
+        "meddy_feedback": "You don't have enough AP for that. Want me to call an ambulance to transfer to Mega Hospital?",
+        "options": [
+          {
+            "id": "call_ambulance",
+            "label": "Yes — call the ambulance",
+            "result": "lose",
+            "bonus_points_awarded": 0,
+            "action": "ambulance_called"
+          },
+          {
+            "id": "cancel",
+            "label": "No — I'll try something else",
+            "result": "continue",
+            "action": "dismiss_popup"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mega_hospital_transfer_appendectomy",
+      "name": "Mega Hospital Transfer — Appendectomy Unaffordable",
+      "description": "Player tries to perform appendectomy but cannot afford the 10 AP cost. Special case — awards 3 bonus points for recognizing the need for surgery.",
+      "trigger": "player_attempts_appendectomy_insufficient_ap",
+      "result": "lose",
+      "popup": {
+        "meddy_feedback": "You don't have enough AP to perform the appendectomy. But you knew what this patient needed — that counts for something. Want me to call an ambulance to transfer to Mega Hospital?",
+        "options": [
+          {
+            "id": "call_ambulance_appendectomy",
+            "label": "Yes — call the ambulance",
+            "result": "lose",
+            "bonus_points_awarded": 3,
+            "meddy_feedback_on_confirm": "Ambulance is on the way. You knew the diagnosis and the treatment — just ran out of time. 3 bonus points awarded for clinical insight.",
+            "action": "ambulance_called"
+          },
+          {
+            "id": "cancel",
+            "label": "No — I'll try something else",
+            "result": "continue",
+            "action": "dismiss_popup"
+          }
+        ]
+      }
+    }
+  ],
+
+  "disposition_prompt": {
+    "description": "After successful appendectomy, MEDDY asks where to send the patient. All options cost 0 AP.",
+    "meddy_prompt": "Surgery went well! Where are we sending this patient?",
+    "options": [
+      {
+        "id": "admit_hospital",
+        "label": "Admit to Hospital Floor"
+      },
+      {
+        "id": "admit_icu",
+        "label": "Admit to ICU"
+      },
+      {
+        "id": "discharge_home",
+        "label": "Discharge to Home"
+      }
+    ],
+
+    "outcomes_by_state": {
+
+      "stable": {
+        "admit_hospital": {
+          "bonus_points": 1,
+          "harm_points": 0,
+          "result": "accepted",
+          "meddy_feedback": "Good call. Routine post-op admission to the floor. The patient will do great!",
+          "ending": "ambulance"
+        },
+        "admit_icu": {
+          "bonus_points": 0,
+          "harm_points": 0,
+          "result": "overridden",
+          "meddy_feedback": "ICU attending declines — this patient doesn't need that level of care after a routine appendectomy. Admitting to the hospital floor instead.",
+          "actual_disposition": "admit_hospital",
+          "ending": "ambulance"
+        },
+        "discharge_home": {
+          "bonus_points": 1,
+          "harm_points": 0,
+          "result": "accepted",
+          "meddy_feedback": "Sounds good! Routine laparoscopic appendectomy — safe to go home with follow-up instructions. See you next time!",
+          "ending": "patient_walks_out"
+        }
+      },
+
+      "perforated": {
+        "admit_hospital": {
+          "bonus_points": 1,
+          "harm_points": 0,
+          "result": "accepted",
+          "meddy_feedback": "Right call. Perforated appendix needs inpatient monitoring, IV antibiotics, and wound care. Good thinking.",
+          "ending": "ambulance"
+        },
+        "admit_icu": {
+          "bonus_points": 0,
+          "harm_points": 0,
+          "result": "overridden",
+          "meddy_feedback": "ICU attending declines — perforated appendix is serious but doesn't require ICU level care. Admitting to the hospital floor instead.",
+          "actual_disposition": "admit_hospital",
+          "ending": "ambulance"
+        },
+        "discharge_home": {
+          "bonus_points": 0,
+          "harm_points": 0,
+          "result": "accepted",
+          "meddy_feedback": "Hmm — discharging a perforated appendix patient isn't ideal, but it's your call. They'll need very close follow-up.",
+          "ending": "patient_walks_out"
+        }
+      },
+
+      "septic_shock": {
+        "admit_hospital": {
+          "bonus_points": 0,
+          "harm_points": 1,
+          "result": "overridden",
+          "meddy_feedback": "Floor attending refused — this patient just came out of septic shock and needs ICU level monitoring. Admitting to the ICU instead.",
+          "actual_disposition": "admit_icu",
+          "ending": "ambulance"
+        },
+        "admit_icu": {
+          "bonus_points": 1,
+          "harm_points": 0,
+          "result": "accepted",
+          "meddy_feedback": "Absolutely the right call. Post-op septic shock patient needs ICU monitoring, vasopressor weaning, and close observation. Great decision.",
+          "ending": "ambulance"
+        },
+        "discharge_home": {
+          "bonus_points": 0,
+          "harm_points": 2,
+          "result": "overridden",
+          "meddy_feedback": "I'm not comfortable discharging this patient home — they just came out of septic shock. I'm initiating ICU admission.",
+          "actual_disposition": "admit_icu",
+          "ending": "ambulance"
+        }
+      }
+    }
+  },
+
+  "endings": {
+    "ambulance": {
+      "id": "ambulance",
+      "description": "An ambulance arrives and whisks the patient away. Used for all hospital and ICU admissions, and for Mega Hospital transfers.",
+      "animation": "ambulance_arrival_and_departure",
+      "meddy_feedback": "The ambulance is here. Safe travels — you did good work today."
+    },
+    "patient_walks_out": {
+      "id": "patient_walks_out",
+      "description": "Patient walks out on their own. Used for discharge to home.",
+      "animation": "patient_exit_walking",
+      "meddy_feedback": "There they go! Make sure they have their discharge instructions."
+    },
+    "mega_hospital_transfer": {
+      "id": "mega_hospital_transfer",
+      "description": "Ambulance transfers patient to Mega Hospital. Encounter is lost.",
+      "animation": "ambulance_arrival_and_departure",
+      "meddy_feedback": "Mega Hospital will take good care of them. We'll do better next time."
+    }
+  },
+
+  "scoring_summary": {
+    "appendectomy_bonus_points": 10,
+    "disposition_bonus_points_max": 1,
+    "mega_hospital_appendectomy_bonus_points": 3,
+    "note": "Disposition bonus points and harm points applied before final XP calculation."
+  }
+}
