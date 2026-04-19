@@ -312,3 +312,6 @@ text = "ABP:"
 [node name="ALineValue" type="Label" parent="Monitor/VitalsContainer/ALineWaveform/ALineRow" unique_id=1003164308]
 layout_mode = 2
 text = "120/85"
+
+[connection signal="pressed" from="IconBar/IconContainer/HistoryBtn" to="." method="_on_history_btn_pressed"]
+[connection signal="pressed" from="InputArea/InputPanel/InputRow/SubmitBtn" to="." method="_on_submit_btn_pressed"]

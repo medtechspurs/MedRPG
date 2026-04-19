@@ -43,6 +43,8 @@ var dispenser_used: bool = false
 # --- Condition Data ---
 var condition_data: Dictionary = {}
 
+var current_mode: String = ""
+
 # ============================================================
 func _ready():
 	load_condition_data()
@@ -180,3 +182,30 @@ func update_monitor():
 func on_insufficient_ap():
 	print("Insufficient AP!")
 	# TODO: show Mega Hospital popup
+
+
+func _on_history_btn_pressed() -> void:
+	print("History button clicked!")
+	show_input_area("history")
+
+func show_input_area(mode: String) -> void:
+	current_mode = mode
+	$InputArea/InputPanel/InputRow/InputField.placeholder_text = "Ask a history question..."
+	$InputArea/InputPanel/InputRow/InputField.grab_focus()
+	
+
+
+func _on_submit_btn_pressed() -> void:
+	var input_text = $InputArea/InputPanel/InputRow/InputField.text.strip_edges()
+	if input_text == "":
+		return
+	print("Player input: " + input_text)
+	process_input(input_text)
+	$InputArea/InputPanel/InputRow/InputField.text = ""
+
+func process_input(input: String) -> void:
+	match current_mode:
+		"history":
+			print("Processing history question: " + input)
+		_:
+			print("No mode selected")
