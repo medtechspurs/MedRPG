@@ -238,8 +238,13 @@ func _on_ollama_request_request_completed(result, response_code, headers, body) 
 	json.parse(body.get_string_from_utf8())
 	var response = json.get_data()
 	if response and response.has("response"):
-		var text = response["response"]
-		print("Ollama says: " + text)
-		# TODO: display in MEDDY popup
+		var response_text = response["response"]
+		print("Ollama says: " + response_text)
+		display_response("Patient", response_text)
 	else:
 		print("Ollama error or empty response")
+
+func display_response(speaker: String, response_text: String) -> void:
+	$ResponseLayer/ResponsePanel.visible = true
+	$ResponseLayer/ResponsePanel/ResponseContent/ResponseSpeaker.text = speaker + ":"
+	$ResponseLayer/ResponsePanel/ResponseContent/ResponseText.text = response_text

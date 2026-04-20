@@ -315,6 +315,28 @@ text = "120/85"
 
 [node name="OllamaRequest" type="HTTPRequest" parent="." unique_id=224163414]
 
+[node name="ResponseLayer" type="CanvasLayer" parent="." unique_id=515746429]
+
+[node name="ResponsePanel" type="PanelContainer" parent="ResponseLayer" unique_id=325546005]
+visible = false
+custom_minimum_size = Vector2(800, 200)
+offset_left = 200.0
+offset_top = 200.0
+offset_right = 261.0
+offset_bottom = 250.0
+
+[node name="ResponseContent" type="VBoxContainer" parent="ResponseLayer/ResponsePanel" unique_id=866042078]
+layout_mode = 2
+
+[node name="ResponseSpeaker" type="Label" parent="ResponseLayer/ResponsePanel/ResponseContent" unique_id=2147473331]
+layout_mode = 2
+text = "Patient:"
+
+[node name="ResponseText" type="Label" parent="ResponseLayer/ResponsePanel/ResponseContent" unique_id=2114332900]
+layout_mode = 2
+text = "..."
+autowrap_mode = 2
+
 [connection signal="pressed" from="IconBar/IconContainer/HistoryBtn" to="." method="_on_history_btn_pressed"]
 [connection signal="pressed" from="InputArea/InputPanel/InputRow/SubmitBtn" to="." method="_on_submit_btn_pressed"]
 [connection signal="request_completed" from="OllamaRequest" to="." method="_on_ollama_request_request_completed"]
