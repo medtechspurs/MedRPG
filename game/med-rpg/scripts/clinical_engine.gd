@@ -190,6 +190,7 @@ func _on_history_btn_pressed() -> void:
 
 func show_input_area(mode: String) -> void:
 	current_mode = mode
+	print("Mode set to: " + current_mode)
 	$InputArea/InputPanel/InputRow/InputField.placeholder_text = "Ask a history question..."
 	$InputArea/InputPanel/InputRow/InputField.grab_focus()
 	
@@ -204,8 +205,41 @@ func _on_submit_btn_pressed() -> void:
 	$InputArea/InputPanel/InputRow/InputField.text = ""
 
 func process_input(input: String) -> void:
+	print("Current mode is: " + current_mode)
 	match current_mode:
 		"history":
-			print("Processing history question: " + input)
+			var prompt = """You are playing the role of a patient with appendicitis. 
+The patient is a 22 year old male with right lower quadrant abdominal pain.
+The doctor is asking you: """ + input + """
+Respond as the patient would in 2-3 sentences. Be realistic and natural.
+Do not reveal the diagnosis directly."""
+			send_to_ollama(prompt)
 		_:
 			print("No mode selected")
+			
+func send_to_ollama(prompt: String) -> void:
+	print("Attempting Ollama request...")
+	var ollama_node = get_node_or_null("OllamaRequest")
+	if ollama_node == null:
+		print("ERROR: OllamaRequest node not found!")
+		return
+	var url = "http://localhost:11434/api/generate"
+	var headers = ["Content-Type: application/json"]
+	var body = JSON.stringify({
+		"model": "phi3:mini",
+		"prompt": prompt,
+		"stream": false
+	})
+	ollama_node.request(url, headers, HTTPClient.METHOD_POST, body)
+	print("Request sent to Ollama!")
+
+func _on_ollama_request_request_completed(result, response_code, headers, body) -> void:
+	var json = JSON.new()
+	json.parse(body.get_string_from_utf8())
+	var response = json.get_data()
+	if response and response.has("response"):
+		var text = response["response"]
+		print("Ollama says: " + text)
+		# TODO: display in MEDDY popup
+	else:
+		print("Ollama error or empty response")

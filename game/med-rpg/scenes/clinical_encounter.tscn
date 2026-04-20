@@ -313,5 +313,8 @@ text = "ABP:"
 layout_mode = 2
 text = "120/85"
 
+[node name="OllamaRequest" type="HTTPRequest" parent="." unique_id=224163414]
+
 [connection signal="pressed" from="IconBar/IconContainer/HistoryBtn" to="." method="_on_history_btn_pressed"]
 [connection signal="pressed" from="InputArea/InputPanel/InputRow/SubmitBtn" to="." method="_on_submit_btn_pressed"]
+[connection signal="request_completed" from="OllamaRequest" to="." method="_on_ollama_request_request_completed"]
