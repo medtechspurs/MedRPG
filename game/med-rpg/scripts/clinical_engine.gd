@@ -208,30 +208,21 @@ func process_input(input: String) -> void:
 	print("Current mode is: " + current_mode)
 	match current_mode:
 		"history":
-			var prompt = """You are playing the role of a patient with appendicitis. 
-The patient is a 22 year old male with right lower quadrant abdominal pain.
-The doctor is asking you: """ + input + """
-Respond as the patient would in 2-3 sentences. Be realistic and natural.
-Do not reveal the diagnosis directly."""
-			send_to_ollama(prompt)
+			var system = "You are a 22 year old male patient with abdominal pain seeing a doctor. Respond naturally in 1-2 sentences only as the patient. Never reveal your diagnosis."
+			send_to_llm(input, system)
 		_:
 			print("No mode selected")
 			
-func send_to_ollama(prompt: String) -> void:
-	print("Attempting Ollama request...")
-	var ollama_node = get_node_or_null("OllamaRequest")
-	if ollama_node == null:
-		print("ERROR: OllamaRequest node not found!")
-		return
-	var url = "http://localhost:11434/api/generate"
+func send_to_llm(prompt: String, system: String) -> void:
+	print("Sending request to MedRPG server...")
+	var url = "http://localhost:3000/llm"
 	var headers = ["Content-Type: application/json"]
 	var body = JSON.stringify({
-		"model": "phi3:mini",
 		"prompt": prompt,
-		"stream": false
+		"system": system,
+		"max_tokens": 256
 	})
-	ollama_node.request(url, headers, HTTPClient.METHOD_POST, body)
-	print("Request sent to Ollama!")
+	$OllamaRequest.request(url, headers, HTTPClient.METHOD_POST, body)
 
 func _on_ollama_request_request_completed(result, response_code, headers, body) -> void:
 	var json = JSON.new()
