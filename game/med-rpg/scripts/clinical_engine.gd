@@ -47,6 +47,8 @@ var current_mode: String = ""
 
 var system_prompts: Dictionary = {}
 
+var pending_input: String = ""
+
 # ============================================================
 func _ready():
 	load_condition_data()
@@ -209,12 +211,27 @@ func show_input_area(mode: String) -> void:
 
 
 func _on_submit_btn_pressed() -> void:
+	print("Submit button pressed!")
 	var input_text = $InputArea/InputPanel/InputRow/InputField.text.strip_edges()
 	if input_text == "":
 		return
-	print("Player input: " + input_text)
-	process_input(input_text)
-	$InputArea/InputPanel/InputRow/InputField.text = ""
+	pending_input = input_text
+	show_confirmation_popup()
+	$PopupLayer/PopupContent/PopupVBox/PopupButtons/ConfirmBtn.grab_focus()
+
+func show_confirmation_popup() -> void:
+	print("Showing confirmation popup...")
+	var cost = get_action_cost(current_mode)
+	var message = ""
+	match current_mode:
+		"history":
+			message = "Ask patient:\n\"" + pending_input + "\"\n\nCost: " + str(cost) + " AP. Proceed?"
+		_:
+			message = "Perform action?\n\nCost: " + str(cost) + " AP. Proceed?"
+	print("Message: " + message)
+	$PopupLayer/PopupContent/PopupVBox/PopupMessage.text = message
+	$PopupLayer/PopupContent.visible = true
+	print("Popup should be visible now")
 
 func process_input(input: String) -> void:
 	print("Current mode is: " + current_mode)
@@ -251,3 +268,37 @@ func display_response(speaker: String, response_text: String) -> void:
 	$ResponseLayer/ResponsePanel.visible = true
 	$ResponseLayer/ResponsePanel/ResponseContent/ResponseSpeaker.text = speaker + ":"
 	$ResponseLayer/ResponsePanel/ResponseContent/ResponseText.text = response_text
+	
+func get_action_cost(mode: String) -> int:
+	match mode:
+		"history":
+			return 5
+		_:
+			return 2
+
+
+func _on_confirm_btn_pressed() -> void:
+	$PopupLayer/PopupContent.visible = false
+	var cost = get_action_cost(current_mode)
+	if spend_ap(cost):
+		process_input(pending_input)
+		$InputArea/InputPanel/InputRow/InputField.text = ""
+		pending_input = ""
+	else:
+		print("Not enough AP!")
+
+func _on_cancel_btn_pressed() -> void:
+	$PopupLayer/PopupContent.visible = false
+	pending_input = ""
+	$InputArea/InputPanel/InputRow/InputField.text = ""
+
+
+func _on_input_field_text_submitted(new_text: String) -> void:
+	_on_submit_btn_pressed()
+	
+func _input(event: InputEvent) -> void:
+	if $PopupLayer/PopupContent.visible:
+		if event.is_action_pressed("ui_accept"):
+			_on_confirm_btn_pressed()
+		elif event.is_action_pressed("ui_cancel"):
+			_on_cancel_btn_pressed()

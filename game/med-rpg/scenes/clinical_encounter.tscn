@@ -2,6 +2,23 @@
 
 [ext_resource type="Script" uid="uid://c3dmtfjt2apsq" path="res://scripts/clinical_engine.gd" id="1_nmkfv"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nmkfv"]
+bg_color = Color(0.14901961, 0.14901961, 0.14901961, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qqtt1"]
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ddsb"]
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
 [node name="ClinicalEncounter" type="Node2D" unique_id=1121298204]
 script = ExtResource("1_nmkfv")
 
@@ -162,25 +179,39 @@ layout_mode = 2
 text = "Send"
 
 [node name="PopupLayer" type="CanvasLayer" parent="." unique_id=252508960]
+layer = 20
 
 [node name="PopupContent" type="PanelContainer" parent="PopupLayer" unique_id=470848328]
 visible = false
-offset_right = 40.0
-offset_bottom = 40.0
+custom_minimum_size = Vector2(500, 100)
+offset_left = 390.0
+offset_top = 260.0
+offset_right = 525.0
+offset_bottom = 300.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_nmkfv")
 
-[node name="PopupMessage" type="Label" parent="PopupLayer/PopupContent" unique_id=11008815]
+[node name="PopupVBox" type="VBoxContainer" parent="PopupLayer/PopupContent" unique_id=1275707302]
+layout_mode = 2
+
+[node name="PopupMessage" type="Label" parent="PopupLayer/PopupContent/PopupVBox" unique_id=11008815]
 layout_mode = 2
 text = "Are you sure?"
+horizontal_alignment = 1
 
-[node name="PopupButtons" type="HBoxContainer" parent="PopupLayer/PopupContent" unique_id=1984008112]
+[node name="PopupButtons" type="HBoxContainer" parent="PopupLayer/PopupContent/PopupVBox" unique_id=1984008112]
 layout_mode = 2
+alignment = 1
 
-[node name="ConfirmBtn" type="Button" parent="PopupLayer/PopupContent/PopupButtons" unique_id=2040482602]
+[node name="ConfirmBtn" type="Button" parent="PopupLayer/PopupContent/PopupVBox/PopupButtons" unique_id=2040482602]
 layout_mode = 2
+focus_neighbor_right = NodePath("../CancelBtn")
+theme_override_styles/focus = SubResource("StyleBoxFlat_qqtt1")
 text = "Confirm"
 
-[node name="CancelBtn" type="Button" parent="PopupLayer/PopupContent/PopupButtons" unique_id=1837745950]
+[node name="CancelBtn" type="Button" parent="PopupLayer/PopupContent/PopupVBox/PopupButtons" unique_id=1837745950]
 layout_mode = 2
+focus_neighbor_left = NodePath("../ConfirmBtn")
+theme_override_styles/focus = SubResource("StyleBoxFlat_8ddsb")
 text = "Cancel"
 
 [node name="Background" type="Node2D" parent="." unique_id=352296938]
@@ -316,14 +347,15 @@ text = "120/85"
 [node name="OllamaRequest" type="HTTPRequest" parent="." unique_id=224163414]
 
 [node name="ResponseLayer" type="CanvasLayer" parent="." unique_id=515746429]
+layer = 5
 
 [node name="ResponsePanel" type="PanelContainer" parent="ResponseLayer" unique_id=325546005]
 visible = false
-custom_minimum_size = Vector2(800, 200)
-offset_left = 200.0
-offset_top = 200.0
-offset_right = 261.0
-offset_bottom = 250.0
+custom_minimum_size = Vector2(280, 120)
+offset_left = 100.0
+offset_top = 10.0
+offset_right = 880.0
+offset_bottom = 210.0
 
 [node name="ResponseContent" type="VBoxContainer" parent="ResponseLayer/ResponsePanel" unique_id=866042078]
 layout_mode = 2
@@ -338,5 +370,8 @@ text = "..."
 autowrap_mode = 2
 
 [connection signal="pressed" from="IconBar/IconContainer/HistoryBtn" to="." method="_on_history_btn_pressed"]
+[connection signal="text_submitted" from="InputArea/InputPanel/InputRow/InputField" to="." method="_on_input_field_text_submitted"]
 [connection signal="pressed" from="InputArea/InputPanel/InputRow/SubmitBtn" to="." method="_on_submit_btn_pressed"]
+[connection signal="pressed" from="PopupLayer/PopupContent/PopupVBox/PopupButtons/ConfirmBtn" to="." method="_on_confirm_btn_pressed"]
+[connection signal="pressed" from="PopupLayer/PopupContent/PopupVBox/PopupButtons/CancelBtn" to="." method="_on_cancel_btn_pressed"]
 [connection signal="request_completed" from="OllamaRequest" to="." method="_on_ollama_request_request_completed"]
