@@ -17,6 +17,21 @@
     "description_plain": "A young man sitting hunched over, clutching his right side. He looks uncomfortable but is awake and able to talk to you."
   },
 
+
+ "patient_personality": {
+    "name": "Marcus",
+    "analytical_level": 5,
+    "education": "college",
+    "speech_grade_level": 11,
+    "dialect": "standard_usa",
+    "personality": "Friendly, respectful, and cooperative. Not dramatic but clearly uncomfortable. Tries to answer questions thoroughly without embellishing.",
+    "mood": "Anxious but calm. Clearly in pain and a little worried, but trusting the doctor. Not panicking.",
+    "pain_level": 7,
+    "agendas": [],
+    "communication_style": "forthcoming",
+    "notes": "Speaks naturally like a normal 22 year old college educated American male. Uses everyday language, not medical terminology."
+  },
+    
   "patient_states": {
     "stable": {
       "ap_threshold": 0,

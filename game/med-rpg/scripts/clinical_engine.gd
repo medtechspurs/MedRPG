@@ -49,6 +49,10 @@ var system_prompts: Dictionary = {}
 
 var pending_input: String = ""
 
+var pending_validated_input: String = ""
+var awaiting_validation: bool = false
+
+
 # ============================================================
 func _ready():
 	load_condition_data()
@@ -241,6 +245,11 @@ func process_input(input: String) -> void:
 		"history":
 			var system = system_prompts["system_prompts"]["history"]["prompt"]
 			send_to_llm(input, system)
+		"exam":
+			validate_exam_input(input)
+		"stability":
+			var system = system_prompts["system_prompts"]["physical_exam"]["prompt"]
+			send_to_llm("The doctor performs a rapid stability assessment — quickly looks at the patient's general appearance, skin color, breathing, and alertness.", system)
 		_:
 			print("No mode selected")
 			
@@ -261,8 +270,11 @@ func _on_ollama_request_request_completed(result, response_code, headers, body) 
 	var response = json.get_data()
 	if response and response.has("response"):
 		var response_text = response["response"]
-		print("Ollama says: " + response_text)
-		display_response("Patient", response_text)
+		print("Response received: " + response_text)
+		if awaiting_validation:
+			handle_validation_response(response_text)
+		else:
+			display_response("Patient", response_text)
 	else:
 		print("Ollama error or empty response")
 
@@ -337,7 +349,7 @@ func _on_stability_btn_pressed() -> void:
 
 func _on_exam_btn_pressed() -> void:
 	current_mode = "exam"
-	$InputArea/InputPanel/InputRow/InputField.placeholder_text = "Describe exam maneuver..."
+	$InputArea/InputPanel/InputRow/InputField.placeholder_text = "Examine part of body (abdomen, lungs, etc), or do specific exam maneuver (e.g. 'listen to lungs,' 'palpate abdomen')..."
 	$InputArea/InputPanel/InputRow/InputField.grab_focus()
 
 func _on_labs_btn_pressed() -> void:
@@ -399,3 +411,20 @@ func _on_o2_btn_pressed() -> void:
 	current_mode = "other_treatments"
 	pending_input = "Supplemental oxygen"
 	show_confirmation_popup()
+
+func validate_exam_input(input: String) -> void:
+	awaiting_validation = true
+	pending_validated_input = input
+	var validation_system = "You are a medical input validator. Determine if the following physical exam input describes ONE specific body system exam (e.g. abdominal exam, cardiac exam, respiratory exam) OR ONE specific exam maneuver (e.g. McBurney's point, Rovsing's sign, rebound tenderness, psoas sign). Respond with only VALID or INVALID. Multiple maneuvers at once = INVALID. Vague requests like 'do everything' = INVALID."
+	send_to_llm(input, validation_system)
+
+func handle_validation_response(response: String) -> void:
+	awaiting_validation = false
+	var clean = response.strip_edges().to_upper()
+	if clean.begins_with("VALID"):
+		var system = system_prompts["system_prompts"]["physical_exam"]["prompt"]
+		send_to_llm(pending_validated_input, system)
+		pending_validated_input = ""
+	else:
+		display_response("MEDDY", "Try examining one specific area or maneuver at a time — like 'abdominal exam' or 'check for rebound tenderness'.")
+		pending_validated_input = ""
