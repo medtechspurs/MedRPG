@@ -220,18 +220,20 @@ func _on_submit_btn_pressed() -> void:
 	$PopupLayer/PopupContent/PopupVBox/PopupButtons/ConfirmBtn.grab_focus()
 
 func show_confirmation_popup() -> void:
-	print("Showing confirmation popup...")
 	var cost = get_action_cost(current_mode)
 	var message = ""
 	match current_mode:
 		"history":
 			message = "Ask patient:\n\"" + pending_input + "\"\n\nCost: " + str(cost) + " AP. Proceed?"
+		"exam":
+			message = "Perform exam:\n\"" + pending_input + "\"\n\nCost: " + str(cost) + " AP. Proceed?"
+		"diagnosis":
+			message = "Submit diagnosis:\n\"" + pending_input + "\"\n\nNo AP cost. Proceed?"
 		_:
-			message = "Perform action?\n\nCost: " + str(cost) + " AP. Proceed?"
-	print("Message: " + message)
+			message = "Perform action:\n\"" + pending_input + "\"\n\nCost: " + str(cost) + " AP. Proceed?"
 	$PopupLayer/PopupContent/PopupVBox/PopupMessage.text = message
 	$PopupLayer/PopupContent.visible = true
-	print("Popup should be visible now")
+	$PopupLayer/PopupContent/PopupVBox/PopupButtons/ConfirmBtn.grab_focus()
 
 func process_input(input: String) -> void:
 	print("Current mode is: " + current_mode)
@@ -273,6 +275,30 @@ func get_action_cost(mode: String) -> int:
 	match mode:
 		"history":
 			return 5
+		"stability":
+			return 2
+		"exam":
+			return 2
+		"labs":
+			return 2
+		"imaging":
+			return 8
+		"medications":
+			return 3
+		"consults":
+			return 7
+		"surgeries":
+			return 10
+		"other_treatments":
+			return 2
+		"airway":
+			return 5
+		"pathology":
+			return 4
+		"misc_tests":
+			return 5
+		"diagnosis":
+			return 0
 		_:
 			return 2
 
@@ -302,3 +328,74 @@ func _input(event: InputEvent) -> void:
 			_on_confirm_btn_pressed()
 		elif event.is_action_pressed("ui_cancel"):
 			_on_cancel_btn_pressed()
+
+
+func _on_stability_btn_pressed() -> void:
+	current_mode = "stability"
+	pending_input = "Rapid Stability Assessment"
+	show_confirmation_popup()
+
+func _on_exam_btn_pressed() -> void:
+	current_mode = "exam"
+	$InputArea/InputPanel/InputRow/InputField.placeholder_text = "Describe exam maneuver..."
+	$InputArea/InputPanel/InputRow/InputField.grab_focus()
+
+func _on_labs_btn_pressed() -> void:
+	current_mode = "labs"
+	$InputArea/InputPanel/InputRow/InputField.placeholder_text = "Order a lab test..."
+	$InputArea/InputPanel/InputRow/InputField.grab_focus()
+
+func _on_imaging_btn_pressed() -> void:
+	current_mode = "imaging"
+	$InputArea/InputPanel/InputRow/InputField.placeholder_text = "Order imaging (e.g. CT abdomen)..."
+	$InputArea/InputPanel/InputRow/InputField.grab_focus()
+
+func _on_meds_btn_pressed() -> void:
+	current_mode = "medications"
+	$InputArea/InputPanel/InputRow/InputField.placeholder_text = "Order a medication..."
+	$InputArea/InputPanel/InputRow/InputField.grab_focus()
+
+func _on_consults_btn_pressed() -> void:
+	current_mode = "consults"
+	$InputArea/InputPanel/InputRow/InputField.placeholder_text = "Request a consult (e.g. General Surgery)..."
+	$InputArea/InputPanel/InputRow/InputField.grab_focus()
+
+func _on_surgeries_btn_pressed() -> void:
+	current_mode = "surgeries"
+	$InputArea/InputPanel/InputRow/InputField.placeholder_text = "Request a procedure or surgery..."
+	$InputArea/InputPanel/InputRow/InputField.grab_focus()
+
+func _on_other_tx_btn_pressed() -> void:
+	current_mode = "other_treatments"
+	$InputArea/InputPanel/InputRow/InputField.placeholder_text = "Order supportive care (e.g. NPO, IV access)..."
+	$InputArea/InputPanel/InputRow/InputField.grab_focus()
+
+func _on_airway_btn_pressed() -> void:
+	current_mode = "airway"
+	$InputArea/InputPanel/InputRow/InputField.placeholder_text = "Airway action (e.g. intubate, BMV)..."
+	$InputArea/InputPanel/InputRow/InputField.grab_focus()
+
+func _on_pathology_btn_pressed() -> void:
+	current_mode = "pathology"
+	$InputArea/InputPanel/InputRow/InputField.placeholder_text = "Order pathology or biopsy..."
+	$InputArea/InputPanel/InputRow/InputField.grab_focus()
+
+func _on_misc_tests_btn_pressed() -> void:
+	current_mode = "misc_tests"
+	$InputArea/InputPanel/InputRow/InputField.placeholder_text = "Order misc test (e.g. EKG, EEG)..."
+	$InputArea/InputPanel/InputRow/InputField.grab_focus()
+
+func _on_diagnosis_btn_pressed() -> void:
+	current_mode = "diagnosis"
+	$InputArea/InputPanel/InputRow/InputField.placeholder_text = "Enter your diagnosis..."
+	$InputArea/InputPanel/InputRow/InputField.grab_focus()
+
+func _on_iv_btn_pressed() -> void:
+	current_mode = "other_treatments"
+	pending_input = "IV access"
+	show_confirmation_popup()
+
+func _on_o2_btn_pressed() -> void:
+	current_mode = "other_treatments"
+	pending_input = "Supplemental oxygen"
+	show_confirmation_popup()
