@@ -4,7 +4,7 @@
 ---
 
 ## Concept
-Retro pixel art RPG where player is a doctor traveling a world map curing patients. Clinical encounters are turn-based. Player uses 13 icon categories to interact with patients. A local LLM (Ollama) parses free text for History, Physical Exam, Medications, and Diagnosis. Everything else is list/browser-based.
+Retro pixel art RPG where player is a doctor traveling a world map curing patients. Clinical encounters are turn-based. Player uses 13 icon categories to interact with patients. A local LLM (Claude via Anthropic API) parses free text for History, Physical Exam, Medications, and Diagnosis. Everything else is list/browser-based.
 
 ---
 
@@ -13,9 +13,22 @@ Retro pixel art RPG where player is a doctor traveling a world map curing patien
 - **Primary target:** PC / Steam
 - **Secondary:** Mac / Linux via Godot export
 - **Art:** LPC sprites + Itch.io tilesets (placeholder)
-- **LLM:** Ollama local — Phi-3 Mini or Llama 3.2 3B
+- **LLM:** Anthropic API (Claude Sonnet) via Node.js backend server
 - **Git repo:** `C:\Users\jmcar\OneDrive\Documents\Coding Projects\MedRPG`
 - **Godot project root:** `C:\Users\jmcar\OneDrive\Documents\Coding Projects\MedRPG\game\med-rpg\`
+- **Backend server:** `C:\Users\jmcar\OneDrive\Documents\Coding Projects\MedRPG\server\`
+
+---
+
+## Backend Server
+Node.js server running on `http://localhost:3000`. Proxies all LLM requests to Anthropic API. Players never see the API key.
+
+**For development:** Run manually with `node server.js`
+**For production:** Deploy to cloud server (e.g. $5/month DigitalOcean droplet)
+
+**Endpoints:**
+- `GET /health` — health check
+- `POST /llm` — send prompt + system prompt, receive LLM response
 
 ---
 
@@ -24,8 +37,12 @@ Retro pixel art RPG where player is a doctor traveling a world map curing patien
 MedRPG/
 ├── docs/
 │   └── PROJECT_NOTES.md
+├── server/
+│   ├── server.js              ← Node.js backend (API key lives here)
+│   ├── package.json
+│   └── node_modules/
 ├── game/
-│   └── med-rpg/                   ← Godot project root (project.godot lives here)
+│   └── med-rpg/               ← Godot project root
 │       ├── .gitignore
 │       ├── project.godot
 │       ├── data/
@@ -36,40 +53,24 @@ MedRPG/
 │       │   │   └── burnout_badges.json
 │       │   ├── conditions/
 │       │   │   ├── appendicitis.json
+│       │   │   ├── appendicitis_system_prompts.json
 │       │   │   ├── appendicitis_other_treatments.json
 │       │   │   ├── appendicitis_surgeries_procedures.json
 │       │   │   └── appendicitis_end_conditions.json
 │       │   └── medications/
 │       │       └── (23 medication JSON files)
 │       ├── scenes/
+│       │   └── clinical_encounter.tscn
 │       ├── scripts/
+│       │   └── clinical_engine.gd
 │       └── assets/
-│           ├── sprites/
-│           │   └── characters/
-│           │       ├── meddy/
-│           │       ├── player/
-│           │       │   ├── body/
-│           │       │   ├── body_baby/
-│           │       │   ├── head/
-│           │       │   ├── head_baby/
-│           │       │   ├── hair/
-│           │       │   ├── hair_baby/
-│           │       │   ├── clothing/
-│           │       │   ├── clothing_baby/
-│           │       │   └── extras/
-│           │       ├── patients/
-│           │       │   └── patient_young_male/
-│           │       └── npcs/
-│           ├── badges/
-│           │   ├── boost/
-│           │   ├── burnout/
-│           │   └── badge_reel.png
-│           ├── ui/
-│           │   ├── icons/
-│           │   ├── panels/
-│           │   ├── buttons/
-│           │   ├── fonts/
-│           │   └── hud/
+│           ├── sprites/characters/
+│           │   ├── meddy/
+│           │   ├── player/ (body, head, hair, clothing, extras, _baby variants)
+│           │   ├── patients/patient_young_male/
+│           │   └── npcs/
+│           ├── badges/boost/ + burnout/
+│           ├── ui/icons/ + panels/ + buttons/ + fonts/ + hud/
 │           ├── backgrounds/
 │           └── audio/
 ├── exports/
@@ -78,57 +79,76 @@ MedRPG/
 
 ---
 
-## UI Icons Needed (created later)
-**13 Icon Bar:** icon_history, icon_stability, icon_exam, icon_labs, icon_imaging, icon_medications, icon_consults, icon_surgeries, icon_other_treatments, icon_airway, icon_pathology, icon_misc_tests, icon_diagnosis
-**Quick Access:** icon_iv, icon_o2
+## Patient Personality Schema
+Every condition file must include a `patient_personality` block and a companion `[condition]_system_prompts.json` file. This ensures clinical accuracy and consistent patient characterization across all LLM interactions.
 
----
-
-## Sprite System
-
-### Layer Stack (bottom to top)
+### Schema
+```json
+"patient_personality": {
+  "name": "string — patient first name",
+  "analytical_level": "1-10 (1=very concrete, 10=very analytical)",
+  "education": "none | high_school | some_college | college | graduate",
+  "speech_grade_level": "integer (e.g. 11)",
+  "dialect": "standard_usa | southern_usa | AAVE | british | etc.",
+  "personality": "free text description",
+  "mood": "free text description",
+  "pain_level": "1-10",
+  "agendas": "array of hidden goals or directives (empty if none)",
+  "communication_style": "forthcoming | hesitant | verbose | concise | evasive",
+  "notes": "any additional notes for LLM prompt construction"
+}
 ```
-Layer 1 — Body (torso + limbs)     grayscale, skin tone tinted at runtime
-Layer 2 — Head                     grayscale, skin tone tinted at runtime
-Layer 3 — Hair                     grayscale, hair color tinted at runtime
-Layer 4 — Eyes                     grayscale, eye color tinted at runtime
-Layer 5 — Glasses                  optional overlay
-Layer 6 — Clothing                 varies by character type
-Layer 7 — Ad hoc overlays          IV line, O2 mask, pain expression, etc.
+
+### Appendicitis Patient (Marcus)
+- Name: Marcus
+- Analytical level: 5 (average)
+- Education: College
+- Speech grade level: 11
+- Dialect: Standard USA
+- Personality: Friendly, respectful, cooperative, not dramatic
+- Mood: Anxious but calm, clearly in pain, trusting the doctor
+- Pain level: 7
+- Agendas: None
+- Communication style: Forthcoming
+
+---
+
+## System Prompts Architecture
+Each condition has a companion `[condition]_system_prompts.json` file containing:
+
+- **history** — Patient responds to history questions with correct clinical presentation
+- **physical_exam** — Patient reacts to physical exam maneuvers correctly
+- **diagnosis** — Engine evaluates player's diagnosis (not shown to player)
+- **meddy_commentary** — MEDDY generates educational feedback for bonus/harm events
+
+### Key Principle
+System prompts contain the full clinical ground truth for the case. The patient never volunteers information not asked about. Responses are 1-3 sentences. Patient never uses medical terminology or reveals diagnosis.
+
+### Appendicitis Clinical Ground Truth (locked into system prompt)
+- Pain started periumbilical 24hrs ago, migrated to RLQ — classic presentation
+- Sharp, constant, 7/10
+- Worse with movement, coughing, bumps, jumping
+- Relieved only by lying still
+- Associated: mild nausea, anorexia, low grade fever
+- No vomiting, no diarrhea, no urinary symptoms
+- PMH: none | Meds: none | Allergies: none
+
+---
+
+## LLM Integration
+
+### Flow
+```
+Player input → Godot → HTTP POST → Node.js server → Anthropic API → Claude → response → Godot → display
 ```
 
-### Four Sprite Tiers
-| Tier | Body | Head | Hair | Clothing | Scale |
-|---|---|---|---|---|---|
-| Adult | `body\` | `head\` | `hair\` | `clothing\` | 100% |
-| Child | `body\` | `head\` | `hair\` | `clothing\` | 65-70% |
-| Toddler | `body\` | `head\` | `hair\` | `clothing\` | body 45-50%, head 60-65% |
-| Baby | `body_baby\` | `head_baby\` | `hair_baby\` | `clothing_baby\` | own proportions |
+### In Godot
+- `send_to_llm(prompt, system)` sends request to `http://localhost:3000/llm`
+- `_on_ollama_request_request_completed()` handles response
+- `display_response(speaker, text)` shows response in ResponsePanel
 
-### Hair Styles
-**Adult/Child/Toddler (27):** Shaved, Bald, Short/Medium/Shoulder/Long × Straight/Wavy/Curly, Braided Short/Medium/Long, Natural Very Short/Short/Medium/Large
-**Baby:** Baby Short, Baby Medium only
-
-### Clothing Variants
-coat_white (player), clothes_hospital_gown, clothes_casual_male/female/child/toddler, clothes_scrubs, clothes_suit, clothes_onesie (baby)
-
----
-
-## Character Creator
-- Skin tone: gradient slider
-- Height: 5 options (adult)
-- Hair style: 27 styles grid
-- Hair color + Eye color: color wheels
-- Glasses: toggle
-- White coat: always worn
-
----
-
-## MEDDY — Companion AI Device
-Cute pixel art mobile computer / AI EMR companion. Stands next to player during encounters. Reacts via popup messages to all bonus/harm events.
-
-**Sprite states:** neutral, excited, worried, alarmed, thinking, celebrating
-**Popup text** defined per-event in condition JSON via `meddy_feedback` field. Auto-dismisses 3–4 seconds.
+### Response Speed
+~1-3 seconds with Anthropic API. Far superior to local Ollama on CPU.
 
 ---
 
@@ -173,122 +193,64 @@ Threshold = 7 (appendicitis). Reaching threshold → septic shock + AP reduced t
 ~531 medications across 23 JSON files. No dosing in med files — lives in condition files.
 
 ### Medication Browser
-Browse mode (category + filter) / LLM semantic mode (Ollama → ranked list).
-Med detail: route dropdown + dose free text. Default 3 AP per med.
-
-### IV Without Access
-Auto-places IV via popup. Normal +1 AP / Difficult Stick +2 AP. Never earns bonus point.
-
-### Dose Scoring
-`correct_dose` + `correct_dose_aliases`. Correct = bonus points. Wrong = nothing.
+Browse mode / LLM semantic mode. Med detail: route dropdown + dose free text.
+Default 3 AP per med. IV without access → auto-place popup.
 
 ---
 
 ## Airway System
-Icon 10. Subcategories: Basic Maneuvers, Adjuncts, BMV, Intubation, Surgical Airway, Ventilator Settings, Extubation.
-
-### Intubation (RSI) — 5 AP
-MEDDY RSI safety checklist (free). Player checks boxes — engine verifies independently.
-
-**Harm point rules:**
-| Scenario | Harm Points |
-|---|---|
-| Intubate in stable or perforated | 2 |
-| Intubate in septic shock | 0 |
-| No paralytic | 2 |
-| No sedation — immediate | 5 |
-| Each action without sedation post-intubation | 5 per action |
-| Sedation given post-intubation | stops accrual, prior harm stays |
-
-**Auto-vent on intubation:** VC-AC, TV 500mL, RR 14, PEEP 5, FiO2 40%
+Icon 10. RSI checklist (free). Intubation 5 AP. Auto-vent: VC-AC, TV 500mL, RR 14, PEEP 5, FiO2 40%.
 
 ---
 
 ## Surgeries & Procedures
-
-### Appendectomy — 10 AP — WIN CONDITION — +10 bonus points
-Prerequisites: imaging (CT/XR/US) OR general surgery consult.
-
-| State | Allowed | Harm | Notes |
-|---|---|---|---|
-| Stable | Yes | 0 | |
-| Perforated | Yes | 0 | |
-| Septic Shock | Yes | 0 if resuscitated, 2 if not | Needs fluids + vasopressor first |
-| Coma/Fail | No | — | Too late |
-
-### Arterial Line — 4 AP
-Unlocks: ABG → 1 AP (from 6 AP). New vital: continuous A-line waveform on monitor.
-
-### Central Line — 5 AP
-Appropriate in septic shock. No direct progression effect.
-
-### Other procedures (no effect): Thoracentesis 6 AP, Paracentesis 6 AP, LP 6 AP
+Appendectomy 10 AP → WIN → +10 bonus points → disposition prompt.
+Arterial line 4 AP → ABG becomes 1 AP + A-line waveform vital sign.
 
 ---
 
 ## End Condition System
-
-### Win
-Appendectomy completed → +10 bonus points → disposition prompt.
-
-### Disposition Prompt (0 AP, post-appendectomy)
-MEDDY asks: *"Where are we sending this patient?"*
-
-| State | Hospital Floor | ICU | Discharge Home |
-|---|---|---|---|
-| Stable | +1 bonus ✓ | overridden → floor | +1 bonus ✓ |
-| Perforated | +1 bonus ✓ | overridden → floor | 0 bonus |
-| Septic Shock | 1 harm, overridden → ICU | +1 bonus ✓ | 2 harm, overridden → ICU |
-
-**Endings:**
-- Admission: ambulance arrives, patient whisked away
-- Discharge home: patient walks out
-
-### Lose Conditions
-- **AP hits 0:** coma/fail → ambulance to Mega Hospital, encounter lost
-- **Unaffordable action:** MEDDY popup → Yes = lose (0 bonus) / No = dismiss
-- **Unaffordable appendectomy:** same popup → Yes = lose + **3 bonus points**
+Post-appendectomy disposition: Hospital / ICU / Discharge (0 AP).
+Lose: AP hits 0 OR unaffordable action → Mega Hospital transfer.
+Unaffordable appendectomy → +3 bonus points on transfer.
 
 ---
 
-## Other Treatments System
-
-### Auto-Bed Triggers (appendicitis)
-IV established / O2 started / septic shock state.
-
-### IV Access
-| Scenario | AP | Bonus |
-|---|---|---|
-| Proactive before septic shock | 2 | +1 |
-| Proactive after septic shock | 1 | 0 |
-| Via popup | 1 or 2 | never |
-
-### Difficult Stick Infiltration
-Every 5 AP spent → 15% infiltration → IV resets → 2 AP to replace.
-
-### NPO
-Before septic shock: 2 AP, +1 bonus. After: 1 AP, 0 bonus.
-
-### Other (all 1 AP, 0 bonus)
-O2 (auto-bed), Foley, NG Tube, Fall Precautions, Strict I&Os.
+## Other Treatments
+NPO + IV before septic shock = +1 bonus each. All others 1 AP, 0 bonus.
+Auto-bed triggers: IV placed / O2 started / septic shock.
+Difficult Stick: IV costs 2 AP, 15% infiltration per 5 AP spent.
 
 ---
 
 ## Badge System
+**Boost (13):** Badge Board / Dispenser (10 AP, draw 3 pick 1, stable only) / rewards
+**Burnout (12):** Triggered at 5 harm OR 50 AP. Max 1 early / max 2 late.
 
-### Boost (13)
-Badge Board / Dispenser (10 AP, draw 3 pick 1, stable, once/encounter early) / rewards.
+---
 
-### Burnout (12)
-Triggered at 5 harm OR 50 AP remaining. Random. Max 1 early / max 2 late.
-Pre-attached on some encounters = higher XP reward.
+## Sprite System
+Layered sprites: Body → Head → Hair → Eyes → Glasses → Clothing → Overlays
+Four tiers: Adult (100%) / Child (65-70%) / Toddler (body 45-50%, head 60-65%) / Baby (separate assets)
+27 hair styles. Runtime color tinting via Godot modulate.
+
+---
+
+## Character Creator
+Skin tone slider / Height 5 options / 27 hair styles / Hair+Eye color wheels / Glasses toggle / White coat always worn.
+
+---
+
+## MEDDY
+Cute pixel art AI device companion. 6 sprite states. Popup feedback on all bonus/harm events.
+Feedback text defined in `[condition]_system_prompts.json` via `meddy_commentary` prompt.
 
 ---
 
 ## Appendicitis Case
 
 ### Patient
-22yo male, 6'0", 84kg, BMI 25.1, no allergies, no PMH
+Marcus, 22yo male, 6'0", 84kg, BMI 25.1, no allergies, no PMH
 
 ### States
 | State | Trigger | HR | BP | RR | Temp | SpO2 |
@@ -298,18 +260,8 @@ Pre-attached on some encounters = higher XP reward.
 | Septic Shock | 70 AP without appendectomy OR 7 harm points | 135 ±6 | 100/60 | 28 | 103.4°F | 95 |
 | Coma/Fail | 100 AP | 148 ±2 | 80/40 | 32 | 104.2°F | 88 |
 
-### Total Available Bonus Points: 34
-| Source | Points |
-|---|---|
-| History | 2 |
-| Physical Exam | 3 |
-| Rapid Stability Assessment | 2 |
-| Consult | 1 |
-| Other Treatments (NPO + IV) | 2 |
-| Diagnosis | 13 |
-| Appendectomy | 10 |
-| Disposition | 1 |
-| **Total** | **34** |
+### Bonus Points: 34 total
+History (2) + Exam (3) + Stability (2) + Consult (1) + Other Treatments (2) + Diagnosis (13) + Appendectomy (10) + Disposition (1)
 
 ### Scoring
 Base 120 XP + remaining AP×1 + banked bonus×3 - harm×10
@@ -317,24 +269,25 @@ Base 120 XP + remaining AP×1 + banked bonus×3 - harm×10
 ---
 
 ## Godot Project Settings
-- Renderer: Compatibility
-- Window: 1280×720
-- Stretch Mode: canvas_items
-- Stretch Aspect: keep
-- Default Texture Filter: Nearest (critical for pixel art)
+Renderer: Compatibility / Window: 1280×720 / Stretch: canvas_items / Texture Filter: Nearest
 
 ---
 
 ## MVP Sequence
-1. Single encounter, appendicitis
-2. Character creator
-3. Free text → Ollama → action registry
-4. AP counter + state machine
-5. MEDDY UI + popups
-6. Badge system
-7. Win/fail/disposition states
-8. Badge board + encounter selection
-9. Overworld, story, more conditions
+1. ✅ Scene built — ClinicalEncounter.tscn
+2. ✅ ClinicalEngine.gd — state machine, AP, bonus/harm
+3. ✅ Vitals monitor working
+4. ✅ History button wired up
+5. ✅ Anthropic API connected — fast responses
+6. ✅ Patient system prompt locked in clinically
+7. ⬜ Wire remaining 12 icon buttons
+8. ⬜ AP deduction on actions
+9. ⬜ MEDDY popup system
+10. ⬜ Confirmation popup
+11. ⬜ Badge system
+12. ⬜ Win/fail states
+13. ⬜ Badge board + encounter selection
+14. ⬜ Overworld + story
 
 ---
 
@@ -351,9 +304,14 @@ $10 base. DLC condition packs later.
 - **Session 5:** Other treatments fully defined
 - **Session 6:** Airway icon (13th icon)
 - **Session 7:** MEDDY designed. Asset folder structure finalized.
-- **Session 8:** Character creator — layered sprite system, 27 hair styles, color wheels, height, glasses
-- **Session 9:** Unified sprite tier system — adult/child/toddler share assets, baby separate. Head as own layer.
-- **Session 10:** Full UI asset folder structure.
-- **Session 11:** Surgeries & procedures — appendectomy, intubation RSI checklist, arterial line unlocks.
-- **Session 12:** End conditions fully defined — disposition, MEDDY overrides, ambulance, Mega Hospital. Bonus points = 34.
-- **Session 13:** Godot project initialized. Project moved to game\med-rpg\. .gitignore added. Pixel art settings configured.
+- **Session 8:** Character creator — layered sprite system
+- **Session 9:** Unified sprite tier system
+- **Session 10:** Full UI asset folder structure
+- **Session 11:** Surgeries & procedures schema
+- **Session 12:** End conditions fully defined
+- **Session 13:** Godot project initialized
+- **Session 14:** ClinicalEncounter scene built, ClinicalEngine.gd written
+- **Session 15:** Vitals monitor fixed, basic layout working
+- **Session 16:** History button wired, Submit button wired, Ollama integrated
+- **Session 17:** Switched to Anthropic API via Node.js backend — fast responses
+- **Session 18:** Patient personality schema defined. Full clinical system prompt written for appendicitis. appendicitis_system_prompts.json created.

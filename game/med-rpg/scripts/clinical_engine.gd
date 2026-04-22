@@ -45,6 +45,8 @@ var condition_data: Dictionary = {}
 
 var current_mode: String = ""
 
+var system_prompts: Dictionary = {}
+
 # ============================================================
 func _ready():
 	load_condition_data()
@@ -62,6 +64,16 @@ func load_condition_data():
 		print("Condition data loaded OK")
 	else:
 		print("ERROR: Could not load appendicitis.json")
+		
+	var prompt_file = FileAccess.open("res://data/conditions/appendicitis_system_prompts.json", FileAccess.READ)
+	if prompt_file:
+		var json2 = JSON.new()
+		json2.parse(prompt_file.get_as_text())
+		system_prompts = json2.get_data()
+		prompt_file.close()
+		print("System prompts loaded OK")
+	else:
+		print("ERROR: Could not load appendicitis_system_prompts.json")
 
 # ============================================================
 func update_hud():
@@ -208,7 +220,7 @@ func process_input(input: String) -> void:
 	print("Current mode is: " + current_mode)
 	match current_mode:
 		"history":
-			var system = "You are a 22 year old male patient with abdominal pain seeing a doctor. Respond naturally in 1-2 sentences only as the patient. Never reveal your diagnosis."
+			var system = system_prompts["system_prompts"]["history"]["prompt"]
 			send_to_llm(input, system)
 		_:
 			print("No mode selected")
