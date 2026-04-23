@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dwbpdfux0lbeu"]
 
 [ext_resource type="Script" uid="uid://c3dmtfjt2apsq" path="res://scripts/clinical_engine.gd" id="1_nmkfv"]
-[ext_resource type="Texture2D" uid="uid://dskqo6n4bf5fy" path="res://assets/sprites/characters/meddy/meddy_neutral.png" id="2_qqtt1"]
+[ext_resource type="Texture2D" uid="uid://cbci7yn3qqtgu" path="res://assets/sprites/characters/meddy/MeddyBlinkAnimationSpriteSheetsecondtry.png" id="2_qqtt1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nmkfv"]
 bg_color = Color(0.14901961, 0.14901961, 0.14901961, 1)
@@ -19,6 +19,77 @@ border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ddsb"]
+atlas = ExtResource("2_qqtt1")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j0ls3"]
+atlas = ExtResource("2_qqtt1")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8uh6k"]
+atlas = ExtResource("2_qqtt1")
+region = Rect2(512, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1coh1"]
+atlas = ExtResource("2_qqtt1")
+region = Rect2(768, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bfgei"]
+atlas = ExtResource("2_qqtt1")
+region = Rect2(1024, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lil5m"]
+atlas = ExtResource("2_qqtt1")
+region = Rect2(1280, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7bjqm"]
+atlas = ExtResource("2_qqtt1")
+region = Rect2(1536, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wwuku"]
+atlas = ExtResource("2_qqtt1")
+region = Rect2(1792, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1qkk6"]
+atlas = ExtResource("2_qqtt1")
+region = Rect2(2048, 0, 256, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_oemmk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ddsb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j0ls3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8uh6k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1coh1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bfgei")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lil5m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7bjqm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wwuku")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1qkk6")
+}],
+"loop": true,
+"name": &"IdleBlink",
+"speed": 10.0
+}]
 
 [node name="ClinicalEncounter" type="Node2D" unique_id=1121298204]
 script = ExtResource("1_nmkfv")
@@ -253,10 +324,12 @@ text = "Cancel"
 
 [node name="Meddy" type="Node2D" parent="PlayerArea" unique_id=1265485585]
 
-[node name="MeddySprite" type="Sprite2D" parent="PlayerArea/Meddy" unique_id=1845906834]
-position = Vector2(360, 460)
-scale = Vector2(0.42, 0.42)
-texture = ExtResource("2_qqtt1")
+[node name="MeddySprite" type="AnimatedSprite2D" parent="PlayerArea/Meddy" unique_id=1327615172]
+position = Vector2(300, 513)
+scale = Vector2(0.6, 0.6)
+sprite_frames = SubResource("SpriteFrames_oemmk")
+animation = &"IdleBlink"
+autoplay = "IdleBlink"
 
 [node name="MeddyPopup" type="CanvasLayer" parent="PlayerArea/Meddy" unique_id=45597603]
 visible = false
