@@ -65,6 +65,15 @@ var pending_history_cost: int = 0
 var pending_new_domains: Array = []
 var pending_new_symptoms: Array = []
 
+# Exam tracking
+var exam_systems_done: Array = []      # e.g. ["abdomen", "cardiovascular", "respiratory"]
+var exam_maneuvers_done: Array = []    # e.g. ["rovsing", "mcburneys", "rebound_tenderness"]
+var awaiting_exam_cost: bool = false
+var pending_exam_input: String = ""
+var pending_exam_cost: int = 0
+var pending_new_exam_systems: Array = []
+var pending_new_exam_maneuvers: Array = []
+
 # ============================================================
 func _ready():
 	load_condition_data()
@@ -233,8 +242,10 @@ func _on_submit_btn_pressed() -> void:
 		return
 	
 	if current_mode == "history":
-		# History uses two-call system — detect cost first, no immediate popup
 		detect_history_cost(input_text)
+		$InputArea/InputPanel/InputRow/InputField.text = ""
+	elif current_mode == "exam":
+		detect_exam_cost(input_text)
 		$InputArea/InputPanel/InputRow/InputField.text = ""
 	else:
 		pending_input = input_text
@@ -263,7 +274,7 @@ func process_input(input: String) -> void:
 		"history":
 			detect_history_cost(input)
 		"exam":
-			validate_exam_input(input)
+			detect_exam_cost(input)
 		"stability":
 			var system = system_prompts["system_prompts"]["physical_exam"]["prompt"]
 			send_to_llm("The doctor performs a rapid stability assessment — quickly looks at the patient's general appearance, skin color, breathing, and alertness.", system)
@@ -295,6 +306,8 @@ func _on_ollama_request_request_completed(result, response_code, headers, body) 
 		print("Response received: " + response_text)
 		if awaiting_history_cost:
 			handle_history_cost_response(response_text)
+		elif awaiting_exam_cost:
+			handle_exam_cost_response(response_text)
 		elif awaiting_validation:
 			handle_validation_response(response_text)
 		else:
@@ -344,6 +357,8 @@ func _on_confirm_btn_pressed() -> void:
 	var cost = 0
 	if current_mode == "history":
 		cost = pending_history_cost
+	elif current_mode == "exam":
+		cost = pending_exam_cost
 	else:
 		cost = get_action_cost(current_mode)
 	
@@ -355,6 +370,13 @@ func _on_confirm_btn_pressed() -> void:
 			pending_history_cost = 0
 			pending_new_domains = []
 			pending_new_symptoms = []
+		elif current_mode == "exam":
+			update_exam_tracking(pending_new_exam_systems, pending_new_exam_maneuvers)
+			send_exam_to_patient(pending_exam_input)
+			pending_exam_input = ""
+			pending_exam_cost = 0
+			pending_new_exam_systems = []
+			pending_new_exam_maneuvers = []
 		else:
 			process_input(pending_input)
 		$InputArea/InputPanel/InputRow/InputField.text = ""
@@ -534,4 +556,61 @@ func update_history_tracking(new_domains: Array, new_symptoms: Array) -> void:
 
 func send_history_to_patient(input: String) -> void:
 	var system = system_prompts["system_prompts"]["history"]["prompt"]
+	send_to_llm(input, system)
+
+func detect_exam_cost(input: String) -> void:
+	awaiting_exam_cost = true
+	pending_exam_input = input
+	
+	var already_systems = JSON.stringify(exam_systems_done)
+	var already_maneuvers = JSON.stringify(exam_maneuvers_done)
+	
+	var detection_system = system_prompts["system_prompts"]["exam_cost_detection"]["prompt"]
+	detection_system = detection_system.replace("{already_examined_systems}", already_systems)
+	detection_system = detection_system.replace("{already_done_maneuvers}", already_maneuvers)
+	
+	send_to_llm(input, detection_system)
+
+func handle_exam_cost_response(response: String) -> void:
+	awaiting_exam_cost = false
+	
+	var json = JSON.new()
+	var clean = response.strip_edges()
+	clean = clean.replace("```json", "").replace("```", "").strip_edges()
+	json.parse(clean)
+	var data = json.get_data()
+	
+	if data == null:
+		print("ERROR: Could not parse exam cost response")
+		send_exam_to_patient(pending_exam_input)
+		return
+	
+	var ap_cost = data.get("ap_cost", 2)
+	var new_systems = data.get("new_systems", [])
+	var new_maneuvers = data.get("new_maneuvers", [])
+	
+	pending_exam_cost = ap_cost
+	pending_new_exam_systems = new_systems
+	pending_new_exam_maneuvers = new_maneuvers
+	
+	if ap_cost == 0:
+		update_exam_tracking(new_systems, new_maneuvers)
+		send_exam_to_patient(pending_exam_input)
+		return
+	
+	var message = "Perform exam:\n\"" + pending_exam_input + "\"\n\nCost: " + str(ap_cost) + " AP. Proceed?"
+	$PopupLayer/PopupContent/PopupVBox/PopupMessage.text = message
+	$PopupLayer/PopupContent.visible = true
+	$PopupLayer/PopupContent/PopupVBox/PopupButtons/ConfirmBtn.grab_focus()
+
+func update_exam_tracking(new_systems: Array, new_maneuvers: Array) -> void:
+	for system in new_systems:
+		if not exam_systems_done.has(system):
+			exam_systems_done.append(system)
+	for maneuver in new_maneuvers:
+		if not exam_maneuvers_done.has(maneuver):
+			exam_maneuvers_done.append(maneuver)
+
+func send_exam_to_patient(input: String) -> void:
+	var system = system_prompts["system_prompts"]["physical_exam"]["prompt"]
 	send_to_llm(input, system)
