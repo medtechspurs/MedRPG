@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dwbpdfux0lbeu"]
 
 [ext_resource type="Script" uid="uid://c3dmtfjt2apsq" path="res://scripts/clinical_engine.gd" id="1_nmkfv"]
+[ext_resource type="Texture2D" uid="uid://dskqo6n4bf5fy" path="res://assets/sprites/characters/meddy/meddy_neutral.png" id="2_qqtt1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nmkfv"]
 bg_color = Color(0.14901961, 0.14901961, 0.14901961, 1)
@@ -253,6 +254,9 @@ text = "Cancel"
 [node name="Meddy" type="Node2D" parent="PlayerArea" unique_id=1265485585]
 
 [node name="MeddySprite" type="Sprite2D" parent="PlayerArea/Meddy" unique_id=1845906834]
+position = Vector2(360, 460)
+scale = Vector2(0.42, 0.42)
+texture = ExtResource("2_qqtt1")
 
 [node name="MeddyPopup" type="CanvasLayer" parent="PlayerArea/Meddy" unique_id=45597603]
 visible = false
@@ -383,8 +387,8 @@ autowrap_mode = 2
 [connection signal="pressed" from="IconBar/IconContainer/MiscTestBtn" to="." method="_on_misc_test_btn_pressed"]
 [connection signal="pressed" from="IconBar/IconContainer/DiagnosisBtn" to="." method="_on_diagnosis_btn_pressed"]
 [connection signal="pressed" from="IconBar/QuickAccess/IVBtn" to="." method="_on_iv_btn_pressed"]
-[connection signal="pressed" from="IconBar/QuickAccess/O2Btn" to="." method="_on_o2_btn_pressed"]
 [connection signal="pressed" from="IconBar/QuickAccess/O2Btn" to="." method="_on_o_2_btn_pressed"]
+[connection signal="pressed" from="IconBar/QuickAccess/O2Btn" to="." method="_on_o2_btn_pressed"]
 [connection signal="text_submitted" from="InputArea/InputPanel/InputRow/InputField" to="." method="_on_input_field_text_submitted"]
 [connection signal="pressed" from="InputArea/InputPanel/InputRow/SubmitBtn" to="." method="_on_submit_btn_pressed"]
 [connection signal="pressed" from="PopupLayer/PopupContent/PopupVBox/PopupButtons/ConfirmBtn" to="." method="_on_confirm_btn_pressed"]
