@@ -52,6 +52,18 @@ var pending_input: String = ""
 var pending_validated_input: String = ""
 var awaiting_validation: bool = false
 
+# History domain tracking
+var history_domains_asked: Array = []
+var history_symptoms_drilled: Array = []
+var family_friendly_mode: bool = false
+
+# Two-call state tracking
+var awaiting_history_cost: bool = false
+var pending_history_input: String = ""
+var pending_history_cost: int = 0
+
+var pending_new_domains: Array = []
+var pending_new_symptoms: Array = []
 
 # ============================================================
 func _ready():
@@ -219,9 +231,14 @@ func _on_submit_btn_pressed() -> void:
 	var input_text = $InputArea/InputPanel/InputRow/InputField.text.strip_edges()
 	if input_text == "":
 		return
-	pending_input = input_text
-	show_confirmation_popup()
-	$PopupLayer/PopupContent/PopupVBox/PopupButtons/ConfirmBtn.grab_focus()
+	
+	if current_mode == "history":
+		# History uses two-call system — detect cost first, no immediate popup
+		detect_history_cost(input_text)
+		$InputArea/InputPanel/InputRow/InputField.text = ""
+	else:
+		pending_input = input_text
+		show_confirmation_popup()
 
 func show_confirmation_popup() -> void:
 	var cost = get_action_cost(current_mode)
@@ -240,11 +257,11 @@ func show_confirmation_popup() -> void:
 	$PopupLayer/PopupContent/PopupVBox/PopupButtons/ConfirmBtn.grab_focus()
 
 func process_input(input: String) -> void:
+	print("process_input called with: " + input)
 	print("Current mode is: " + current_mode)
 	match current_mode:
 		"history":
-			var system = system_prompts["system_prompts"]["history"]["prompt"]
-			send_to_llm(input, system)
+			detect_history_cost(input)
 		"exam":
 			validate_exam_input(input)
 		"stability":
@@ -254,6 +271,9 @@ func process_input(input: String) -> void:
 			print("No mode selected")
 			
 func send_to_llm(prompt: String, system: String) -> void:
+	print("send_to_llm called")
+	print("Prompt length: " + str(prompt.length()))
+	print("System length: " + str(system.length()))
 	print("Sending request to MedRPG server...")
 	var url = "http://localhost:3000/llm"
 	var headers = ["Content-Type: application/json"]
@@ -262,7 +282,9 @@ func send_to_llm(prompt: String, system: String) -> void:
 		"system": system,
 		"max_tokens": 256
 	})
+	print("Body length: " + str(body.length()))
 	$OllamaRequest.request(url, headers, HTTPClient.METHOD_POST, body)
+	print("Request sent!")
 
 func _on_ollama_request_request_completed(result, response_code, headers, body) -> void:
 	var json = JSON.new()
@@ -271,7 +293,9 @@ func _on_ollama_request_request_completed(result, response_code, headers, body) 
 	if response and response.has("response"):
 		var response_text = response["response"]
 		print("Response received: " + response_text)
-		if awaiting_validation:
+		if awaiting_history_cost:
+			handle_history_cost_response(response_text)
+		elif awaiting_validation:
 			handle_validation_response(response_text)
 		else:
 			display_response("Patient", response_text)
@@ -317,9 +341,22 @@ func get_action_cost(mode: String) -> int:
 
 func _on_confirm_btn_pressed() -> void:
 	$PopupLayer/PopupContent.visible = false
-	var cost = get_action_cost(current_mode)
+	var cost = 0
+	if current_mode == "history":
+		cost = pending_history_cost
+	else:
+		cost = get_action_cost(current_mode)
+	
 	if spend_ap(cost):
-		process_input(pending_input)
+		if current_mode == "history":
+			update_history_tracking(pending_new_domains, pending_new_symptoms)
+			send_history_to_patient(pending_history_input)
+			pending_history_input = ""
+			pending_history_cost = 0
+			pending_new_domains = []
+			pending_new_symptoms = []
+		else:
+			process_input(pending_input)
 		$InputArea/InputPanel/InputRow/InputField.text = ""
 		pending_input = ""
 	else:
@@ -428,3 +465,73 @@ func handle_validation_response(response: String) -> void:
 	else:
 		display_response("MEDDY", "Try examining one specific area or maneuver at a time — like 'abdominal exam' or 'check for rebound tenderness'.")
 		pending_validated_input = ""
+
+func detect_history_cost(input: String) -> void:
+	print("detect_history_cost called with: " + input)
+	awaiting_history_cost = true
+	pending_history_input = input
+	
+	var already_asked = JSON.stringify(history_domains_asked)
+	var already_drilled = JSON.stringify(history_symptoms_drilled)
+	
+	var detection_system = system_prompts["system_prompts"]["history_cost_detection"]["prompt"]
+	detection_system = detection_system.replace("{already_asked_domains}", already_asked)
+	detection_system = detection_system.replace("{already_drilled_symptoms}", already_drilled)
+	
+	send_to_llm(input, detection_system)
+
+func handle_history_cost_response(response: String) -> void:
+	awaiting_history_cost = false
+	
+	# Parse JSON response
+	var json = JSON.new()
+	var clean = response.strip_edges()
+	# Strip markdown code blocks if present
+	clean = clean.replace("```json", "").replace("```", "").strip_edges()
+	json.parse(clean)
+	var data = json.get_data()
+	
+	if data == null:
+		print("ERROR: Could not parse history cost response")
+		# Fall back to just sending the question
+		send_history_to_patient(pending_history_input)
+		return
+	
+	# Check if unrelated
+	if data.get("is_unrelated", false):
+		send_history_to_patient(pending_history_input)
+		return
+	
+	var ap_cost = data.get("ap_cost", 1)
+	var new_domains = data.get("new_domains", [])
+	var new_symptoms = data.get("new_symptoms", [])
+	
+	pending_history_cost = ap_cost
+	
+	# If cost is 0 — skip popup and go straight to patient response
+	if ap_cost == 0:
+		update_history_tracking(new_domains, new_symptoms)
+		send_history_to_patient(pending_history_input)
+		return
+	
+	# Show confirmation popup with AP cost
+	var message = "Ask patient:\n\"" + pending_history_input + "\"\n\nCost: " + str(ap_cost) + " AP. Proceed?"
+	$PopupLayer/PopupContent/PopupVBox/PopupMessage.text = message
+	$PopupLayer/PopupContent.visible = true
+	$PopupLayer/PopupContent/PopupVBox/PopupButtons/ConfirmBtn.grab_focus()
+	
+	# Store domains for updating after confirm
+	pending_new_domains = new_domains
+	pending_new_symptoms = new_symptoms
+
+func update_history_tracking(new_domains: Array, new_symptoms: Array) -> void:
+	for domain in new_domains:
+		if not history_domains_asked.has(domain):
+			history_domains_asked.append(domain)
+	for symptom in new_symptoms:
+		if not history_symptoms_drilled.has(symptom):
+			history_symptoms_drilled.append(symptom)
+
+func send_history_to_patient(input: String) -> void:
+	var system = system_prompts["system_prompts"]["history"]["prompt"]
+	send_to_llm(input, system)
