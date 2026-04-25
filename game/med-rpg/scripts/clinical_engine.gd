@@ -6,6 +6,13 @@ extends Node2D
 # AP, bonus points, harm points, and all game logic.
 # ============================================================
 
+# ============================================================
+# DEVELOPER TOGGLES — change before builds
+# ============================================================
+const DEV_MODE_LLM: bool = true          # true = live LLM, false = authored responses
+const DEV_MODE_SKIP_CONFIRM: bool = false # true = skip AP popups (for auto-runs only)
+
+
 # --- Patient State ---
 enum PatientState { STABLE, PERFORATED, SEPTIC_SHOCK, COMA_FAIL }
 var current_state: PatientState = PatientState.STABLE
@@ -76,6 +83,10 @@ var pending_new_exam_maneuvers: Array = []
 
 # ============================================================
 func _ready():
+	if DEV_MODE_LLM:
+		print("WARNING: Running in LLM dev mode — not for shipping")
+	if DEV_MODE_SKIP_CONFIRM:
+		print("WARNING: AP confirmation disabled — auto-run mode")
 	load_condition_data()
 	update_hud()
 	update_monitor()
@@ -241,15 +252,25 @@ func _on_submit_btn_pressed() -> void:
 	if input_text == "":
 		return
 	
-	if current_mode == "history":
-		detect_history_cost(input_text)
-		$InputArea/InputPanel/InputRow/InputField.text = ""
-	elif current_mode == "exam":
-		detect_exam_cost(input_text)
+	if DEV_MODE_SKIP_CONFIRM:
+		# Skip confirmation popup entirely
+		if current_mode == "history":
+			detect_history_cost(input_text)
+		elif current_mode == "exam":
+			detect_exam_cost(input_text)
+		else:
+			process_input(input_text)
 		$InputArea/InputPanel/InputRow/InputField.text = ""
 	else:
-		pending_input = input_text
-		show_confirmation_popup()
+		if current_mode == "history":
+			detect_history_cost(input_text)
+			$InputArea/InputPanel/InputRow/InputField.text = ""
+		elif current_mode == "exam":
+			detect_exam_cost(input_text)
+			$InputArea/InputPanel/InputRow/InputField.text = ""
+		else:
+			pending_input = input_text
+			show_confirmation_popup()
 
 func show_confirmation_popup() -> void:
 	var cost = get_action_cost(current_mode)

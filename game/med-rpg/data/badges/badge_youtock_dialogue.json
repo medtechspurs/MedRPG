@@ -1,0 +1,49 @@
+{
+  "badge_id": "burnout_youtock",
+  "badge_name": "YouTock University",
+  "flavor_text": "I did my own research.",
+
+  "medication_refusal_quotes": [
+    "Actually I saw a video that says ibuprofen turns your microbiome into a 5G receiver.",
+    "That antibiotic was linked to autism in ferrets in a 2019 study from a university I can't find anymore.",
+    "My guy HealthWarrior247 says that CT scans give you more radiation than standing next to Chernobyl.",
+    "I read that morphine is actually just recycled chemtrails in pill form.",
+    "That vaccine has graphene oxide in it. I'm not saying Bill Gates, but... Bill Gates.",
+    "My sister's boyfriend's cousin had that procedure and now he can't taste blue things.",
+    "I'm doing a 30 day celery juice cleanse instead. It's basically the same thing.",
+    "I looked it up and that medication has like 47 side effects listed. No thank you.",
+    "My body is a temple and I don't put anything in it that isn't natural.",
+    "That's actually been banned in 14 countries. I have the article saved somewhere."
+  ],
+
+  "education_refusal_quotes": [
+    "I really appreciate you taking the time, doc, but honestly I've spent like 400 hours researching this and I just feel like I know my body, you know?",
+    "That's really sweet of you to explain, but my wellness coach already went over all of this with me and we came to a different conclusion.",
+    "I hear you, I do. I just think the medical establishment hasn't caught up with some of this newer research yet.",
+    "No offense but that's literally what they want you to say.",
+    "I'm going to have to respectfully disagree based on what I've learned on my journey.",
+    "My aunt is a nurse and she actually agrees with me on this one."
+  ],
+
+  "meddy_response_after_refusal": [
+    "Okay... noted. Moving on then!",
+    "Alright. We'll... figure something else out.",
+    "That's... a perspective. Let's see what else we can do.",
+    "Noted! Deep breaths. We've got this."
+  ],
+
+  "achievements": [
+    {
+      "id": "i_did_my_own_research",
+      "name": "I Did My Own Research",
+      "description": "Successfully treat a YouTock patient despite 5 refusals.",
+      "pixel_art_description": "Doctor looking exhausted, MEDDY with steam coming out, patient holding phone smugly"
+    },
+    {
+      "id": "respectfully_disagree",
+      "name": "Respectfully Disagree",
+      "description": "Attempt to educate a YouTock patient and get declined.",
+      "pixel_art_description": "Patient with arms crossed, polite smile, doctor with clipboard looking defeated"
+    }
+  ]
+}
