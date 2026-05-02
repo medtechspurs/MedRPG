@@ -1,5 +1,7 @@
 {
-  "category": "Boost Badges",
+  "schema_version": "1.0",
+    
+    "category": "Boost Badges",
   "category_id": "boost_badges",
   "description": "Positive modifier badges that help the player during clinical encounters. Displayed as green/blue ovals on the badge reel UI.",
   "dispenser_rules": {

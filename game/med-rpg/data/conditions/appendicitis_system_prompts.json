@@ -1,5 +1,7 @@
 {
-  "condition_id": "appendicitis",
+  "schema_version": "1.0",
+
+    "condition_id": "appendicitis",
   "description": "System prompts for all LLM interactions in the appendicitis encounter.",
 
   "patient_personality": {

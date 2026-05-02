@@ -4,7 +4,7 @@
 ---
 
 ## Concept
-Retro pixel art RPG where player is a doctor traveling a world map curing patients. Clinical encounters are turn-based. Player uses 13 icon categories to interact with patients. A local LLM (Claude via Anthropic API) parses free text for History, Physical Exam, Medications, and Diagnosis. Everything else is list/browser-based.
+Retro pixel art RPG where player is a doctor traveling a world map curing patients. Clinical encounters are turn-based. Player uses 13 icon categories + quick access buttons to interact with patients. Input classified by LLM, routed to authored responses in shipped game.
 
 ---
 
@@ -22,15 +22,26 @@ Retro pixel art RPG where player is a doctor traveling a world map curing patien
 
 ## Backend Server
 Node.js server on `http://localhost:3000`. Proxies all LLM requests to Anthropic API.
-
 **To run:** `cd server && node server.js`
-**For production:** Deploy to cloud server (e.g. $5/month DigitalOcean droplet)
-
-**Endpoints:**
-- `GET /health` — health check
-- `POST /llm` — send prompt + system, receive response
-
 **Model:** `claude-sonnet-4-5`
+**Endpoints:** `GET /health` / `POST /llm`
+
+---
+
+## Developer Toggles (clinical_engine.gd)
+```gdscript
+const DEV_MODE_LLM: bool = true          # true = live LLM, false = authored responses
+const DEV_MODE_SKIP_CONFIRM: bool = false # true = skip AP popups (auto-runs only)
+```
+**Before shipping:** Delete all DEV_MODE_LLM code paths and auto-runner script entirely.
+
+---
+
+## JSON Schema Versioning Rule
+**All JSON files must include `schema_version` as the first field.**
+- Current version: `"1.0"`
+- Bump to `"1.1"` for non-breaking additions
+- Bump to `"2.0"` for breaking schema changes
 
 ---
 
@@ -38,62 +49,57 @@ Node.js server on `http://localhost:3000`. Proxies all LLM requests to Anthropic
 ```
 MedRPG/
 ├── docs/
-│   └── PROJECT_NOTES.md
+│   ├── PROJECT_NOTES.md
+│   └── AUTHORED_RESPONSE_SYSTEM.md    ← full authored response architecture
 ├── server/
-│   ├── server.js              ← Node.js backend (API key lives here)
+│   ├── server.js
 │   ├── package.json
 │   └── node_modules/
 ├── game/
-│   └── med-rpg/               ← Godot project root
+│   └── med-rpg/
 │       ├── .gitignore
 │       ├── project.godot
 │       ├── data/
+│       │   ├── master_categories.json     ← global category list for all conditions
 │       │   ├── action_registry.json
 │       │   ├── airway.json
 │       │   ├── badges/
 │       │   │   ├── boost_badges.json
-│       │   │   └── burnout_badges.json
+│       │   │   ├── burnout_badges.json
+│       │   │   └── badge_youtock_dialogue.json
 │       │   ├── conditions/
 │       │   │   ├── appendicitis.json
 │       │   │   ├── appendicitis_system_prompts.json
 │       │   │   ├── appendicitis_other_treatments.json
 │       │   │   ├── appendicitis_surgeries_procedures.json
 │       │   │   └── appendicitis_end_conditions.json
-│       │   └── medications/
-│       │       └── (23 medication JSON files)
+│       │   ├── medications/
+│       │   │   └── (23 medication JSON files)
+│       │   └── responses/
+│       │       ├── appendicitis/
+│       │       │   ├── history_responses.json
+│       │       │   ├── exam_responses.json
+│       │       │   ├── meddy_responses.json
+│       │       │   ├── ask_meddy_responses.json
+│       │       │   └── deflection_responses.json
+│       │       └── coverage_reports/      ← auto-runner output
 │       ├── scenes/
 │       │   └── clinical_encounter.tscn
 │       ├── scripts/
-│       │   └── clinical_engine.gd
+│       │   ├── clinical_engine.gd
+│       │   └── auto_runner.gd             ← dev only, deleted before shipping
 │       └── assets/
-│           ├── sprites/
-│           │   └── characters/
-│           │       ├── meddy/
-│           │       │   ├── meddy_neutral.png         ← static neutral sprite
-│           │       │   └── MeddyBlinkAnimationSpriteSheet.png ← idle animation sheet
-│           │       ├── player/
-│           │       │   ├── body/
-│           │       │   ├── body_baby/
-│           │       │   ├── head/
-│           │       │   ├── head_baby/
-│           │       │   ├── hair/
-│           │       │   ├── hair_baby/
-│           │       │   ├── clothing/
-│           │       │   ├── clothing_baby/
-│           │       │   └── extras/
-│           │       ├── patients/
-│           │       │   └── patient_young_male/
-│           │       └── npcs/
-│           ├── badges/
-│           │   ├── boost/
-│           │   ├── burnout/
-│           │   └── badge_reel.png
-│           ├── ui/
-│           │   ├── icons/
-│           │   ├── panels/
-│           │   ├── buttons/
-│           │   ├── fonts/
-│           │   └── hud/
+│           ├── sprites/characters/
+│           │   ├── meddy/
+│           │   │   ├── meddy_neutral.png
+│           │   │   └── MeddyBlinkAnimationSpriteSheet.png
+│           │   ├── player/
+│           │   │   ├── body/ head/ hair/ clothing/ extras/
+│           │   │   └── body_baby/ head_baby/ hair_baby/ clothing_baby/
+│           │   ├── patients/patient_young_male/
+│           │   └── npcs/
+│           ├── badges/boost/ + burnout/
+│           ├── ui/icons/ + panels/ + buttons/ + fonts/ + hud/
 │           ├── backgrounds/
 │           └── audio/
 ├── exports/
@@ -102,183 +108,193 @@ MedRPG/
 
 ---
 
-## Current Scene Structure (clinical_encounter.tscn)
+## Authored Response System
+*Full architecture in `docs/AUTHORED_RESPONSE_SYSTEM.md`*
+
+### Overview
+All patient dialogue and MEDDY content is pre-authored and physician-reviewed. LLM used only for input classification in shipped game.
+
+### Pipeline
+1. **Auto-runner** generates test inputs (LLM plays as doctor)
+2. **Coverage reports** exported to `data/responses/coverage_reports/`
+3. **Human review** — physician curates best responses
+4. **Answer bank** built in response JSON files
+5. **Local classifier** trained eventually for offline classification
+
+### Answer Bank Structure
+```json
+{
+  "schema_version": "1.0",
+  "category": "symptom_drill_pain",
+  "variants": [
+    {
+      "id": "pain_first_ask",
+      "priority": 3,
+      "conditions": {
+        "domains_asked": [],
+        "patient_state": "any"
+      },
+      "answers": ["Answer option 1", "Answer option 2"],
+      "speaker": "patient"
+    }
+  ],
+  "fallback_answer": "Can we focus on what's going on with me right now?"
+}
 ```
-ClinicalEncounter (Node2D) ← clinical_engine.gd attached
-├── HUD (CanvasLayer, layer 10)
-│   ├── APBar (HBoxContainer) → APLabel, APValue
-│   ├── BonusPoints (HBoxContainer) → BonusLabel, BonusValue
-│   └── HarmPoints (HBoxContainer) → HarmLabel, HarmValue
-├── IconBar (CanvasLayer)
-│   ├── IconContainer (HBoxContainer) → 13 buttons
-│   └── QuickAccess (HBoxContainer) → IVBtn, O2Btn
-├── InputArea (CanvasLayer)
-│   └── InputPanel → InputRow → InputField (LineEdit) + SubmitBtn
-├── PopupLayer (CanvasLayer, layer 20)
-│   └── PopupContent (PanelContainer, hidden by default)
-│       └── PopupVBox → PopupMessage + PopupButtons → ConfirmBtn + CancelBtn
-├── ResponseLayer (CanvasLayer, layer 5)
-│   └── ResponsePanel (hidden by default)
-│       └── ResponseContent → ResponseSpeaker + ResponseText
-├── Background (Node2D)
-├── PatientArea (Node2D)
-│   ├── PatientSprite (Node2D) → Body, Head, Hair, Eyes, Glasses, Clothing
-│   └── Bed (Sprite2D)
-├── PlayerArea (Node2D)
-│   ├── PlayerSprite (Node2D) → Body, Head, Hair, Eyes, Glasses, Clothing
-│   └── Meddy (Node2D)
-│       ├── MeddySprite (AnimatedSprite2D) ← idle animation playing
-│       └── MeddyPopup (CanvasLayer, hidden)
-│           └── PopupPanel → PopupLabel
-├── Monitor (Node2D, position ~900, 20)
-│   ├── MonitorBackground (Sprite2D)
-│   └── VitalsContainer (VBoxContainer)
-│       ├── HRRow → HRTitle + HRValue
-│       ├── BPRow → BPTitle + BPValue
-│       ├── RRRow → RRTitle + RRValue
-│       ├── TempRow → TempTitle + TempValue
-│       ├── SpO2Row → SpO2Title + SpO2Value
-│       └── ALineWaveform (HBoxContainer, hidden) → ALineTitle + ALineValue
-└── OllamaRequest (HTTPRequest) ← handles all API calls
-```
+
+### Master Categories (42 total)
+- **History (14):** overview, symptom_drill_pain/nausea/fever/appetite/bowel/urinary, review_of_systems, pmh_surgical, medications, allergies, social_travel_exposure, family_history, sexual_history
+- **Physical Exam (17):** exam_general/abdomen/cardiovascular/respiratory/neurological/skin/heent/musculoskeletal/genitourinary/rectal/breast + maneuver_mcburneys/rovsing/psoas/obturator/rebound/murphy/other
+- **Ask MEDDY (5):** meddy_general_knowledge, meddy_differential, meddy_condition_tests, meddy_condition_treatment, meddy_finding_significance
+- **Irrelevant (1):** catch-all deflection
+
+*New categories can be added anytime — just add to `master_categories.json` and create corresponding response entries.*
 
 ---
 
 ## MEDDY Sprite System
 
 ### Current Status
-- ✅ Neutral static sprite: `meddy_neutral.png` (325x572 trimmed, displayed at scale 0.42)
-- ✅ Idle animation: `MeddyBlinkAnimationSpriteSheet.png` (10 frames, playing as AnimatedSprite2D)
-- ⬜ Excited animation
-- ⬜ Worried animation
-- ⬜ Alarmed animation
-- ⬜ Thinking animation
-- ⬜ Celebrating animation
+- ✅ Idle animation: `MeddyBlinkAnimationSpriteSheet.png` (10 frames, AnimatedSprite2D)
+- ⬜ Excited, Worried, Alarmed, Thinking, Celebrating animations
 
-### MEDDY Sprite States
-| State | Trigger |
-|---|---|
-| idle | Default, always playing |
-| excited | Bonus point earned |
-| worried | Harm point triggered |
-| alarmed | Patient deteriorating |
-| thinking | LLM processing |
-| celebrating | Correct diagnosis |
-
-### MEDDY Animation Workflow
-1. Generate base image in **ChatGPT**
-2. Convert to pixel art in **Pixelicious** (pixelicious.xyz) — 128px grid
-3. Clean up / trim in **Aseprite**
-4. Generate animation frames in **PixelLab** (pixellab.ai)
-   - Max input size: 256x256
-   - Export as individual PNGs (0001, 0002, etc.)
-5. Import frames into **Aseprite** (File → Open all frames as animation)
-6. Adjust frame timing (~100-150ms per frame)
-7. Export as horizontal sprite sheet PNG
-8. Import into Godot as AnimatedSprite2D SpriteFrames
-
-### PixelLab Idle Animation Prompt
-*"Idle animation. Consistent sprite size. Subtle breathing motion. Knees flex up and down, elbows flex and unflex, green eyes and smile pulsing with light, looping idle animation, standing still. All frames same size, seamless loop."*
-
-### Aseprite Tips
-- Remove background: Eraser tool (E) at high zoom
-- Trim transparent border: Sprite → Trim
-- Check dimensions: F4
-- Extend canvas without scaling: Sprite → Canvas Size
-- Frame timing: Right-click frame in timeline → Frame Properties
-- Import multiple frames as animation: File → Open all PNGs at once → Yes to animation prompt
-- Files must be in folder with no spaces in path, short filenames
-
-### Godot AnimatedSprite2D Setup
-- Change node type from Sprite2D to AnimatedSprite2D
-- Inspector → Sprite Frames → New SpriteFrames
-- SpriteFrames panel → rename animation to `idle`
-- Add Frames from Sprite Sheet → set correct frame width (check dimensions)
-- Set FPS to ~10, enable loop
-- Set Autoplay to `idle`
+### Animation Workflow
+1. Generate in **ChatGPT** → convert in **Pixelicious** → clean in **Aseprite** → animate in **PixelLab** → import to Godot
+2. PixelLab idle prompt: *"Idle animation. Consistent sprite size. Subtle breathing motion. Knees flex up and down, elbows flex and unflex, green eyes and smile pulsing with light, looping idle animation, standing still. All frames same size, seamless loop."*
+3. Export from PixelLab as individual PNGs → import to Aseprite → export as horizontal sprite sheet
+4. In Godot: AnimatedSprite2D → SpriteFrames → frame width 256px → ~10 FPS → loop
 
 ---
 
-## LLM Integration
+## Game Modes
 
-### Flow
-```
-Player input → Godot → HTTP POST → Node.js server → Anthropic API → Claude → response → Godot → display
-```
+### Balatro Run Mode (build first)
+- 3 random cases per run
+- Cases pulled from full case library
+- Badges accumulate across run
+- Between cases: Badge Board (spend XP), encounter selection (3 options)
 
-### Two-Call System (History)
-- **Call 1:** Cost detection — Claude classifies domains, returns JSON with AP cost
-- **Popup:** Shows cost, player confirms or cancels
-- **Call 2:** Patient response — Claude responds as Marcus
+### Themed Runs (future DLC)
+- Trauma Run, Infectious Disease Run, Cardiology Run, Pediatrics Run, ICU Run, Night Float Run
+- Natural DLC packs — themed run + new cases + specialty badges
 
-### Response Display
-- ResponsePanel (top center of screen) shows patient/MEDDY responses
-- Speaker label + wrapped response text
-- Hidden by default, shown on response
-
----
-
-## History Domain System
-
-### Domain AP Costs
-| Domain | AP Cost | Once Only? |
-|---|---|---|
-| overview | 1 | Yes |
-| symptom_drill (per symptom) | 1 | Per new symptom |
-| Further drill same symptom | 0 | Free |
-| review_of_systems | 1 | Yes |
-| pmh_surgical | 1 | Yes — covers both |
-| medications | 1 | Yes |
-| allergies | 1 | Yes |
-| social_travel_exposure | 1 | Yes |
-| family_history | 1 | Yes |
-| sexual_history | 1 | Yes — blocked in family friendly mode |
-| Multiple domains one question | Stacked | Each charged once |
-
-### Tracking in GDScript
-```gdscript
-var history_domains_asked: Array = []
-var history_symptoms_drilled: Array = []
-var family_friendly_mode: bool = false
-```
-
-### Flow
-1. Player types history question → clicks Send
-2. `detect_history_cost()` → Call 1 to Claude
-3. Claude returns JSON: `{"new_domains": [...], "new_symptoms": [...], "ap_cost": 1}`
-4. If cost = 0 → skip popup, go straight to patient
-5. If cost > 0 → show popup with cost
-6. Player confirms → `spend_ap()` → `send_history_to_patient()` → Call 2
-7. Patient responds, domain tracking updated
+### RPG Overworld Mode (future)
+- World map, story, linear progression
+- Add after Balatro mode is complete and polished
 
 ---
 
-## Physical Exam System
+## Personal Difficulty Scaling
+Per-case performance tracked across runs:
+- AP remaining, turns taken, bonus points, harm points
+- If case crushed → next time: less AP, faster decompensation, pre-attached Burnout Badge, comorbidities
+- **Difficulty tiers (appendicitis example):**
 
-### Validation
-- Call 1: Claude validates input is ONE specific body system or maneuver
-- VALID → patient reacts to exam
-- INVALID → MEDDY redirects: "Try one specific area or maneuver at a time"
-
----
-
-## Patient Personality Schema
-Every condition includes `patient_personality` in condition JSON and companion `[condition]_system_prompts.json`.
-
-### Appendicitis Patient (Marcus)
-- Age: 22, male, college student
-- Analytical: 5/10, Speech: 11th grade, Dialect: Standard USA
-- Friendly, cooperative, anxious but calm, pain 7/10
-- No agendas, forthcoming communication style
+| Tier | AP | Decompensation | Burnout Badges | Comorbidities |
+|---|---|---|---|---|
+| 1 | 100 | Standard | 0 | None |
+| 2 | 85 | 10% faster | 1 | Obese |
+| 3 | 70 | 25% faster | 1 | Diabetic |
+| 4 | 55 | 40% faster | 2 | Warfarin + diabetic |
+| 5 | 40 | 50% faster | 2 | Complex, atypical |
 
 ---
 
-## 13 Icon UI Bar
+## Turn Counter
+- Every confirmed action = 1 turn (even free AP actions)
+- Display near AP/Bonus/Harm in HUD
+- Turn 10 → draw Burnout Badge (early game max 1, late game max 2)
+- Creates pressure alongside AP — efficiency on two axes
+
+---
+
+## Badge System
+
+### Boost Badges (13 + new)
+Acquired via Badge Board (XP) / Badge Dispenser (10 AP, draw 3 pick 1, stable only) / mid-encounter rewards / critical hit chance (5% per bonus point earned)
+
+**Diminishing returns:** Multiple badges less impactful, situational by design
+
+### Burnout Badges (12 + new)
+Triggered at 5 harm OR 50 AP remaining OR turn 10. Random from pool.
+Early game: max 1. Late game: max 2. Pre-attached on some encounters = higher XP.
+
+### New Badges Designed
+| ID | Name | Type | Effect |
+|---|---|---|---|
+| boost_universal_healthcare | Universal Coverage | Boost | All actions -1 AP, non-emergent has 2-turn wait |
+| boost_prayer | Thoughts & Prayers | Boost | 20% chance +1 AP per turn, 10% chance -1 harm per turn, heavenly glow |
+| burnout_insurance_denial | Prior Auth Required | Burnout | 50% non-life-saving actions denied, AP still charged. CEO laughs counting money. Peer-to-peer 2AP/20% success, prior auth 3AP/50% success |
+| burnout_national_backorder | National Backorder | Burnout | 33% chance med on backorder, AP charged, 40% chance stays backordered on retry |
+| burnout_youtock | YouTock University | Burnout | 50% refuse meds/vaccines/procedures, funny refusal quotes, education attempts declined politely |
+
+*(Full YouTock dialogue in `badge_youtock_dialogue.json`)*
+
+---
+
+## Ask MEDDY System
+- Dedicated button above MEDDY's head on encounter screen
+- Costs 2-4 AP depending on question type
+- Uses conversation log as context for differential diagnosis
+- All responses authored (not live LLM in shipped game)
+- Accessible to non-medical players as learning tool
+
+### MEDDY Hints
+- Triggers if no clinical progress after X turns
+- Triggers if AP drops critically without key actions
+- Triggers on clinically wrong decisions
+- Never condescending, always encouraging
+
+---
+
+## PPE System
+- PPE button on main UI near IV and O2 quick access
+- Required before physical exam or procedures
+- Not donning appropriate PPE = 1 harm point
+- One-time action per encounter
+- For appendicitis: standard precautions (gloves + mask)
+- Future: contact/droplet/airborne/full PPE for infectious cases
+
+---
+
+## Accessibility & Difficulty Modes
+- **Tourist Mode** — MEDDY very proactive, suggests next steps
+- **Attending Mode** — MEDDY helpful, larger Ask MEDDY radius
+- **Resident Mode** — occasional nudges if going wrong direction
+- **Med Student Mode** — full game, MEDDY only answers when asked
+- **Family Friendly Mode** — blocks sexual history, age-appropriate content
+
+---
+
+## Character Creator
+
+### Doctor Sprite
+- Male and female base sprites (different body/face, same hair assets)
+- Layered system: Body → Head → Hair → Beard (male) → Eyes → Glasses → White coat
+- Skin tone: horizontal gradient slider
+- Hair styles (13, shared male/female): Bald, Short/Medium/Long straight, Short/Medium/Long natural African, Short/Medium/Long braids, Short/Medium wavy
+- Beard (male only): None, Short, Medium
+- Hair color + Eye color: color wheels
+- Glasses: toggle
+- White coat: always worn
+
+### Patient / NPC Sprites
+- Same layered asset system as doctor
+- Different clothing layer per character type
+- Four tiers: Adult (100%) / Child (65-70%) / Toddler (body 45-50%, head 60-65%) / Baby (separate assets)
+
+### Patient Visual States (appendicitis)
+- **Standing** — default, slightly hunched, hand on right side, casual clothes
+- **In hospital bed** — triggered by IV access / O2 / septic shock. Hospital gown.
+
+---
+
+## 13 Icon UI Bar + Quick Access
 | # | Button | Mode | AP Cost |
 |---|---|---|---|
-| 1 | Hx | history | 1 per domain |
+| 1 | Hx | history | 1 per question |
 | 2 | Stab | stability | 2 |
-| 3 | Exam | exam | 2 |
+| 3 | Exam | exam | 2 (free repeat) |
 | 4 | Labs | labs | varies |
 | 5 | Ima | imaging | 8 |
 | 6 | Med | medications | 3 |
@@ -290,87 +306,27 @@ Every condition includes `patient_personality` in condition JSON and companion `
 | 12 | Misc | misc_tests | 5 |
 | 13 | Dx | diagnosis | 0 |
 
-**Quick Access:** IV (2 AP), O2 (1 AP)
+**Quick Access (always visible):** IV (2 AP), O2 (1 AP), PPE (1 AP), Ask MEDDY (2-4 AP)
 
-### UI Keyboard Controls
-- **Enter** — submits input field OR confirms popup
-- **Escape** — cancels popup
-- **Left/Right arrows** — toggle between Confirm/Cancel buttons
-- **White border** = focused button (unambiguous selection indicator)
+**Input field max length:** 150 characters
+
+**Keyboard:** Enter = submit/confirm, Escape = cancel, Left/Right = toggle confirm/cancel
 
 ---
 
 ## Points System
-
-### AP
-Budget per case (appendicitis = 100 AP). Depleted = deterioration / fail.
-
-### Bonus Points
-Earned for targeted clinical knowledge. Dual use: offset harm OR bank for XP.
-
-### Harm Points
-Threshold = 7 (appendicitis). Reaching threshold → septic shock + AP reduced to 30.
-
-### XP Formula
-`base_xp + (remaining AP × 1) + (banked bonus × 3) - (harm × 10)`
-
----
-
-## Medication System
-~531 medications across 23 JSON files. No dosing in med files — lives in condition files.
-Default 3 AP per med. IV without access → auto-place popup.
-
----
-
-## Airway System
-Icon 10. RSI checklist (free). Intubation 5 AP. Auto-vent: VC-AC, TV 500mL, RR 14, PEEP 5, FiO2 40%.
-
----
-
-## Surgeries & Procedures
-Appendectomy 10 AP → WIN → +10 bonus points → disposition prompt.
-Arterial line 4 AP → ABG becomes 1 AP + A-line waveform vital sign.
-
----
-
-## End Condition System
-Post-appendectomy disposition: Hospital / ICU / Discharge (0 AP).
-Lose: AP hits 0 OR unaffordable action → Mega Hospital transfer.
-Unaffordable appendectomy → +3 bonus points on transfer.
-
----
-
-## Other Treatments
-NPO + IV before septic shock = +1 bonus each. All others 1 AP, 0 bonus.
-Auto-bed triggers: IV placed / O2 started / septic shock.
-Difficult Stick: IV costs 2 AP, 15% infiltration per 5 AP spent.
-
----
-
-## Badge System
-**Boost (13):** Badge Board / Dispenser (10 AP, draw 3 pick 1, stable only) / rewards
-**Burnout (12):** Triggered at 5 harm OR 50 AP. Max 1 early / max 2 late.
-Pre-attached on some encounters = higher XP reward.
-
----
-
-## Sprite System
-Layered sprites: Body → Head → Hair → Eyes → Glasses → Clothing → Overlays
-Four tiers: Adult (100%) / Child (65-70%) / Toddler (body 45-50%, head 60-65%) / Baby (separate assets)
-27 hair styles. Runtime color tinting via Godot modulate.
-
----
-
-## Character Creator
-Skin tone slider / Height 5 options / 27 hair styles / Hair+Eye color wheels / Glasses toggle / White coat always worn.
-**Family Friendly Mode** — chosen at character creation screen. Blocks sexual history questions.
+- **AP:** 100 per case. Every action costs AP. Depleted = fail.
+- **Turns:** Every confirmed action = 1 turn. Turn 10 triggers Burnout Badge.
+- **Bonus Points:** Clinical excellence. Offset harm OR bank for XP.
+- **Harm Points:** Threshold 7. Triggers septic shock + AP capped at 30.
+- **XP Formula:** `base_xp + (remaining AP × 1) + (banked bonus × 3) - (harm × 10)`
 
 ---
 
 ## Appendicitis Case
 
-### Patient
-Marcus, 22yo male, 6'0", 84kg, BMI 25.1, no allergies, no PMH
+### Patient: Marcus
+22yo male, 6'0", 84kg, BMI 25.1, no allergies, no PMH, college student
 
 ### States
 | State | Trigger | HR | BP | RR | Temp | SpO2 |
@@ -383,8 +339,23 @@ Marcus, 22yo male, 6'0", 84kg, BMI 25.1, no allergies, no PMH
 ### Bonus Points: 34 total
 History (2) + Exam (3) + Stability (2) + Consult (1) + Other Treatments (2) + Diagnosis (13) + Appendectomy (10) + Disposition (1)
 
-### Scoring
-Base 120 XP + remaining AP×1 + banked bonus×3 - harm×10
+---
+
+## Achievements (pixel art badge for each)
+| ID | Name | Description |
+|---|---|---|
+| first_diagnosis | First Blood | First correct diagnosis |
+| speed_demon | Speed Demon | Complete case under 15 turns |
+| textbook | Textbook | Earn every bonus point |
+| oops | Oops | Trigger septic shock |
+| miracle_worker | Miracle Worker | Prayer badge saves the run |
+| thorough | Thorough | Ask every possible history domain |
+| sharpshooter | Sharpshooter | Correct diagnosis without Ask MEDDY |
+| frequent_flyer | Frequent Flyer | Send 10 patients to Mega Hospital |
+| boy_scout | Boy Scout | Place IV before any other action |
+| insurance_nightmare | Insurance Nightmare | Get denied 5 times in one run |
+| i_did_my_research | I Did My Own Research | Treat YouTock patient despite 5 refusals |
+| respectfully_disagree | Respectfully Disagree | Patient declines education attempt |
 
 ---
 
@@ -396,50 +367,107 @@ Renderer: Compatibility / Window: 1280×720 / Stretch: canvas_items / Texture Fi
 ## MVP Sequence
 1. ✅ Scene built — ClinicalEncounter.tscn
 2. ✅ ClinicalEngine.gd — state machine, AP, bonus/harm
-3. ✅ Vitals monitor working
-4. ✅ All 13 buttons + IV + O2 wired up
+3. ✅ Vitals monitor
+4. ✅ All 13 buttons + IV + O2 wired
 5. ✅ Confirmation popup — keyboard nav, white focus ring
-6. ✅ Anthropic API connected — fast responses
+6. ✅ Anthropic API connected
 7. ✅ Patient system prompt locked in clinically
-8. ✅ Exam validation layer working
-9. ✅ History domain AP system — two-call architecture
-10. ✅ MEDDY idle animation in game
-11. ⬜ Labs system — objective data from condition file
-12. ⬜ Diagnosis evaluation
-13. ⬜ MEDDY emotional animations wired to events
-14. ⬜ Bonus/harm point events firing
-15. ⬜ AP visual feedback / state transitions
-16. ⬜ Badge system
-17. ⬜ Win/fail states
-18. ⬜ Badge board + encounter selection
-19. ⬜ Overworld + story
+8. ✅ Exam validation layer
+9. ✅ History domain AP system
+10. ✅ Exam tracking — free re-examination
+11. ✅ MEDDY idle animation
+12. ✅ Dev toggles added
+13. ✅ Master categories defined
+14. ✅ Response folder structure created
+15. ✅ Authored response system architecture documented
+16. ⬜ AutoRunner.gd
+17. ⬜ Coverage report export
+18. ✅ Turn counter + HUD display
+19. ✅ Time counter + HUD display
+20. ⬜ Log system
+20. ⬜ Ask MEDDY button + system
+21. ⬜ PPE button
+22. ⬜ Labs system
+23. ⬜ Diagnosis evaluation
+24. ⬜ MEDDY emotional animations
+25. ⬜ Badge system implementation
+26. ⬜ Win/fail states
+27. ⬜ Balatro run mode + encounter selection
+28. ⬜ Character creator screen
 
 ---
 
 ## Monetization
-$10 base. DLC condition packs later.
+$10 base. DLC condition packs + themed runs later. School/institution licensing potential.
 
 ---
 
-## Session Log
-- **Session 1:** Concept, architecture, platform
-- **Session 2:** Action registry, appendicitis condition file
-- **Session 3:** Full medication database (23 files, ~531 meds)
-- **Session 4:** Badge system
-- **Session 5:** Other treatments fully defined
-- **Session 6:** Airway icon (13th icon)
-- **Session 7:** MEDDY designed. Asset folder structure finalized.
-- **Session 8:** Character creator — layered sprite system
-- **Session 9:** Unified sprite tier system
-- **Session 10:** Full UI asset folder structure
-- **Session 11:** Surgeries & procedures schema
-- **Session 12:** End conditions fully defined
-- **Session 13:** Godot project initialized
-- **Session 14:** ClinicalEncounter scene built, ClinicalEngine.gd written
-- **Session 15:** Vitals monitor fixed, basic layout working
-- **Session 16:** History button wired, Submit button wired
-- **Session 17:** Switched to Anthropic API via Node.js backend
-- **Session 18:** Patient personality schema, full clinical system prompt
-- **Session 19:** All 14 buttons wired, confirmation popup complete, keyboard nav
-- **Session 20:** Exam validation layer, MEDDY idle animation in game
-- **Session 21:** History domain AP system — two-call architecture, domain tracking, free re-queries
+## Turn Counter & Time Counter
+
+### Turn Counter
+- `turn_count` increments on every confirmed action — including free AP (irrelevant deflections, repeat exams, repeat history)
+- Increments via `increment_turn()` which also calls `check_burnout_triggers()`
+- Turn 10 → triggers Burnout Badge draw
+- Displayed in HUD: `HUD/TurnCounter/TurnValue`
+
+### Time Counter
+- `elapsed_seconds` increments every 1 second via a `Timer` node created in `_ready()`
+- Clock runs continuously — never pauses during LLM wait
+- `time_limit_active: bool = false` — off by default, activated by timed badges/game modes
+- `time_limit_seconds: float = 36000.0` — 10 hours default (effectively disabled)
+- When limit hit → same outcome as 0 AP (Mega Hospital transfer)
+- To activate a time limit: set `time_limit_active = true` and `time_limit_seconds` to target value
+- Displayed in HUD: `HUD/TimeCounter/TimeValue` in `HH:MM:SS` format
+
+---
+
+## Labs System
+
+### UI Flow
+1. Player clicks **Labs** button → Labs popup window opens
+2. Popup has three ways to find and select labs:
+   - **Search by description** (top bar): free text interpreted by LLM → returns matching labs by tag
+   - **Search by name** (second bar): exact match on lab name or acronym (e.g. "CBC" or "complete blood count") → live dropdown of matches below
+   - **Category browser** (main panel): scrollable vertical list of broad categories → click to expand → click lab to select
+3. Labs can be selected from any of the three methods — selections accumulate
+4. **"Order Selected Labs"** button → AP cost popup showing combined cost → Confirm or Cancel
+
+### Lab Categories (broad, for UI browser)
+General / Screening, Hematology, Chemistry / Metabolic, Liver / Hepatic, Renal, Cardiac, Inflammatory / Infection, Coagulation, Endocrine / Hormonal, Pulmonary / Blood Gas, Rheumatologic / Autoimmune, Toxicology / Drug Levels, Urinalysis, Microbiology / Cultures, Tumor Markers, Nutritional / Vitamins, Genetic / Molecular
+
+*Labs can appear in multiple categories.*
+
+### Lab Tag System
+Each lab has a comprehensive tag array covering:
+- **Organ system:** hematologic, hepatic, renal, cardiac, pulmonary, endocrine, GI, neurologic, musculoskeletal, reproductive
+- **Category:** chemistry, hematology, coagulation, inflammatory, metabolic, hormonal, toxicology, urinalysis, culture, tumor_marker, nutritional, genetic
+- **Body region:** abdomen, chest, pelvis, systemic
+- **Clinical association:** tags linking to conditions/diagnoses (e.g. `appendicitis`, `anemia`, `sepsis`, `liver_disease`, etc.)
+- **Clinical use:** screening, diagnosis, monitoring, preoperative
+
+### Lab Result System
+- Each lab has result ranges per patient state: `stable`, `perforated`, `septic_shock`, `coma_fail`
+- Results are randomized within range each playthrough for replayability
+- Example: WBC range 8–22 for appendicitis stable state
+- Ranges based on real clinical literature
+
+### JSON Structure
+- **Master lab list:** `data/labs/master_labs.json` — all labs, tags, categories, AP costs
+- **Condition-specific results:** `data/conditions/appendicitis_labs.json` — result ranges per state per lab
+
+### AP Cost
+- TBD per lab or per lab category — to be designed
+
+---
+- **Session 1-12:** Architecture, data layer, all JSON files
+- **Session 13:** Godot initialized
+- **Session 14:** Scene + ClinicalEngine.gd
+- **Session 15:** Vitals monitor, basic layout
+- **Session 16:** History + Submit buttons wired
+- **Session 17:** Anthropic API via Node.js
+- **Session 18:** Patient personality + system prompts
+- **Session 19:** All 14 buttons, confirmation popup, keyboard nav
+- **Session 20:** Exam validation, MEDDY idle animation
+- **Session 21:** History domain AP system, two-call architecture
+- **Session 22:** Authored response system designed, dev toggles, master categories, response folder structure, new badges designed, game modes planned, personal difficulty scaling, turn counter, achievements, character creator finalized
+- **Session 23:** Migration session. Turn counter + time counter implemented in clinical_engine.gd and HUD. Labs system fully designed (UI flow, tag system, categories, result ranges, JSON structure). PROJECT_NOTES updated. AutoRunner design clarified — full encounter coverage, undifferentiated patient LLM persona, mode-constrained runs, free-text persona instructions, button lives on main scene.

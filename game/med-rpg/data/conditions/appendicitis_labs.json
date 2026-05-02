@@ -1,0 +1,1131 @@
+{
+  "schema_version": "1.0",
+  "condition_id": "appendicitis",
+  "condition_name": "Acute Appendicitis",
+  "patient_demographics": {
+    "age": 22,
+    "age_group": "adult",
+    "sex": "male",
+    "character": "Marcus"
+  },
+  "states": {
+    "stable": "Uncomplicated appendicitis. AP > 50. Patient alert, uncomfortable, classic presentation.",
+    "perforated": "Perforated appendicitis. AP <= 50. Increased toxicity, peritoneal signs, worsening systemic illness.",
+    "septic_shock": "Septic shock from perforated appendicitis. AP <= 30 or >= 7 harm points. Hemodynamic instability, end-organ dysfunction.",
+    "coma_fail": "Multi-organ failure / imminent death. AP = 0. Extreme lab derangements."
+  },
+  "clinical_notes": {
+    "general": "Ranges represent realistic clinical variation for acute appendicitis in a 22yo male. Values are randomized within range each playthrough for replayability.",
+    "urinalysis": "Mild UA abnormalities in appendicitis reflect proximity of inflamed appendix to right ureter \u2014 important for DDx (distinguishing from UTI, kidney stone). Should NOT be impressive enough to redirect diagnosis.",
+    "negative_findings": "Normal lipase/amylase (rules out pancreatitis), normal LFTs (rules out cholecystitis/hepatitis), normal troponin, negative urine/serum hCG (rules out ectopic pregnancy in females \u2014 Marcus is male so hCG is negative) are important DDx findings.",
+    "blood_cultures": "Blood cultures return no growth in stable/perforated states; may return gram-negative organisms in septic_shock and coma_fail.",
+    "culture_delay": "Blood and urine cultures have 48-120h result delay. Include initial 'Pending' state in UI."
+  },
+  "fallback_rule": "Any lab not listed in result_ranges returns normal adult reference range values (randomized within that range).",
+  "result_ranges": {
+    "wbc": {
+      "stable": {
+        "min": 11.0,
+        "max": 18.0,
+        "note": "Classic leukocytosis. ~80% of simple appendicitis cases have WBC > 10."
+      },
+      "perforated": {
+        "min": 16.0,
+        "max": 25.0,
+        "note": "Marked leukocytosis with perforation."
+      },
+      "septic_shock": {
+        "min": 2.0,
+        "max": 35.0,
+        "note": "Wide range \u2014 very high OR paradoxically low (leukemoid reaction or overwhelming sepsis)."
+      },
+      "coma_fail": {
+        "min": 1.0,
+        "max": 40.0,
+        "note": "Extreme dysregulation."
+      }
+    },
+    "neutrophils_pct": {
+      "stable": {
+        "min": 76,
+        "max": 90,
+        "note": "Left shift with neutrophilia"
+      },
+      "perforated": {
+        "min": 82,
+        "max": 95
+      },
+      "septic_shock": {
+        "min": 55,
+        "max": 96,
+        "note": "Can be very high OR low with overwhelming sepsis"
+      },
+      "coma_fail": {
+        "min": 40,
+        "max": 96
+      }
+    },
+    "lymphocytes_pct": {
+      "stable": {
+        "min": 6,
+        "max": 18,
+        "note": "Relatively low due to neutrophilia"
+      },
+      "perforated": {
+        "min": 4,
+        "max": 14
+      },
+      "septic_shock": {
+        "min": 2,
+        "max": 14,
+        "note": "Lymphopenia common in sepsis"
+      },
+      "coma_fail": {
+        "min": 1,
+        "max": 10
+      }
+    },
+    "monocytes_pct": {
+      "stable": {
+        "min": 3,
+        "max": 9
+      },
+      "perforated": {
+        "min": 3,
+        "max": 10
+      },
+      "septic_shock": {
+        "min": 2,
+        "max": 10
+      },
+      "coma_fail": {
+        "min": 1,
+        "max": 10
+      }
+    },
+    "eosinophils_pct": {
+      "stable": {
+        "min": 0,
+        "max": 3
+      },
+      "perforated": {
+        "min": 0,
+        "max": 2
+      },
+      "septic_shock": {
+        "min": 0,
+        "max": 1,
+        "note": "Eosinopenia common in sepsis"
+      },
+      "coma_fail": {
+        "min": 0,
+        "max": 1
+      }
+    },
+    "basophils_pct": {
+      "stable": {
+        "min": 0,
+        "max": 1
+      },
+      "perforated": {
+        "min": 0,
+        "max": 1
+      },
+      "septic_shock": {
+        "min": 0,
+        "max": 1
+      },
+      "coma_fail": {
+        "min": 0,
+        "max": 1
+      }
+    },
+    "anc": {
+      "stable": {
+        "min": 9000,
+        "max": 15000,
+        "note": "Elevated ANC is the hallmark \u2014 >7700 is abnormal"
+      },
+      "perforated": {
+        "min": 13000,
+        "max": 22000
+      },
+      "septic_shock": {
+        "min": 1000,
+        "max": 30000,
+        "note": "Very wide range in septic shock"
+      },
+      "coma_fail": {
+        "min": 500,
+        "max": 35000
+      }
+    },
+    "alc": {
+      "stable": {
+        "min": 700,
+        "max": 2000,
+        "note": "Low-normal to low due to neutrophil predominance"
+      },
+      "perforated": {
+        "min": 500,
+        "max": 1500
+      },
+      "septic_shock": {
+        "min": 200,
+        "max": 1200,
+        "note": "Lymphopenia is a sepsis marker"
+      },
+      "coma_fail": {
+        "min": 100,
+        "max": 800
+      }
+    },
+    "aec": {
+      "stable": {
+        "min": 0,
+        "max": 300
+      },
+      "perforated": {
+        "min": 0,
+        "max": 200
+      },
+      "septic_shock": {
+        "min": 0,
+        "max": 100,
+        "note": "Eosinopenia in sepsis"
+      },
+      "coma_fail": {
+        "min": 0,
+        "max": 100
+      }
+    },
+    "hemoglobin": {
+      "stable": {
+        "min": 13.0,
+        "max": 16.5,
+        "note": "Normal to mildly hemoconcentrated from dehydration"
+      },
+      "perforated": {
+        "min": 12.5,
+        "max": 16.0
+      },
+      "septic_shock": {
+        "min": 10.0,
+        "max": 15.0,
+        "note": "Dilutional anemia of critical illness, possible blood loss"
+      },
+      "coma_fail": {
+        "min": 7.0,
+        "max": 14.0
+      }
+    },
+    "hematocrit": {
+      "stable": {
+        "min": 40.0,
+        "max": 49.0
+      },
+      "perforated": {
+        "min": 38.0,
+        "max": 48.0
+      },
+      "septic_shock": {
+        "min": 30.0,
+        "max": 46.0
+      },
+      "coma_fail": {
+        "min": 22.0,
+        "max": 43.0
+      }
+    },
+    "platelets": {
+      "stable": {
+        "min": 200,
+        "max": 420,
+        "note": "Normal to mildly reactive thrombocytosis"
+      },
+      "perforated": {
+        "min": 200,
+        "max": 500,
+        "note": "Reactive thrombocytosis can occur"
+      },
+      "septic_shock": {
+        "min": 50,
+        "max": 350,
+        "note": "Thrombocytopenia from sepsis, early DIC"
+      },
+      "coma_fail": {
+        "min": 20,
+        "max": 200,
+        "note": "Severe thrombocytopenia in DIC / multi-organ failure"
+      }
+    },
+    "sodium": {
+      "stable": {
+        "min": 133,
+        "max": 142,
+        "note": "Mild hyponatremia from vomiting, poor PO intake"
+      },
+      "perforated": {
+        "min": 130,
+        "max": 142
+      },
+      "septic_shock": {
+        "min": 126,
+        "max": 148,
+        "note": "Variable in sepsis \u2014 hypo or hypernatremia possible"
+      },
+      "coma_fail": {
+        "min": 120,
+        "max": 155
+      }
+    },
+    "potassium": {
+      "stable": {
+        "min": 3.3,
+        "max": 4.5,
+        "note": "Mild hypokalemia from vomiting possible"
+      },
+      "perforated": {
+        "min": 3.1,
+        "max": 4.8
+      },
+      "septic_shock": {
+        "min": 2.8,
+        "max": 6.5,
+        "note": "Wide range \u2014 renal failure causes hyperK; vomiting causes hypoK"
+      },
+      "coma_fail": {
+        "min": 2.5,
+        "max": 7.5
+      }
+    },
+    "chloride": {
+      "stable": {
+        "min": 98,
+        "max": 108
+      },
+      "perforated": {
+        "min": 95,
+        "max": 108
+      },
+      "septic_shock": {
+        "min": 88,
+        "max": 115
+      },
+      "coma_fail": {
+        "min": 80,
+        "max": 120
+      }
+    },
+    "co2_bicarb": {
+      "stable": {
+        "min": 19,
+        "max": 26,
+        "note": "Mild metabolic acidosis possible from poor PO intake"
+      },
+      "perforated": {
+        "min": 16,
+        "max": 24
+      },
+      "septic_shock": {
+        "min": 10,
+        "max": 22,
+        "note": "Metabolic acidosis from lactic acidosis, sepsis"
+      },
+      "coma_fail": {
+        "min": 5,
+        "max": 18
+      }
+    },
+    "bun": {
+      "stable": {
+        "min": 14,
+        "max": 22,
+        "note": "Mildly elevated from dehydration, poor PO"
+      },
+      "perforated": {
+        "min": 16,
+        "max": 30
+      },
+      "septic_shock": {
+        "min": 22,
+        "max": 65,
+        "note": "AKI from sepsis, prerenal"
+      },
+      "coma_fail": {
+        "min": 35,
+        "max": 110
+      }
+    },
+    "creatinine": {
+      "stable": {
+        "min": 0.8,
+        "max": 1.3,
+        "note": "Mildly elevated from dehydration"
+      },
+      "perforated": {
+        "min": 0.9,
+        "max": 1.6
+      },
+      "septic_shock": {
+        "min": 1.3,
+        "max": 4.0,
+        "note": "AKI in sepsis \u2014 rise is clinically significant"
+      },
+      "coma_fail": {
+        "min": 2.5,
+        "max": 9.0
+      }
+    },
+    "glucose": {
+      "stable": {
+        "min": 95,
+        "max": 150,
+        "note": "Stress hyperglycemia from catecholamine surge"
+      },
+      "perforated": {
+        "min": 100,
+        "max": 170
+      },
+      "septic_shock": {
+        "min": 80,
+        "max": 260,
+        "note": "Can be high (stress) or low (poor glycogen stores, hepatic failure)"
+      },
+      "coma_fail": {
+        "min": 50,
+        "max": 300
+      }
+    },
+    "calcium": {
+      "stable": {
+        "min": 8.3,
+        "max": 10.2,
+        "note": "Usually normal; may be mildly low from poor intake"
+      },
+      "perforated": {
+        "min": 8.0,
+        "max": 10.0
+      },
+      "septic_shock": {
+        "min": 7.2,
+        "max": 9.8,
+        "note": "Hypocalcemia common in sepsis"
+      },
+      "coma_fail": {
+        "min": 6.5,
+        "max": 9.5
+      }
+    },
+    "alt": {
+      "stable": {
+        "min": 10,
+        "max": 40,
+        "note": "NORMAL \u2014 important negative finding vs hepatitis/cholecystitis"
+      },
+      "perforated": {
+        "min": 12,
+        "max": 45
+      },
+      "septic_shock": {
+        "min": 15,
+        "max": 200,
+        "note": "Shock liver (ischemic hepatitis) possible"
+      },
+      "coma_fail": {
+        "min": 30,
+        "max": 500
+      }
+    },
+    "ast": {
+      "stable": {
+        "min": 12,
+        "max": 38
+      },
+      "perforated": {
+        "min": 14,
+        "max": 45
+      },
+      "septic_shock": {
+        "min": 20,
+        "max": 250
+      },
+      "coma_fail": {
+        "min": 40,
+        "max": 800
+      }
+    },
+    "alp": {
+      "stable": {
+        "min": 50,
+        "max": 130,
+        "note": "Normal \u2014 not elevated in simple appendicitis"
+      },
+      "perforated": {
+        "min": 55,
+        "max": 140
+      },
+      "septic_shock": {
+        "min": 60,
+        "max": 200
+      },
+      "coma_fail": {
+        "min": 70,
+        "max": 350
+      }
+    },
+    "total_bilirubin": {
+      "stable": {
+        "min": 0.3,
+        "max": 1.2,
+        "note": "Normal \u2014 elevated bilirubin suggests cholecystitis, hepatitis, or hemolysis"
+      },
+      "perforated": {
+        "min": 0.4,
+        "max": 1.5
+      },
+      "septic_shock": {
+        "min": 0.5,
+        "max": 4.0,
+        "note": "Cholestasis of sepsis, shock liver"
+      },
+      "coma_fail": {
+        "min": 1.0,
+        "max": 12.0
+      }
+    },
+    "albumin": {
+      "stable": {
+        "min": 3.6,
+        "max": 4.8,
+        "note": "Normal \u2014 mildly decreased may reflect acute inflammation"
+      },
+      "perforated": {
+        "min": 3.2,
+        "max": 4.5
+      },
+      "septic_shock": {
+        "min": 2.2,
+        "max": 3.8,
+        "note": "Hypoalbuminemia in critical illness (third spacing, decreased synthesis)"
+      },
+      "coma_fail": {
+        "min": 1.5,
+        "max": 3.0
+      }
+    },
+    "pt": {
+      "stable": {
+        "min": 11.0,
+        "max": 13.5,
+        "note": "Normal"
+      },
+      "perforated": {
+        "min": 11.0,
+        "max": 14.5
+      },
+      "septic_shock": {
+        "min": 12.0,
+        "max": 22.0,
+        "note": "Coagulopathy of sepsis"
+      },
+      "coma_fail": {
+        "min": 16.0,
+        "max": 50.0,
+        "note": "DIC \u2014 profound PT prolongation"
+      }
+    },
+    "inr": {
+      "stable": {
+        "min": 0.9,
+        "max": 1.2
+      },
+      "perforated": {
+        "min": 0.9,
+        "max": 1.3
+      },
+      "septic_shock": {
+        "min": 1.0,
+        "max": 2.2
+      },
+      "coma_fail": {
+        "min": 1.4,
+        "max": 5.0
+      }
+    },
+    "ptt": {
+      "stable": {
+        "min": 25.0,
+        "max": 35.0
+      },
+      "perforated": {
+        "min": 26.0,
+        "max": 38.0
+      },
+      "septic_shock": {
+        "min": 28.0,
+        "max": 60.0
+      },
+      "coma_fail": {
+        "min": 35.0,
+        "max": 120.0,
+        "note": "DIC \u2014 may be very prolonged or paradoxically normal if fully consumed"
+      }
+    },
+    "fibrinogen": {
+      "stable": {
+        "min": 300,
+        "max": 500,
+        "note": "Elevated \u2014 acute phase reactant, rises early in inflammation"
+      },
+      "perforated": {
+        "min": 400,
+        "max": 700
+      },
+      "septic_shock": {
+        "min": 100,
+        "max": 600,
+        "note": "May be consumed in early DIC, still elevated in reactive phase"
+      },
+      "coma_fail": {
+        "min": 40,
+        "max": 300,
+        "note": "Depleted in DIC \u2014 very low fibrinogen is an ominous sign"
+      }
+    },
+    "d_dimer": {
+      "stable": {
+        "min": 0.2,
+        "max": 1.0,
+        "note": "Mildly elevated from inflammation and fibrinolysis"
+      },
+      "perforated": {
+        "min": 0.5,
+        "max": 2.5
+      },
+      "septic_shock": {
+        "min": 1.0,
+        "max": 10.0,
+        "note": "Markedly elevated in sepsis and early DIC"
+      },
+      "coma_fail": {
+        "min": 5.0,
+        "max": 20.0,
+        "note": "Very high in overt DIC"
+      }
+    },
+    "lactate": {
+      "stable": {
+        "min": 0.8,
+        "max": 1.8,
+        "note": "Normal to mildly elevated \u2014 tissue hypoperfusion from dehydration"
+      },
+      "perforated": {
+        "min": 1.5,
+        "max": 3.0,
+        "note": "Mild to moderate elevation"
+      },
+      "septic_shock": {
+        "min": 2.5,
+        "max": 8.0,
+        "note": "Significant elevation \u2014 lactate >4 indicates septic shock in adults"
+      },
+      "coma_fail": {
+        "min": 6.0,
+        "max": 18.0,
+        "note": "Extreme \u2014 terminal hypoperfusion"
+      }
+    },
+    "vbg_ph": {
+      "stable": {
+        "min": 7.33,
+        "max": 7.41
+      },
+      "perforated": {
+        "min": 7.28,
+        "max": 7.41
+      },
+      "septic_shock": {
+        "min": 7.12,
+        "max": 7.37,
+        "note": "Metabolic acidosis \u00b1 respiratory compensation"
+      },
+      "coma_fail": {
+        "min": 6.9,
+        "max": 7.28
+      }
+    },
+    "vbg_hco3": {
+      "stable": {
+        "min": 19.0,
+        "max": 26.0
+      },
+      "perforated": {
+        "min": 16.0,
+        "max": 24.0
+      },
+      "septic_shock": {
+        "min": 10.0,
+        "max": 22.0
+      },
+      "coma_fail": {
+        "min": 5.0,
+        "max": 16.0
+      }
+    },
+    "vbg_base_excess": {
+      "stable": {
+        "min": -4.0,
+        "max": 0.0
+      },
+      "perforated": {
+        "min": -7.0,
+        "max": 0.0
+      },
+      "septic_shock": {
+        "min": -14.0,
+        "max": -3.0
+      },
+      "coma_fail": {
+        "min": -20.0,
+        "max": -6.0
+      }
+    },
+    "abg_ph": {
+      "stable": {
+        "min": 7.35,
+        "max": 7.45
+      },
+      "perforated": {
+        "min": 7.3,
+        "max": 7.44
+      },
+      "septic_shock": {
+        "min": 7.14,
+        "max": 7.38
+      },
+      "coma_fail": {
+        "min": 6.9,
+        "max": 7.28
+      }
+    },
+    "abg_hco3": {
+      "stable": {
+        "min": 20.0,
+        "max": 26.0
+      },
+      "perforated": {
+        "min": 17.0,
+        "max": 25.0
+      },
+      "septic_shock": {
+        "min": 10.0,
+        "max": 22.0
+      },
+      "coma_fail": {
+        "min": 5.0,
+        "max": 16.0
+      }
+    },
+    "abg_pco2": {
+      "stable": {
+        "min": 34.0,
+        "max": 45.0
+      },
+      "perforated": {
+        "min": 28.0,
+        "max": 44.0,
+        "note": "May see respiratory compensation (hyperventilation) \u2192 lower pCO2"
+      },
+      "septic_shock": {
+        "min": 20.0,
+        "max": 42.0,
+        "note": "Kussmaul breathing \u2192 low pCO2; late respiratory failure \u2192 high pCO2"
+      },
+      "coma_fail": {
+        "min": 18.0,
+        "max": 55.0
+      }
+    },
+    "abg_po2": {
+      "stable": {
+        "min": 82.0,
+        "max": 100.0
+      },
+      "perforated": {
+        "min": 78.0,
+        "max": 100.0
+      },
+      "septic_shock": {
+        "min": 55.0,
+        "max": 98.0,
+        "note": "Hypoxemia from ARDS, poor ventilation"
+      },
+      "coma_fail": {
+        "min": 40.0,
+        "max": 90.0
+      }
+    },
+    "abg_base_excess": {
+      "stable": {
+        "min": -4.0,
+        "max": 0.0
+      },
+      "perforated": {
+        "min": -8.0,
+        "max": 0.0
+      },
+      "septic_shock": {
+        "min": -14.0,
+        "max": -3.0
+      },
+      "coma_fail": {
+        "min": -22.0,
+        "max": -6.0
+      }
+    },
+    "crp": {
+      "stable": {
+        "min": 20.0,
+        "max": 80.0,
+        "note": "Elevated CRP is a key finding \u2014 rises within 12h of inflammation"
+      },
+      "perforated": {
+        "min": 80.0,
+        "max": 220.0
+      },
+      "septic_shock": {
+        "min": 150.0,
+        "max": 380.0
+      },
+      "coma_fail": {
+        "min": 200.0,
+        "max": 450.0,
+        "note": "May paradoxically fall if hepatic synthesis impaired"
+      }
+    },
+    "esr": {
+      "stable": {
+        "min": 20,
+        "max": 60,
+        "note": "Elevated ESR \u2014 rises more slowly than CRP (lags 24-48h)"
+      },
+      "perforated": {
+        "min": 45,
+        "max": 100
+      },
+      "septic_shock": {
+        "min": 60,
+        "max": 120
+      },
+      "coma_fail": {
+        "min": 50,
+        "max": 120
+      }
+    },
+    "procalcitonin": {
+      "stable": {
+        "min": 0.1,
+        "max": 0.5,
+        "note": "Mildly elevated \u2014 PCT rises sharply with bacterial infection"
+      },
+      "perforated": {
+        "min": 0.5,
+        "max": 5.0,
+        "note": "Significant elevation indicating bacterial translocation"
+      },
+      "septic_shock": {
+        "min": 5.0,
+        "max": 50.0,
+        "note": "Markedly elevated \u2014 hallmark of sepsis"
+      },
+      "coma_fail": {
+        "min": 20.0,
+        "max": 120.0
+      }
+    },
+    "ferritin": {
+      "stable": {
+        "min": 80,
+        "max": 250,
+        "note": "Elevated as acute phase reactant"
+      },
+      "perforated": {
+        "min": 200,
+        "max": 600
+      },
+      "septic_shock": {
+        "min": 400,
+        "max": 3000,
+        "note": "Very high ferritin in sepsis/critical illness"
+      },
+      "coma_fail": {
+        "min": 800,
+        "max": 8000
+      }
+    },
+    "lipase": {
+      "stable": {
+        "min": 15,
+        "max": 70,
+        "note": "NORMAL \u2014 critical DDx finding; elevated lipase = consider pancreatitis instead"
+      },
+      "perforated": {
+        "min": 15,
+        "max": 80
+      },
+      "septic_shock": {
+        "min": 15,
+        "max": 120,
+        "note": "Mild elevation possible in critical illness, not diagnostic for pancreatitis"
+      },
+      "coma_fail": {
+        "min": 15,
+        "max": 180
+      }
+    },
+    "amylase": {
+      "stable": {
+        "min": 25,
+        "max": 90,
+        "note": "NORMAL \u2014 should not suggest pancreatitis"
+      },
+      "perforated": {
+        "min": 25,
+        "max": 110
+      },
+      "septic_shock": {
+        "min": 25,
+        "max": 150
+      },
+      "coma_fail": {
+        "min": 25,
+        "max": 200
+      }
+    },
+    "ua_rbc": {
+      "stable": {
+        "min": 0,
+        "max": 10,
+        "note": "Mild hematuria from ureteral proximity \u2014 should NOT suggest kidney stone strongly"
+      },
+      "perforated": {
+        "min": 0,
+        "max": 15
+      },
+      "septic_shock": {
+        "min": 0,
+        "max": 20
+      },
+      "coma_fail": {
+        "min": 0,
+        "max": 25
+      }
+    },
+    "ua_wbc": {
+      "stable": {
+        "min": 0,
+        "max": 15,
+        "note": "Mild pyuria from ureteral/peritoneal proximity \u2014 should NOT strongly suggest UTI"
+      },
+      "perforated": {
+        "min": 2,
+        "max": 20
+      },
+      "septic_shock": {
+        "min": 3,
+        "max": 30
+      },
+      "coma_fail": {
+        "min": 5,
+        "max": 40
+      }
+    },
+    "ua_protein": {
+      "stable": {
+        "qualitative": "Negative to Trace",
+        "note": "May be trace from fever/stress"
+      },
+      "perforated": {
+        "qualitative": "Trace to 1+"
+      },
+      "septic_shock": {
+        "qualitative": "1+ to 2+",
+        "note": "Sepsis-associated proteinuria"
+      },
+      "coma_fail": {
+        "qualitative": "2+ to 3+"
+      }
+    },
+    "ua_specific_gravity": {
+      "stable": {
+        "min": 1.015,
+        "max": 1.03,
+        "note": "Concentrated urine from poor PO intake"
+      },
+      "perforated": {
+        "min": 1.018,
+        "max": 1.03
+      },
+      "septic_shock": {
+        "min": 1.005,
+        "max": 1.03,
+        "note": "May decrease with AKI (isosthenuria)"
+      },
+      "coma_fail": {
+        "min": 1.005,
+        "max": 1.025
+      }
+    },
+    "ua_ketones": {
+      "stable": {
+        "qualitative": "Trace to 1+",
+        "note": "Starvation ketones from poor PO intake, nausea, vomiting"
+      },
+      "perforated": {
+        "qualitative": "1+ to 2+"
+      },
+      "septic_shock": {
+        "qualitative": "Negative to 2+"
+      },
+      "coma_fail": {
+        "qualitative": "Negative to 2+"
+      }
+    },
+    "ua_leukocyte_esterase": {
+      "stable": {
+        "qualitative": "Negative to Trace",
+        "note": "Should NOT be strongly positive \u2014 would suggest UTI"
+      },
+      "perforated": {
+        "qualitative": "Trace to 1+"
+      },
+      "septic_shock": {
+        "qualitative": "Trace to 2+"
+      },
+      "coma_fail": {
+        "qualitative": "1+ to 2+"
+      }
+    },
+    "ua_nitrite": {
+      "stable": {
+        "qualitative": "Negative",
+        "note": "Negative nitrite argues against UTI"
+      },
+      "perforated": {
+        "qualitative": "Negative"
+      },
+      "septic_shock": {
+        "qualitative": "Negative to Positive",
+        "note": "May be positive if concurrent UTI develops (catheter-associated)"
+      },
+      "coma_fail": {
+        "qualitative": "Negative to Positive"
+      }
+    },
+    "beta_hcg_serum": {
+      "stable": {
+        "min": 0,
+        "max": 2,
+        "note": "Negative \u2014 Marcus is male. Key DDx for abdominal pain in females."
+      },
+      "perforated": {
+        "min": 0,
+        "max": 2
+      },
+      "septic_shock": {
+        "min": 0,
+        "max": 2
+      },
+      "coma_fail": {
+        "min": 0,
+        "max": 2
+      }
+    },
+    "urine_hcg": {
+      "stable": {
+        "qualitative": "Negative"
+      },
+      "perforated": {
+        "qualitative": "Negative"
+      },
+      "septic_shock": {
+        "qualitative": "Negative"
+      },
+      "coma_fail": {
+        "qualitative": "Negative"
+      }
+    },
+    "troponin_i": {
+      "stable": {
+        "min": 0.0,
+        "max": 0.02,
+        "note": "NORMAL \u2014 important DDx finding vs ACS"
+      },
+      "perforated": {
+        "min": 0.0,
+        "max": 0.04
+      },
+      "septic_shock": {
+        "min": 0.02,
+        "max": 0.5,
+        "note": "Demand ischemia, sepsis-related myocardial depression"
+      },
+      "coma_fail": {
+        "min": 0.05,
+        "max": 2.0
+      }
+    },
+    "troponin_t": {
+      "stable": {
+        "min": 0.0,
+        "max": 9.0,
+        "note": "Normal"
+      },
+      "perforated": {
+        "min": 0.0,
+        "max": 14.0
+      },
+      "septic_shock": {
+        "min": 8.0,
+        "max": 200.0
+      },
+      "coma_fail": {
+        "min": 20.0,
+        "max": 500.0
+      }
+    },
+    "blood_culture": {
+      "stable": {
+        "qualitative": "No growth",
+        "note": "Bacteremia uncommon in uncomplicated appendicitis"
+      },
+      "perforated": {
+        "qualitative": "No growth to occasional gram-negative rod",
+        "note": "E. coli, Bacteroides fragilis possible with perforation"
+      },
+      "septic_shock": {
+        "qualitative": "Gram-negative bacteremia (E. coli, Klebsiella, Bacteroides) \u2014 pending 48-120h",
+        "note": "Positive in ~30-50% of septic patients"
+      },
+      "coma_fail": {
+        "qualitative": "Polymicrobial gram-negative/anaerobe bacteremia \u2014 pending 48-120h"
+      }
+    },
+    "urine_culture": {
+      "stable": {
+        "qualitative": "No growth",
+        "note": "Clean catch \u2014 no UTI"
+      },
+      "perforated": {
+        "qualitative": "No growth"
+      },
+      "septic_shock": {
+        "qualitative": "No growth or contaminant"
+      },
+      "coma_fail": {
+        "qualitative": "No growth or contaminant"
+      }
+    }
+  }
+}

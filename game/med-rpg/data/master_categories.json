@@ -1,0 +1,485 @@
+{
+  "version": "1.0",
+  "description": "Master list of all classification categories used in MedRPG. This is the single source of truth for all input classification. Every player input gets classified into one of these categories or into irrelevant.",
+
+  "categories": {
+
+    "history": {
+      "description": "Categories for history-taking interactions via Icon 1",
+      "ap_cost": 1,
+      "note": "All history questions cost 1 AP each, even repeats",
+      "items": [
+        {
+          "id": "overview",
+          "name": "Overview / Chief Complaint",
+          "description": "Player asks what is going on, why patient came in, chief complaint, general overview of symptoms",
+          "examples": [
+            "what's going on",
+            "why did you come in today",
+            "what brings you in",
+            "tell me what happened",
+            "what's wrong",
+            "how can I help you"
+          ]
+        },
+        {
+          "id": "symptom_drill_pain",
+          "name": "Pain — Detailed",
+          "description": "Any detailed question about the pain — location, character, severity, timing, onset, duration, radiation, aggravating factors, relieving factors, quality",
+          "examples": [
+            "where is your pain",
+            "what does the pain feel like",
+            "how bad is the pain",
+            "when did the pain start",
+            "what makes the pain worse",
+            "what makes the pain better",
+            "does the pain go anywhere else",
+            "is the pain constant or does it come and go",
+            "on a scale of 1 to 10 how bad is it",
+            "is it sharp or dull",
+            "what were you doing when it started"
+          ]
+        },
+        {
+          "id": "symptom_drill_nausea",
+          "name": "Nausea / Vomiting — Detailed",
+          "description": "Any detailed question about nausea or vomiting",
+          "examples": [
+            "do you feel nauseous",
+            "have you vomited",
+            "are you sick to your stomach",
+            "when did the nausea start",
+            "how many times did you vomit"
+          ]
+        },
+        {
+          "id": "symptom_drill_fever",
+          "name": "Fever / Chills — Detailed",
+          "description": "Any detailed question about fever, chills, or temperature",
+          "examples": [
+            "do you have a fever",
+            "have you felt warm",
+            "do you have chills",
+            "did you take your temperature",
+            "when did the fever start"
+          ]
+        },
+        {
+          "id": "symptom_drill_appetite",
+          "name": "Appetite / Eating — Detailed",
+          "description": "Any detailed question about appetite, eating, food intake",
+          "examples": [
+            "have you been able to eat",
+            "do you have an appetite",
+            "when did you last eat",
+            "have you lost your appetite",
+            "does eating make it worse"
+          ]
+        },
+        {
+          "id": "symptom_drill_bowel",
+          "name": "Bowel Habits — Detailed",
+          "description": "Any detailed question about bowel movements, constipation, diarrhea, rectal symptoms",
+          "examples": [
+            "have you had a bowel movement",
+            "are you constipated",
+            "do you have diarrhea",
+            "any blood in your stool",
+            "when was your last bowel movement"
+          ]
+        },
+        {
+          "id": "symptom_drill_urinary",
+          "name": "Urinary Symptoms — Detailed",
+          "description": "Any detailed question about urination, urinary symptoms",
+          "examples": [
+            "any pain when you urinate",
+            "are you urinating normally",
+            "any blood in your urine",
+            "do you have to urinate more than usual",
+            "any burning with urination"
+          ]
+        },
+        {
+          "id": "review_of_systems",
+          "name": "Review of Systems",
+          "description": "Player asks if there are any other symptoms, anything else going on, general ROS sweep",
+          "examples": [
+            "any other symptoms",
+            "is there anything else going on",
+            "anything else bothering you",
+            "any chest pain or shortness of breath",
+            "any other complaints"
+          ]
+        },
+        {
+          "id": "pmh_surgical",
+          "name": "Past Medical / Surgical History",
+          "description": "Questions about past medical conditions, hospitalizations, surgeries, operations",
+          "examples": [
+            "do you have any medical conditions",
+            "have you had any surgeries",
+            "have you ever been hospitalized",
+            "any past medical history",
+            "have you had any operations before",
+            "do you have any chronic conditions"
+          ]
+        },
+        {
+          "id": "medications",
+          "name": "Medications",
+          "description": "Questions about current medications, prescriptions, supplements, OTC medications",
+          "examples": [
+            "are you taking any medications",
+            "what medications do you take",
+            "any prescriptions",
+            "do you take any supplements",
+            "any over the counter medications"
+          ]
+        },
+        {
+          "id": "allergies",
+          "name": "Allergies",
+          "description": "Questions about drug allergies, medication reactions, environmental allergies",
+          "examples": [
+            "do you have any allergies",
+            "any drug allergies",
+            "have you ever had a reaction to a medication",
+            "are you allergic to anything",
+            "any medication sensitivities"
+          ]
+        },
+        {
+          "id": "social_travel_exposure",
+          "name": "Social / Travel / Exposure History",
+          "description": "Questions about social history, occupation, living situation, travel, animal exposure, sick contacts, smoking, alcohol, drug use",
+          "examples": [
+            "do you smoke",
+            "do you drink alcohol",
+            "any drug use",
+            "have you traveled recently",
+            "any sick contacts",
+            "any animal exposures",
+            "what do you do for work",
+            "where do you live",
+            "do you use any recreational drugs"
+          ]
+        },
+        {
+          "id": "family_history",
+          "name": "Family History",
+          "description": "Questions about family medical history, conditions that run in the family",
+          "examples": [
+            "any family history of medical conditions",
+            "does anything run in your family",
+            "any family history of cancer",
+            "how is your family's health",
+            "any genetic conditions in the family"
+          ]
+        },
+        {
+          "id": "sexual_history",
+          "name": "Sexual History",
+          "description": "Questions about sexual history, partners, activity, STIs, contraception. BLOCKED in family friendly mode.",
+          "family_friendly_blocked": true,
+          "examples": [
+            "are you sexually active",
+            "any chance of pregnancy",
+            "any STIs",
+            "how many sexual partners",
+            "any unprotected sex"
+          ]
+        }
+      ]
+    },
+
+    "physical_exam": {
+      "description": "Categories for physical examination interactions via Icon 3",
+      "ap_cost": 2,
+      "note": "Free on repeat — exam_systems_done and exam_maneuvers_done tracked in GDScript",
+      "items": [
+        {
+          "id": "exam_general",
+          "name": "General Appearance",
+          "description": "General look at the patient, overall appearance, distress level",
+          "examples": [
+            "how does the patient look",
+            "general appearance",
+            "what is the patient's general condition",
+            "how is he doing overall"
+          ]
+        },
+        {
+          "id": "exam_abdomen",
+          "name": "Abdominal Examination",
+          "description": "General abdominal exam including inspection, auscultation, palpation",
+          "examples": [
+            "examine the abdomen",
+            "abdominal exam",
+            "palpate the abdomen",
+            "listen to bowel sounds",
+            "check the belly"
+          ]
+        },
+        {
+          "id": "exam_cardiovascular",
+          "name": "Cardiovascular Examination",
+          "description": "Heart exam, pulse, capillary refill",
+          "examples": [
+            "listen to the heart",
+            "cardiovascular exam",
+            "check the pulse",
+            "heart exam",
+            "check capillary refill"
+          ]
+        },
+        {
+          "id": "exam_respiratory",
+          "name": "Respiratory Examination",
+          "description": "Lung exam, breathing assessment",
+          "examples": [
+            "listen to the lungs",
+            "respiratory exam",
+            "check breathing",
+            "lung exam",
+            "auscultate the chest"
+          ]
+        },
+        {
+          "id": "exam_neurological",
+          "name": "Neurological Examination",
+          "description": "Neuro exam, mental status, reflexes",
+          "examples": [
+            "neuro exam",
+            "check mental status",
+            "neurological examination",
+            "check reflexes",
+            "assess alertness"
+          ]
+        },
+        {
+          "id": "exam_skin",
+          "name": "Skin Examination",
+          "description": "Skin assessment, color, temperature, rashes",
+          "examples": [
+            "check the skin",
+            "skin exam",
+            "look at skin color",
+            "check for rashes",
+            "assess skin temperature"
+          ]
+        },
+        {
+          "id": "exam_heent",
+          "name": "HEENT Examination",
+          "description": "Head, eyes, ears, nose, throat examination",
+          "examples": [
+            "HEENT exam",
+            "check the throat",
+            "look in the ears",
+            "examine the eyes",
+            "head and neck exam"
+          ]
+        },
+        {
+          "id": "exam_musculoskeletal",
+          "name": "Musculoskeletal Examination",
+          "description": "Joint, muscle, bone examination",
+          "examples": [
+            "musculoskeletal exam",
+            "check the joints",
+            "assess range of motion",
+            "muscle exam"
+          ]
+        },
+        {
+          "id": "exam_genitourinary",
+          "name": "Genitourinary Examination",
+          "description": "GU exam — clinical response only, no patient dialogue",
+          "sensitive": true,
+          "examples": [
+            "genitourinary exam",
+            "check the testicles",
+            "pelvic exam",
+            "examine genitalia"
+          ]
+        },
+        {
+          "id": "exam_rectal",
+          "name": "Rectal Examination",
+          "description": "Rectal exam — clinical response only, no patient dialogue",
+          "sensitive": true,
+          "examples": [
+            "rectal exam",
+            "digital rectal exam",
+            "DRE",
+            "check rectum"
+          ]
+        },
+        {
+          "id": "exam_breast",
+          "name": "Breast Examination",
+          "description": "Breast exam — clinical response only, no patient dialogue",
+          "sensitive": true,
+          "examples": [
+            "breast exam",
+            "examine the breasts",
+            "check for breast masses"
+          ]
+        },
+        {
+          "id": "maneuver_mcburneys",
+          "name": "McBurney's Point",
+          "description": "Palpation at McBurney's point for appendiceal tenderness",
+          "examples": [
+            "check McBurney's point",
+            "McBurney's sign",
+            "press on McBurney's point",
+            "palpate right lower quadrant at McBurney's"
+          ]
+        },
+        {
+          "id": "maneuver_rovsing",
+          "name": "Rovsing's Sign",
+          "description": "Press left lower quadrant to elicit right lower quadrant pain",
+          "examples": [
+            "check Rovsing's sign",
+            "Rovsing's sign",
+            "press the left side",
+            "check for referred RLQ pain"
+          ]
+        },
+        {
+          "id": "maneuver_psoas",
+          "name": "Psoas Sign",
+          "description": "Extend right hip to elicit RLQ pain",
+          "examples": [
+            "psoas sign",
+            "check psoas sign",
+            "extend the right hip",
+            "iliopsoas test"
+          ]
+        },
+        {
+          "id": "maneuver_obturator",
+          "name": "Obturator Sign",
+          "description": "Internally rotate right hip to elicit RLQ pain",
+          "examples": [
+            "obturator sign",
+            "check obturator sign",
+            "internally rotate right hip",
+            "obturator test"
+          ]
+        },
+        {
+          "id": "maneuver_rebound",
+          "name": "Rebound Tenderness",
+          "description": "Release pressure to elicit rebound tenderness",
+          "examples": [
+            "check for rebound tenderness",
+            "rebound tenderness",
+            "release pressure suddenly",
+            "Blumberg's sign",
+            "peritoneal signs"
+          ]
+        },
+        {
+          "id": "maneuver_murphy",
+          "name": "Murphy's Sign",
+          "description": "Palpate right upper quadrant during deep inspiration",
+          "examples": [
+            "Murphy's sign",
+            "check Murphy's sign",
+            "palpate right upper quadrant during inspiration"
+          ]
+        },
+        {
+          "id": "maneuver_other",
+          "name": "Other Specific Maneuver",
+          "description": "Any other named clinical exam maneuver not listed above",
+          "examples": [
+            "check for Carnett's sign",
+            "perform heel drop test",
+            "check for Dunphy's sign"
+          ]
+        }
+      ]
+    },
+
+    "ask_meddy": {
+      "description": "Categories for Ask MEDDY interactions",
+      "items": [
+        {
+          "id": "meddy_general_knowledge",
+          "name": "General Medical Knowledge",
+          "ap_cost": 2,
+          "description": "General medical questions not specific to current case",
+          "examples": [
+            "what is Rovsing's sign",
+            "what does rebound tenderness mean",
+            "what is the appendix",
+            "what causes right lower quadrant pain"
+          ]
+        },
+        {
+          "id": "meddy_differential",
+          "name": "Differential Diagnosis",
+          "ap_cost": 4,
+          "description": "Ask for differential based on findings so far. Uses conversation state to generate relevant differential.",
+          "examples": [
+            "what could be causing these symptoms",
+            "what is the differential diagnosis",
+            "what are we dealing with here",
+            "what conditions could cause this"
+          ]
+        },
+        {
+          "id": "meddy_condition_tests",
+          "name": "Condition — Diagnostic Tests",
+          "ap_cost": 2,
+          "description": "What tests are used to diagnose a specific condition",
+          "examples": [
+            "what tests diagnose appendicitis",
+            "how do you diagnose appendicitis",
+            "what workup should I do for appendicitis"
+          ]
+        },
+        {
+          "id": "meddy_condition_treatment",
+          "name": "Condition — Treatment",
+          "ap_cost": 2,
+          "description": "What is the treatment for a specific condition",
+          "examples": [
+            "what is the treatment for appendicitis",
+            "how do you treat appendicitis",
+            "what do you do for appendicitis"
+          ]
+        },
+        {
+          "id": "meddy_finding_significance",
+          "name": "Finding Significance",
+          "ap_cost": 2,
+          "description": "What does a specific finding mean clinically",
+          "examples": [
+            "what does rebound tenderness tell us",
+            "what is the significance of a positive Rovsing's sign",
+            "what does elevated WBC mean",
+            "why does the pain migrate from the belly button"
+          ]
+        }
+      ]
+    },
+
+    "irrelevant": {
+      "description": "Anything not clinically relevant to the encounter. Patient deflects warmly.",
+      "ap_cost": 0,
+      "examples": [
+        "what's the weather like",
+        "do you like sports",
+        "what is the meaning of life",
+        "sup",
+        "tell me a joke"
+      ]
+    }
+  }
+}

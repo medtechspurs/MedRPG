@@ -1,5 +1,7 @@
 {
-  "category": "Burnout Badges",
+  "schema_version": "1.0",
+    
+    "category": "Burnout Badges",
   "category_id": "burnout_badges",
   "description": "Negative modifier badges that hinder the player during clinical encounters. Displayed as red/orange worn-looking ovals on the badge reel UI.",
   "trigger_rules": {

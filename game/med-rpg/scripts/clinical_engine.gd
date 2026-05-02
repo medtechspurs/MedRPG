@@ -47,6 +47,15 @@ var active_boost_badges: Array = []
 var active_burnout_badges: Array = []
 var dispenser_used: bool = false
 
+# --- Turn Counter ---
+var turn_count: int = 0
+
+# --- Time Counter ---
+var elapsed_seconds: float = 0.0
+var time_limit_seconds: float = 36000.0  # 10 hours — effectively off for now
+var time_limit_active: bool = false       # set true by timed badges/modes
+var clock_timer: Timer
+
 # --- Condition Data ---
 var condition_data: Dictionary = {}
 
@@ -81,6 +90,14 @@ var pending_exam_cost: int = 0
 var pending_new_exam_systems: Array = []
 var pending_new_exam_maneuvers: Array = []
 
+# --- Labs Data ---
+var master_labs_data: Dictionary = {}
+var condition_labs_data: Dictionary = {}
+var encounter_lab_results: Array = []
+
+# --- Labs Popup ---
+var labs_popup: Control = null
+
 # ============================================================
 func _ready():
 	if DEV_MODE_LLM:
@@ -88,9 +105,18 @@ func _ready():
 	if DEV_MODE_SKIP_CONFIRM:
 		print("WARNING: AP confirmation disabled — auto-run mode")
 	load_condition_data()
+	# Start the clock
+	clock_timer = Timer.new()
+	clock_timer.wait_time = 1.0
+	clock_timer.autostart = true
+	clock_timer.timeout.connect(_on_clock_tick)
+	add_child(clock_timer)
 	update_hud()
 	update_monitor()
-
+# Wire labs popup
+	labs_popup = $LabsPopup
+	labs_popup.order_confirmed.connect(_on_labs_order_confirmed)
+	labs_popup.popup_closed.connect(_on_labs_popup_closed)
 # ============================================================
 func load_condition_data():
 	var file = FileAccess.open("res://data/conditions/appendicitis.json", FileAccess.READ)
@@ -102,6 +128,26 @@ func load_condition_data():
 		print("Condition data loaded OK")
 	else:
 		print("ERROR: Could not load appendicitis.json")
+	# Load master labs
+	var labs_file = FileAccess.open("res://data/labs/master_labs.json", FileAccess.READ)
+	if labs_file:
+		var labs_json := JSON.new()
+		labs_json.parse(labs_file.get_as_text())
+		master_labs_data = labs_json.get_data()
+		labs_file.close()
+		print("master_labs.json loaded OK")
+	else:
+		print("ERROR: Could not load master_labs.json")
+
+	var cond_labs_file = FileAccess.open("res://data/conditions/appendicitis_labs.json", FileAccess.READ)
+	if cond_labs_file:
+		var cond_json := JSON.new()
+		cond_json.parse(cond_labs_file.get_as_text())
+		condition_labs_data = cond_json.get_data()
+		cond_labs_file.close()
+		print("appendicitis_labs.json loaded OK")
+	else:
+		print("ERROR: Could not load appendicitis_labs.json")
 		
 	var prompt_file = FileAccess.open("res://data/conditions/appendicitis_system_prompts.json", FileAccess.READ)
 	if prompt_file:
@@ -115,11 +161,41 @@ func load_condition_data():
 
 # ============================================================
 func update_hud():
-	# Update AP, bonus, harm displays
+	# Update AP, bonus, harm, turn, time displays
 	var hud = $HUD
 	hud.get_node("APBar/APValue").text = str(ap_current)
 	hud.get_node("BonusPoints/BonusValue").text = str(bonus_points)
 	hud.get_node("HarmPoints/HarmValue").text = str(harm_points)
+	hud.get_node("TurnCounter/TurnValue").text = str(turn_count)
+	hud.get_node("TimeCounter/TimeValue").text = format_time(elapsed_seconds)
+
+# ============================================================
+func increment_turn() -> void:
+	turn_count += 1
+	update_hud()
+	check_burnout_triggers()
+
+# ============================================================
+func _on_clock_tick() -> void:
+	elapsed_seconds += 1.0
+	update_hud()
+	if time_limit_active and elapsed_seconds >= time_limit_seconds:
+		on_time_limit_reached()
+
+# ============================================================
+func on_time_limit_reached() -> void:
+	clock_timer.stop()
+	print("Time limit reached!")
+	# TODO: same Mega Hospital outcome as 0 AP
+	on_insufficient_ap()
+
+# ============================================================
+func format_time(seconds: float) -> String:
+	var total: int = int(seconds)
+	var h: int = total / 3600
+	var m: int = (total % 3600) / 60
+	var s: int = total % 60
+	return "%02d:%02d:%02d" % [h, m, s]
 
 # ============================================================
 func spend_ap(amount: int) -> bool:
@@ -127,6 +203,7 @@ func spend_ap(amount: int) -> bool:
 	var actual_cost = apply_badge_cost_modifiers(amount)
 	if ap_current >= actual_cost:
 		ap_current -= actual_cost
+		increment_turn()
 		update_hud()
 		check_state_transitions()
 		check_burnout_triggers()
@@ -183,6 +260,7 @@ func transition_to_state(new_state: PatientState):
 	current_state = new_state
 	print("Patient state changed to: " + PatientState.keys()[new_state])
 	update_monitor()
+	labs_popup.invalidate_result_cache()
 	# TODO: trigger MEDDY alarmed popup
 	# TODO: update patient sprite
 
@@ -192,6 +270,8 @@ func check_burnout_triggers():
 		if harm_points >= 5:
 			trigger_burnout_badge()
 		elif ap_current <= 50:
+			trigger_burnout_badge()
+		elif turn_count >= 10:
 			trigger_burnout_badge()
 
 # ============================================================
@@ -433,9 +513,17 @@ func _on_exam_btn_pressed() -> void:
 	$InputArea/InputPanel/InputRow/InputField.grab_focus()
 
 func _on_labs_btn_pressed() -> void:
-	current_mode = "labs"
-	$InputArea/InputPanel/InputRow/InputField.placeholder_text = "Order a lab test..."
-	$InputArea/InputPanel/InputRow/InputField.grab_focus()
+	if master_labs_data.is_empty():
+		print("ERROR: master_labs_data not loaded")
+		return
+	$InputArea.visible = false
+	labs_popup.open(
+		master_labs_data,
+		condition_labs_data,
+		_get_state_name(),
+		elapsed_seconds,
+		encounter_lab_results
+	)
 
 func _on_imaging_btn_pressed() -> void:
 	current_mode = "imaging"
@@ -542,6 +630,7 @@ func handle_history_cost_response(response: String) -> void:
 	
 	# Check if unrelated
 	if data.get("is_unrelated", false):
+		increment_turn()
 		send_history_to_patient(pending_history_input)
 		return
 	
@@ -553,6 +642,7 @@ func handle_history_cost_response(response: String) -> void:
 	
 	# If cost is 0 — skip popup and go straight to patient response
 	if ap_cost == 0:
+		increment_turn()
 		update_history_tracking(new_domains, new_symptoms)
 		send_history_to_patient(pending_history_input)
 		return
@@ -615,6 +705,7 @@ func handle_exam_cost_response(response: String) -> void:
 	pending_new_exam_maneuvers = new_maneuvers
 	
 	if ap_cost == 0:
+		increment_turn()
 		update_exam_tracking(new_systems, new_maneuvers)
 		send_exam_to_patient(pending_exam_input)
 		return
@@ -635,3 +726,20 @@ func update_exam_tracking(new_systems: Array, new_maneuvers: Array) -> void:
 func send_exam_to_patient(input: String) -> void:
 	var system = system_prompts["system_prompts"]["physical_exam"]["prompt"]
 	send_to_llm(input, system)
+
+func _get_state_name() -> String:
+	match current_state:
+		PatientState.STABLE:       return "stable"
+		PatientState.PERFORATED:   return "perforated"
+		PatientState.SEPTIC_SHOCK: return "septic_shock"
+		PatientState.COMA_FAIL:    return "coma_fail"
+	return "stable"
+
+func _on_labs_order_confirmed(new_results: Array, total_ap: int) -> void:
+	spend_ap(total_ap)
+	encounter_lab_results.append_array(new_results)
+	increment_turn()
+	print("Labs ordered: %d results, %d AP" % [new_results.size(), total_ap])
+
+func _on_labs_popup_closed() -> void:
+	$InputArea.visible = true

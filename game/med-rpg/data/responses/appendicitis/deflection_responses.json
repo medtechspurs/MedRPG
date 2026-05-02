@@ -1,1 +1,25 @@
-{}
+{
+  "schema_version": "1.0",
+    
+    "condition_id": "appendicitis",
+  "description": "Responses used when player input is classified as irrelevant or off-topic. Patient redirects doctor warmly back to clinical situation. Rotate randomly. 0 AP cost.",
+
+  "deflection_responses": [
+    "Ha, I appreciate that, but honestly I'm really focused on this pain right now, doc.",
+    "I'm not sure what you mean — can we maybe focus on what's going on with me?",
+    "That's... an interesting question. But this pain is really worrying me.",
+    "I think we might be getting a little off track here — is everything okay?",
+    "Doc, I trust you, but I'm in a lot of pain. Can we stay focused?",
+    "I mean... sure, but can we get back to figuring out what's wrong with me?",
+    "Haha, okay... but seriously my stomach is killing me right now.",
+    "I don't really know how to answer that. Can we talk about why I came in?",
+    "That's a little random, doc. I'm kind of freaking out about this pain.",
+    "I appreciate the conversation but I'm really not feeling great right now."
+  ],
+
+  "post_youtock_deflection": [
+    "I hear you doc, but I've done a lot of research on this and I think we should stay focused on what I came in for.",
+    "That's interesting but honestly I'm more concerned about what I read online about my symptoms.",
+    "Can we get back to my situation? I have a lot of questions based on my research."
+  ]
+}

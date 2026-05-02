@@ -1,0 +1,8159 @@
+{
+  "schema_version": "1.0",
+  "description": "Master lab list for MedRPG. Comprehensive acute care lab database.",
+  "architecture_notes": {
+    "panel_grouping": "If player orders any component lab of a panel, the entire panel is returned. E.g. ordering sodium returns full BMP.",
+    "repeat_ordering": "Player warned if panel already ordered this encounter. Can re-order same AP cost to get updated results (runs whole panel again).",
+    "ap_costs": "Each panel = 1 AP except CMP = 2 AP (BMP + liver panel). Standalone labs = 1 AP each.",
+    "bilirubin_panel_note": "Ordering bilirubin panel triggers liver panel result automatically.",
+    "display_type_note": "qualitative: use reference_ranges[age_group].qualitative. numeric: use min/max with display_decimals.",
+    "pediatric_age_groups": {
+      "cbc_labs": [
+        "adult",
+        "ped_6yr_plus",
+        "ped_1_5yr",
+        "ped_6_12mo",
+        "ped_3_6mo",
+        "ped_1_3mo",
+        "ped_1_4wk",
+        "ped_0_1wk"
+      ],
+      "all_other_labs": [
+        "adult",
+        "ped_1yr_plus",
+        "ped_1mo_1yr",
+        "ped_0_1mo"
+      ],
+      "note": "CBC uses granular tiers. Bilirubin neonatal ranges deferred (follow AAP). Puberty/hormone ranges deferred."
+    },
+    "extensibility": "Add labs to labs array, panels to panels array, new ui_categories as needed."
+  },
+  "tag_taxonomy": {
+    "organ_system": [
+      "hematologic",
+      "hepatic",
+      "renal",
+      "cardiac",
+      "pulmonary",
+      "endocrine",
+      "gastrointestinal",
+      "neurologic",
+      "musculoskeletal",
+      "reproductive",
+      "immunologic",
+      "rheumatologic",
+      "pancreatic"
+    ],
+    "lab_category": [
+      "chemistry",
+      "hematology",
+      "coagulation",
+      "inflammatory",
+      "metabolic",
+      "hormonal",
+      "toxicology",
+      "urinalysis",
+      "microbiology",
+      "blood_gas",
+      "rheumatologic",
+      "cardiac_marker",
+      "liver",
+      "thyroid",
+      "lipid",
+      "nutritional",
+      "blood_bank"
+    ],
+    "clinical_use": [
+      "screening",
+      "diagnosis",
+      "monitoring",
+      "preoperative",
+      "emergency"
+    ],
+    "condition_association": [
+      "appendicitis",
+      "sepsis",
+      "anemia",
+      "infection",
+      "liver_disease",
+      "renal_failure",
+      "cardiac_disease",
+      "coagulopathy",
+      "autoimmune",
+      "thyroid_disease",
+      "malnutrition",
+      "dehydration",
+      "electrolyte_imbalance",
+      "pancreatitis",
+      "cholecystitis",
+      "ectopic_pregnancy",
+      "pulmonary_embolism",
+      "dvt",
+      "pneumonia",
+      "gi_bleed",
+      "bowel_obstruction",
+      "dic",
+      "acidosis",
+      "alkalosis",
+      "urinary_tract_infection",
+      "kidney_stone",
+      "hepatitis",
+      "rheumatoid_arthritis",
+      "lupus",
+      "vasculitis"
+    ]
+  },
+  "ui_categories": [
+    {
+      "id": "general",
+      "name": "General / Screening"
+    },
+    {
+      "id": "hematology",
+      "name": "Hematology"
+    },
+    {
+      "id": "chemistry",
+      "name": "Chemistry / Metabolic"
+    },
+    {
+      "id": "electrolytes",
+      "name": "Electrolytes"
+    },
+    {
+      "id": "renal",
+      "name": "Renal / Kidney"
+    },
+    {
+      "id": "liver",
+      "name": "Liver / Hepatic"
+    },
+    {
+      "id": "cardiac",
+      "name": "Cardiac"
+    },
+    {
+      "id": "inflammatory",
+      "name": "Inflammatory / Infection"
+    },
+    {
+      "id": "coagulation",
+      "name": "Coagulation"
+    },
+    {
+      "id": "endocrine",
+      "name": "Endocrine / Hormonal"
+    },
+    {
+      "id": "thyroid",
+      "name": "Thyroid"
+    },
+    {
+      "id": "blood_gas",
+      "name": "Blood Gas / Pulmonary"
+    },
+    {
+      "id": "rheumatologic",
+      "name": "Rheumatologic / Autoimmune"
+    },
+    {
+      "id": "toxicology",
+      "name": "Toxicology / Drug Levels"
+    },
+    {
+      "id": "urinalysis",
+      "name": "Urinalysis"
+    },
+    {
+      "id": "microbiology",
+      "name": "Microbiology / Cultures"
+    },
+    {
+      "id": "nutritional",
+      "name": "Nutritional / Vitamins"
+    },
+    {
+      "id": "lipids",
+      "name": "Lipids"
+    },
+    {
+      "id": "iron",
+      "name": "Iron Studies"
+    },
+    {
+      "id": "blood_bank",
+      "name": "Blood Bank"
+    },
+    {
+      "id": "pregnancy",
+      "name": "Pregnancy"
+    },
+    {
+      "id": "pancreatic",
+      "name": "Pancreatic"
+    },
+    {
+      "id": "hepatitis",
+      "name": "Hepatitis / Viral"
+    }
+  ],
+  "panels": [
+    {
+      "id": "bmp",
+      "name": "Basic Metabolic Panel",
+      "aliases": [
+        "BMP",
+        "basic metabolic",
+        "basic metabolic panel",
+        "chem 7",
+        "chem7",
+        "chem-7",
+        "basic chemistry"
+      ],
+      "ap_cost": 1,
+      "component_lab_ids": [
+        "sodium",
+        "potassium",
+        "chloride",
+        "co2_bicarb",
+        "bun",
+        "creatinine",
+        "glucose",
+        "calcium"
+      ],
+      "ui_categories": [
+        "chemistry",
+        "electrolytes",
+        "renal",
+        "general"
+      ],
+      "tags": [
+        "chemistry",
+        "metabolic",
+        "renal",
+        "electrolytes",
+        "dehydration",
+        "renal_failure",
+        "electrolyte_imbalance",
+        "sepsis",
+        "appendicitis"
+      ]
+    },
+    {
+      "id": "cmp",
+      "name": "Comprehensive Metabolic Panel",
+      "aliases": [
+        "CMP",
+        "comprehensive metabolic",
+        "comprehensive metabolic panel",
+        "chem 14",
+        "chem14",
+        "full metabolic"
+      ],
+      "ap_cost": 2,
+      "component_lab_ids": [
+        "sodium",
+        "potassium",
+        "chloride",
+        "co2_bicarb",
+        "bun",
+        "creatinine",
+        "glucose",
+        "calcium",
+        "alt",
+        "ast",
+        "alp",
+        "total_bilirubin",
+        "direct_bilirubin",
+        "total_protein",
+        "albumin",
+        "ggt"
+      ],
+      "ui_categories": [
+        "chemistry",
+        "liver",
+        "renal",
+        "electrolytes",
+        "general"
+      ],
+      "tags": [
+        "chemistry",
+        "metabolic",
+        "hepatic",
+        "renal",
+        "electrolytes",
+        "screening",
+        "liver_disease",
+        "renal_failure"
+      ]
+    },
+    {
+      "id": "liver_panel",
+      "name": "Liver Function Tests",
+      "aliases": [
+        "LFTs",
+        "liver function tests",
+        "liver panel",
+        "hepatic panel",
+        "LFT",
+        "liver enzymes"
+      ],
+      "ap_cost": 1,
+      "component_lab_ids": [
+        "alt",
+        "ast",
+        "alp",
+        "total_bilirubin",
+        "direct_bilirubin",
+        "total_protein",
+        "albumin",
+        "ggt"
+      ],
+      "ui_categories": [
+        "liver",
+        "chemistry",
+        "general"
+      ],
+      "tags": [
+        "hepatic",
+        "liver",
+        "chemistry",
+        "screening",
+        "liver_disease",
+        "cholecystitis",
+        "hepatitis",
+        "appendicitis"
+      ]
+    },
+    {
+      "id": "cbc",
+      "name": "Complete Blood Count with Differential",
+      "aliases": [
+        "CBC",
+        "CBC with diff",
+        "CBC with differential",
+        "complete blood count",
+        "blood count",
+        "full blood count",
+        "FBC"
+      ],
+      "ap_cost": 1,
+      "component_lab_ids": [
+        "wbc",
+        "rbc",
+        "hemoglobin",
+        "hematocrit",
+        "mcv",
+        "mch",
+        "mchc",
+        "rdw",
+        "platelets",
+        "neutrophils_pct",
+        "lymphocytes_pct",
+        "monocytes_pct",
+        "eosinophils_pct",
+        "basophils_pct",
+        "anc",
+        "alc",
+        "aec"
+      ],
+      "ui_categories": [
+        "hematology",
+        "general"
+      ],
+      "tags": [
+        "hematologic",
+        "hematology",
+        "screening",
+        "anemia",
+        "infection",
+        "sepsis",
+        "appendicitis",
+        "neutropenia",
+        "thrombocytopenia",
+        "leukocytosis"
+      ]
+    },
+    {
+      "id": "coagulation",
+      "name": "Coagulation Panel",
+      "aliases": [
+        "coag panel",
+        "coagulation panel",
+        "coags",
+        "PT/PTT",
+        "PT PTT INR",
+        "clotting studies",
+        "coagulation studies"
+      ],
+      "ap_cost": 1,
+      "component_lab_ids": [
+        "pt",
+        "inr",
+        "ptt",
+        "fibrinogen"
+      ],
+      "ui_categories": [
+        "coagulation",
+        "hematology",
+        "general"
+      ],
+      "tags": [
+        "coagulation",
+        "hematologic",
+        "preoperative",
+        "coagulopathy",
+        "bleeding",
+        "dic",
+        "sepsis",
+        "liver_disease"
+      ]
+    },
+    {
+      "id": "dic_panel",
+      "name": "DIC Panel",
+      "aliases": [
+        "DIC panel",
+        "disseminated intravascular coagulation",
+        "DIC workup",
+        "DIC screen"
+      ],
+      "ap_cost": 1,
+      "component_lab_ids": [
+        "pt",
+        "inr",
+        "ptt",
+        "fibrinogen",
+        "d_dimer",
+        "thrombin_time"
+      ],
+      "ui_categories": [
+        "coagulation",
+        "hematology",
+        "inflammatory"
+      ],
+      "tags": [
+        "coagulation",
+        "hematologic",
+        "emergency",
+        "dic",
+        "coagulopathy",
+        "bleeding",
+        "sepsis",
+        "thrombocytopenia"
+      ]
+    },
+    {
+      "id": "abg",
+      "name": "Arterial Blood Gas",
+      "aliases": [
+        "ABG",
+        "arterial blood gas",
+        "arterial gas",
+        "blood gas arterial"
+      ],
+      "ap_cost": 1,
+      "component_lab_ids": [
+        "abg_ph",
+        "abg_pco2",
+        "abg_po2",
+        "abg_hco3",
+        "abg_base_excess",
+        "abg_sao2"
+      ],
+      "ui_categories": [
+        "blood_gas",
+        "general"
+      ],
+      "tags": [
+        "pulmonary",
+        "blood_gas",
+        "emergency",
+        "acidosis",
+        "alkalosis",
+        "sepsis",
+        "respiratory_failure",
+        "ventilation"
+      ]
+    },
+    {
+      "id": "vbg",
+      "name": "Venous Blood Gas",
+      "aliases": [
+        "VBG",
+        "venous blood gas",
+        "venous gas",
+        "blood gas venous"
+      ],
+      "ap_cost": 1,
+      "component_lab_ids": [
+        "vbg_ph",
+        "vbg_pco2",
+        "vbg_po2",
+        "vbg_hco3",
+        "vbg_base_excess",
+        "lactate"
+      ],
+      "ui_categories": [
+        "blood_gas",
+        "general"
+      ],
+      "tags": [
+        "pulmonary",
+        "blood_gas",
+        "emergency",
+        "acidosis",
+        "alkalosis",
+        "sepsis",
+        "lactate",
+        "ischemia"
+      ]
+    },
+    {
+      "id": "cooximetry",
+      "name": "Co-oximetry Panel",
+      "aliases": [
+        "co-oximetry",
+        "cooximetry",
+        "co-ox",
+        "methemoglobin panel",
+        "carboxyhemoglobin panel",
+        "oximetry panel"
+      ],
+      "ap_cost": 1,
+      "component_lab_ids": [
+        "sao2_measured",
+        "methemoglobin",
+        "carboxyhemoglobin",
+        "oxyhemoglobin",
+        "deoxyhemoglobin"
+      ],
+      "ui_categories": [
+        "blood_gas",
+        "hematology"
+      ],
+      "tags": [
+        "pulmonary",
+        "hematologic",
+        "blood_gas",
+        "emergency",
+        "carbon_monoxide_poisoning",
+        "methemoglobinemia"
+      ]
+    },
+    {
+      "id": "lipid_panel",
+      "name": "Lipid Panel",
+      "aliases": [
+        "lipid panel",
+        "lipids",
+        "cholesterol panel",
+        "fasting lipid panel",
+        "lipid profile"
+      ],
+      "ap_cost": 1,
+      "component_lab_ids": [
+        "total_cholesterol",
+        "ldl",
+        "hdl",
+        "triglycerides",
+        "non_hdl_cholesterol"
+      ],
+      "ui_categories": [
+        "lipids",
+        "chemistry",
+        "general"
+      ],
+      "tags": [
+        "lipid",
+        "metabolic",
+        "cardiac",
+        "screening",
+        "cardiac_disease",
+        "atherosclerosis"
+      ]
+    },
+    {
+      "id": "iron_panel",
+      "name": "Iron Studies",
+      "aliases": [
+        "iron panel",
+        "iron studies",
+        "iron workup",
+        "iron profile",
+        "serum iron panel"
+      ],
+      "ap_cost": 1,
+      "component_lab_ids": [
+        "serum_iron",
+        "tibc",
+        "transferrin_saturation",
+        "ferritin"
+      ],
+      "ui_categories": [
+        "iron",
+        "hematology",
+        "chemistry"
+      ],
+      "tags": [
+        "hematologic",
+        "metabolic",
+        "nutritional",
+        "anemia",
+        "iron_deficiency",
+        "malnutrition"
+      ]
+    },
+    {
+      "id": "thyroid_panel",
+      "name": "Thyroid Panel",
+      "aliases": [
+        "thyroid panel",
+        "thyroid function tests",
+        "TFTs",
+        "thyroid function",
+        "thyroid workup",
+        "TSH free T4"
+      ],
+      "ap_cost": 1,
+      "component_lab_ids": [
+        "tsh",
+        "free_t4"
+      ],
+      "ui_categories": [
+        "thyroid",
+        "endocrine",
+        "chemistry"
+      ],
+      "tags": [
+        "endocrine",
+        "thyroid",
+        "hormonal",
+        "screening",
+        "thyroid_disease",
+        "hypothyroidism",
+        "hyperthyroidism"
+      ]
+    },
+    {
+      "id": "ana_panel",
+      "name": "ANA Panel",
+      "aliases": [
+        "ANA panel",
+        "antinuclear antibody panel",
+        "autoimmune panel",
+        "ANA with reflex"
+      ],
+      "ap_cost": 1,
+      "component_lab_ids": [
+        "ana",
+        "anti_dsdna",
+        "anti_smith",
+        "anti_ssa",
+        "anti_ssb",
+        "anti_scl70",
+        "anti_jo1"
+      ],
+      "ui_categories": [
+        "rheumatologic"
+      ],
+      "tags": [
+        "rheumatologic",
+        "immunologic",
+        "autoimmune",
+        "screening",
+        "lupus",
+        "scleroderma",
+        "sjogrens",
+        "myositis"
+      ]
+    },
+    {
+      "id": "rheum_panel",
+      "name": "Rheumatologic Panel",
+      "aliases": [
+        "rheum panel",
+        "rheumatologic panel",
+        "inflammatory panel",
+        "rheumatology workup",
+        "arthritis panel"
+      ],
+      "ap_cost": 1,
+      "component_lab_ids": [
+        "esr",
+        "crp",
+        "rf",
+        "anti_ccp",
+        "complement_c3",
+        "complement_c4",
+        "anca"
+      ],
+      "ui_categories": [
+        "rheumatologic",
+        "inflammatory"
+      ],
+      "tags": [
+        "rheumatologic",
+        "inflammatory",
+        "immunologic",
+        "autoimmune",
+        "rheumatoid_arthritis",
+        "vasculitis",
+        "lupus"
+      ]
+    },
+    {
+      "id": "hepatitis_panel",
+      "name": "Hepatitis Panel",
+      "aliases": [
+        "hepatitis panel",
+        "hepatitis workup",
+        "viral hepatitis panel",
+        "hep panel",
+        "hepatitis screen"
+      ],
+      "ap_cost": 1,
+      "component_lab_ids": [
+        "hbsag",
+        "hbsab",
+        "hbcab_igm",
+        "hbcab_igg",
+        "hcv_ab",
+        "hav_igm",
+        "hav_igg"
+      ],
+      "ui_categories": [
+        "hepatitis",
+        "liver",
+        "microbiology"
+      ],
+      "tags": [
+        "hepatic",
+        "immunologic",
+        "microbiology",
+        "screening",
+        "hepatitis",
+        "liver_disease",
+        "viral_infection"
+      ]
+    },
+    {
+      "id": "type_screen",
+      "name": "Type and Screen",
+      "aliases": [
+        "type and screen",
+        "T&S",
+        "type screen",
+        "blood type and screen",
+        "type & screen"
+      ],
+      "ap_cost": 1,
+      "component_lab_ids": [
+        "abo_type",
+        "rh_factor",
+        "antibody_screen"
+      ],
+      "ui_categories": [
+        "blood_bank",
+        "general"
+      ],
+      "tags": [
+        "hematologic",
+        "blood_bank",
+        "preoperative",
+        "emergency",
+        "blood_transfusion",
+        "surgery",
+        "appendicitis"
+      ]
+    },
+    {
+      "id": "type_crossmatch",
+      "name": "Type and Crossmatch",
+      "aliases": [
+        "type and crossmatch",
+        "T&C",
+        "type crossmatch",
+        "crossmatch",
+        "type & crossmatch"
+      ],
+      "ap_cost": 1,
+      "component_lab_ids": [
+        "abo_type",
+        "rh_factor",
+        "antibody_screen",
+        "crossmatch_result"
+      ],
+      "ui_categories": [
+        "blood_bank",
+        "general"
+      ],
+      "tags": [
+        "hematologic",
+        "blood_bank",
+        "preoperative",
+        "emergency",
+        "blood_transfusion",
+        "surgery",
+        "trauma",
+        "gi_bleed"
+      ]
+    },
+    {
+      "id": "urine_drug_screen",
+      "name": "Urine Drug Screen",
+      "aliases": [
+        "urine drug screen",
+        "UDS",
+        "drug screen",
+        "toxicology screen",
+        "urine tox",
+        "drug test",
+        "tox screen"
+      ],
+      "ap_cost": 1,
+      "component_lab_ids": [
+        "uds_thc",
+        "uds_cocaine",
+        "uds_opiates",
+        "uds_amphetamines",
+        "uds_methamphetamine",
+        "uds_benzodiazepines",
+        "uds_barbiturates",
+        "uds_pcp",
+        "uds_mdma",
+        "uds_fentanyl"
+      ],
+      "ui_categories": [
+        "toxicology",
+        "urinalysis"
+      ],
+      "tags": [
+        "toxicology",
+        "urinalysis",
+        "emergency",
+        "drug_use",
+        "substance_abuse",
+        "altered_mental_status"
+      ]
+    },
+    {
+      "id": "urinalysis_panel",
+      "name": "Urinalysis with Microscopy",
+      "aliases": [
+        "urinalysis",
+        "UA",
+        "urine analysis",
+        "UA with microscopy",
+        "urine test",
+        "urinalysis with microscopy"
+      ],
+      "ap_cost": 1,
+      "component_lab_ids": [
+        "ua_color",
+        "ua_clarity",
+        "ua_ph",
+        "ua_specific_gravity",
+        "ua_glucose",
+        "ua_protein",
+        "ua_ketones",
+        "ua_bilirubin",
+        "ua_urobilinogen",
+        "ua_nitrite",
+        "ua_leukocyte_esterase",
+        "ua_rbc",
+        "ua_wbc",
+        "ua_bacteria",
+        "ua_casts",
+        "ua_epithelial"
+      ],
+      "ui_categories": [
+        "urinalysis",
+        "renal",
+        "general"
+      ],
+      "tags": [
+        "renal",
+        "urinalysis",
+        "screening",
+        "urinary_tract_infection",
+        "kidney_stone",
+        "renal_failure",
+        "appendicitis",
+        "hematuria"
+      ]
+    },
+    {
+      "id": "urine_protein_cr",
+      "name": "Urine Protein/Creatinine Ratio",
+      "aliases": [
+        "urine protein creatinine ratio",
+        "urine P/Cr",
+        "spot urine protein",
+        "protein creatinine ratio",
+        "urine PCR"
+      ],
+      "ap_cost": 1,
+      "component_lab_ids": [
+        "urine_protein_random",
+        "urine_creatinine_random",
+        "urine_pcr"
+      ],
+      "ui_categories": [
+        "renal",
+        "urinalysis"
+      ],
+      "tags": [
+        "renal",
+        "urinalysis",
+        "proteinuria",
+        "nephrotic_syndrome",
+        "renal_failure",
+        "pre_eclampsia"
+      ]
+    },
+    {
+      "id": "bilirubin_panel",
+      "name": "Bilirubin Panel",
+      "aliases": [
+        "bilirubin panel",
+        "bili panel",
+        "bilirubin",
+        "total and direct bilirubin"
+      ],
+      "ap_cost": 1,
+      "component_lab_ids": [
+        "total_bilirubin",
+        "direct_bilirubin",
+        "indirect_bilirubin"
+      ],
+      "ui_categories": [
+        "liver",
+        "chemistry"
+      ],
+      "tags": [
+        "hepatic",
+        "liver",
+        "chemistry",
+        "jaundice",
+        "liver_disease",
+        "cholestasis",
+        "hemolysis"
+      ],
+      "note": "Ordering bilirubin panel triggers liver panel results automatically"
+    }
+  ],
+  "labs": [
+    {
+      "id": "sodium",
+      "name": "Sodium",
+      "aliases": [
+        "Na",
+        "Na+",
+        "serum sodium",
+        "blood sodium"
+      ],
+      "unit": "mEq/L",
+      "panel_memberships": [
+        "bmp",
+        "cmp"
+      ],
+      "ui_categories": [
+        "chemistry",
+        "electrolytes",
+        "renal",
+        "general"
+      ],
+      "tags": [
+        "chemistry",
+        "metabolic",
+        "renal",
+        "electrolytes",
+        "dehydration",
+        "hyponatremia",
+        "hypernatremia",
+        "electrolyte_imbalance",
+        "sepsis",
+        "appendicitis",
+        "vomiting"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 136,
+          "max": 145
+        },
+        "ped_1yr_plus": {
+          "min": 136,
+          "max": 145
+        },
+        "ped_1mo_1yr": {
+          "min": 133,
+          "max": 146
+        },
+        "ped_0_1mo": {
+          "min": 133,
+          "max": 146
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 1
+    },
+    {
+      "id": "potassium",
+      "name": "Potassium",
+      "aliases": [
+        "K",
+        "K+",
+        "serum potassium",
+        "blood potassium"
+      ],
+      "unit": "mEq/L",
+      "panel_memberships": [
+        "bmp",
+        "cmp"
+      ],
+      "ui_categories": [
+        "chemistry",
+        "electrolytes",
+        "renal",
+        "cardiac",
+        "general"
+      ],
+      "tags": [
+        "chemistry",
+        "metabolic",
+        "renal",
+        "cardiac",
+        "electrolytes",
+        "hypokalemia",
+        "hyperkalemia",
+        "electrolyte_imbalance",
+        "sepsis",
+        "renal_failure"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 3.5,
+          "max": 5.0
+        },
+        "ped_1yr_plus": {
+          "min": 3.5,
+          "max": 5.0
+        },
+        "ped_1mo_1yr": {
+          "min": 3.7,
+          "max": 5.9
+        },
+        "ped_0_1mo": {
+          "min": 3.7,
+          "max": 6.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 2
+    },
+    {
+      "id": "chloride",
+      "name": "Chloride",
+      "aliases": [
+        "Cl",
+        "Cl-",
+        "serum chloride",
+        "blood chloride"
+      ],
+      "unit": "mEq/L",
+      "panel_memberships": [
+        "bmp",
+        "cmp"
+      ],
+      "ui_categories": [
+        "chemistry",
+        "electrolytes",
+        "renal",
+        "general"
+      ],
+      "tags": [
+        "chemistry",
+        "metabolic",
+        "renal",
+        "electrolytes",
+        "electrolyte_imbalance",
+        "acidosis",
+        "alkalosis",
+        "vomiting",
+        "dehydration"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 98,
+          "max": 107
+        },
+        "ped_1yr_plus": {
+          "min": 98,
+          "max": 107
+        },
+        "ped_1mo_1yr": {
+          "min": 98,
+          "max": 110
+        },
+        "ped_0_1mo": {
+          "min": 98,
+          "max": 113
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 3
+    },
+    {
+      "id": "co2_bicarb",
+      "name": "CO2 (Bicarbonate)",
+      "aliases": [
+        "CO2",
+        "bicarb",
+        "bicarbonate",
+        "serum bicarb",
+        "HCO3",
+        "carbon dioxide",
+        "total CO2"
+      ],
+      "unit": "mEq/L",
+      "panel_memberships": [
+        "bmp",
+        "cmp"
+      ],
+      "ui_categories": [
+        "chemistry",
+        "electrolytes",
+        "blood_gas",
+        "general"
+      ],
+      "tags": [
+        "chemistry",
+        "metabolic",
+        "pulmonary",
+        "electrolytes",
+        "acidosis",
+        "alkalosis",
+        "electrolyte_imbalance",
+        "sepsis",
+        "renal_failure",
+        "vomiting"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 22,
+          "max": 29
+        },
+        "ped_1yr_plus": {
+          "min": 20,
+          "max": 28
+        },
+        "ped_1mo_1yr": {
+          "min": 18,
+          "max": 28
+        },
+        "ped_0_1mo": {
+          "min": 17,
+          "max": 27
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 4
+    },
+    {
+      "id": "bun",
+      "name": "Blood Urea Nitrogen",
+      "aliases": [
+        "BUN",
+        "urea nitrogen",
+        "blood urea nitrogen",
+        "urea"
+      ],
+      "unit": "mg/dL",
+      "panel_memberships": [
+        "bmp",
+        "cmp"
+      ],
+      "ui_categories": [
+        "chemistry",
+        "renal",
+        "general"
+      ],
+      "tags": [
+        "chemistry",
+        "renal",
+        "metabolic",
+        "renal_failure",
+        "dehydration",
+        "gi_bleed",
+        "appendicitis",
+        "sepsis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 7,
+          "max": 20
+        },
+        "ped_1yr_plus": {
+          "min": 7,
+          "max": 18
+        },
+        "ped_1mo_1yr": {
+          "min": 5,
+          "max": 15
+        },
+        "ped_0_1mo": {
+          "min": 3,
+          "max": 12
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 5
+    },
+    {
+      "id": "creatinine",
+      "name": "Creatinine",
+      "aliases": [
+        "Cr",
+        "creatinine",
+        "serum creatinine"
+      ],
+      "unit": "mg/dL",
+      "panel_memberships": [
+        "bmp",
+        "cmp"
+      ],
+      "ui_categories": [
+        "chemistry",
+        "renal",
+        "general"
+      ],
+      "tags": [
+        "chemistry",
+        "renal",
+        "metabolic",
+        "renal_failure",
+        "dehydration",
+        "aki",
+        "sepsis",
+        "appendicitis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0.6,
+          "max": 1.2,
+          "note": "Male: 0.7-1.3, Female: 0.5-1.1"
+        },
+        "ped_1yr_plus": {
+          "min": 0.3,
+          "max": 0.7
+        },
+        "ped_1mo_1yr": {
+          "min": 0.2,
+          "max": 0.4
+        },
+        "ped_0_1mo": {
+          "min": 0.3,
+          "max": 1.0
+        }
+      },
+      "display_decimals": 2,
+      "display_order": 6
+    },
+    {
+      "id": "glucose",
+      "name": "Glucose",
+      "aliases": [
+        "glucose",
+        "blood glucose",
+        "blood sugar",
+        "serum glucose",
+        "BG",
+        "BS",
+        "sugar"
+      ],
+      "unit": "mg/dL",
+      "panel_memberships": [
+        "bmp",
+        "cmp"
+      ],
+      "ui_categories": [
+        "chemistry",
+        "endocrine",
+        "general"
+      ],
+      "tags": [
+        "chemistry",
+        "metabolic",
+        "endocrine",
+        "hyperglycemia",
+        "hypoglycemia",
+        "diabetes",
+        "sepsis",
+        "appendicitis",
+        "stress_response",
+        "screening"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 70,
+          "max": 100
+        },
+        "ped_1yr_plus": {
+          "min": 70,
+          "max": 100
+        },
+        "ped_1mo_1yr": {
+          "min": 60,
+          "max": 100
+        },
+        "ped_0_1mo": {
+          "min": 45,
+          "max": 95
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 7
+    },
+    {
+      "id": "calcium",
+      "name": "Calcium",
+      "aliases": [
+        "Ca",
+        "Ca2+",
+        "serum calcium",
+        "blood calcium",
+        "total calcium"
+      ],
+      "unit": "mg/dL",
+      "panel_memberships": [
+        "bmp",
+        "cmp"
+      ],
+      "ui_categories": [
+        "chemistry",
+        "electrolytes",
+        "endocrine",
+        "general"
+      ],
+      "tags": [
+        "chemistry",
+        "metabolic",
+        "endocrine",
+        "electrolytes",
+        "hypocalcemia",
+        "hypercalcemia",
+        "electrolyte_imbalance",
+        "pancreatitis",
+        "sepsis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 8.5,
+          "max": 10.5
+        },
+        "ped_1yr_plus": {
+          "min": 8.8,
+          "max": 10.8
+        },
+        "ped_1mo_1yr": {
+          "min": 8.7,
+          "max": 11.0
+        },
+        "ped_0_1mo": {
+          "min": 7.5,
+          "max": 11.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 8
+    },
+    {
+      "id": "alt",
+      "name": "Alanine Aminotransferase",
+      "aliases": [
+        "ALT",
+        "SGPT",
+        "alanine aminotransferase",
+        "liver enzyme ALT"
+      ],
+      "unit": "U/L",
+      "panel_memberships": [
+        "liver_panel",
+        "cmp"
+      ],
+      "ui_categories": [
+        "liver",
+        "chemistry",
+        "general"
+      ],
+      "tags": [
+        "hepatic",
+        "liver",
+        "chemistry",
+        "screening",
+        "liver_disease",
+        "hepatitis",
+        "cholecystitis",
+        "appendicitis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 7,
+          "max": 40
+        },
+        "ped_1yr_plus": {
+          "min": 7,
+          "max": 45
+        },
+        "ped_1mo_1yr": {
+          "min": 10,
+          "max": 45
+        },
+        "ped_0_1mo": {
+          "min": 10,
+          "max": 50
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 1
+    },
+    {
+      "id": "ast",
+      "name": "Aspartate Aminotransferase",
+      "aliases": [
+        "AST",
+        "SGOT",
+        "aspartate aminotransferase"
+      ],
+      "unit": "U/L",
+      "panel_memberships": [
+        "liver_panel",
+        "cmp"
+      ],
+      "ui_categories": [
+        "liver",
+        "chemistry",
+        "cardiac",
+        "general"
+      ],
+      "tags": [
+        "hepatic",
+        "liver",
+        "cardiac",
+        "chemistry",
+        "liver_disease",
+        "hepatitis",
+        "cholecystitis",
+        "cardiac_disease",
+        "muscle_injury"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 10,
+          "max": 40
+        },
+        "ped_1yr_plus": {
+          "min": 10,
+          "max": 40
+        },
+        "ped_1mo_1yr": {
+          "min": 20,
+          "max": 60
+        },
+        "ped_0_1mo": {
+          "min": 25,
+          "max": 75
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 2
+    },
+    {
+      "id": "alp",
+      "name": "Alkaline Phosphatase",
+      "aliases": [
+        "ALP",
+        "alk phos",
+        "alkaline phosphatase",
+        "ALKP"
+      ],
+      "unit": "U/L",
+      "panel_memberships": [
+        "liver_panel",
+        "cmp"
+      ],
+      "ui_categories": [
+        "liver",
+        "chemistry",
+        "general"
+      ],
+      "tags": [
+        "hepatic",
+        "liver",
+        "musculoskeletal",
+        "chemistry",
+        "liver_disease",
+        "cholestasis",
+        "bone_disease",
+        "cholecystitis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 44,
+          "max": 147
+        },
+        "ped_1yr_plus": {
+          "min": 100,
+          "max": 320
+        },
+        "ped_1mo_1yr": {
+          "min": 150,
+          "max": 350
+        },
+        "ped_0_1mo": {
+          "min": 100,
+          "max": 400
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 3
+    },
+    {
+      "id": "total_bilirubin",
+      "name": "Total Bilirubin",
+      "aliases": [
+        "total bili",
+        "T bili",
+        "total bilirubin",
+        "Tbili"
+      ],
+      "unit": "mg/dL",
+      "panel_memberships": [
+        "liver_panel",
+        "cmp",
+        "bilirubin_panel"
+      ],
+      "ui_categories": [
+        "liver",
+        "chemistry",
+        "general"
+      ],
+      "tags": [
+        "hepatic",
+        "liver",
+        "hematologic",
+        "chemistry",
+        "jaundice",
+        "liver_disease",
+        "cholestasis",
+        "hemolysis",
+        "cholecystitis",
+        "hepatitis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0.2,
+          "max": 1.2,
+          "note": "Neonates: varies by day of life\u2014follow AAP neonatal hyperbilirubinemia guidelines"
+        },
+        "ped_1yr_plus": {
+          "min": 0.2,
+          "max": 1.0
+        },
+        "ped_1mo_1yr": {
+          "min": 0.2,
+          "max": 1.0
+        },
+        "ped_0_1mo": {
+          "min": 0.2,
+          "max": 12.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 4
+    },
+    {
+      "id": "direct_bilirubin",
+      "name": "Direct Bilirubin",
+      "aliases": [
+        "direct bili",
+        "D bili",
+        "direct bilirubin",
+        "conjugated bilirubin",
+        "Dbili"
+      ],
+      "unit": "mg/dL",
+      "panel_memberships": [
+        "liver_panel",
+        "cmp",
+        "bilirubin_panel"
+      ],
+      "ui_categories": [
+        "liver",
+        "chemistry",
+        "general"
+      ],
+      "tags": [
+        "hepatic",
+        "liver",
+        "chemistry",
+        "jaundice",
+        "liver_disease",
+        "cholestasis",
+        "cholecystitis",
+        "hepatitis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0.0,
+          "max": 0.3
+        },
+        "ped_1yr_plus": {
+          "min": 0.0,
+          "max": 0.3
+        },
+        "ped_1mo_1yr": {
+          "min": 0.0,
+          "max": 0.3
+        },
+        "ped_0_1mo": {
+          "min": 0.0,
+          "max": 1.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 5
+    },
+    {
+      "id": "indirect_bilirubin",
+      "name": "Indirect Bilirubin",
+      "aliases": [
+        "indirect bili",
+        "unconjugated bilirubin",
+        "indirect bilirubin"
+      ],
+      "unit": "mg/dL",
+      "panel_memberships": [
+        "bilirubin_panel"
+      ],
+      "ui_categories": [
+        "liver",
+        "chemistry"
+      ],
+      "tags": [
+        "hepatic",
+        "liver",
+        "hematologic",
+        "chemistry",
+        "jaundice",
+        "hemolysis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0.2,
+          "max": 0.9
+        },
+        "ped_1yr_plus": {
+          "min": 0.2,
+          "max": 0.8
+        },
+        "ped_1mo_1yr": {
+          "min": 0.2,
+          "max": 0.8
+        },
+        "ped_0_1mo": {
+          "min": 0.2,
+          "max": 11.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 6,
+      "calculated": true,
+      "calculation": "total_bilirubin - direct_bilirubin"
+    },
+    {
+      "id": "total_protein",
+      "name": "Total Protein",
+      "aliases": [
+        "total protein",
+        "TP",
+        "serum protein"
+      ],
+      "unit": "g/dL",
+      "panel_memberships": [
+        "liver_panel",
+        "cmp"
+      ],
+      "ui_categories": [
+        "liver",
+        "chemistry",
+        "nutritional",
+        "general"
+      ],
+      "tags": [
+        "hepatic",
+        "liver",
+        "nutritional",
+        "chemistry",
+        "screening",
+        "liver_disease",
+        "malnutrition",
+        "nephrotic_syndrome"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 6.3,
+          "max": 8.2
+        },
+        "ped_1yr_plus": {
+          "min": 6.0,
+          "max": 8.0
+        },
+        "ped_1mo_1yr": {
+          "min": 5.0,
+          "max": 7.5
+        },
+        "ped_0_1mo": {
+          "min": 4.6,
+          "max": 7.4
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 7
+    },
+    {
+      "id": "albumin",
+      "name": "Albumin",
+      "aliases": [
+        "albumin",
+        "serum albumin",
+        "Alb"
+      ],
+      "unit": "g/dL",
+      "panel_memberships": [
+        "liver_panel",
+        "cmp"
+      ],
+      "ui_categories": [
+        "liver",
+        "chemistry",
+        "nutritional",
+        "general"
+      ],
+      "tags": [
+        "hepatic",
+        "liver",
+        "nutritional",
+        "chemistry",
+        "screening",
+        "liver_disease",
+        "malnutrition",
+        "sepsis",
+        "nephrotic_syndrome"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 3.5,
+          "max": 5.0
+        },
+        "ped_1yr_plus": {
+          "min": 3.5,
+          "max": 5.0
+        },
+        "ped_1mo_1yr": {
+          "min": 3.2,
+          "max": 4.8
+        },
+        "ped_0_1mo": {
+          "min": 2.8,
+          "max": 4.4
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 8
+    },
+    {
+      "id": "ggt",
+      "name": "Gamma-Glutamyl Transferase",
+      "aliases": [
+        "GGT",
+        "gamma GT",
+        "gamma-glutamyl transferase"
+      ],
+      "unit": "U/L",
+      "panel_memberships": [
+        "liver_panel",
+        "cmp"
+      ],
+      "ui_categories": [
+        "liver",
+        "chemistry",
+        "general"
+      ],
+      "tags": [
+        "hepatic",
+        "liver",
+        "chemistry",
+        "liver_disease",
+        "cholestasis",
+        "alcohol_use",
+        "cholecystitis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 8,
+          "max": 60
+        },
+        "ped_1yr_plus": {
+          "min": 5,
+          "max": 32
+        },
+        "ped_1mo_1yr": {
+          "min": 15,
+          "max": 132
+        },
+        "ped_0_1mo": {
+          "min": 14,
+          "max": 131
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 9
+    },
+    {
+      "id": "wbc",
+      "name": "White Blood Cell Count",
+      "aliases": [
+        "WBC",
+        "white blood cells",
+        "white cell count",
+        "leukocyte count",
+        "white count"
+      ],
+      "unit": "x10\u00b3/\u00b5L",
+      "panel_memberships": [
+        "cbc"
+      ],
+      "ui_categories": [
+        "hematology",
+        "inflammatory",
+        "general"
+      ],
+      "tags": [
+        "hematologic",
+        "hematology",
+        "inflammatory",
+        "infection",
+        "leukocytosis",
+        "leukopenia",
+        "infection",
+        "sepsis",
+        "appendicitis",
+        "neutropenia",
+        "screening",
+        "monitoring"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 4.5,
+          "max": 11.0
+        },
+        "ped_6yr_plus": {
+          "min": 4.5,
+          "max": 13.5
+        },
+        "ped_1_5yr": {
+          "min": 5.0,
+          "max": 15.5
+        },
+        "ped_6_12mo": {
+          "min": 6.0,
+          "max": 17.5
+        },
+        "ped_3_6mo": {
+          "min": 6.0,
+          "max": 17.5
+        },
+        "ped_1_3mo": {
+          "min": 6.0,
+          "max": 18.0
+        },
+        "ped_1_4wk": {
+          "min": 5.0,
+          "max": 20.0
+        },
+        "ped_0_1wk": {
+          "min": 9.0,
+          "max": 30.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 1
+    },
+    {
+      "id": "rbc",
+      "name": "Red Blood Cell Count",
+      "aliases": [
+        "RBC",
+        "red blood cells",
+        "red cell count",
+        "erythrocyte count"
+      ],
+      "unit": "x10\u2076/\u00b5L",
+      "panel_memberships": [
+        "cbc"
+      ],
+      "ui_categories": [
+        "hematology",
+        "general"
+      ],
+      "tags": [
+        "hematologic",
+        "hematology",
+        "anemia",
+        "polycythemia",
+        "monitoring"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 4.5,
+          "max": 5.9,
+          "note": "Male: 4.5-5.9, Female: 4.0-5.2"
+        },
+        "ped_6yr_plus": {
+          "min": 4.0,
+          "max": 5.5
+        },
+        "ped_1_5yr": {
+          "min": 3.9,
+          "max": 5.0
+        },
+        "ped_6_12mo": {
+          "min": 3.8,
+          "max": 4.9
+        },
+        "ped_3_6mo": {
+          "min": 3.5,
+          "max": 5.0
+        },
+        "ped_1_3mo": {
+          "min": 3.5,
+          "max": 5.5
+        },
+        "ped_1_4wk": {
+          "min": 4.0,
+          "max": 6.0
+        },
+        "ped_0_1wk": {
+          "min": 4.5,
+          "max": 6.5
+        }
+      },
+      "display_decimals": 2,
+      "display_order": 2
+    },
+    {
+      "id": "hemoglobin",
+      "name": "Hemoglobin",
+      "aliases": [
+        "Hgb",
+        "Hb",
+        "hemoglobin",
+        "haemoglobin"
+      ],
+      "unit": "g/dL",
+      "panel_memberships": [
+        "cbc"
+      ],
+      "ui_categories": [
+        "hematology",
+        "general"
+      ],
+      "tags": [
+        "hematologic",
+        "hematology",
+        "anemia",
+        "polycythemia",
+        "blood_loss",
+        "sepsis",
+        "appendicitis",
+        "gi_bleed",
+        "trauma",
+        "monitoring",
+        "screening"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 13.5,
+          "max": 17.5,
+          "note": "Male: 13.5-17.5, Female: 12.0-15.5"
+        },
+        "ped_6yr_plus": {
+          "min": 11.5,
+          "max": 15.5
+        },
+        "ped_1_5yr": {
+          "min": 11.0,
+          "max": 14.0
+        },
+        "ped_6_12mo": {
+          "min": 10.5,
+          "max": 14.0
+        },
+        "ped_3_6mo": {
+          "min": 9.5,
+          "max": 13.5
+        },
+        "ped_1_3mo": {
+          "min": 9.5,
+          "max": 13.5
+        },
+        "ped_1_4wk": {
+          "min": 10.0,
+          "max": 18.0
+        },
+        "ped_0_1wk": {
+          "min": 14.5,
+          "max": 22.5
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 3
+    },
+    {
+      "id": "hematocrit",
+      "name": "Hematocrit",
+      "aliases": [
+        "Hct",
+        "hematocrit",
+        "HCT",
+        "packed cell volume",
+        "PCV"
+      ],
+      "unit": "%",
+      "panel_memberships": [
+        "cbc"
+      ],
+      "ui_categories": [
+        "hematology",
+        "general"
+      ],
+      "tags": [
+        "hematologic",
+        "hematology",
+        "anemia",
+        "polycythemia",
+        "dehydration",
+        "blood_loss",
+        "monitoring"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 41.0,
+          "max": 53.0,
+          "note": "Male: 41-53%, Female: 36-46%"
+        },
+        "ped_6yr_plus": {
+          "min": 34.0,
+          "max": 45.0
+        },
+        "ped_1_5yr": {
+          "min": 32.0,
+          "max": 42.0
+        },
+        "ped_6_12mo": {
+          "min": 32.0,
+          "max": 42.0
+        },
+        "ped_3_6mo": {
+          "min": 28.0,
+          "max": 40.0
+        },
+        "ped_1_3mo": {
+          "min": 28.0,
+          "max": 42.0
+        },
+        "ped_1_4wk": {
+          "min": 30.0,
+          "max": 54.0
+        },
+        "ped_0_1wk": {
+          "min": 45.0,
+          "max": 67.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 4
+    },
+    {
+      "id": "mcv",
+      "name": "Mean Corpuscular Volume",
+      "aliases": [
+        "MCV",
+        "mean corpuscular volume",
+        "mean cell volume"
+      ],
+      "unit": "fL",
+      "panel_memberships": [
+        "cbc"
+      ],
+      "ui_categories": [
+        "hematology",
+        "general"
+      ],
+      "tags": [
+        "hematologic",
+        "hematology",
+        "anemia",
+        "microcytic",
+        "macrocytic",
+        "iron_deficiency",
+        "b12_deficiency",
+        "folate_deficiency"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 80.0,
+          "max": 100.0
+        },
+        "ped_6yr_plus": {
+          "min": 78.0,
+          "max": 95.0
+        },
+        "ped_1_5yr": {
+          "min": 70.0,
+          "max": 86.0
+        },
+        "ped_6_12mo": {
+          "min": 70.0,
+          "max": 86.0
+        },
+        "ped_3_6mo": {
+          "min": 68.0,
+          "max": 85.0
+        },
+        "ped_1_3mo": {
+          "min": 85.0,
+          "max": 100.0
+        },
+        "ped_1_4wk": {
+          "min": 85.0,
+          "max": 103.0
+        },
+        "ped_0_1wk": {
+          "min": 95.0,
+          "max": 115.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 5
+    },
+    {
+      "id": "mch",
+      "name": "Mean Corpuscular Hemoglobin",
+      "aliases": [
+        "MCH",
+        "mean corpuscular hemoglobin"
+      ],
+      "unit": "pg",
+      "panel_memberships": [
+        "cbc"
+      ],
+      "ui_categories": [
+        "hematology",
+        "general"
+      ],
+      "tags": [
+        "hematologic",
+        "hematology",
+        "anemia",
+        "iron_deficiency"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 27.0,
+          "max": 33.0
+        },
+        "ped_6yr_plus": {
+          "min": 25.0,
+          "max": 32.0
+        },
+        "ped_1_5yr": {
+          "min": 23.0,
+          "max": 30.0
+        },
+        "ped_6_12mo": {
+          "min": 22.0,
+          "max": 30.0
+        },
+        "ped_3_6mo": {
+          "min": 20.0,
+          "max": 28.0
+        },
+        "ped_1_3mo": {
+          "min": 25.0,
+          "max": 35.0
+        },
+        "ped_1_4wk": {
+          "min": 26.0,
+          "max": 36.0
+        },
+        "ped_0_1wk": {
+          "min": 30.0,
+          "max": 40.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 6
+    },
+    {
+      "id": "mchc",
+      "name": "Mean Corpuscular Hemoglobin Concentration",
+      "aliases": [
+        "MCHC",
+        "mean corpuscular hemoglobin concentration"
+      ],
+      "unit": "g/dL",
+      "panel_memberships": [
+        "cbc"
+      ],
+      "ui_categories": [
+        "hematology",
+        "general"
+      ],
+      "tags": [
+        "hematologic",
+        "hematology",
+        "anemia",
+        "iron_deficiency",
+        "spherocytosis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 32.0,
+          "max": 36.0
+        },
+        "ped_6yr_plus": {
+          "min": 32.0,
+          "max": 36.0
+        },
+        "ped_1_5yr": {
+          "min": 31.0,
+          "max": 35.0
+        },
+        "ped_6_12mo": {
+          "min": 30.0,
+          "max": 35.0
+        },
+        "ped_3_6mo": {
+          "min": 29.0,
+          "max": 34.0
+        },
+        "ped_1_3mo": {
+          "min": 29.0,
+          "max": 35.0
+        },
+        "ped_1_4wk": {
+          "min": 28.0,
+          "max": 35.0
+        },
+        "ped_0_1wk": {
+          "min": 29.0,
+          "max": 37.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 7
+    },
+    {
+      "id": "rdw",
+      "name": "Red Cell Distribution Width",
+      "aliases": [
+        "RDW",
+        "red cell distribution width"
+      ],
+      "unit": "%",
+      "panel_memberships": [
+        "cbc"
+      ],
+      "ui_categories": [
+        "hematology",
+        "general"
+      ],
+      "tags": [
+        "hematologic",
+        "hematology",
+        "anemia",
+        "iron_deficiency",
+        "mixed_anemia"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 11.5,
+          "max": 14.5
+        },
+        "ped_6yr_plus": {
+          "min": 11.5,
+          "max": 14.5
+        },
+        "ped_1_5yr": {
+          "min": 11.5,
+          "max": 14.5
+        },
+        "ped_6_12mo": {
+          "min": 11.5,
+          "max": 14.5
+        },
+        "ped_3_6mo": {
+          "min": 11.5,
+          "max": 14.5
+        },
+        "ped_1_3mo": {
+          "min": 11.5,
+          "max": 14.5
+        },
+        "ped_1_4wk": {
+          "min": 11.5,
+          "max": 14.5
+        },
+        "ped_0_1wk": {
+          "min": 11.5,
+          "max": 14.5
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 8
+    },
+    {
+      "id": "platelets",
+      "name": "Platelet Count",
+      "aliases": [
+        "platelets",
+        "PLT",
+        "platelet count",
+        "thrombocyte count"
+      ],
+      "unit": "x10\u00b3/\u00b5L",
+      "panel_memberships": [
+        "cbc"
+      ],
+      "ui_categories": [
+        "hematology",
+        "coagulation",
+        "general"
+      ],
+      "tags": [
+        "hematologic",
+        "hematology",
+        "coagulation",
+        "thrombocytopenia",
+        "thrombocytosis",
+        "bleeding",
+        "sepsis",
+        "dic",
+        "appendicitis",
+        "preoperative",
+        "monitoring"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 150,
+          "max": 400
+        },
+        "ped_6yr_plus": {
+          "min": 150,
+          "max": 450
+        },
+        "ped_1_5yr": {
+          "min": 150,
+          "max": 450
+        },
+        "ped_6_12mo": {
+          "min": 150,
+          "max": 450
+        },
+        "ped_3_6mo": {
+          "min": 150,
+          "max": 450
+        },
+        "ped_1_3mo": {
+          "min": 150,
+          "max": 450
+        },
+        "ped_1_4wk": {
+          "min": 150,
+          "max": 450
+        },
+        "ped_0_1wk": {
+          "min": 150,
+          "max": 450
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 9
+    },
+    {
+      "id": "neutrophils_pct",
+      "name": "Neutrophils",
+      "aliases": [
+        "neutrophils",
+        "PMNs",
+        "polys",
+        "segs",
+        "neutrophil percentage",
+        "neut %"
+      ],
+      "unit": "%",
+      "panel_memberships": [
+        "cbc"
+      ],
+      "ui_categories": [
+        "hematology",
+        "inflammatory",
+        "general"
+      ],
+      "tags": [
+        "hematologic",
+        "hematology",
+        "inflammatory",
+        "infection",
+        "neutrophilia",
+        "neutropenia",
+        "sepsis",
+        "appendicitis",
+        "leukocytosis",
+        "monitoring"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 50,
+          "max": 70
+        },
+        "ped_6yr_plus": {
+          "min": 40,
+          "max": 70
+        },
+        "ped_1_5yr": {
+          "min": 25,
+          "max": 55
+        },
+        "ped_6_12mo": {
+          "min": 20,
+          "max": 50
+        },
+        "ped_3_6mo": {
+          "min": 20,
+          "max": 50
+        },
+        "ped_1_3mo": {
+          "min": 25,
+          "max": 60
+        },
+        "ped_1_4wk": {
+          "min": 30,
+          "max": 65
+        },
+        "ped_0_1wk": {
+          "min": 40,
+          "max": 80
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 10
+    },
+    {
+      "id": "lymphocytes_pct",
+      "name": "Lymphocytes",
+      "aliases": [
+        "lymphocytes",
+        "lymphs",
+        "lymphocyte percentage",
+        "lymph %"
+      ],
+      "unit": "%",
+      "panel_memberships": [
+        "cbc"
+      ],
+      "ui_categories": [
+        "hematology",
+        "inflammatory",
+        "general"
+      ],
+      "tags": [
+        "hematologic",
+        "hematology",
+        "inflammatory",
+        "infection",
+        "immunologic",
+        "lymphocytosis",
+        "lymphopenia",
+        "viral_infection",
+        "sepsis",
+        "monitoring"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 20,
+          "max": 40
+        },
+        "ped_6yr_plus": {
+          "min": 25,
+          "max": 50
+        },
+        "ped_1_5yr": {
+          "min": 35,
+          "max": 65
+        },
+        "ped_6_12mo": {
+          "min": 40,
+          "max": 72
+        },
+        "ped_3_6mo": {
+          "min": 40,
+          "max": 72
+        },
+        "ped_1_3mo": {
+          "min": 35,
+          "max": 65
+        },
+        "ped_1_4wk": {
+          "min": 30,
+          "max": 60
+        },
+        "ped_0_1wk": {
+          "min": 15,
+          "max": 35
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 11
+    },
+    {
+      "id": "monocytes_pct",
+      "name": "Monocytes",
+      "aliases": [
+        "monocytes",
+        "monos",
+        "monocyte percentage",
+        "mono %"
+      ],
+      "unit": "%",
+      "panel_memberships": [
+        "cbc"
+      ],
+      "ui_categories": [
+        "hematology",
+        "general"
+      ],
+      "tags": [
+        "hematologic",
+        "hematology",
+        "inflammatory",
+        "infection",
+        "monocytosis",
+        "infection",
+        "chronic_inflammation"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 2,
+          "max": 10
+        },
+        "ped_6yr_plus": {
+          "min": 2,
+          "max": 10
+        },
+        "ped_1_5yr": {
+          "min": 2,
+          "max": 10
+        },
+        "ped_6_12mo": {
+          "min": 2,
+          "max": 10
+        },
+        "ped_3_6mo": {
+          "min": 2,
+          "max": 10
+        },
+        "ped_1_3mo": {
+          "min": 2,
+          "max": 10
+        },
+        "ped_1_4wk": {
+          "min": 2,
+          "max": 10
+        },
+        "ped_0_1wk": {
+          "min": 2,
+          "max": 10
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 12
+    },
+    {
+      "id": "eosinophils_pct",
+      "name": "Eosinophils",
+      "aliases": [
+        "eosinophils",
+        "eos",
+        "eosinophil percentage",
+        "eos %"
+      ],
+      "unit": "%",
+      "panel_memberships": [
+        "cbc"
+      ],
+      "ui_categories": [
+        "hematology",
+        "general"
+      ],
+      "tags": [
+        "hematologic",
+        "hematology",
+        "immunologic",
+        "eosinophilia",
+        "parasitic_infection",
+        "allergy",
+        "asthma",
+        "drug_reaction"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 1,
+          "max": 4
+        },
+        "ped_6yr_plus": {
+          "min": 1,
+          "max": 5
+        },
+        "ped_1_5yr": {
+          "min": 1,
+          "max": 5
+        },
+        "ped_6_12mo": {
+          "min": 1,
+          "max": 5
+        },
+        "ped_3_6mo": {
+          "min": 1,
+          "max": 5
+        },
+        "ped_1_3mo": {
+          "min": 1,
+          "max": 5
+        },
+        "ped_1_4wk": {
+          "min": 1,
+          "max": 5
+        },
+        "ped_0_1wk": {
+          "min": 1,
+          "max": 5
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 13
+    },
+    {
+      "id": "basophils_pct",
+      "name": "Basophils",
+      "aliases": [
+        "basophils",
+        "basos",
+        "basophil percentage",
+        "baso %"
+      ],
+      "unit": "%",
+      "panel_memberships": [
+        "cbc"
+      ],
+      "ui_categories": [
+        "hematology",
+        "general"
+      ],
+      "tags": [
+        "hematologic",
+        "hematology",
+        "immunologic",
+        "basophilia",
+        "allergy",
+        "myeloproliferative"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0,
+          "max": 1
+        },
+        "ped_6yr_plus": {
+          "min": 0,
+          "max": 1
+        },
+        "ped_1_5yr": {
+          "min": 0,
+          "max": 1
+        },
+        "ped_6_12mo": {
+          "min": 0,
+          "max": 1
+        },
+        "ped_3_6mo": {
+          "min": 0,
+          "max": 1
+        },
+        "ped_1_3mo": {
+          "min": 0,
+          "max": 1
+        },
+        "ped_1_4wk": {
+          "min": 0,
+          "max": 1
+        },
+        "ped_0_1wk": {
+          "min": 0,
+          "max": 1
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 14
+    },
+    {
+      "id": "anc",
+      "name": "Absolute Neutrophil Count",
+      "aliases": [
+        "ANC",
+        "absolute neutrophil count",
+        "absolute neutrophils",
+        "neutrophil count"
+      ],
+      "unit": "/\u00b5L",
+      "panel_memberships": [
+        "cbc"
+      ],
+      "ui_categories": [
+        "hematology",
+        "inflammatory",
+        "general"
+      ],
+      "tags": [
+        "hematologic",
+        "hematology",
+        "inflammatory",
+        "infection",
+        "neutropenia",
+        "neutrophilia",
+        "infection",
+        "sepsis",
+        "appendicitis",
+        "chemotherapy",
+        "immunocompromised",
+        "monitoring"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 1800,
+          "max": 7700
+        },
+        "ped_6yr_plus": {
+          "min": 1500,
+          "max": 8000
+        },
+        "ped_1_5yr": {
+          "min": 1500,
+          "max": 8000
+        },
+        "ped_6_12mo": {
+          "min": 1000,
+          "max": 8000
+        },
+        "ped_3_6mo": {
+          "min": 1000,
+          "max": 8000
+        },
+        "ped_1_3mo": {
+          "min": 1000,
+          "max": 9000
+        },
+        "ped_1_4wk": {
+          "min": 1500,
+          "max": 10000
+        },
+        "ped_0_1wk": {
+          "min": 3600,
+          "max": 18000
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 15
+    },
+    {
+      "id": "alc",
+      "name": "Absolute Lymphocyte Count",
+      "aliases": [
+        "ALC",
+        "absolute lymphocyte count",
+        "absolute lymphocytes",
+        "lymphocyte count"
+      ],
+      "unit": "/\u00b5L",
+      "panel_memberships": [
+        "cbc"
+      ],
+      "ui_categories": [
+        "hematology",
+        "general"
+      ],
+      "tags": [
+        "hematologic",
+        "hematology",
+        "immunologic",
+        "lymphopenia",
+        "lymphocytosis",
+        "viral_infection",
+        "immunodeficiency",
+        "sepsis",
+        "monitoring"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 1000,
+          "max": 4800
+        },
+        "ped_6yr_plus": {
+          "min": 1500,
+          "max": 6500
+        },
+        "ped_1_5yr": {
+          "min": 2000,
+          "max": 8000
+        },
+        "ped_6_12mo": {
+          "min": 2500,
+          "max": 9000
+        },
+        "ped_3_6mo": {
+          "min": 2500,
+          "max": 9000
+        },
+        "ped_1_3mo": {
+          "min": 2000,
+          "max": 8000
+        },
+        "ped_1_4wk": {
+          "min": 1500,
+          "max": 7000
+        },
+        "ped_0_1wk": {
+          "min": 1000,
+          "max": 5000
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 16
+    },
+    {
+      "id": "aec",
+      "name": "Absolute Eosinophil Count",
+      "aliases": [
+        "AEC",
+        "absolute eosinophil count",
+        "absolute eosinophils",
+        "eosinophil count"
+      ],
+      "unit": "/\u00b5L",
+      "panel_memberships": [
+        "cbc"
+      ],
+      "ui_categories": [
+        "hematology",
+        "general"
+      ],
+      "tags": [
+        "hematologic",
+        "hematology",
+        "immunologic",
+        "eosinophilia",
+        "parasitic_infection",
+        "allergy",
+        "hypereosinophilic_syndrome"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0,
+          "max": 500
+        },
+        "ped_6yr_plus": {
+          "min": 0,
+          "max": 600
+        },
+        "ped_1_5yr": {
+          "min": 0,
+          "max": 700
+        },
+        "ped_6_12mo": {
+          "min": 0,
+          "max": 700
+        },
+        "ped_3_6mo": {
+          "min": 0,
+          "max": 700
+        },
+        "ped_1_3mo": {
+          "min": 0,
+          "max": 700
+        },
+        "ped_1_4wk": {
+          "min": 0,
+          "max": 700
+        },
+        "ped_0_1wk": {
+          "min": 0,
+          "max": 700
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 17
+    },
+    {
+      "id": "pt",
+      "name": "Prothrombin Time",
+      "aliases": [
+        "PT",
+        "prothrombin time",
+        "pro time"
+      ],
+      "unit": "seconds",
+      "panel_memberships": [
+        "coagulation",
+        "dic_panel"
+      ],
+      "ui_categories": [
+        "coagulation",
+        "hematology",
+        "general"
+      ],
+      "tags": [
+        "coagulation",
+        "hematologic",
+        "hepatic",
+        "preoperative",
+        "coagulopathy",
+        "bleeding",
+        "liver_disease",
+        "warfarin",
+        "dic",
+        "sepsis",
+        "appendicitis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 11.0,
+          "max": 13.5
+        },
+        "ped_1yr_plus": {
+          "min": 11.0,
+          "max": 13.5
+        },
+        "ped_1mo_1yr": {
+          "min": 11.0,
+          "max": 14.0
+        },
+        "ped_0_1mo": {
+          "min": 12.0,
+          "max": 17.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 1
+    },
+    {
+      "id": "inr",
+      "name": "International Normalized Ratio",
+      "aliases": [
+        "INR",
+        "international normalized ratio",
+        "PT/INR"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "coagulation",
+        "dic_panel"
+      ],
+      "ui_categories": [
+        "coagulation",
+        "hematology",
+        "general"
+      ],
+      "tags": [
+        "coagulation",
+        "hematologic",
+        "hepatic",
+        "preoperative",
+        "coagulopathy",
+        "bleeding",
+        "liver_disease",
+        "warfarin",
+        "anticoagulation",
+        "dic",
+        "sepsis",
+        "appendicitis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0.8,
+          "max": 1.1
+        },
+        "ped_1yr_plus": {
+          "min": 0.8,
+          "max": 1.2
+        },
+        "ped_1mo_1yr": {
+          "min": 0.8,
+          "max": 1.2
+        },
+        "ped_0_1mo": {
+          "min": 0.9,
+          "max": 1.5
+        }
+      },
+      "display_decimals": 2,
+      "display_order": 2
+    },
+    {
+      "id": "ptt",
+      "name": "Partial Thromboplastin Time",
+      "aliases": [
+        "PTT",
+        "aPTT",
+        "partial thromboplastin time",
+        "activated PTT",
+        "activated partial thromboplastin time"
+      ],
+      "unit": "seconds",
+      "panel_memberships": [
+        "coagulation",
+        "dic_panel"
+      ],
+      "ui_categories": [
+        "coagulation",
+        "hematology",
+        "general"
+      ],
+      "tags": [
+        "coagulation",
+        "hematologic",
+        "preoperative",
+        "coagulopathy",
+        "bleeding",
+        "heparin",
+        "hemophilia",
+        "dic",
+        "sepsis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 25.0,
+          "max": 35.0
+        },
+        "ped_1yr_plus": {
+          "min": 25.0,
+          "max": 35.0
+        },
+        "ped_1mo_1yr": {
+          "min": 26.0,
+          "max": 42.0
+        },
+        "ped_0_1mo": {
+          "min": 28.0,
+          "max": 55.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 3
+    },
+    {
+      "id": "fibrinogen",
+      "name": "Fibrinogen",
+      "aliases": [
+        "fibrinogen",
+        "fibrinogen level",
+        "factor I"
+      ],
+      "unit": "mg/dL",
+      "panel_memberships": [
+        "coagulation",
+        "dic_panel"
+      ],
+      "ui_categories": [
+        "coagulation",
+        "hematology",
+        "inflammatory",
+        "general"
+      ],
+      "tags": [
+        "coagulation",
+        "hematologic",
+        "inflammatory",
+        "coagulopathy",
+        "bleeding",
+        "dic",
+        "sepsis",
+        "appendicitis",
+        "acute_phase_reactant"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 200,
+          "max": 400
+        },
+        "ped_1yr_plus": {
+          "min": 180,
+          "max": 400
+        },
+        "ped_1mo_1yr": {
+          "min": 150,
+          "max": 350
+        },
+        "ped_0_1mo": {
+          "min": 150,
+          "max": 300
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 4
+    },
+    {
+      "id": "d_dimer",
+      "name": "D-Dimer",
+      "aliases": [
+        "D-dimer",
+        "d dimer",
+        "ddimer",
+        "fibrin degradation product",
+        "FDP"
+      ],
+      "unit": "\u00b5g/mL FEU",
+      "panel_memberships": [
+        "dic_panel"
+      ],
+      "ui_categories": [
+        "coagulation",
+        "hematology",
+        "inflammatory",
+        "general"
+      ],
+      "tags": [
+        "coagulation",
+        "hematologic",
+        "inflammatory",
+        "coagulopathy",
+        "pulmonary_embolism",
+        "dvt",
+        "dic",
+        "sepsis",
+        "thrombosis",
+        "appendicitis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0.0,
+          "max": 0.5
+        },
+        "ped_1yr_plus": {
+          "min": 0.0,
+          "max": 0.5
+        },
+        "ped_1mo_1yr": {
+          "min": 0.0,
+          "max": 0.5
+        },
+        "ped_0_1mo": {
+          "min": 0.0,
+          "max": 0.5
+        }
+      },
+      "display_decimals": 2,
+      "display_order": 5
+    },
+    {
+      "id": "thrombin_time",
+      "name": "Thrombin Time",
+      "aliases": [
+        "thrombin time",
+        "TT",
+        "thrombin clotting time"
+      ],
+      "unit": "seconds",
+      "panel_memberships": [
+        "dic_panel"
+      ],
+      "ui_categories": [
+        "coagulation",
+        "hematology"
+      ],
+      "tags": [
+        "coagulation",
+        "hematologic",
+        "coagulopathy",
+        "dic",
+        "heparin",
+        "fibrinogen_deficiency"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 14.0,
+          "max": 19.0
+        },
+        "ped_1yr_plus": {
+          "min": 14.0,
+          "max": 19.0
+        },
+        "ped_1mo_1yr": {
+          "min": 14.0,
+          "max": 22.0
+        },
+        "ped_0_1mo": {
+          "min": 14.0,
+          "max": 26.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 6
+    },
+    {
+      "id": "abg_ph",
+      "name": "Arterial pH",
+      "aliases": [
+        "arterial pH",
+        "pH (arterial)",
+        "blood pH ABG",
+        "pH ABG"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "abg"
+      ],
+      "ui_categories": [
+        "blood_gas",
+        "general"
+      ],
+      "tags": [
+        "pulmonary",
+        "blood_gas",
+        "chemistry",
+        "emergency",
+        "acidosis",
+        "alkalosis",
+        "sepsis",
+        "respiratory_failure"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 7.35,
+          "max": 7.45
+        },
+        "ped_1yr_plus": {
+          "min": 7.35,
+          "max": 7.45
+        },
+        "ped_1mo_1yr": {
+          "min": 7.34,
+          "max": 7.45
+        },
+        "ped_0_1mo": {
+          "min": 7.3,
+          "max": 7.45
+        }
+      },
+      "display_decimals": 2,
+      "display_order": 1
+    },
+    {
+      "id": "abg_pco2",
+      "name": "Arterial pCO2",
+      "aliases": [
+        "pCO2 (arterial)",
+        "arterial pCO2",
+        "PCO2 ABG",
+        "carbon dioxide pressure ABG"
+      ],
+      "unit": "mmHg",
+      "panel_memberships": [
+        "abg"
+      ],
+      "ui_categories": [
+        "blood_gas",
+        "general"
+      ],
+      "tags": [
+        "pulmonary",
+        "blood_gas",
+        "chemistry",
+        "emergency",
+        "respiratory_acidosis",
+        "respiratory_alkalosis",
+        "ventilation",
+        "sepsis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 35.0,
+          "max": 45.0
+        },
+        "ped_1yr_plus": {
+          "min": 35.0,
+          "max": 45.0
+        },
+        "ped_1mo_1yr": {
+          "min": 30.0,
+          "max": 40.0
+        },
+        "ped_0_1mo": {
+          "min": 30.0,
+          "max": 40.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 2
+    },
+    {
+      "id": "abg_po2",
+      "name": "Arterial pO2",
+      "aliases": [
+        "pO2 (arterial)",
+        "arterial pO2",
+        "PO2 ABG",
+        "oxygen pressure ABG"
+      ],
+      "unit": "mmHg",
+      "panel_memberships": [
+        "abg"
+      ],
+      "ui_categories": [
+        "blood_gas",
+        "general"
+      ],
+      "tags": [
+        "pulmonary",
+        "blood_gas",
+        "emergency",
+        "hypoxia",
+        "respiratory_failure",
+        "pneumonia",
+        "sepsis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 80.0,
+          "max": 100.0
+        },
+        "ped_1yr_plus": {
+          "min": 80.0,
+          "max": 100.0
+        },
+        "ped_1mo_1yr": {
+          "min": 75.0,
+          "max": 100.0
+        },
+        "ped_0_1mo": {
+          "min": 60.0,
+          "max": 90.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 3
+    },
+    {
+      "id": "abg_hco3",
+      "name": "Arterial Bicarbonate",
+      "aliases": [
+        "HCO3 (arterial)",
+        "arterial bicarb",
+        "arterial bicarbonate"
+      ],
+      "unit": "mEq/L",
+      "panel_memberships": [
+        "abg"
+      ],
+      "ui_categories": [
+        "blood_gas",
+        "chemistry",
+        "general"
+      ],
+      "tags": [
+        "pulmonary",
+        "blood_gas",
+        "chemistry",
+        "emergency",
+        "metabolic_acidosis",
+        "metabolic_alkalosis",
+        "sepsis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 22.0,
+          "max": 26.0
+        },
+        "ped_1yr_plus": {
+          "min": 20.0,
+          "max": 26.0
+        },
+        "ped_1mo_1yr": {
+          "min": 18.0,
+          "max": 25.0
+        },
+        "ped_0_1mo": {
+          "min": 17.0,
+          "max": 24.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 4
+    },
+    {
+      "id": "abg_base_excess",
+      "name": "Base Excess (Arterial)",
+      "aliases": [
+        "base excess",
+        "BE",
+        "base deficit",
+        "base excess ABG"
+      ],
+      "unit": "mEq/L",
+      "panel_memberships": [
+        "abg"
+      ],
+      "ui_categories": [
+        "blood_gas",
+        "general"
+      ],
+      "tags": [
+        "pulmonary",
+        "blood_gas",
+        "chemistry",
+        "emergency",
+        "metabolic_acidosis",
+        "sepsis",
+        "shock",
+        "trauma"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": -2.0,
+          "max": 2.0
+        },
+        "ped_1yr_plus": {
+          "min": -4.0,
+          "max": 2.0
+        },
+        "ped_1mo_1yr": {
+          "min": -4.0,
+          "max": 2.0
+        },
+        "ped_0_1mo": {
+          "min": -6.0,
+          "max": 2.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 5
+    },
+    {
+      "id": "abg_sao2",
+      "name": "O2 Saturation Arterial (Measured)",
+      "aliases": [
+        "SaO2",
+        "oxygen saturation arterial",
+        "arterial saturation",
+        "SaO2 ABG"
+      ],
+      "unit": "%",
+      "panel_memberships": [
+        "abg",
+        "cooximetry"
+      ],
+      "ui_categories": [
+        "blood_gas",
+        "general"
+      ],
+      "tags": [
+        "pulmonary",
+        "blood_gas",
+        "emergency",
+        "hypoxia",
+        "respiratory_failure"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 95.0,
+          "max": 100.0
+        },
+        "ped_1yr_plus": {
+          "min": 95.0,
+          "max": 100.0
+        },
+        "ped_1mo_1yr": {
+          "min": 95.0,
+          "max": 100.0
+        },
+        "ped_0_1mo": {
+          "min": 93.0,
+          "max": 100.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 6
+    },
+    {
+      "id": "vbg_ph",
+      "name": "Venous pH",
+      "aliases": [
+        "venous pH",
+        "pH (venous)",
+        "VBG pH"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "vbg"
+      ],
+      "ui_categories": [
+        "blood_gas",
+        "general"
+      ],
+      "tags": [
+        "pulmonary",
+        "blood_gas",
+        "chemistry",
+        "emergency",
+        "acidosis",
+        "alkalosis",
+        "sepsis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 7.31,
+          "max": 7.41
+        },
+        "ped_1yr_plus": {
+          "min": 7.31,
+          "max": 7.41
+        },
+        "ped_1mo_1yr": {
+          "min": 7.3,
+          "max": 7.41
+        },
+        "ped_0_1mo": {
+          "min": 7.27,
+          "max": 7.41
+        }
+      },
+      "display_decimals": 2,
+      "display_order": 1
+    },
+    {
+      "id": "vbg_pco2",
+      "name": "Venous pCO2",
+      "aliases": [
+        "pCO2 (venous)",
+        "venous pCO2",
+        "VBG PCO2"
+      ],
+      "unit": "mmHg",
+      "panel_memberships": [
+        "vbg"
+      ],
+      "ui_categories": [
+        "blood_gas",
+        "general"
+      ],
+      "tags": [
+        "pulmonary",
+        "blood_gas",
+        "chemistry",
+        "emergency",
+        "ventilation",
+        "sepsis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 41.0,
+          "max": 51.0
+        },
+        "ped_1yr_plus": {
+          "min": 41.0,
+          "max": 51.0
+        },
+        "ped_1mo_1yr": {
+          "min": 38.0,
+          "max": 50.0
+        },
+        "ped_0_1mo": {
+          "min": 36.0,
+          "max": 50.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 2
+    },
+    {
+      "id": "vbg_po2",
+      "name": "Venous pO2",
+      "aliases": [
+        "pO2 (venous)",
+        "venous pO2",
+        "VBG PO2"
+      ],
+      "unit": "mmHg",
+      "panel_memberships": [
+        "vbg"
+      ],
+      "ui_categories": [
+        "blood_gas",
+        "general"
+      ],
+      "tags": [
+        "pulmonary",
+        "blood_gas",
+        "emergency",
+        "monitoring"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 30.0,
+          "max": 50.0
+        },
+        "ped_1yr_plus": {
+          "min": 30.0,
+          "max": 50.0
+        },
+        "ped_1mo_1yr": {
+          "min": 28.0,
+          "max": 48.0
+        },
+        "ped_0_1mo": {
+          "min": 25.0,
+          "max": 45.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 3
+    },
+    {
+      "id": "vbg_hco3",
+      "name": "Venous Bicarbonate",
+      "aliases": [
+        "HCO3 (venous)",
+        "venous bicarb",
+        "venous bicarbonate",
+        "VBG HCO3"
+      ],
+      "unit": "mEq/L",
+      "panel_memberships": [
+        "vbg"
+      ],
+      "ui_categories": [
+        "blood_gas",
+        "chemistry",
+        "general"
+      ],
+      "tags": [
+        "pulmonary",
+        "blood_gas",
+        "chemistry",
+        "emergency",
+        "metabolic_acidosis",
+        "sepsis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 22.0,
+          "max": 29.0
+        },
+        "ped_1yr_plus": {
+          "min": 20.0,
+          "max": 28.0
+        },
+        "ped_1mo_1yr": {
+          "min": 18.0,
+          "max": 27.0
+        },
+        "ped_0_1mo": {
+          "min": 17.0,
+          "max": 26.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 4
+    },
+    {
+      "id": "vbg_base_excess",
+      "name": "Base Excess (Venous)",
+      "aliases": [
+        "base excess (venous)",
+        "VBG base excess",
+        "venous BE"
+      ],
+      "unit": "mEq/L",
+      "panel_memberships": [
+        "vbg"
+      ],
+      "ui_categories": [
+        "blood_gas",
+        "general"
+      ],
+      "tags": [
+        "pulmonary",
+        "blood_gas",
+        "chemistry",
+        "emergency",
+        "acidosis",
+        "sepsis",
+        "shock"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": -2.0,
+          "max": 2.0
+        },
+        "ped_1yr_plus": {
+          "min": -4.0,
+          "max": 2.0
+        },
+        "ped_1mo_1yr": {
+          "min": -4.0,
+          "max": 2.0
+        },
+        "ped_0_1mo": {
+          "min": -6.0,
+          "max": 2.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 5
+    },
+    {
+      "id": "lactate",
+      "name": "Lactate",
+      "aliases": [
+        "lactate",
+        "lactic acid",
+        "blood lactate",
+        "serum lactate",
+        "lactate level"
+      ],
+      "unit": "mmol/L",
+      "panel_memberships": [
+        "vbg"
+      ],
+      "ui_categories": [
+        "blood_gas",
+        "chemistry",
+        "inflammatory",
+        "general"
+      ],
+      "tags": [
+        "chemistry",
+        "metabolic",
+        "blood_gas",
+        "emergency",
+        "sepsis",
+        "shock",
+        "ischemia",
+        "appendicitis",
+        "hypoperfusion",
+        "lactic_acidosis",
+        "monitoring"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0.5,
+          "max": 2.0
+        },
+        "ped_1yr_plus": {
+          "min": 0.5,
+          "max": 2.0
+        },
+        "ped_1mo_1yr": {
+          "min": 0.5,
+          "max": 2.2
+        },
+        "ped_0_1mo": {
+          "min": 0.5,
+          "max": 2.5
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 6
+    },
+    {
+      "id": "sao2_measured",
+      "name": "O2 Saturation (Co-oximetry)",
+      "aliases": [
+        "SaO2 measured",
+        "co-ox saturation",
+        "functional SaO2"
+      ],
+      "unit": "%",
+      "panel_memberships": [
+        "cooximetry"
+      ],
+      "ui_categories": [
+        "blood_gas",
+        "hematology"
+      ],
+      "tags": [
+        "hematologic",
+        "blood_gas",
+        "emergency",
+        "monitoring",
+        "hypoxia"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 95.0,
+          "max": 100.0
+        },
+        "ped_1yr_plus": {
+          "min": 95.0,
+          "max": 100.0
+        },
+        "ped_1mo_1yr": {
+          "min": 95.0,
+          "max": 100.0
+        },
+        "ped_0_1mo": {
+          "min": 93.0,
+          "max": 100.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 1
+    },
+    {
+      "id": "methemoglobin",
+      "name": "Methemoglobin",
+      "aliases": [
+        "methemoglobin",
+        "MetHgb",
+        "met hgb"
+      ],
+      "unit": "%",
+      "panel_memberships": [
+        "cooximetry"
+      ],
+      "ui_categories": [
+        "blood_gas",
+        "hematology"
+      ],
+      "tags": [
+        "hematologic",
+        "blood_gas",
+        "toxicology",
+        "emergency",
+        "methemoglobinemia",
+        "drug_toxicity",
+        "cyanosis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0.0,
+          "max": 1.5
+        },
+        "ped_1yr_plus": {
+          "min": 0.0,
+          "max": 1.5
+        },
+        "ped_1mo_1yr": {
+          "min": 0.0,
+          "max": 1.5
+        },
+        "ped_0_1mo": {
+          "min": 0.0,
+          "max": 1.5
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 2
+    },
+    {
+      "id": "carboxyhemoglobin",
+      "name": "Carboxyhemoglobin",
+      "aliases": [
+        "carboxyhemoglobin",
+        "COHgb",
+        "CO hemoglobin",
+        "COHb",
+        "carbon monoxide hemoglobin"
+      ],
+      "unit": "%",
+      "panel_memberships": [
+        "cooximetry"
+      ],
+      "ui_categories": [
+        "blood_gas",
+        "hematology",
+        "toxicology"
+      ],
+      "tags": [
+        "hematologic",
+        "blood_gas",
+        "toxicology",
+        "emergency",
+        "carbon_monoxide_poisoning",
+        "smoke_inhalation"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0.0,
+          "max": 3.0,
+          "note": "Smokers up to 10%"
+        },
+        "ped_1yr_plus": {
+          "min": 0.0,
+          "max": 2.0
+        },
+        "ped_1mo_1yr": {
+          "min": 0.0,
+          "max": 2.0
+        },
+        "ped_0_1mo": {
+          "min": 0.0,
+          "max": 2.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 3
+    },
+    {
+      "id": "oxyhemoglobin",
+      "name": "Oxyhemoglobin",
+      "aliases": [
+        "oxyhemoglobin",
+        "OxyHgb",
+        "O2Hgb"
+      ],
+      "unit": "%",
+      "panel_memberships": [
+        "cooximetry"
+      ],
+      "ui_categories": [
+        "blood_gas",
+        "hematology"
+      ],
+      "tags": [
+        "hematologic",
+        "blood_gas",
+        "monitoring",
+        "hypoxia"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 94.0,
+          "max": 98.0
+        },
+        "ped_1yr_plus": {
+          "min": 94.0,
+          "max": 98.0
+        },
+        "ped_1mo_1yr": {
+          "min": 94.0,
+          "max": 98.0
+        },
+        "ped_0_1mo": {
+          "min": 92.0,
+          "max": 98.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 4
+    },
+    {
+      "id": "deoxyhemoglobin",
+      "name": "Deoxyhemoglobin",
+      "aliases": [
+        "deoxyhemoglobin",
+        "DeoxyHgb",
+        "reduced hemoglobin"
+      ],
+      "unit": "%",
+      "panel_memberships": [
+        "cooximetry"
+      ],
+      "ui_categories": [
+        "blood_gas",
+        "hematology"
+      ],
+      "tags": [
+        "hematologic",
+        "blood_gas",
+        "monitoring"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0.0,
+          "max": 5.0
+        },
+        "ped_1yr_plus": {
+          "min": 0.0,
+          "max": 5.0
+        },
+        "ped_1mo_1yr": {
+          "min": 0.0,
+          "max": 5.0
+        },
+        "ped_0_1mo": {
+          "min": 0.0,
+          "max": 5.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 5
+    },
+    {
+      "id": "total_cholesterol",
+      "name": "Total Cholesterol",
+      "aliases": [
+        "total cholesterol",
+        "cholesterol",
+        "cholesterol total",
+        "TC"
+      ],
+      "unit": "mg/dL",
+      "panel_memberships": [
+        "lipid_panel"
+      ],
+      "ui_categories": [
+        "lipids",
+        "chemistry",
+        "general"
+      ],
+      "tags": [
+        "lipid",
+        "metabolic",
+        "cardiac",
+        "screening",
+        "cardiac_disease",
+        "atherosclerosis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0,
+          "max": 200,
+          "note": "Desirable <200, Borderline 200-239, High \u2265240"
+        },
+        "ped_1yr_plus": {
+          "min": 0,
+          "max": 170
+        },
+        "ped_1mo_1yr": {
+          "min": 50,
+          "max": 150
+        },
+        "ped_0_1mo": {
+          "min": 50,
+          "max": 150
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 1
+    },
+    {
+      "id": "ldl",
+      "name": "LDL Cholesterol",
+      "aliases": [
+        "LDL",
+        "LDL cholesterol",
+        "low density lipoprotein",
+        "bad cholesterol",
+        "LDL-C"
+      ],
+      "unit": "mg/dL",
+      "panel_memberships": [
+        "lipid_panel"
+      ],
+      "ui_categories": [
+        "lipids",
+        "chemistry",
+        "cardiac",
+        "general"
+      ],
+      "tags": [
+        "lipid",
+        "metabolic",
+        "cardiac",
+        "screening",
+        "cardiac_disease",
+        "atherosclerosis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0,
+          "max": 100,
+          "note": "Optimal <100, Near optimal 100-129, Borderline 130-159, High 160-189"
+        },
+        "ped_1yr_plus": {
+          "min": 0,
+          "max": 110
+        },
+        "ped_1mo_1yr": {
+          "min": 0,
+          "max": 110
+        },
+        "ped_0_1mo": {
+          "min": 0,
+          "max": 110
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 2
+    },
+    {
+      "id": "hdl",
+      "name": "HDL Cholesterol",
+      "aliases": [
+        "HDL",
+        "HDL cholesterol",
+        "high density lipoprotein",
+        "good cholesterol",
+        "HDL-C"
+      ],
+      "unit": "mg/dL",
+      "panel_memberships": [
+        "lipid_panel"
+      ],
+      "ui_categories": [
+        "lipids",
+        "chemistry",
+        "cardiac",
+        "general"
+      ],
+      "tags": [
+        "lipid",
+        "metabolic",
+        "cardiac",
+        "screening",
+        "cardiac_disease",
+        "atherosclerosis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 40,
+          "max": 999,
+          "note": "Low risk >60, Normal \u226540 (male) or \u226550 (female)"
+        },
+        "ped_1yr_plus": {
+          "min": 35,
+          "max": 999
+        },
+        "ped_1mo_1yr": {
+          "min": 30,
+          "max": 999
+        },
+        "ped_0_1mo": {
+          "min": 30,
+          "max": 999
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 3
+    },
+    {
+      "id": "triglycerides",
+      "name": "Triglycerides",
+      "aliases": [
+        "triglycerides",
+        "TG",
+        "trigs",
+        "serum triglycerides"
+      ],
+      "unit": "mg/dL",
+      "panel_memberships": [
+        "lipid_panel"
+      ],
+      "ui_categories": [
+        "lipids",
+        "chemistry",
+        "general",
+        "pancreatic"
+      ],
+      "tags": [
+        "lipid",
+        "metabolic",
+        "cardiac",
+        "pancreatic",
+        "screening",
+        "cardiac_disease",
+        "pancreatitis",
+        "diabetes"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0,
+          "max": 150,
+          "note": "Normal <150, Borderline 150-199, High 200-499, Very high \u2265500"
+        },
+        "ped_1yr_plus": {
+          "min": 0,
+          "max": 130
+        },
+        "ped_1mo_1yr": {
+          "min": 0,
+          "max": 100
+        },
+        "ped_0_1mo": {
+          "min": 0,
+          "max": 100
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 4
+    },
+    {
+      "id": "non_hdl_cholesterol",
+      "name": "Non-HDL Cholesterol",
+      "aliases": [
+        "non-HDL cholesterol",
+        "non HDL",
+        "non-HDL"
+      ],
+      "unit": "mg/dL",
+      "panel_memberships": [
+        "lipid_panel"
+      ],
+      "ui_categories": [
+        "lipids",
+        "chemistry",
+        "cardiac",
+        "general"
+      ],
+      "tags": [
+        "lipid",
+        "metabolic",
+        "cardiac",
+        "screening",
+        "cardiac_disease",
+        "atherosclerosis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0,
+          "max": 130,
+          "note": "Desirable <130"
+        },
+        "ped_1yr_plus": {
+          "min": 0,
+          "max": 120
+        },
+        "ped_1mo_1yr": {
+          "min": 0,
+          "max": 120
+        },
+        "ped_0_1mo": {
+          "min": 0,
+          "max": 120
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 5
+    },
+    {
+      "id": "serum_iron",
+      "name": "Serum Iron",
+      "aliases": [
+        "serum iron",
+        "iron",
+        "iron level",
+        "Fe",
+        "blood iron"
+      ],
+      "unit": "\u00b5g/dL",
+      "panel_memberships": [
+        "iron_panel"
+      ],
+      "ui_categories": [
+        "iron",
+        "hematology",
+        "chemistry",
+        "general"
+      ],
+      "tags": [
+        "hematologic",
+        "nutritional",
+        "metabolic",
+        "anemia",
+        "iron_deficiency",
+        "iron_overload",
+        "hemochromatosis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 60,
+          "max": 170,
+          "note": "Male: 65-175, Female: 50-170"
+        },
+        "ped_1yr_plus": {
+          "min": 50,
+          "max": 120
+        },
+        "ped_1mo_1yr": {
+          "min": 40,
+          "max": 100
+        },
+        "ped_0_1mo": {
+          "min": 50,
+          "max": 150
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 1
+    },
+    {
+      "id": "tibc",
+      "name": "Total Iron Binding Capacity",
+      "aliases": [
+        "TIBC",
+        "total iron binding capacity",
+        "iron binding capacity",
+        "transferrin"
+      ],
+      "unit": "\u00b5g/dL",
+      "panel_memberships": [
+        "iron_panel"
+      ],
+      "ui_categories": [
+        "iron",
+        "hematology",
+        "chemistry"
+      ],
+      "tags": [
+        "hematologic",
+        "nutritional",
+        "metabolic",
+        "anemia",
+        "iron_deficiency",
+        "malnutrition"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 250,
+          "max": 370
+        },
+        "ped_1yr_plus": {
+          "min": 250,
+          "max": 380
+        },
+        "ped_1mo_1yr": {
+          "min": 200,
+          "max": 400
+        },
+        "ped_0_1mo": {
+          "min": 100,
+          "max": 400
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 2
+    },
+    {
+      "id": "transferrin_saturation",
+      "name": "Transferrin Saturation",
+      "aliases": [
+        "transferrin saturation",
+        "TSAT",
+        "iron saturation",
+        "transferrin sat",
+        "percent saturation"
+      ],
+      "unit": "%",
+      "panel_memberships": [
+        "iron_panel"
+      ],
+      "ui_categories": [
+        "iron",
+        "hematology",
+        "chemistry"
+      ],
+      "tags": [
+        "hematologic",
+        "nutritional",
+        "metabolic",
+        "anemia",
+        "iron_deficiency",
+        "iron_overload",
+        "hemochromatosis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 20,
+          "max": 50
+        },
+        "ped_1yr_plus": {
+          "min": 15,
+          "max": 50
+        },
+        "ped_1mo_1yr": {
+          "min": 10,
+          "max": 50
+        },
+        "ped_0_1mo": {
+          "min": 10,
+          "max": 60
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 3
+    },
+    {
+      "id": "ferritin",
+      "name": "Ferritin",
+      "aliases": [
+        "ferritin",
+        "serum ferritin",
+        "ferritin level",
+        "iron stores"
+      ],
+      "unit": "ng/mL",
+      "panel_memberships": [
+        "iron_panel"
+      ],
+      "ui_categories": [
+        "iron",
+        "hematology",
+        "chemistry",
+        "inflammatory",
+        "general"
+      ],
+      "tags": [
+        "hematologic",
+        "nutritional",
+        "inflammatory",
+        "metabolic",
+        "anemia",
+        "iron_deficiency",
+        "iron_overload",
+        "hemochromatosis",
+        "sepsis",
+        "malignancy"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 20,
+          "max": 300,
+          "note": "Male: 20-300, Female: 15-200"
+        },
+        "ped_1yr_plus": {
+          "min": 7,
+          "max": 140
+        },
+        "ped_1mo_1yr": {
+          "min": 20,
+          "max": 200
+        },
+        "ped_0_1mo": {
+          "min": 25,
+          "max": 200
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 4
+    },
+    {
+      "id": "tsh",
+      "name": "Thyroid Stimulating Hormone",
+      "aliases": [
+        "TSH",
+        "thyroid stimulating hormone",
+        "thyrotropin",
+        "TSH level",
+        "thyroid"
+      ],
+      "unit": "mIU/L",
+      "panel_memberships": [
+        "thyroid_panel"
+      ],
+      "ui_categories": [
+        "thyroid",
+        "endocrine",
+        "chemistry",
+        "general"
+      ],
+      "tags": [
+        "endocrine",
+        "thyroid",
+        "hormonal",
+        "screening",
+        "thyroid_disease",
+        "hypothyroidism",
+        "hyperthyroidism",
+        "altered_mental_status",
+        "tachycardia"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0.4,
+          "max": 4.0
+        },
+        "ped_1yr_plus": {
+          "min": 0.5,
+          "max": 4.5
+        },
+        "ped_1mo_1yr": {
+          "min": 1.0,
+          "max": 8.0
+        },
+        "ped_0_1mo": {
+          "min": 1.0,
+          "max": 20.0
+        }
+      },
+      "display_decimals": 2,
+      "display_order": 1
+    },
+    {
+      "id": "free_t4",
+      "name": "Free T4",
+      "aliases": [
+        "free T4",
+        "FT4",
+        "free thyroxine",
+        "thyroxine free",
+        "T4 free"
+      ],
+      "unit": "ng/dL",
+      "panel_memberships": [
+        "thyroid_panel"
+      ],
+      "ui_categories": [
+        "thyroid",
+        "endocrine",
+        "chemistry",
+        "general"
+      ],
+      "tags": [
+        "endocrine",
+        "thyroid",
+        "hormonal",
+        "thyroid_disease",
+        "hypothyroidism",
+        "hyperthyroidism"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0.8,
+          "max": 1.8
+        },
+        "ped_1yr_plus": {
+          "min": 0.8,
+          "max": 1.7
+        },
+        "ped_1mo_1yr": {
+          "min": 0.9,
+          "max": 2.0
+        },
+        "ped_0_1mo": {
+          "min": 1.0,
+          "max": 3.0
+        }
+      },
+      "display_decimals": 2,
+      "display_order": 2
+    },
+    {
+      "id": "free_t3",
+      "name": "Free T3",
+      "aliases": [
+        "free T3",
+        "FT3",
+        "free triiodothyronine",
+        "T3 free"
+      ],
+      "unit": "pg/mL",
+      "panel_memberships": [],
+      "ui_categories": [
+        "thyroid",
+        "endocrine",
+        "chemistry"
+      ],
+      "tags": [
+        "endocrine",
+        "thyroid",
+        "hormonal",
+        "thyroid_disease",
+        "hyperthyroidism",
+        "hypothyroidism"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 2.3,
+          "max": 4.2
+        },
+        "ped_1yr_plus": {
+          "min": 2.0,
+          "max": 4.4
+        },
+        "ped_1mo_1yr": {
+          "min": 1.8,
+          "max": 6.0
+        },
+        "ped_0_1mo": {
+          "min": 1.5,
+          "max": 6.5
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 3
+    },
+    {
+      "id": "ana",
+      "name": "Antinuclear Antibody",
+      "aliases": [
+        "ANA",
+        "antinuclear antibody",
+        "anti-nuclear antibody",
+        "ANA titer",
+        "ANA screen"
+      ],
+      "unit": "titer",
+      "panel_memberships": [
+        "ana_panel"
+      ],
+      "ui_categories": [
+        "rheumatologic"
+      ],
+      "tags": [
+        "rheumatologic",
+        "immunologic",
+        "autoimmune",
+        "screening",
+        "lupus",
+        "connective_tissue_disease"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative at 1:40"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative at 1:40"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative at 1:40"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative at 1:40"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 1
+    },
+    {
+      "id": "anti_dsdna",
+      "name": "Anti-dsDNA Antibody",
+      "aliases": [
+        "anti-dsDNA",
+        "anti dsDNA",
+        "double stranded DNA antibody",
+        "ds-DNA antibody"
+      ],
+      "unit": "IU/mL",
+      "panel_memberships": [
+        "ana_panel"
+      ],
+      "ui_categories": [
+        "rheumatologic"
+      ],
+      "tags": [
+        "rheumatologic",
+        "immunologic",
+        "autoimmune",
+        "lupus",
+        "nephritis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0,
+          "max": 30
+        },
+        "ped_1yr_plus": {
+          "min": 0,
+          "max": 30
+        },
+        "ped_1mo_1yr": {
+          "min": 0,
+          "max": 30
+        },
+        "ped_0_1mo": {
+          "min": 0,
+          "max": 30
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 2
+    },
+    {
+      "id": "anti_smith",
+      "name": "Anti-Smith Antibody",
+      "aliases": [
+        "anti-Smith",
+        "anti Smith",
+        "anti-Sm",
+        "Smith antibody"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "ana_panel"
+      ],
+      "ui_categories": [
+        "rheumatologic"
+      ],
+      "tags": [
+        "rheumatologic",
+        "immunologic",
+        "autoimmune",
+        "lupus"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 3
+    },
+    {
+      "id": "anti_ssa",
+      "name": "Anti-SSA/Ro Antibody",
+      "aliases": [
+        "anti-SSA",
+        "anti-Ro",
+        "SSA antibody",
+        "Ro antibody",
+        "anti-SSA/Ro"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "ana_panel"
+      ],
+      "ui_categories": [
+        "rheumatologic"
+      ],
+      "tags": [
+        "rheumatologic",
+        "immunologic",
+        "autoimmune",
+        "sjogrens",
+        "lupus",
+        "neonatal_lupus"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 4
+    },
+    {
+      "id": "anti_ssb",
+      "name": "Anti-SSB/La Antibody",
+      "aliases": [
+        "anti-SSB",
+        "anti-La",
+        "SSB antibody",
+        "La antibody"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "ana_panel"
+      ],
+      "ui_categories": [
+        "rheumatologic"
+      ],
+      "tags": [
+        "rheumatologic",
+        "immunologic",
+        "autoimmune",
+        "sjogrens",
+        "lupus"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 5
+    },
+    {
+      "id": "anti_scl70",
+      "name": "Anti-Scl-70 Antibody",
+      "aliases": [
+        "anti-Scl-70",
+        "anti Scl70",
+        "anti-topoisomerase I",
+        "Scl-70 antibody"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "ana_panel"
+      ],
+      "ui_categories": [
+        "rheumatologic"
+      ],
+      "tags": [
+        "rheumatologic",
+        "immunologic",
+        "autoimmune",
+        "scleroderma",
+        "systemic_sclerosis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 6
+    },
+    {
+      "id": "anti_jo1",
+      "name": "Anti-Jo-1 Antibody",
+      "aliases": [
+        "anti-Jo-1",
+        "anti Jo1",
+        "Jo-1 antibody",
+        "anti-histidyl-tRNA synthetase"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "ana_panel"
+      ],
+      "ui_categories": [
+        "rheumatologic"
+      ],
+      "tags": [
+        "rheumatologic",
+        "immunologic",
+        "autoimmune",
+        "myositis",
+        "polymyositis",
+        "dermatomyositis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 7
+    },
+    {
+      "id": "esr",
+      "name": "Erythrocyte Sedimentation Rate",
+      "aliases": [
+        "ESR",
+        "sed rate",
+        "sedimentation rate",
+        "erythrocyte sedimentation rate",
+        "Westergren ESR"
+      ],
+      "unit": "mm/hr",
+      "panel_memberships": [
+        "rheum_panel"
+      ],
+      "ui_categories": [
+        "rheumatologic",
+        "inflammatory",
+        "hematology",
+        "general"
+      ],
+      "tags": [
+        "hematologic",
+        "inflammatory",
+        "rheumatologic",
+        "immunologic",
+        "screening",
+        "infection",
+        "autoimmune",
+        "malignancy",
+        "appendicitis",
+        "inflammation"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0,
+          "max": 20,
+          "note": "Male <15, Female <20; increases with age"
+        },
+        "ped_1yr_plus": {
+          "min": 0,
+          "max": 20
+        },
+        "ped_1mo_1yr": {
+          "min": 0,
+          "max": 20
+        },
+        "ped_0_1mo": {
+          "min": 0,
+          "max": 10
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 1
+    },
+    {
+      "id": "crp",
+      "name": "C-Reactive Protein",
+      "aliases": [
+        "CRP",
+        "C-reactive protein",
+        "C reactive protein",
+        "CRP level"
+      ],
+      "unit": "mg/L",
+      "panel_memberships": [
+        "rheum_panel"
+      ],
+      "ui_categories": [
+        "inflammatory",
+        "rheumatologic",
+        "general"
+      ],
+      "tags": [
+        "inflammatory",
+        "immunologic",
+        "rheumatologic",
+        "infection",
+        "sepsis",
+        "appendicitis",
+        "autoimmune",
+        "acute_phase_reactant",
+        "monitoring",
+        "screening"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0.0,
+          "max": 10.0
+        },
+        "ped_1yr_plus": {
+          "min": 0.0,
+          "max": 10.0
+        },
+        "ped_1mo_1yr": {
+          "min": 0.0,
+          "max": 10.0
+        },
+        "ped_0_1mo": {
+          "min": 0.0,
+          "max": 10.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 2
+    },
+    {
+      "id": "rf",
+      "name": "Rheumatoid Factor",
+      "aliases": [
+        "RF",
+        "rheumatoid factor",
+        "RA factor"
+      ],
+      "unit": "IU/mL",
+      "panel_memberships": [
+        "rheum_panel"
+      ],
+      "ui_categories": [
+        "rheumatologic"
+      ],
+      "tags": [
+        "rheumatologic",
+        "immunologic",
+        "autoimmune",
+        "screening",
+        "rheumatoid_arthritis",
+        "sjogrens"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0,
+          "max": 14
+        },
+        "ped_1yr_plus": {
+          "min": 0,
+          "max": 14
+        },
+        "ped_1mo_1yr": {
+          "min": 0,
+          "max": 14
+        },
+        "ped_0_1mo": {
+          "min": 0,
+          "max": 14
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 3
+    },
+    {
+      "id": "anti_ccp",
+      "name": "Anti-CCP Antibody",
+      "aliases": [
+        "anti-CCP",
+        "anti CCP",
+        "anti-cyclic citrullinated peptide",
+        "CCP antibody",
+        "ACPA"
+      ],
+      "unit": "U/mL",
+      "panel_memberships": [
+        "rheum_panel"
+      ],
+      "ui_categories": [
+        "rheumatologic"
+      ],
+      "tags": [
+        "rheumatologic",
+        "immunologic",
+        "autoimmune",
+        "rheumatoid_arthritis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0,
+          "max": 17
+        },
+        "ped_1yr_plus": {
+          "min": 0,
+          "max": 17
+        },
+        "ped_1mo_1yr": {
+          "min": 0,
+          "max": 17
+        },
+        "ped_0_1mo": {
+          "min": 0,
+          "max": 17
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 4
+    },
+    {
+      "id": "complement_c3",
+      "name": "Complement C3",
+      "aliases": [
+        "C3",
+        "complement C3",
+        "C3 level"
+      ],
+      "unit": "mg/dL",
+      "panel_memberships": [
+        "rheum_panel"
+      ],
+      "ui_categories": [
+        "rheumatologic"
+      ],
+      "tags": [
+        "rheumatologic",
+        "immunologic",
+        "autoimmune",
+        "lupus",
+        "complement_deficiency",
+        "glomerulonephritis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 90,
+          "max": 180
+        },
+        "ped_1yr_plus": {
+          "min": 77,
+          "max": 166
+        },
+        "ped_1mo_1yr": {
+          "min": 62,
+          "max": 135
+        },
+        "ped_0_1mo": {
+          "min": 57,
+          "max": 116
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 5
+    },
+    {
+      "id": "complement_c4",
+      "name": "Complement C4",
+      "aliases": [
+        "C4",
+        "complement C4",
+        "C4 level"
+      ],
+      "unit": "mg/dL",
+      "panel_memberships": [
+        "rheum_panel"
+      ],
+      "ui_categories": [
+        "rheumatologic"
+      ],
+      "tags": [
+        "rheumatologic",
+        "immunologic",
+        "autoimmune",
+        "lupus",
+        "complement_deficiency"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 16,
+          "max": 47
+        },
+        "ped_1yr_plus": {
+          "min": 12,
+          "max": 39
+        },
+        "ped_1mo_1yr": {
+          "min": 8,
+          "max": 32
+        },
+        "ped_0_1mo": {
+          "min": 5,
+          "max": 30
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 6
+    },
+    {
+      "id": "anca",
+      "name": "ANCA",
+      "aliases": [
+        "ANCA",
+        "anti-neutrophil cytoplasmic antibody",
+        "antineutrophil cytoplasmic antibody",
+        "p-ANCA",
+        "c-ANCA",
+        "MPO-ANCA",
+        "PR3-ANCA"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "rheum_panel"
+      ],
+      "ui_categories": [
+        "rheumatologic"
+      ],
+      "tags": [
+        "rheumatologic",
+        "immunologic",
+        "autoimmune",
+        "vasculitis",
+        "granulomatosis_polyangiitis",
+        "microscopic_polyangiitis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 7
+    },
+    {
+      "id": "hbsag",
+      "name": "Hepatitis B Surface Antigen",
+      "aliases": [
+        "HBsAg",
+        "hepatitis B surface antigen",
+        "hep B surface antigen"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "hepatitis_panel"
+      ],
+      "ui_categories": [
+        "hepatitis",
+        "liver",
+        "microbiology"
+      ],
+      "tags": [
+        "hepatic",
+        "immunologic",
+        "microbiology",
+        "screening",
+        "hepatitis",
+        "liver_disease",
+        "hepatitis_B"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 1
+    },
+    {
+      "id": "hbsab",
+      "name": "Hepatitis B Surface Antibody",
+      "aliases": [
+        "HBsAb",
+        "anti-HBs",
+        "hepatitis B surface antibody"
+      ],
+      "unit": "mIU/mL",
+      "panel_memberships": [
+        "hepatitis_panel"
+      ],
+      "ui_categories": [
+        "hepatitis",
+        "liver",
+        "microbiology"
+      ],
+      "tags": [
+        "hepatic",
+        "immunologic",
+        "microbiology",
+        "screening",
+        "hepatitis",
+        "immunity",
+        "hepatitis_B"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0,
+          "max": 10,
+          "note": "\u226510 mIU/mL indicates immunity"
+        },
+        "ped_1yr_plus": {
+          "min": 0,
+          "max": 10
+        },
+        "ped_1mo_1yr": {
+          "min": 0,
+          "max": 10
+        },
+        "ped_0_1mo": {
+          "min": 0,
+          "max": 10
+        }
+      },
+      "display_type": "qualitative",
+      "display_decimals": 0,
+      "display_order": 2
+    },
+    {
+      "id": "hbcab_igm",
+      "name": "Hepatitis B Core Antibody IgM",
+      "aliases": [
+        "HBcAb IgM",
+        "anti-HBc IgM",
+        "hepatitis B core IgM",
+        "acute hepatitis B"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "hepatitis_panel"
+      ],
+      "ui_categories": [
+        "hepatitis",
+        "liver",
+        "microbiology"
+      ],
+      "tags": [
+        "hepatic",
+        "immunologic",
+        "microbiology",
+        "hepatitis",
+        "acute_hepatitis",
+        "hepatitis_B"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 3
+    },
+    {
+      "id": "hbcab_igg",
+      "name": "Hepatitis B Core Antibody IgG",
+      "aliases": [
+        "HBcAb IgG",
+        "anti-HBc IgG",
+        "total HBcAb"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "hepatitis_panel"
+      ],
+      "ui_categories": [
+        "hepatitis",
+        "liver",
+        "microbiology"
+      ],
+      "tags": [
+        "hepatic",
+        "immunologic",
+        "microbiology",
+        "screening",
+        "hepatitis",
+        "past_infection",
+        "hepatitis_B"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 4
+    },
+    {
+      "id": "hcv_ab",
+      "name": "Hepatitis C Antibody",
+      "aliases": [
+        "HCV Ab",
+        "hepatitis C antibody",
+        "anti-HCV",
+        "hep C antibody",
+        "HCV screen"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "hepatitis_panel"
+      ],
+      "ui_categories": [
+        "hepatitis",
+        "liver",
+        "microbiology"
+      ],
+      "tags": [
+        "hepatic",
+        "immunologic",
+        "microbiology",
+        "screening",
+        "hepatitis",
+        "liver_disease",
+        "hepatitis_C"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 5
+    },
+    {
+      "id": "hav_igm",
+      "name": "Hepatitis A Antibody IgM",
+      "aliases": [
+        "HAV IgM",
+        "anti-HAV IgM",
+        "hepatitis A IgM",
+        "acute hepatitis A"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "hepatitis_panel"
+      ],
+      "ui_categories": [
+        "hepatitis",
+        "liver",
+        "microbiology"
+      ],
+      "tags": [
+        "hepatic",
+        "immunologic",
+        "microbiology",
+        "hepatitis",
+        "acute_hepatitis",
+        "hepatitis_A",
+        "food_borne"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 6
+    },
+    {
+      "id": "hav_igg",
+      "name": "Hepatitis A Antibody IgG",
+      "aliases": [
+        "HAV IgG",
+        "anti-HAV IgG",
+        "hepatitis A immunity"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "hepatitis_panel"
+      ],
+      "ui_categories": [
+        "hepatitis",
+        "liver",
+        "microbiology"
+      ],
+      "tags": [
+        "hepatic",
+        "immunologic",
+        "microbiology",
+        "screening",
+        "hepatitis",
+        "immunity",
+        "hepatitis_A"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative (or Positive if vaccinated/prior infection)"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative (or Positive if vaccinated/prior infection)"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative (or Positive if vaccinated/prior infection)"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative (or Positive if vaccinated/prior infection)"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 7
+    },
+    {
+      "id": "abo_type",
+      "name": "ABO Blood Type",
+      "aliases": [
+        "ABO type",
+        "blood type",
+        "blood group",
+        "ABO",
+        "ABO typing"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "type_screen",
+        "type_crossmatch"
+      ],
+      "ui_categories": [
+        "blood_bank",
+        "general"
+      ],
+      "tags": [
+        "hematologic",
+        "blood_bank",
+        "preoperative",
+        "emergency",
+        "surgery",
+        "transfusion",
+        "trauma"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "A, B, AB, or O"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "A, B, AB, or O"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "A, B, AB, or O"
+        },
+        "ped_0_1mo": {
+          "qualitative": "A, B, AB, or O"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 1
+    },
+    {
+      "id": "rh_factor",
+      "name": "Rh Factor",
+      "aliases": [
+        "Rh",
+        "Rh factor",
+        "Rh type",
+        "Rh typing",
+        "Rh status"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "type_screen",
+        "type_crossmatch"
+      ],
+      "ui_categories": [
+        "blood_bank",
+        "general"
+      ],
+      "tags": [
+        "hematologic",
+        "blood_bank",
+        "preoperative",
+        "emergency",
+        "surgery",
+        "transfusion",
+        "pregnancy"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Positive or Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Positive or Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Positive or Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Positive or Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 2
+    },
+    {
+      "id": "antibody_screen",
+      "name": "Antibody Screen",
+      "aliases": [
+        "antibody screen",
+        "red cell antibody screen",
+        "indirect Coombs",
+        "indirect antiglobulin test"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "type_screen",
+        "type_crossmatch"
+      ],
+      "ui_categories": [
+        "blood_bank",
+        "hematology"
+      ],
+      "tags": [
+        "hematologic",
+        "blood_bank",
+        "immunologic",
+        "preoperative",
+        "emergency",
+        "transfusion",
+        "hemolysis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 3
+    },
+    {
+      "id": "crossmatch_result",
+      "name": "Crossmatch",
+      "aliases": [
+        "crossmatch",
+        "cross match",
+        "blood crossmatch",
+        "compatibility test"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "type_crossmatch"
+      ],
+      "ui_categories": [
+        "blood_bank"
+      ],
+      "tags": [
+        "hematologic",
+        "blood_bank",
+        "preoperative",
+        "emergency",
+        "transfusion",
+        "surgery",
+        "trauma"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Compatible"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Compatible"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Compatible"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Compatible"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 4
+    },
+    {
+      "id": "uds_thc",
+      "name": "THC (Cannabis)",
+      "aliases": [
+        "THC",
+        "marijuana",
+        "cannabis",
+        "weed",
+        "pot",
+        "cannabinoids"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "urine_drug_screen"
+      ],
+      "ui_categories": [
+        "toxicology",
+        "urinalysis"
+      ],
+      "tags": [
+        "toxicology",
+        "urinalysis",
+        "emergency",
+        "drug_use",
+        "substance_abuse"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 1
+    },
+    {
+      "id": "uds_cocaine",
+      "name": "Cocaine / Benzoylecgonine",
+      "aliases": [
+        "cocaine",
+        "benzoylecgonine",
+        "coke",
+        "crack"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "urine_drug_screen"
+      ],
+      "ui_categories": [
+        "toxicology",
+        "urinalysis"
+      ],
+      "tags": [
+        "toxicology",
+        "urinalysis",
+        "emergency",
+        "drug_use",
+        "substance_abuse"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 2
+    },
+    {
+      "id": "uds_opiates",
+      "name": "Opiates / Opioids",
+      "aliases": [
+        "opiates",
+        "opioids",
+        "morphine",
+        "codeine",
+        "heroin",
+        "opioid screen"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "urine_drug_screen"
+      ],
+      "ui_categories": [
+        "toxicology",
+        "urinalysis"
+      ],
+      "tags": [
+        "toxicology",
+        "urinalysis",
+        "emergency",
+        "drug_use",
+        "substance_abuse",
+        "overdose"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 3
+    },
+    {
+      "id": "uds_amphetamines",
+      "name": "Amphetamines",
+      "aliases": [
+        "amphetamines",
+        "amphetamine",
+        "stimulants",
+        "speed",
+        "ADHD meds"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "urine_drug_screen"
+      ],
+      "ui_categories": [
+        "toxicology",
+        "urinalysis"
+      ],
+      "tags": [
+        "toxicology",
+        "urinalysis",
+        "emergency",
+        "drug_use",
+        "substance_abuse"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 4
+    },
+    {
+      "id": "uds_methamphetamine",
+      "name": "Methamphetamine",
+      "aliases": [
+        "methamphetamine",
+        "meth",
+        "crystal meth",
+        "MA"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "urine_drug_screen"
+      ],
+      "ui_categories": [
+        "toxicology",
+        "urinalysis"
+      ],
+      "tags": [
+        "toxicology",
+        "urinalysis",
+        "emergency",
+        "drug_use",
+        "substance_abuse"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 5
+    },
+    {
+      "id": "uds_benzodiazepines",
+      "name": "Benzodiazepines",
+      "aliases": [
+        "benzodiazepines",
+        "benzos",
+        "diazepam",
+        "lorazepam",
+        "alprazolam",
+        "clonazepam"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "urine_drug_screen"
+      ],
+      "ui_categories": [
+        "toxicology",
+        "urinalysis"
+      ],
+      "tags": [
+        "toxicology",
+        "urinalysis",
+        "emergency",
+        "drug_use",
+        "substance_abuse",
+        "overdose",
+        "sedation"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 6
+    },
+    {
+      "id": "uds_barbiturates",
+      "name": "Barbiturates",
+      "aliases": [
+        "barbiturates",
+        "phenobarbital",
+        "barbs",
+        "phenobarb"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "urine_drug_screen"
+      ],
+      "ui_categories": [
+        "toxicology",
+        "urinalysis"
+      ],
+      "tags": [
+        "toxicology",
+        "urinalysis",
+        "emergency",
+        "drug_use",
+        "substance_abuse",
+        "overdose",
+        "seizure"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 7
+    },
+    {
+      "id": "uds_pcp",
+      "name": "Phencyclidine (PCP)",
+      "aliases": [
+        "PCP",
+        "phencyclidine",
+        "angel dust"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "urine_drug_screen"
+      ],
+      "ui_categories": [
+        "toxicology",
+        "urinalysis"
+      ],
+      "tags": [
+        "toxicology",
+        "urinalysis",
+        "emergency",
+        "drug_use",
+        "substance_abuse",
+        "altered_mental_status"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 8
+    },
+    {
+      "id": "uds_mdma",
+      "name": "MDMA (Ecstasy)",
+      "aliases": [
+        "MDMA",
+        "ecstasy",
+        "molly",
+        "XTC"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "urine_drug_screen"
+      ],
+      "ui_categories": [
+        "toxicology",
+        "urinalysis"
+      ],
+      "tags": [
+        "toxicology",
+        "urinalysis",
+        "emergency",
+        "drug_use",
+        "substance_abuse"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 9
+    },
+    {
+      "id": "uds_fentanyl",
+      "name": "Fentanyl",
+      "aliases": [
+        "fentanyl",
+        "fent",
+        "fentanyl screen"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "urine_drug_screen"
+      ],
+      "ui_categories": [
+        "toxicology",
+        "urinalysis"
+      ],
+      "tags": [
+        "toxicology",
+        "urinalysis",
+        "emergency",
+        "drug_use",
+        "substance_abuse",
+        "overdose",
+        "opioid"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 10
+    },
+    {
+      "id": "ua_color",
+      "name": "Urine Color",
+      "aliases": [
+        "urine color",
+        "UA color",
+        "color"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "urinalysis_panel"
+      ],
+      "ui_categories": [
+        "urinalysis",
+        "renal"
+      ],
+      "tags": [
+        "renal",
+        "urinalysis",
+        "urinary_tract_infection",
+        "dehydration",
+        "hematuria",
+        "jaundice"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Yellow"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Yellow"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Yellow"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Yellow"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 1
+    },
+    {
+      "id": "ua_clarity",
+      "name": "Urine Clarity",
+      "aliases": [
+        "urine clarity",
+        "UA clarity",
+        "clarity",
+        "appearance"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "urinalysis_panel"
+      ],
+      "ui_categories": [
+        "urinalysis",
+        "renal"
+      ],
+      "tags": [
+        "renal",
+        "urinalysis",
+        "urinary_tract_infection",
+        "pyuria"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Clear"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Clear"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Clear"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Clear"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 2
+    },
+    {
+      "id": "ua_ph",
+      "name": "Urine pH",
+      "aliases": [
+        "urine pH",
+        "UA pH"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "urinalysis_panel"
+      ],
+      "ui_categories": [
+        "urinalysis",
+        "renal"
+      ],
+      "tags": [
+        "renal",
+        "urinalysis",
+        "chemistry",
+        "kidney_stone",
+        "urinary_tract_infection",
+        "renal_tubular_acidosis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 5.0,
+          "max": 8.0
+        },
+        "ped_1yr_plus": {
+          "min": 5.0,
+          "max": 8.0
+        },
+        "ped_1mo_1yr": {
+          "min": 5.0,
+          "max": 8.0
+        },
+        "ped_0_1mo": {
+          "min": 5.0,
+          "max": 8.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 3
+    },
+    {
+      "id": "ua_specific_gravity",
+      "name": "Urine Specific Gravity",
+      "aliases": [
+        "specific gravity",
+        "urine SG",
+        "UA specific gravity",
+        "SG"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "urinalysis_panel"
+      ],
+      "ui_categories": [
+        "urinalysis",
+        "renal"
+      ],
+      "tags": [
+        "renal",
+        "urinalysis",
+        "dehydration",
+        "renal_failure",
+        "diabetes_insipidus"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 1.005,
+          "max": 1.03
+        },
+        "ped_1yr_plus": {
+          "min": 1.005,
+          "max": 1.03
+        },
+        "ped_1mo_1yr": {
+          "min": 1.002,
+          "max": 1.025
+        },
+        "ped_0_1mo": {
+          "min": 1.001,
+          "max": 1.02
+        }
+      },
+      "display_decimals": 3,
+      "display_order": 4
+    },
+    {
+      "id": "ua_glucose",
+      "name": "Urine Glucose",
+      "aliases": [
+        "urine glucose",
+        "UA glucose",
+        "glucosuria",
+        "sugar in urine"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "urinalysis_panel"
+      ],
+      "ui_categories": [
+        "urinalysis",
+        "renal",
+        "endocrine"
+      ],
+      "tags": [
+        "renal",
+        "urinalysis",
+        "endocrine",
+        "diabetes",
+        "hyperglycemia"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 5
+    },
+    {
+      "id": "ua_protein",
+      "name": "Urine Protein",
+      "aliases": [
+        "urine protein",
+        "UA protein",
+        "proteinuria",
+        "protein in urine"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "urinalysis_panel"
+      ],
+      "ui_categories": [
+        "urinalysis",
+        "renal"
+      ],
+      "tags": [
+        "renal",
+        "urinalysis",
+        "proteinuria",
+        "renal_failure",
+        "nephrotic_syndrome",
+        "appendicitis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative to Trace"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative to Trace"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative to Trace"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative to Trace"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 6
+    },
+    {
+      "id": "ua_ketones",
+      "name": "Urine Ketones",
+      "aliases": [
+        "urine ketones",
+        "UA ketones",
+        "ketonuria",
+        "ketones in urine"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "urinalysis_panel"
+      ],
+      "ui_categories": [
+        "urinalysis",
+        "endocrine"
+      ],
+      "tags": [
+        "renal",
+        "urinalysis",
+        "endocrine",
+        "diabetic_ketoacidosis",
+        "starvation",
+        "vomiting",
+        "dehydration",
+        "appendicitis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 7
+    },
+    {
+      "id": "ua_bilirubin",
+      "name": "Urine Bilirubin",
+      "aliases": [
+        "urine bilirubin",
+        "UA bilirubin",
+        "bilirubinuria"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "urinalysis_panel"
+      ],
+      "ui_categories": [
+        "urinalysis",
+        "liver"
+      ],
+      "tags": [
+        "renal",
+        "hepatic",
+        "urinalysis",
+        "liver_disease",
+        "cholestasis",
+        "hepatitis",
+        "jaundice"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 8
+    },
+    {
+      "id": "ua_urobilinogen",
+      "name": "Urine Urobilinogen",
+      "aliases": [
+        "urine urobilinogen",
+        "UA urobilinogen",
+        "urobilinogen"
+      ],
+      "unit": "EU/dL",
+      "panel_memberships": [
+        "urinalysis_panel"
+      ],
+      "ui_categories": [
+        "urinalysis",
+        "liver"
+      ],
+      "tags": [
+        "renal",
+        "hepatic",
+        "urinalysis",
+        "liver_disease",
+        "hemolysis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0.2,
+          "max": 1.0
+        },
+        "ped_1yr_plus": {
+          "min": 0.2,
+          "max": 1.0
+        },
+        "ped_1mo_1yr": {
+          "min": 0.2,
+          "max": 1.0
+        },
+        "ped_0_1mo": {
+          "min": 0.2,
+          "max": 1.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 9
+    },
+    {
+      "id": "ua_nitrite",
+      "name": "Urine Nitrite",
+      "aliases": [
+        "urine nitrite",
+        "UA nitrite",
+        "nitrites in urine"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "urinalysis_panel"
+      ],
+      "ui_categories": [
+        "urinalysis",
+        "microbiology",
+        "renal"
+      ],
+      "tags": [
+        "renal",
+        "urinalysis",
+        "microbiology",
+        "urinary_tract_infection",
+        "bacteria",
+        "appendicitis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 10
+    },
+    {
+      "id": "ua_leukocyte_esterase",
+      "name": "Leukocyte Esterase",
+      "aliases": [
+        "leukocyte esterase",
+        "LE",
+        "UA leukocyte esterase",
+        "WBC esterase",
+        "white cells urine"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "urinalysis_panel"
+      ],
+      "ui_categories": [
+        "urinalysis",
+        "microbiology",
+        "renal",
+        "inflammatory"
+      ],
+      "tags": [
+        "renal",
+        "urinalysis",
+        "inflammatory",
+        "microbiology",
+        "urinary_tract_infection",
+        "pyuria",
+        "appendicitis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 11
+    },
+    {
+      "id": "ua_rbc",
+      "name": "Urine RBCs (Microscopy)",
+      "aliases": [
+        "urine RBCs",
+        "urine red blood cells",
+        "hematuria",
+        "blood in urine",
+        "UA RBC",
+        "RBC per hpf"
+      ],
+      "unit": "/hpf",
+      "panel_memberships": [
+        "urinalysis_panel"
+      ],
+      "ui_categories": [
+        "urinalysis",
+        "renal",
+        "hematology"
+      ],
+      "tags": [
+        "renal",
+        "hematologic",
+        "urinalysis",
+        "hematuria",
+        "kidney_stone",
+        "urinary_tract_infection",
+        "trauma",
+        "glomerulonephritis",
+        "appendicitis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0,
+          "max": 3
+        },
+        "ped_1yr_plus": {
+          "min": 0,
+          "max": 3
+        },
+        "ped_1mo_1yr": {
+          "min": 0,
+          "max": 3
+        },
+        "ped_0_1mo": {
+          "min": 0,
+          "max": 3
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 12
+    },
+    {
+      "id": "ua_wbc",
+      "name": "Urine WBCs (Microscopy)",
+      "aliases": [
+        "urine WBCs",
+        "urine white blood cells",
+        "pyuria",
+        "UA WBC",
+        "WBC per hpf",
+        "pus cells"
+      ],
+      "unit": "/hpf",
+      "panel_memberships": [
+        "urinalysis_panel"
+      ],
+      "ui_categories": [
+        "urinalysis",
+        "renal",
+        "inflammatory"
+      ],
+      "tags": [
+        "renal",
+        "inflammatory",
+        "urinalysis",
+        "microbiology",
+        "urinary_tract_infection",
+        "pyuria",
+        "appendicitis",
+        "pyelonephritis",
+        "kidney_stone"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0,
+          "max": 5
+        },
+        "ped_1yr_plus": {
+          "min": 0,
+          "max": 5
+        },
+        "ped_1mo_1yr": {
+          "min": 0,
+          "max": 5
+        },
+        "ped_0_1mo": {
+          "min": 0,
+          "max": 5
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 13
+    },
+    {
+      "id": "ua_bacteria",
+      "name": "Urine Bacteria (Microscopy)",
+      "aliases": [
+        "urine bacteria",
+        "bacteriuria",
+        "bacteria in urine",
+        "UA bacteria"
+      ],
+      "unit": "",
+      "panel_memberships": [
+        "urinalysis_panel"
+      ],
+      "ui_categories": [
+        "urinalysis",
+        "microbiology",
+        "renal"
+      ],
+      "tags": [
+        "renal",
+        "urinalysis",
+        "microbiology",
+        "urinary_tract_infection",
+        "bacteria"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "None"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "None"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "None"
+        },
+        "ped_0_1mo": {
+          "qualitative": "None"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 14
+    },
+    {
+      "id": "ua_casts",
+      "name": "Urine Casts (Microscopy)",
+      "aliases": [
+        "urine casts",
+        "casts",
+        "UA casts",
+        "renal casts",
+        "hyaline casts",
+        "granular casts",
+        "RBC casts",
+        "WBC casts"
+      ],
+      "unit": "/lpf",
+      "panel_memberships": [
+        "urinalysis_panel"
+      ],
+      "ui_categories": [
+        "urinalysis",
+        "renal"
+      ],
+      "tags": [
+        "renal",
+        "urinalysis",
+        "renal_failure",
+        "glomerulonephritis",
+        "pyelonephritis",
+        "aki"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0,
+          "max": 2,
+          "note": "0-2 hyaline casts/lpf is normal"
+        },
+        "ped_1yr_plus": {
+          "min": 0,
+          "max": 2
+        },
+        "ped_1mo_1yr": {
+          "min": 0,
+          "max": 2
+        },
+        "ped_0_1mo": {
+          "min": 0,
+          "max": 2
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 15
+    },
+    {
+      "id": "ua_epithelial",
+      "name": "Urine Epithelial Cells",
+      "aliases": [
+        "epithelial cells",
+        "urine epithelials",
+        "squamous cells urine",
+        "UA epithelial"
+      ],
+      "unit": "/hpf",
+      "panel_memberships": [
+        "urinalysis_panel"
+      ],
+      "ui_categories": [
+        "urinalysis",
+        "renal"
+      ],
+      "tags": [
+        "renal",
+        "urinalysis",
+        "contamination"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Few to moderate"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Few to moderate"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Few to moderate"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Few to moderate"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 16
+    },
+    {
+      "id": "urine_protein_random",
+      "name": "Urine Protein (Random)",
+      "aliases": [
+        "urine protein",
+        "spot urine protein",
+        "random urine protein"
+      ],
+      "unit": "mg/dL",
+      "panel_memberships": [
+        "urine_protein_cr"
+      ],
+      "ui_categories": [
+        "urinalysis",
+        "renal"
+      ],
+      "tags": [
+        "renal",
+        "urinalysis",
+        "proteinuria",
+        "nephrotic_syndrome",
+        "renal_failure"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0,
+          "max": 14
+        },
+        "ped_1yr_plus": {
+          "min": 0,
+          "max": 14
+        },
+        "ped_1mo_1yr": {
+          "min": 0,
+          "max": 14
+        },
+        "ped_0_1mo": {
+          "min": 0,
+          "max": 14
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 1
+    },
+    {
+      "id": "urine_creatinine_random",
+      "name": "Urine Creatinine (Random)",
+      "aliases": [
+        "urine creatinine",
+        "spot urine creatinine"
+      ],
+      "unit": "mg/dL",
+      "panel_memberships": [
+        "urine_protein_cr"
+      ],
+      "ui_categories": [
+        "urinalysis",
+        "renal"
+      ],
+      "tags": [
+        "renal",
+        "urinalysis",
+        "renal_failure",
+        "proteinuria"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 30,
+          "max": 300
+        },
+        "ped_1yr_plus": {
+          "min": 30,
+          "max": 300
+        },
+        "ped_1mo_1yr": {
+          "min": 20,
+          "max": 200
+        },
+        "ped_0_1mo": {
+          "min": 10,
+          "max": 150
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 2
+    },
+    {
+      "id": "urine_pcr",
+      "name": "Urine Protein/Creatinine Ratio",
+      "aliases": [
+        "urine P/Cr ratio",
+        "PCR urine",
+        "protein creatinine ratio",
+        "urine protein to creatinine ratio"
+      ],
+      "unit": "mg/mg",
+      "panel_memberships": [
+        "urine_protein_cr"
+      ],
+      "ui_categories": [
+        "urinalysis",
+        "renal"
+      ],
+      "tags": [
+        "renal",
+        "urinalysis",
+        "proteinuria",
+        "nephrotic_syndrome",
+        "renal_failure",
+        "pre_eclampsia"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0.0,
+          "max": 0.2
+        },
+        "ped_1yr_plus": {
+          "min": 0.0,
+          "max": 0.2
+        },
+        "ped_1mo_1yr": {
+          "min": 0.0,
+          "max": 0.3
+        },
+        "ped_0_1mo": {
+          "min": 0.0,
+          "max": 0.5
+        }
+      },
+      "display_decimals": 2,
+      "display_order": 3
+    },
+    {
+      "id": "procalcitonin",
+      "name": "Procalcitonin",
+      "aliases": [
+        "procalcitonin",
+        "PCT",
+        "PCT level",
+        "procalcitonin level"
+      ],
+      "unit": "ng/mL",
+      "panel_memberships": [],
+      "ui_categories": [
+        "inflammatory",
+        "microbiology",
+        "general"
+      ],
+      "tags": [
+        "inflammatory",
+        "microbiology",
+        "emergency",
+        "sepsis",
+        "bacterial_infection",
+        "appendicitis",
+        "antibiotic_stewardship",
+        "monitoring"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0.0,
+          "max": 0.1,
+          "note": "<0.1 normal; 0.1-0.25 low risk; >0.25 possible bacterial infection; >0.5 likely sepsis; >2.0 severe sepsis. Neonates: physiologically elevated first 48h"
+        },
+        "ped_1yr_plus": {
+          "min": 0.0,
+          "max": 0.1
+        },
+        "ped_1mo_1yr": {
+          "min": 0.0,
+          "max": 0.5
+        },
+        "ped_0_1mo": {
+          "min": 0.0,
+          "max": 2.0
+        }
+      },
+      "display_decimals": 2,
+      "display_order": 1
+    },
+    {
+      "id": "lipase",
+      "name": "Lipase",
+      "aliases": [
+        "lipase",
+        "serum lipase",
+        "lipase level"
+      ],
+      "unit": "U/L",
+      "panel_memberships": [],
+      "ui_categories": [
+        "pancreatic",
+        "chemistry",
+        "general"
+      ],
+      "tags": [
+        "pancreatic",
+        "gastrointestinal",
+        "chemistry",
+        "emergency",
+        "pancreatitis",
+        "appendicitis",
+        "cholecystitis",
+        "bowel_obstruction"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 10,
+          "max": 140
+        },
+        "ped_1yr_plus": {
+          "min": 10,
+          "max": 140
+        },
+        "ped_1mo_1yr": {
+          "min": 10,
+          "max": 100
+        },
+        "ped_0_1mo": {
+          "min": 10,
+          "max": 100
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 1
+    },
+    {
+      "id": "amylase",
+      "name": "Amylase",
+      "aliases": [
+        "amylase",
+        "serum amylase",
+        "amylase level"
+      ],
+      "unit": "U/L",
+      "panel_memberships": [],
+      "ui_categories": [
+        "pancreatic",
+        "chemistry",
+        "general"
+      ],
+      "tags": [
+        "pancreatic",
+        "gastrointestinal",
+        "chemistry",
+        "pancreatitis",
+        "appendicitis",
+        "cholecystitis",
+        "parotitis",
+        "bowel_obstruction"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 30,
+          "max": 110
+        },
+        "ped_1yr_plus": {
+          "min": 20,
+          "max": 100
+        },
+        "ped_1mo_1yr": {
+          "min": 5,
+          "max": 65
+        },
+        "ped_0_1mo": {
+          "min": 0,
+          "max": 40
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 2
+    },
+    {
+      "id": "troponin_i",
+      "name": "Troponin I",
+      "aliases": [
+        "troponin I",
+        "troponin",
+        "cardiac troponin I",
+        "cTnI",
+        "troponin level"
+      ],
+      "unit": "ng/mL",
+      "panel_memberships": [],
+      "ui_categories": [
+        "cardiac",
+        "general"
+      ],
+      "tags": [
+        "cardiac",
+        "cardiac_marker",
+        "emergency",
+        "myocardial_infarction",
+        "cardiac_disease",
+        "chest_pain",
+        "ischemia",
+        "appendicitis",
+        "monitoring"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0.0,
+          "max": 0.04,
+          "note": ">0.04 ng/mL elevated; high-sensitivity assay preferred"
+        },
+        "ped_1yr_plus": {
+          "min": 0.0,
+          "max": 0.04
+        },
+        "ped_1mo_1yr": {
+          "min": 0.0,
+          "max": 0.06
+        },
+        "ped_0_1mo": {
+          "min": 0.0,
+          "max": 0.1
+        }
+      },
+      "display_decimals": 3,
+      "display_order": 1
+    },
+    {
+      "id": "troponin_t",
+      "name": "Troponin T (High Sensitivity)",
+      "aliases": [
+        "troponin T",
+        "hsTnT",
+        "high sensitivity troponin",
+        "hs troponin T",
+        "hs-TnT",
+        "high sensitivity troponin T"
+      ],
+      "unit": "pg/mL",
+      "panel_memberships": [],
+      "ui_categories": [
+        "cardiac",
+        "general"
+      ],
+      "tags": [
+        "cardiac",
+        "cardiac_marker",
+        "emergency",
+        "myocardial_infarction",
+        "cardiac_disease",
+        "chest_pain",
+        "ischemia",
+        "monitoring"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0.0,
+          "max": 14.0,
+          "note": ">14 pg/mL elevated; sex-specific thresholds apply"
+        },
+        "ped_1yr_plus": {
+          "min": 0.0,
+          "max": 14.0
+        },
+        "ped_1mo_1yr": {
+          "min": 0.0,
+          "max": 20.0
+        },
+        "ped_0_1mo": {
+          "min": 0.0,
+          "max": 30.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 2
+    },
+    {
+      "id": "bnp",
+      "name": "BNP",
+      "aliases": [
+        "BNP",
+        "B-type natriuretic peptide",
+        "brain natriuretic peptide",
+        "BNP level"
+      ],
+      "unit": "pg/mL",
+      "panel_memberships": [],
+      "ui_categories": [
+        "cardiac",
+        "general"
+      ],
+      "tags": [
+        "cardiac",
+        "cardiac_marker",
+        "heart_failure",
+        "cardiac_disease",
+        "dyspnea",
+        "edema",
+        "monitoring"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0,
+          "max": 100,
+          "note": "<100 heart failure unlikely; 100-400 borderline; >400 heart failure likely"
+        },
+        "ped_1yr_plus": {
+          "min": 0,
+          "max": 50
+        },
+        "ped_1mo_1yr": {
+          "min": 0,
+          "max": 100
+        },
+        "ped_0_1mo": {
+          "min": 0,
+          "max": 170
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 3
+    },
+    {
+      "id": "nt_probnp",
+      "name": "NT-proBNP",
+      "aliases": [
+        "NT-proBNP",
+        "N-terminal proBNP",
+        "NTproBNP",
+        "NT pro BNP"
+      ],
+      "unit": "pg/mL",
+      "panel_memberships": [],
+      "ui_categories": [
+        "cardiac",
+        "general"
+      ],
+      "tags": [
+        "cardiac",
+        "cardiac_marker",
+        "heart_failure",
+        "cardiac_disease",
+        "dyspnea",
+        "edema",
+        "monitoring"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0,
+          "max": 125,
+          "note": "Age <75: <125; age >75: <450"
+        },
+        "ped_1yr_plus": {
+          "min": 0,
+          "max": 125
+        },
+        "ped_1mo_1yr": {
+          "min": 0,
+          "max": 1000
+        },
+        "ped_0_1mo": {
+          "min": 0,
+          "max": 4000
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 4
+    },
+    {
+      "id": "ldh",
+      "name": "Lactate Dehydrogenase",
+      "aliases": [
+        "LDH",
+        "lactate dehydrogenase",
+        "lactic dehydrogenase",
+        "LDH level"
+      ],
+      "unit": "U/L",
+      "panel_memberships": [],
+      "ui_categories": [
+        "chemistry",
+        "hematology",
+        "cardiac",
+        "general"
+      ],
+      "tags": [
+        "hematologic",
+        "hepatic",
+        "cardiac",
+        "chemistry",
+        "hemolysis",
+        "malignancy",
+        "liver_disease",
+        "myocardial_infarction",
+        "pulmonary_embolism",
+        "anemia"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 140,
+          "max": 280
+        },
+        "ped_1yr_plus": {
+          "min": 150,
+          "max": 400
+        },
+        "ped_1mo_1yr": {
+          "min": 200,
+          "max": 450
+        },
+        "ped_0_1mo": {
+          "min": 200,
+          "max": 500
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 1
+    },
+    {
+      "id": "uric_acid",
+      "name": "Uric Acid",
+      "aliases": [
+        "uric acid",
+        "serum uric acid",
+        "urate",
+        "uric acid level"
+      ],
+      "unit": "mg/dL",
+      "panel_memberships": [],
+      "ui_categories": [
+        "chemistry",
+        "renal",
+        "rheumatologic",
+        "general"
+      ],
+      "tags": [
+        "renal",
+        "rheumatologic",
+        "chemistry",
+        "gout",
+        "kidney_stone",
+        "tumor_lysis_syndrome",
+        "renal_failure"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 3.5,
+          "max": 7.2,
+          "note": "Male: 3.5-7.2, Female: 2.6-6.0"
+        },
+        "ped_1yr_plus": {
+          "min": 2.0,
+          "max": 5.5
+        },
+        "ped_1mo_1yr": {
+          "min": 1.5,
+          "max": 5.0
+        },
+        "ped_0_1mo": {
+          "min": 1.5,
+          "max": 5.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 1
+    },
+    {
+      "id": "magnesium",
+      "name": "Magnesium",
+      "aliases": [
+        "magnesium",
+        "Mg",
+        "Mg2+",
+        "serum magnesium",
+        "magnesium level"
+      ],
+      "unit": "mg/dL",
+      "panel_memberships": [],
+      "ui_categories": [
+        "chemistry",
+        "electrolytes",
+        "general"
+      ],
+      "tags": [
+        "chemistry",
+        "metabolic",
+        "electrolytes",
+        "hypomagnesemia",
+        "hypermagnesemia",
+        "electrolyte_imbalance",
+        "arrhythmia",
+        "seizure",
+        "malnutrition",
+        "monitoring"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 1.7,
+          "max": 2.2
+        },
+        "ped_1yr_plus": {
+          "min": 1.6,
+          "max": 2.3
+        },
+        "ped_1mo_1yr": {
+          "min": 1.5,
+          "max": 2.3
+        },
+        "ped_0_1mo": {
+          "min": 1.5,
+          "max": 2.5
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 1
+    },
+    {
+      "id": "phosphorus",
+      "name": "Phosphorus",
+      "aliases": [
+        "phosphorus",
+        "phosphate",
+        "serum phosphorus",
+        "PO4",
+        "inorganic phosphate"
+      ],
+      "unit": "mg/dL",
+      "panel_memberships": [],
+      "ui_categories": [
+        "chemistry",
+        "electrolytes",
+        "renal",
+        "general"
+      ],
+      "tags": [
+        "chemistry",
+        "metabolic",
+        "renal",
+        "electrolytes",
+        "hypophosphatemia",
+        "hyperphosphatemia",
+        "electrolyte_imbalance",
+        "renal_failure",
+        "malnutrition",
+        "refeeding_syndrome"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 2.5,
+          "max": 4.5
+        },
+        "ped_1yr_plus": {
+          "min": 3.5,
+          "max": 6.5
+        },
+        "ped_1mo_1yr": {
+          "min": 4.0,
+          "max": 7.0
+        },
+        "ped_0_1mo": {
+          "min": 4.5,
+          "max": 9.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 1
+    },
+    {
+      "id": "hba1c",
+      "name": "Hemoglobin A1c",
+      "aliases": [
+        "HbA1c",
+        "hemoglobin A1c",
+        "glycated hemoglobin",
+        "A1c",
+        "HgbA1c",
+        "glycohemoglobin"
+      ],
+      "unit": "%",
+      "panel_memberships": [],
+      "ui_categories": [
+        "endocrine",
+        "chemistry",
+        "general"
+      ],
+      "tags": [
+        "endocrine",
+        "hematologic",
+        "metabolic",
+        "screening",
+        "diabetes",
+        "hyperglycemia",
+        "glucose_control",
+        "monitoring"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0.0,
+          "max": 5.7,
+          "note": "Normal <5.7%; Prediabetes 5.7-6.4%; Diabetes \u22656.5%"
+        },
+        "ped_1yr_plus": {
+          "min": 0.0,
+          "max": 5.7
+        },
+        "ped_1mo_1yr": {
+          "min": 0.0,
+          "max": 5.7
+        },
+        "ped_0_1mo": {
+          "min": 0.0,
+          "max": 5.7
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 1
+    },
+    {
+      "id": "beta_hcg_serum",
+      "name": "Beta-hCG (Serum)",
+      "aliases": [
+        "beta-hCG",
+        "beta hCG",
+        "quantitative hCG",
+        "serum hCG",
+        "pregnancy test serum",
+        "hCG level",
+        "human chorionic gonadotropin"
+      ],
+      "unit": "mIU/mL",
+      "panel_memberships": [],
+      "ui_categories": [
+        "pregnancy",
+        "endocrine",
+        "general"
+      ],
+      "tags": [
+        "reproductive",
+        "endocrine",
+        "emergency",
+        "pregnancy",
+        "ectopic_pregnancy",
+        "appendicitis",
+        "abdominal_pain",
+        "pelvic_pain"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0,
+          "max": 5,
+          "note": "Non-pregnant <5 mIU/mL; Pregnant: rises rapidly in first trimester"
+        },
+        "ped_1yr_plus": {
+          "min": 0,
+          "max": 5
+        },
+        "ped_1mo_1yr": {
+          "min": 0,
+          "max": 5
+        },
+        "ped_0_1mo": {
+          "min": 0,
+          "max": 5
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 1
+    },
+    {
+      "id": "urine_hcg",
+      "name": "Urine hCG (Pregnancy Test)",
+      "aliases": [
+        "urine hCG",
+        "urine pregnancy test",
+        "urine beta-hCG",
+        "UPT",
+        "urine pregnancy",
+        "pregnancy test urine"
+      ],
+      "unit": "",
+      "panel_memberships": [],
+      "ui_categories": [
+        "pregnancy",
+        "urinalysis",
+        "general"
+      ],
+      "tags": [
+        "reproductive",
+        "urinalysis",
+        "emergency",
+        "pregnancy",
+        "ectopic_pregnancy",
+        "appendicitis",
+        "abdominal_pain"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "Negative"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "Negative"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "Negative"
+        },
+        "ped_0_1mo": {
+          "qualitative": "Negative"
+        }
+      },
+      "display_type": "qualitative",
+      "display_order": 2
+    },
+    {
+      "id": "blood_culture",
+      "name": "Blood Culture",
+      "aliases": [
+        "blood culture",
+        "blood cultures",
+        "blood cx",
+        "BC",
+        "bacteremia workup",
+        "blood culture x2"
+      ],
+      "unit": "",
+      "panel_memberships": [],
+      "ui_categories": [
+        "microbiology",
+        "general"
+      ],
+      "tags": [
+        "microbiology",
+        "hematologic",
+        "emergency",
+        "sepsis",
+        "bacteremia",
+        "infection",
+        "appendicitis",
+        "fever"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "No growth (after 5 days)"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "No growth (after 5 days)"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "No growth (after 5 days)"
+        },
+        "ped_0_1mo": {
+          "qualitative": "No growth (after 5 days)"
+        }
+      },
+      "display_type": "qualitative",
+      "result_delay_hours": "48-120",
+      "display_order": 1
+    },
+    {
+      "id": "urine_culture",
+      "name": "Urine Culture",
+      "aliases": [
+        "urine culture",
+        "urine cx",
+        "UCx",
+        "urine C&S",
+        "culture sensitivity urine"
+      ],
+      "unit": "",
+      "panel_memberships": [],
+      "ui_categories": [
+        "microbiology",
+        "urinalysis",
+        "general"
+      ],
+      "tags": [
+        "microbiology",
+        "renal",
+        "urinalysis",
+        "urinary_tract_infection",
+        "pyelonephritis",
+        "appendicitis",
+        "bacteria"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "No growth (<10,000 CFU/mL)"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "No growth (<10,000 CFU/mL)"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "No growth (<10,000 CFU/mL)"
+        },
+        "ped_0_1mo": {
+          "qualitative": "No growth (<10,000 CFU/mL)"
+        }
+      },
+      "display_type": "qualitative",
+      "result_delay_hours": "24-48",
+      "display_order": 2
+    },
+    {
+      "id": "wound_culture",
+      "name": "Wound Culture",
+      "aliases": [
+        "wound culture",
+        "wound cx",
+        "wound swab culture",
+        "wound swab",
+        "soft tissue culture"
+      ],
+      "unit": "",
+      "panel_memberships": [],
+      "ui_categories": [
+        "microbiology",
+        "general"
+      ],
+      "tags": [
+        "microbiology",
+        "infection",
+        "wound_infection",
+        "abscess",
+        "cellulitis",
+        "sepsis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "No growth"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "No growth"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "No growth"
+        },
+        "ped_0_1mo": {
+          "qualitative": "No growth"
+        }
+      },
+      "display_type": "qualitative",
+      "result_delay_hours": "24-72",
+      "display_order": 3
+    },
+    {
+      "id": "stool_culture",
+      "name": "Stool Culture",
+      "aliases": [
+        "stool culture",
+        "stool cx",
+        "fecal culture",
+        "GI culture",
+        "C. diff",
+        "stool ova and parasites",
+        "stool O&P"
+      ],
+      "unit": "",
+      "panel_memberships": [],
+      "ui_categories": [
+        "microbiology",
+        "general"
+      ],
+      "tags": [
+        "microbiology",
+        "gastrointestinal",
+        "gastroenteritis",
+        "diarrhea",
+        "colitis",
+        "infection",
+        "appendicitis"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "qualitative": "No pathogen isolated"
+        },
+        "ped_1yr_plus": {
+          "qualitative": "No pathogen isolated"
+        },
+        "ped_1mo_1yr": {
+          "qualitative": "No pathogen isolated"
+        },
+        "ped_0_1mo": {
+          "qualitative": "No pathogen isolated"
+        }
+      },
+      "display_type": "qualitative",
+      "result_delay_hours": "24-72",
+      "display_order": 4
+    },
+    {
+      "id": "vitamin_d",
+      "name": "Vitamin D (25-OH)",
+      "aliases": [
+        "vitamin D",
+        "25-OH vitamin D",
+        "25-hydroxyvitamin D",
+        "vit D",
+        "vitamin D level",
+        "calcidiol"
+      ],
+      "unit": "ng/mL",
+      "panel_memberships": [],
+      "ui_categories": [
+        "nutritional",
+        "endocrine",
+        "chemistry",
+        "general"
+      ],
+      "tags": [
+        "nutritional",
+        "endocrine",
+        "musculoskeletal",
+        "screening",
+        "vitamin_D_deficiency",
+        "rickets",
+        "osteoporosis",
+        "malnutrition"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 30,
+          "max": 100,
+          "note": "Deficient <20, Insufficient 20-29, Sufficient 30-100"
+        },
+        "ped_1yr_plus": {
+          "min": 20,
+          "max": 100
+        },
+        "ped_1mo_1yr": {
+          "min": 20,
+          "max": 100
+        },
+        "ped_0_1mo": {
+          "min": 20,
+          "max": 100
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 1
+    },
+    {
+      "id": "vitamin_b12",
+      "name": "Vitamin B12",
+      "aliases": [
+        "vitamin B12",
+        "B12",
+        "cobalamin",
+        "cyanocobalamin",
+        "B12 level"
+      ],
+      "unit": "pg/mL",
+      "panel_memberships": [],
+      "ui_categories": [
+        "nutritional",
+        "hematology",
+        "chemistry",
+        "general"
+      ],
+      "tags": [
+        "nutritional",
+        "hematologic",
+        "neurologic",
+        "screening",
+        "anemia",
+        "macrocytic_anemia",
+        "neuropathy",
+        "malnutrition"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 200,
+          "max": 900
+        },
+        "ped_1yr_plus": {
+          "min": 200,
+          "max": 900
+        },
+        "ped_1mo_1yr": {
+          "min": 200,
+          "max": 900
+        },
+        "ped_0_1mo": {
+          "min": 160,
+          "max": 900
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 2
+    },
+    {
+      "id": "folate",
+      "name": "Folate",
+      "aliases": [
+        "folate",
+        "folic acid",
+        "serum folate",
+        "RBC folate",
+        "B9",
+        "vitamin B9"
+      ],
+      "unit": "ng/mL",
+      "panel_memberships": [],
+      "ui_categories": [
+        "nutritional",
+        "hematology",
+        "chemistry",
+        "general"
+      ],
+      "tags": [
+        "nutritional",
+        "hematologic",
+        "screening",
+        "anemia",
+        "macrocytic_anemia",
+        "malnutrition",
+        "pregnancy"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 2.7,
+          "max": 17.0
+        },
+        "ped_1yr_plus": {
+          "min": 2.0,
+          "max": 17.0
+        },
+        "ped_1mo_1yr": {
+          "min": 2.0,
+          "max": 20.0
+        },
+        "ped_0_1mo": {
+          "min": 2.0,
+          "max": 20.0
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 3
+    },
+    {
+      "id": "acetaminophen_level",
+      "name": "Acetaminophen Level",
+      "aliases": [
+        "acetaminophen level",
+        "Tylenol level",
+        "acetaminophen",
+        "APAP",
+        "paracetamol level"
+      ],
+      "unit": "\u00b5g/mL",
+      "panel_memberships": [],
+      "ui_categories": [
+        "toxicology",
+        "chemistry",
+        "general"
+      ],
+      "tags": [
+        "toxicology",
+        "hepatic",
+        "chemistry",
+        "emergency",
+        "overdose",
+        "liver_failure",
+        "poisoning",
+        "altered_mental_status"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0,
+          "max": 20,
+          "note": "Therapeutic 10-20; toxic >150 at 4h post-ingestion (Rumack-Matthew nomogram)"
+        },
+        "ped_1yr_plus": {
+          "min": 0,
+          "max": 20
+        },
+        "ped_1mo_1yr": {
+          "min": 0,
+          "max": 20
+        },
+        "ped_0_1mo": {
+          "min": 0,
+          "max": 20
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 1
+    },
+    {
+      "id": "salicylate_level",
+      "name": "Salicylate Level",
+      "aliases": [
+        "salicylate level",
+        "aspirin level",
+        "ASA level",
+        "salicylic acid level"
+      ],
+      "unit": "mg/dL",
+      "panel_memberships": [],
+      "ui_categories": [
+        "toxicology",
+        "chemistry",
+        "general"
+      ],
+      "tags": [
+        "toxicology",
+        "chemistry",
+        "emergency",
+        "overdose",
+        "poisoning",
+        "salicylate_toxicity",
+        "altered_mental_status"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0,
+          "max": 20,
+          "note": "Therapeutic 10-20; toxic >30 mg/dL"
+        },
+        "ped_1yr_plus": {
+          "min": 0,
+          "max": 20
+        },
+        "ped_1mo_1yr": {
+          "min": 0,
+          "max": 20
+        },
+        "ped_0_1mo": {
+          "min": 0,
+          "max": 20
+        }
+      },
+      "display_decimals": 1,
+      "display_order": 2
+    },
+    {
+      "id": "ethanol_level",
+      "name": "Ethanol Level",
+      "aliases": [
+        "ethanol level",
+        "alcohol level",
+        "blood alcohol",
+        "BAC",
+        "blood alcohol concentration",
+        "EtOH level"
+      ],
+      "unit": "mg/dL",
+      "panel_memberships": [],
+      "ui_categories": [
+        "toxicology",
+        "chemistry",
+        "general"
+      ],
+      "tags": [
+        "toxicology",
+        "chemistry",
+        "neurologic",
+        "emergency",
+        "alcohol_intoxication",
+        "overdose",
+        "altered_mental_status"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0,
+          "max": 0,
+          "note": "Legal impairment: 80 mg/dL (US); severe toxicity >300"
+        },
+        "ped_1yr_plus": {
+          "min": 0,
+          "max": 0
+        },
+        "ped_1mo_1yr": {
+          "min": 0,
+          "max": 0
+        },
+        "ped_0_1mo": {
+          "min": 0,
+          "max": 0
+        }
+      },
+      "display_decimals": 0,
+      "display_order": 3
+    },
+    {
+      "id": "cystatin_c",
+      "name": "Cystatin C",
+      "aliases": [
+        "cystatin C",
+        "CysC",
+        "cystatin",
+        "cystatin C level"
+      ],
+      "unit": "mg/L",
+      "panel_memberships": [],
+      "ui_categories": [
+        "renal",
+        "chemistry",
+        "general"
+      ],
+      "tags": [
+        "renal",
+        "chemistry",
+        "renal_failure",
+        "aki",
+        "ckd",
+        "egfr",
+        "monitoring"
+      ],
+      "reference_ranges": {
+        "adult": {
+          "min": 0.5,
+          "max": 1.0
+        },
+        "ped_1yr_plus": {
+          "min": 0.5,
+          "max": 1.1
+        },
+        "ped_1mo_1yr": {
+          "min": 0.8,
+          "max": 1.8
+        },
+        "ped_0_1mo": {
+          "min": 1.3,
+          "max": 2.5
+        }
+      },
+      "display_decimals": 2,
+      "display_order": 1
+    }
+  ]
+}

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c3dmtfjt2apsq" path="res://scripts/clinical_engine.gd" id="1_nmkfv"]
 [ext_resource type="Texture2D" uid="uid://cbci7yn3qqtgu" path="res://assets/sprites/characters/meddy/MeddyBlinkAnimationSpriteSheetsecondtry.png" id="2_qqtt1"]
+[ext_resource type="PackedScene" uid="uid://txre63h7yad2" path="res://scenes/labs_popup.tscn" id="3_8ddsb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nmkfv"]
 bg_color = Color(0.14901961, 0.14901961, 0.14901961, 1)
@@ -138,6 +139,32 @@ text = "Harm:"
 [node name="HarmValue" type="Label" parent="HUD/HarmPoints" unique_id=2125487136]
 layout_mode = 2
 text = "0"
+
+[node name="TurnCounter" type="HBoxContainer" parent="HUD" unique_id=597837942]
+offset_left = 20.0
+offset_right = 79.0
+offset_bottom = 40.0
+
+[node name="TurnLabel" type="Label" parent="HUD/TurnCounter" unique_id=1660432863]
+layout_mode = 2
+text = "Turn: "
+
+[node name="TurnValue" type="Label" parent="HUD/TurnCounter" unique_id=569665770]
+layout_mode = 2
+text = "0"
+
+[node name="TimeCounter" type="HBoxContainer" parent="HUD" unique_id=1508811605]
+offset_left = 1100.0
+offset_right = 1215.0
+offset_bottom = 40.0
+
+[node name="TimeLabel" type="Label" parent="HUD/TimeCounter" unique_id=1984763068]
+layout_mode = 2
+text = "Time: "
+
+[node name="TimeValue" type="Label" parent="HUD/TimeCounter" unique_id=359091656]
+layout_mode = 2
+text = "00:00:00"
 
 [node name="IconBar" type="CanvasLayer" parent="." unique_id=1710263548]
 
@@ -445,6 +472,9 @@ text = "Patient:"
 layout_mode = 2
 text = "..."
 autowrap_mode = 2
+
+[node name="LabsPopup" parent="." unique_id=598023489 instance=ExtResource("3_8ddsb")]
+visible = false
 
 [connection signal="pressed" from="IconBar/IconContainer/HistoryBtn" to="." method="_on_history_btn_pressed"]
 [connection signal="pressed" from="IconBar/IconContainer/StabilityBtn" to="." method="_on_stability_btn_pressed"]

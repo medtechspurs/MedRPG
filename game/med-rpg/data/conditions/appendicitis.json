@@ -1,5 +1,7 @@
 {
-  "id": "appendicitis",
+  "schema_version": "1.0",
+
+    "id": "appendicitis",
   "name": "Appendicitis",
   "difficulty": 3,
   "tier_description": "A classic surgical emergency. Common but time-sensitive. Teaches focused abdominal exam and knowing when to act rather than over-investigate.",
