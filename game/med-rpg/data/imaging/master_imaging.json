@@ -1,0 +1,4034 @@
+{
+  "schema_version": "1.0",
+  "description": "Master imaging studies for MedRPG. Comprehensive ER imaging library.",
+  "architecture_notes": {
+    "ap_costs": "Plain film 1, US 1-2, CT non-contrast 2, CT with contrast 3, CTA 3, MRI non-contrast 3, MRI with contrast 4, MRA 4, Fast MRI brain 2, Nuclear medicine 3, Fluoroscopy 2",
+    "delays": "Both result_delay_seconds (real time) AND result_delay_turns must elapse before result is shown. Whichever is LATER blocks the result. Display 'Pending' status until both have elapsed.",
+    "iv_contrast": "Studies with requires_iv_contrast=true cannot be ordered without IV. If IV present, prompt confirms IV contrast; cost is bundled (no extra AP).",
+    "oral_contrast": "Studies with requires_oral_contrast=true add ~30 sec real time for oral admin in addition to base delay.",
+    "stability": "Studies with requires_stable=true blocked in unstable states (septic_shock, coma_fail). Fast MRI brain is the only MRI that is NOT stable_only \u2014 designed for unstable stroke patients.",
+    "pediatric_only": "Studies with pediatric_only=true only appear in pediatric cases.",
+    "extensibility": "Add studies to studies array, new ui_categories as needed."
+  },
+  "ui_categories": [
+    {
+      "id": "xray",
+      "name": "Plain Films (X-Ray)"
+    },
+    {
+      "id": "ultrasound",
+      "name": "Ultrasound"
+    },
+    {
+      "id": "ct",
+      "name": "CT"
+    },
+    {
+      "id": "cta",
+      "name": "CT Angiogram"
+    },
+    {
+      "id": "mri",
+      "name": "MRI"
+    },
+    {
+      "id": "mra",
+      "name": "MR Angiogram"
+    },
+    {
+      "id": "nuclear",
+      "name": "Nuclear Medicine"
+    },
+    {
+      "id": "fluoroscopy",
+      "name": "Fluoroscopy"
+    }
+  ],
+  "studies": [
+    {
+      "id": "xray_left_hand",
+      "name": "X-Ray Left Hand 3 View",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "left hand xray",
+        "x-ray left hand",
+        "left hand films"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "left_upper_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "extremity",
+        "upper_extremity"
+      ]
+    },
+    {
+      "id": "xray_right_hand",
+      "name": "X-Ray Right Hand 3 View",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "right hand xray",
+        "x-ray right hand"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "right_upper_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "extremity",
+        "upper_extremity"
+      ]
+    },
+    {
+      "id": "xray_left_wrist",
+      "name": "X-Ray Left Wrist 3 View",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "left wrist xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "left_upper_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "extremity",
+        "upper_extremity"
+      ]
+    },
+    {
+      "id": "xray_right_wrist",
+      "name": "X-Ray Right Wrist 3 View",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "right wrist xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "right_upper_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "extremity",
+        "upper_extremity"
+      ]
+    },
+    {
+      "id": "xray_left_forearm",
+      "name": "X-Ray Left Forearm",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "left forearm xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "left_upper_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "extremity",
+        "upper_extremity"
+      ]
+    },
+    {
+      "id": "xray_right_forearm",
+      "name": "X-Ray Right Forearm",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "right forearm xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "right_upper_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "extremity",
+        "upper_extremity"
+      ]
+    },
+    {
+      "id": "xray_left_elbow",
+      "name": "X-Ray Left Elbow",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "left elbow xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "left_upper_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "extremity",
+        "upper_extremity"
+      ]
+    },
+    {
+      "id": "xray_right_elbow",
+      "name": "X-Ray Right Elbow",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "right elbow xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "right_upper_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "extremity",
+        "upper_extremity"
+      ]
+    },
+    {
+      "id": "xray_left_humerus",
+      "name": "X-Ray Left Humerus",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "left humerus xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "left_upper_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "extremity",
+        "upper_extremity"
+      ]
+    },
+    {
+      "id": "xray_right_humerus",
+      "name": "X-Ray Right Humerus",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "right humerus xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "right_upper_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "extremity",
+        "upper_extremity"
+      ]
+    },
+    {
+      "id": "xray_left_shoulder",
+      "name": "X-Ray Left Shoulder",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "left shoulder xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "left_upper_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "dislocation",
+        "upper_extremity"
+      ]
+    },
+    {
+      "id": "xray_right_shoulder",
+      "name": "X-Ray Right Shoulder",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "right shoulder xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "right_upper_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "dislocation",
+        "upper_extremity"
+      ]
+    },
+    {
+      "id": "xray_left_clavicle",
+      "name": "X-Ray Left Clavicle",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "left clavicle xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "left_upper_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "upper_extremity"
+      ]
+    },
+    {
+      "id": "xray_right_clavicle",
+      "name": "X-Ray Right Clavicle",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "right clavicle xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "right_upper_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "upper_extremity"
+      ]
+    },
+    {
+      "id": "xray_left_femur",
+      "name": "X-Ray Left Femur",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "left femur xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "left_lower_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "extremity",
+        "lower_extremity"
+      ]
+    },
+    {
+      "id": "xray_right_femur",
+      "name": "X-Ray Right Femur",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "right femur xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "right_lower_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "extremity",
+        "lower_extremity"
+      ]
+    },
+    {
+      "id": "xray_left_knee",
+      "name": "X-Ray Left Knee 3 View",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "left knee xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "left_lower_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "extremity",
+        "lower_extremity",
+        "joint"
+      ]
+    },
+    {
+      "id": "xray_right_knee",
+      "name": "X-Ray Right Knee 3 View",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "right knee xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "right_lower_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "extremity",
+        "lower_extremity",
+        "joint"
+      ]
+    },
+    {
+      "id": "xray_left_tibfib",
+      "name": "X-Ray Left Tib/Fib",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "left tib fib xray",
+        "left lower leg xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "left_lower_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "extremity",
+        "lower_extremity"
+      ]
+    },
+    {
+      "id": "xray_right_tibfib",
+      "name": "X-Ray Right Tib/Fib",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "right tib fib xray",
+        "right lower leg xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "right_lower_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "extremity",
+        "lower_extremity"
+      ]
+    },
+    {
+      "id": "xray_left_ankle",
+      "name": "X-Ray Left Ankle 3 View",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "left ankle xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "left_lower_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "extremity",
+        "lower_extremity",
+        "joint"
+      ]
+    },
+    {
+      "id": "xray_right_ankle",
+      "name": "X-Ray Right Ankle 3 View",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "right ankle xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "right_lower_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "extremity",
+        "lower_extremity",
+        "joint"
+      ]
+    },
+    {
+      "id": "xray_left_foot",
+      "name": "X-Ray Left Foot 3 View",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "left foot xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "left_lower_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "extremity",
+        "lower_extremity"
+      ]
+    },
+    {
+      "id": "xray_right_foot",
+      "name": "X-Ray Right Foot 3 View",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "right foot xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "right_lower_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "extremity",
+        "lower_extremity"
+      ]
+    },
+    {
+      "id": "xray_cspine",
+      "name": "X-Ray Cervical Spine",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "c-spine xray",
+        "cervical spine xray",
+        "cspine xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "spine",
+      "tags": [
+        "trauma",
+        "fracture",
+        "spine",
+        "cervical"
+      ]
+    },
+    {
+      "id": "xray_tspine",
+      "name": "X-Ray Thoracic Spine",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "t-spine xray",
+        "thoracic spine xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "spine",
+      "tags": [
+        "trauma",
+        "fracture",
+        "spine",
+        "thoracic"
+      ]
+    },
+    {
+      "id": "xray_lspine",
+      "name": "X-Ray Lumbar Spine",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "l-spine xray",
+        "lumbar spine xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "spine",
+      "tags": [
+        "trauma",
+        "fracture",
+        "spine",
+        "lumbar"
+      ]
+    },
+    {
+      "id": "xray_coccyx",
+      "name": "X-Ray Coccyx",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "coccyx xray",
+        "tailbone xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "spine",
+      "tags": [
+        "trauma",
+        "fracture",
+        "coccyx"
+      ]
+    },
+    {
+      "id": "xray_pelvis",
+      "name": "X-Ray Pelvis",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "pelvis xray",
+        "pelvic xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "pelvis",
+      "tags": [
+        "trauma",
+        "fracture",
+        "pelvis",
+        "hip"
+      ]
+    },
+    {
+      "id": "xray_chest_pa",
+      "name": "X-Ray Chest PA/Lateral 2 View",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "chest xray",
+        "CXR",
+        "chest x-ray",
+        "pa lateral chest"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "chest",
+      "tags": [
+        "chest",
+        "pneumonia",
+        "pneumothorax",
+        "heart_failure",
+        "trauma",
+        "screening"
+      ]
+    },
+    {
+      "id": "xray_chest_portable",
+      "name": "X-Ray Chest Portable",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "portable cxr",
+        "portable chest xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "chest",
+      "tags": [
+        "chest",
+        "emergency",
+        "unstable",
+        "line_placement"
+      ]
+    },
+    {
+      "id": "xray_kub",
+      "name": "KUB (Abdomen 1 View)",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "KUB",
+        "kidney ureter bladder",
+        "abdomen 1 view"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "abdomen",
+      "tags": [
+        "abdomen",
+        "obstruction",
+        "stone",
+        "foreign_body"
+      ]
+    },
+    {
+      "id": "xray_abdomen_2view",
+      "name": "X-Ray Abdomen 2 View",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "abdomen 2 view",
+        "flat upright abdomen",
+        "AAS"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "abdomen",
+      "tags": [
+        "abdomen",
+        "obstruction",
+        "perforation",
+        "appendicitis",
+        "ileus"
+      ]
+    },
+    {
+      "id": "xray_abdomen_decub",
+      "name": "X-Ray Abdomen 2 View with Bilateral Decubitus",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "abdomen with decubitus",
+        "abdominal series with decubitus"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "abdomen",
+      "tags": [
+        "abdomen",
+        "perforation",
+        "obstruction",
+        "free_air"
+      ]
+    },
+    {
+      "id": "xray_skull",
+      "name": "X-Ray Skull",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "skull xray",
+        "skull films"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "head",
+      "tags": [
+        "trauma",
+        "fracture",
+        "head"
+      ]
+    },
+    {
+      "id": "xray_facial",
+      "name": "X-Ray Facial Bones",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "facial xray",
+        "face xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "head",
+      "tags": [
+        "trauma",
+        "fracture",
+        "face"
+      ]
+    },
+    {
+      "id": "xray_mandible",
+      "name": "X-Ray Mandible",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "mandible xray",
+        "jaw xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "head",
+      "tags": [
+        "trauma",
+        "fracture",
+        "jaw"
+      ]
+    },
+    {
+      "id": "xray_panorex",
+      "name": "Panoramic Dental X-Ray",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "panorex",
+        "dental panoramic"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "head",
+      "tags": [
+        "dental",
+        "jaw"
+      ]
+    },
+    {
+      "id": "xray_sinus",
+      "name": "X-Ray Sinuses",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "sinus xray",
+        "sinus series"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "head",
+      "tags": [
+        "sinusitis",
+        "head"
+      ]
+    },
+    {
+      "id": "xray_soft_tissue_neck",
+      "name": "X-Ray Soft Tissue Neck",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "soft tissue neck",
+        "STN",
+        "neck soft tissue"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "neck",
+      "tags": [
+        "airway",
+        "epiglottitis",
+        "retropharyngeal_abscess",
+        "croup",
+        "foreign_body"
+      ]
+    },
+    {
+      "id": "xray_sternum",
+      "name": "X-Ray Sternum",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "sternum xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "chest",
+      "tags": [
+        "trauma",
+        "fracture",
+        "chest"
+      ]
+    },
+    {
+      "id": "xray_swallow",
+      "name": "Modified Barium Swallow Study",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "modified barium swallow",
+        "MBS",
+        "swallow study",
+        "video swallow"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "neck",
+      "tags": [
+        "dysphagia",
+        "aspiration",
+        "swallow"
+      ]
+    },
+    {
+      "id": "xray_scoliosis",
+      "name": "Scoliosis Series",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "scoliosis xray"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "spine",
+      "tags": [
+        "spine",
+        "scoliosis",
+        "screening"
+      ]
+    },
+    {
+      "id": "xray_pediatric_skeletal_survey",
+      "name": "Pediatric Skeletal Survey",
+      "modality": "xray",
+      "ui_categories": [
+        "xray"
+      ],
+      "aliases": [
+        "skeletal survey",
+        "child abuse survey",
+        "non-accidental trauma survey"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 90,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": true,
+      "body_region": "systemic",
+      "tags": [
+        "pediatric",
+        "abuse",
+        "trauma",
+        "screening"
+      ],
+      "notes": "Pediatric only - child abuse workup"
+    },
+    {
+      "id": "us_soft_tissue",
+      "name": "Ultrasound Soft Tissue",
+      "modality": "ultrasound",
+      "ui_categories": [
+        "ultrasound"
+      ],
+      "aliases": [
+        "soft tissue us",
+        "soft tissue ultrasound"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "",
+      "tags": [
+        "abscess",
+        "cellulitis",
+        "soft_tissue",
+        "foreign_body"
+      ]
+    },
+    {
+      "id": "us_globe",
+      "name": "Ultrasound Ocular / Globe",
+      "modality": "ultrasound",
+      "ui_categories": [
+        "ultrasound"
+      ],
+      "aliases": [
+        "ocular us",
+        "globe ultrasound",
+        "eye ultrasound"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "head",
+      "tags": [
+        "eye",
+        "retinal_detachment",
+        "trauma",
+        "vitreous_hemorrhage"
+      ]
+    },
+    {
+      "id": "us_appendix",
+      "name": "Ultrasound Appendix",
+      "modality": "ultrasound",
+      "ui_categories": [
+        "ultrasound"
+      ],
+      "aliases": [
+        "appendix us",
+        "appendicitis ultrasound",
+        "RLQ ultrasound"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "abdomen",
+      "tags": [
+        "appendicitis",
+        "abdomen",
+        "pediatric",
+        "pregnancy"
+      ]
+    },
+    {
+      "id": "us_abdomen_complete",
+      "name": "Complete Abdominal Ultrasound",
+      "modality": "ultrasound",
+      "ui_categories": [
+        "ultrasound"
+      ],
+      "aliases": [
+        "abdomen us",
+        "abdominal ultrasound",
+        "complete abd us"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "abdomen",
+      "tags": [
+        "abdomen",
+        "liver",
+        "gallbladder",
+        "cholecystitis",
+        "kidneys",
+        "aorta"
+      ]
+    },
+    {
+      "id": "us_renal",
+      "name": "Renal Ultrasound",
+      "modality": "ultrasound",
+      "ui_categories": [
+        "ultrasound"
+      ],
+      "aliases": [
+        "renal us",
+        "kidney ultrasound"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "abdomen",
+      "tags": [
+        "kidney_stone",
+        "hydronephrosis",
+        "renal_failure"
+      ]
+    },
+    {
+      "id": "us_bladder",
+      "name": "Bladder Ultrasound",
+      "modality": "ultrasound",
+      "ui_categories": [
+        "ultrasound"
+      ],
+      "aliases": [
+        "bladder us",
+        "post void residual",
+        "PVR"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "pelvis",
+      "tags": [
+        "urinary_retention",
+        "bladder"
+      ]
+    },
+    {
+      "id": "us_fast",
+      "name": "FAST Ultrasound (Trauma)",
+      "modality": "ultrasound",
+      "ui_categories": [
+        "ultrasound"
+      ],
+      "aliases": [
+        "FAST",
+        "FAST exam",
+        "FAST ultrasound",
+        "trauma ultrasound",
+        "eFAST"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "systemic",
+      "tags": [
+        "trauma",
+        "emergency",
+        "free_fluid",
+        "tamponade",
+        "pneumothorax"
+      ]
+    },
+    {
+      "id": "us_doppler_vessel",
+      "name": "Doppler Ultrasound \u2014 Vessel",
+      "modality": "ultrasound",
+      "ui_categories": [
+        "ultrasound"
+      ],
+      "aliases": [
+        "doppler us",
+        "vascular doppler",
+        "doppler study"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "",
+      "tags": [
+        "vascular",
+        "thrombosis",
+        "blood_flow"
+      ]
+    },
+    {
+      "id": "us_dvt_le",
+      "name": "Lower Extremity DVT Ultrasound",
+      "modality": "ultrasound",
+      "ui_categories": [
+        "ultrasound"
+      ],
+      "aliases": [
+        "LE DVT",
+        "DVT ultrasound",
+        "lower extremity venous doppler"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "lower_extremity",
+      "tags": [
+        "dvt",
+        "thrombosis",
+        "pulmonary_embolism",
+        "vascular"
+      ]
+    },
+    {
+      "id": "us_carotid_duplex",
+      "name": "Carotid Duplex Ultrasound",
+      "modality": "ultrasound",
+      "ui_categories": [
+        "ultrasound"
+      ],
+      "aliases": [
+        "carotid us",
+        "carotid duplex"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "neck",
+      "tags": [
+        "stroke",
+        "carotid_stenosis",
+        "vascular",
+        "TIA"
+      ]
+    },
+    {
+      "id": "us_aorta",
+      "name": "Abdominal Aortic Ultrasound",
+      "modality": "ultrasound",
+      "ui_categories": [
+        "ultrasound"
+      ],
+      "aliases": [
+        "aorta us",
+        "AAA screen",
+        "aortic ultrasound"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "abdomen",
+      "tags": [
+        "AAA",
+        "aortic_aneurysm",
+        "vascular",
+        "screening"
+      ]
+    },
+    {
+      "id": "us_testicle",
+      "name": "Testicular Ultrasound with Doppler",
+      "modality": "ultrasound",
+      "ui_categories": [
+        "ultrasound"
+      ],
+      "aliases": [
+        "testicular us",
+        "scrotal ultrasound",
+        "testicle doppler"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "pelvis",
+      "tags": [
+        "testicular_torsion",
+        "epididymitis",
+        "testicular_mass"
+      ]
+    },
+    {
+      "id": "us_thyroid",
+      "name": "Thyroid Ultrasound",
+      "modality": "ultrasound",
+      "ui_categories": [
+        "ultrasound"
+      ],
+      "aliases": [
+        "thyroid us"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "neck",
+      "tags": [
+        "thyroid",
+        "thyroid_nodule",
+        "goiter"
+      ]
+    },
+    {
+      "id": "us_pleural",
+      "name": "Pleural Ultrasound",
+      "modality": "ultrasound",
+      "ui_categories": [
+        "ultrasound"
+      ],
+      "aliases": [
+        "pleural us",
+        "thoracic ultrasound"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "chest",
+      "tags": [
+        "pleural_effusion",
+        "pneumothorax",
+        "chest",
+        "procedure_guidance"
+      ]
+    },
+    {
+      "id": "us_lung",
+      "name": "Lung Ultrasound",
+      "modality": "ultrasound",
+      "ui_categories": [
+        "ultrasound"
+      ],
+      "aliases": [
+        "lung us",
+        "POCUS lung"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "chest",
+      "tags": [
+        "pneumothorax",
+        "pulmonary_edema",
+        "pneumonia",
+        "B_lines"
+      ]
+    },
+    {
+      "id": "us_echo",
+      "name": "Transthoracic Echocardiogram",
+      "modality": "ultrasound",
+      "ui_categories": [
+        "ultrasound"
+      ],
+      "aliases": [
+        "echo",
+        "TTE",
+        "echocardiogram",
+        "transthoracic echo"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "chest",
+      "tags": [
+        "cardiac",
+        "heart_failure",
+        "tamponade",
+        "valvular_disease",
+        "ischemia"
+      ]
+    },
+    {
+      "id": "us_pelvic_transabd",
+      "name": "Pelvic Ultrasound \u2014 Transabdominal",
+      "modality": "ultrasound",
+      "ui_categories": [
+        "ultrasound"
+      ],
+      "aliases": [
+        "pelvic us",
+        "transabdominal pelvic ultrasound"
+      ],
+      "ap_cost": 1,
+      "result_delay_seconds": 30,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "pelvis",
+      "tags": [
+        "pelvic",
+        "ovarian",
+        "uterine",
+        "ectopic_pregnancy"
+      ]
+    },
+    {
+      "id": "us_pelvic_transvaginal",
+      "name": "Pelvic Ultrasound \u2014 Transvaginal",
+      "modality": "ultrasound",
+      "ui_categories": [
+        "ultrasound"
+      ],
+      "aliases": [
+        "TVUS",
+        "transvaginal ultrasound"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "pelvis",
+      "tags": [
+        "pelvic",
+        "ovarian",
+        "ectopic_pregnancy",
+        "uterine"
+      ]
+    },
+    {
+      "id": "us_ob_first_tri",
+      "name": "OB Ultrasound First Trimester",
+      "modality": "ultrasound",
+      "ui_categories": [
+        "ultrasound"
+      ],
+      "aliases": [
+        "first trimester ultrasound",
+        "ob ultrasound 1st trimester"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "pelvis",
+      "tags": [
+        "pregnancy",
+        "ectopic_pregnancy",
+        "first_trimester",
+        "OB"
+      ]
+    },
+    {
+      "id": "us_ob_late",
+      "name": "OB Ultrasound 2nd/3rd Trimester",
+      "modality": "ultrasound",
+      "ui_categories": [
+        "ultrasound"
+      ],
+      "aliases": [
+        "second trimester ultrasound",
+        "third trimester ultrasound"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "pelvis",
+      "tags": [
+        "pregnancy",
+        "fetal",
+        "OB"
+      ]
+    },
+    {
+      "id": "ct_head_no_contrast",
+      "name": "CT Head without Contrast",
+      "modality": "ct",
+      "ui_categories": [
+        "ct"
+      ],
+      "aliases": [
+        "CT head",
+        "head CT",
+        "non-contrast head CT"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "head",
+      "tags": [
+        "stroke",
+        "trauma",
+        "hemorrhage",
+        "head",
+        "emergency"
+      ]
+    },
+    {
+      "id": "ct_head_with_without",
+      "name": "CT Head with and without Contrast",
+      "modality": "ct",
+      "ui_categories": [
+        "ct"
+      ],
+      "aliases": [
+        "CT head with contrast",
+        "head CT with contrast"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "head",
+      "tags": [
+        "mass",
+        "tumor",
+        "abscess",
+        "head"
+      ]
+    },
+    {
+      "id": "ct_cspine",
+      "name": "CT Cervical Spine",
+      "modality": "ct",
+      "ui_categories": [
+        "ct"
+      ],
+      "aliases": [
+        "CT c-spine",
+        "CT cervical spine"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "spine",
+      "tags": [
+        "trauma",
+        "fracture",
+        "spine",
+        "cervical"
+      ]
+    },
+    {
+      "id": "ct_tspine",
+      "name": "CT Thoracic Spine",
+      "modality": "ct",
+      "ui_categories": [
+        "ct"
+      ],
+      "aliases": [
+        "CT t-spine",
+        "CT thoracic spine"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "spine",
+      "tags": [
+        "trauma",
+        "fracture",
+        "spine",
+        "thoracic"
+      ]
+    },
+    {
+      "id": "ct_lspine",
+      "name": "CT Lumbar Spine",
+      "modality": "ct",
+      "ui_categories": [
+        "ct"
+      ],
+      "aliases": [
+        "CT l-spine",
+        "CT lumbar spine"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "spine",
+      "tags": [
+        "trauma",
+        "fracture",
+        "spine",
+        "lumbar"
+      ]
+    },
+    {
+      "id": "ct_neck_no_contrast",
+      "name": "CT Neck without Contrast",
+      "modality": "ct",
+      "ui_categories": [
+        "ct"
+      ],
+      "aliases": [
+        "CT neck"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "neck",
+      "tags": [
+        "neck",
+        "trauma",
+        "airway"
+      ]
+    },
+    {
+      "id": "ct_neck_with_without",
+      "name": "CT Neck with and without Contrast",
+      "modality": "ct",
+      "ui_categories": [
+        "ct"
+      ],
+      "aliases": [
+        "CT neck with contrast"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "neck",
+      "tags": [
+        "abscess",
+        "mass",
+        "neck",
+        "retropharyngeal_abscess"
+      ]
+    },
+    {
+      "id": "ct_facial",
+      "name": "CT Facial Bones",
+      "modality": "ct",
+      "ui_categories": [
+        "ct"
+      ],
+      "aliases": [
+        "CT face",
+        "facial CT"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "head",
+      "tags": [
+        "trauma",
+        "fracture",
+        "face"
+      ]
+    },
+    {
+      "id": "ct_maxillofacial",
+      "name": "CT Maxillofacial",
+      "modality": "ct",
+      "ui_categories": [
+        "ct"
+      ],
+      "aliases": [
+        "CT max-fax",
+        "maxillofacial CT"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "head",
+      "tags": [
+        "trauma",
+        "fracture",
+        "face"
+      ]
+    },
+    {
+      "id": "ct_temporal_bones",
+      "name": "CT Temporal Bones",
+      "modality": "ct",
+      "ui_categories": [
+        "ct"
+      ],
+      "aliases": [
+        "CT temporal",
+        "temporal bone CT"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "head",
+      "tags": [
+        "mastoiditis",
+        "ear",
+        "head"
+      ]
+    },
+    {
+      "id": "ct_sinus",
+      "name": "CT Sinuses",
+      "modality": "ct",
+      "ui_categories": [
+        "ct"
+      ],
+      "aliases": [
+        "CT sinus",
+        "sinus CT"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "head",
+      "tags": [
+        "sinusitis",
+        "head"
+      ]
+    },
+    {
+      "id": "ct_orbit",
+      "name": "CT Orbits",
+      "modality": "ct",
+      "ui_categories": [
+        "ct"
+      ],
+      "aliases": [
+        "CT orbit",
+        "orbit CT"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "head",
+      "tags": [
+        "trauma",
+        "fracture",
+        "orbital_cellulitis",
+        "eye"
+      ]
+    },
+    {
+      "id": "ct_chest_no_contrast",
+      "name": "CT Chest without Contrast",
+      "modality": "ct",
+      "ui_categories": [
+        "ct"
+      ],
+      "aliases": [
+        "CT chest",
+        "chest CT"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "chest",
+      "tags": [
+        "lung",
+        "pneumonia",
+        "nodule",
+        "screening",
+        "trauma"
+      ]
+    },
+    {
+      "id": "ct_chest_with_without",
+      "name": "CT Chest with and without Contrast",
+      "modality": "ct",
+      "ui_categories": [
+        "ct"
+      ],
+      "aliases": [
+        "CT chest with contrast"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "chest",
+      "tags": [
+        "lung",
+        "mass",
+        "mediastinum",
+        "chest"
+      ]
+    },
+    {
+      "id": "ct_abdpel_no_contrast",
+      "name": "CT Abdomen/Pelvis without Contrast",
+      "modality": "ct",
+      "ui_categories": [
+        "ct"
+      ],
+      "aliases": [
+        "CT abd/pel",
+        "CT abdomen pelvis",
+        "non-contrast abd/pel CT"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "abdomen",
+      "tags": [
+        "abdomen",
+        "kidney_stone",
+        "trauma",
+        "obstruction"
+      ]
+    },
+    {
+      "id": "ct_abdpel_with_without",
+      "name": "CT Abdomen/Pelvis with and without Contrast",
+      "modality": "ct",
+      "ui_categories": [
+        "ct"
+      ],
+      "aliases": [
+        "CT abd/pel with contrast",
+        "CT abdomen pelvis IV contrast"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "abdomen",
+      "tags": [
+        "abdomen",
+        "appendicitis",
+        "abscess",
+        "obstruction",
+        "mass",
+        "trauma"
+      ]
+    },
+    {
+      "id": "ct_abdpel_oral_iv",
+      "name": "CT Abdomen/Pelvis with IV and Oral Contrast",
+      "modality": "ct",
+      "ui_categories": [
+        "ct"
+      ],
+      "aliases": [
+        "CT abd/pel oral and IV contrast",
+        "CT abdomen pelvis triple contrast"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 90,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": true,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "abdomen",
+      "tags": [
+        "abdomen",
+        "obstruction",
+        "fistula",
+        "appendicitis",
+        "IBD"
+      ]
+    },
+    {
+      "id": "ct_enterography",
+      "name": "CT Enterography",
+      "modality": "ct",
+      "ui_categories": [
+        "ct"
+      ],
+      "aliases": [
+        "CT enterography",
+        "CTE"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": true,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "abdomen",
+      "tags": [
+        "IBD",
+        "crohns",
+        "small_bowel",
+        "abdomen"
+      ]
+    },
+    {
+      "id": "ct_left_upper_ext_no_contrast",
+      "name": "CT Left Upper Extremity without Contrast",
+      "modality": "ct",
+      "ui_categories": [
+        "ct"
+      ],
+      "aliases": [
+        "CT left arm"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "left_upper_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "extremity"
+      ]
+    },
+    {
+      "id": "ct_left_upper_ext_with_without",
+      "name": "CT Left Upper Extremity with and without Contrast",
+      "modality": "ct",
+      "ui_categories": [
+        "ct"
+      ],
+      "aliases": [
+        "CT left arm with contrast"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "left_upper_extremity",
+      "tags": [
+        "mass",
+        "abscess",
+        "extremity"
+      ]
+    },
+    {
+      "id": "ct_right_upper_ext_no_contrast",
+      "name": "CT Right Upper Extremity without Contrast",
+      "modality": "ct",
+      "ui_categories": [
+        "ct"
+      ],
+      "aliases": [
+        "CT right arm"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "right_upper_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "extremity"
+      ]
+    },
+    {
+      "id": "ct_right_upper_ext_with_without",
+      "name": "CT Right Upper Extremity with and without Contrast",
+      "modality": "ct",
+      "ui_categories": [
+        "ct"
+      ],
+      "aliases": [
+        "CT right arm with contrast"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "right_upper_extremity",
+      "tags": [
+        "mass",
+        "abscess",
+        "extremity"
+      ]
+    },
+    {
+      "id": "ct_left_lower_ext_no_contrast",
+      "name": "CT Left Lower Extremity without Contrast",
+      "modality": "ct",
+      "ui_categories": [
+        "ct"
+      ],
+      "aliases": [
+        "CT left leg"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "left_lower_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "extremity"
+      ]
+    },
+    {
+      "id": "ct_left_lower_ext_with_without",
+      "name": "CT Left Lower Extremity with and without Contrast",
+      "modality": "ct",
+      "ui_categories": [
+        "ct"
+      ],
+      "aliases": [
+        "CT left leg with contrast"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "left_lower_extremity",
+      "tags": [
+        "mass",
+        "abscess",
+        "extremity"
+      ]
+    },
+    {
+      "id": "ct_right_lower_ext_no_contrast",
+      "name": "CT Right Lower Extremity without Contrast",
+      "modality": "ct",
+      "ui_categories": [
+        "ct"
+      ],
+      "aliases": [
+        "CT right leg"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "right_lower_extremity",
+      "tags": [
+        "trauma",
+        "fracture",
+        "extremity"
+      ]
+    },
+    {
+      "id": "ct_right_lower_ext_with_without",
+      "name": "CT Right Lower Extremity with and without Contrast",
+      "modality": "ct",
+      "ui_categories": [
+        "ct"
+      ],
+      "aliases": [
+        "CT right leg with contrast"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "right_lower_extremity",
+      "tags": [
+        "mass",
+        "abscess",
+        "extremity"
+      ]
+    },
+    {
+      "id": "cta_head",
+      "name": "CT Angiogram Head",
+      "modality": "cta",
+      "ui_categories": [
+        "cta"
+      ],
+      "aliases": [
+        "CTA head",
+        "CT angiogram brain"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "head",
+      "tags": [
+        "stroke",
+        "aneurysm",
+        "vascular",
+        "head",
+        "emergency"
+      ]
+    },
+    {
+      "id": "cta_neck",
+      "name": "CT Angiogram Neck",
+      "modality": "cta",
+      "ui_categories": [
+        "cta"
+      ],
+      "aliases": [
+        "CTA neck",
+        "CT angio neck"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "neck",
+      "tags": [
+        "stroke",
+        "carotid_dissection",
+        "vertebral_dissection",
+        "vascular"
+      ]
+    },
+    {
+      "id": "cta_chest",
+      "name": "CT Angiogram Chest (PE Protocol)",
+      "modality": "cta",
+      "ui_categories": [
+        "cta"
+      ],
+      "aliases": [
+        "CTA chest",
+        "PE protocol CT",
+        "CT PE"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "chest",
+      "tags": [
+        "pulmonary_embolism",
+        "PE",
+        "chest",
+        "emergency",
+        "vascular"
+      ]
+    },
+    {
+      "id": "cta_abdpel",
+      "name": "CT Angiogram Abdomen/Pelvis",
+      "modality": "cta",
+      "ui_categories": [
+        "cta"
+      ],
+      "aliases": [
+        "CTA abdomen pelvis",
+        "CT angiogram abd/pel"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "abdomen",
+      "tags": [
+        "mesenteric_ischemia",
+        "GI_bleed",
+        "aortic_dissection",
+        "vascular",
+        "abdomen"
+      ]
+    },
+    {
+      "id": "cta_left_lower_ext",
+      "name": "CT Angiogram Left Lower Extremity",
+      "modality": "cta",
+      "ui_categories": [
+        "cta"
+      ],
+      "aliases": [
+        "CTA left leg"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "left_lower_extremity",
+      "tags": [
+        "vascular",
+        "trauma",
+        "ischemia",
+        "extremity"
+      ]
+    },
+    {
+      "id": "cta_right_lower_ext",
+      "name": "CT Angiogram Right Lower Extremity",
+      "modality": "cta",
+      "ui_categories": [
+        "cta"
+      ],
+      "aliases": [
+        "CTA right leg"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "right_lower_extremity",
+      "tags": [
+        "vascular",
+        "trauma",
+        "ischemia",
+        "extremity"
+      ]
+    },
+    {
+      "id": "cta_left_upper_ext",
+      "name": "CT Angiogram Left Upper Extremity",
+      "modality": "cta",
+      "ui_categories": [
+        "cta"
+      ],
+      "aliases": [
+        "CTA left arm"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "left_upper_extremity",
+      "tags": [
+        "vascular",
+        "trauma",
+        "ischemia",
+        "extremity"
+      ]
+    },
+    {
+      "id": "cta_right_upper_ext",
+      "name": "CT Angiogram Right Upper Extremity",
+      "modality": "cta",
+      "ui_categories": [
+        "cta"
+      ],
+      "aliases": [
+        "CTA right arm"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "right_upper_extremity",
+      "tags": [
+        "vascular",
+        "trauma",
+        "ischemia",
+        "extremity"
+      ]
+    },
+    {
+      "id": "mri_brain_no_contrast",
+      "name": "MRI Brain without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI brain",
+        "brain MRI"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "head",
+      "tags": [
+        "stroke",
+        "mass",
+        "brain",
+        "tumor",
+        "demyelination"
+      ]
+    },
+    {
+      "id": "mri_brain_fast",
+      "name": "Fast MRI Brain (Stroke Protocol)",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "fast MRI brain",
+        "stroke MRI",
+        "DWI brain",
+        "rapid MRI"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "head",
+      "tags": [
+        "stroke",
+        "emergency",
+        "DWI",
+        "ischemia"
+      ],
+      "notes": "Fast MRI brain \u2014 DWI-only protocol, ~5 min, allowed even when patient unstable"
+    },
+    {
+      "id": "mri_brain_with_without",
+      "name": "MRI Brain with and without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI brain with contrast"
+      ],
+      "ap_cost": 4,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "head",
+      "tags": [
+        "mass",
+        "tumor",
+        "abscess",
+        "metastasis",
+        "brain"
+      ]
+    },
+    {
+      "id": "mri_orbits_with_without",
+      "name": "MRI Orbits with and without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI orbit",
+        "orbital MRI"
+      ],
+      "ap_cost": 4,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "head",
+      "tags": [
+        "orbit",
+        "mass",
+        "optic_neuritis",
+        "tumor",
+        "eye"
+      ]
+    },
+    {
+      "id": "mri_neck_no_contrast",
+      "name": "MRI Neck without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI neck"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "neck",
+      "tags": [
+        "mass",
+        "abscess",
+        "neck"
+      ]
+    },
+    {
+      "id": "mri_neck_with_without",
+      "name": "MRI Neck with and without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI neck with contrast"
+      ],
+      "ap_cost": 4,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "neck",
+      "tags": [
+        "mass",
+        "tumor",
+        "abscess",
+        "neck"
+      ]
+    },
+    {
+      "id": "mri_cardiac",
+      "name": "MRI Cardiac with Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "cardiac MRI",
+        "CMR"
+      ],
+      "ap_cost": 4,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 3,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "chest",
+      "tags": [
+        "cardiac",
+        "cardiomyopathy",
+        "myocarditis",
+        "viability",
+        "amyloidosis"
+      ]
+    },
+    {
+      "id": "mri_abdpel_no_contrast",
+      "name": "MRI Abdomen/Pelvis without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI abd/pel",
+        "MRI abdomen pelvis"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "abdomen",
+      "tags": [
+        "abdomen",
+        "appendicitis",
+        "pregnancy",
+        "stone"
+      ]
+    },
+    {
+      "id": "mri_abdpel_with_without",
+      "name": "MRI Abdomen/Pelvis with and without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI abd/pel with contrast"
+      ],
+      "ap_cost": 4,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "abdomen",
+      "tags": [
+        "abdomen",
+        "mass",
+        "liver",
+        "tumor",
+        "IBD"
+      ]
+    },
+    {
+      "id": "mri_mrcp",
+      "name": "MRCP",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRCP",
+        "MR cholangiopancreatography"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "abdomen",
+      "tags": [
+        "biliary",
+        "gallstone",
+        "pancreatic_duct",
+        "cholangitis"
+      ]
+    },
+    {
+      "id": "mri_enterography",
+      "name": "MR Enterography",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRE",
+        "MR enterography"
+      ],
+      "ap_cost": 4,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "abdomen",
+      "tags": [
+        "IBD",
+        "crohns",
+        "small_bowel"
+      ]
+    },
+    {
+      "id": "mri_cspine_with_without",
+      "name": "MRI Cervical Spine with and without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI c-spine with contrast"
+      ],
+      "ap_cost": 4,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "spine",
+      "tags": [
+        "spine",
+        "cord_compression",
+        "epidural_abscess",
+        "mass",
+        "cervical"
+      ]
+    },
+    {
+      "id": "mri_cspine_no_contrast",
+      "name": "MRI Cervical Spine without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI c-spine"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "spine",
+      "tags": [
+        "spine",
+        "disc",
+        "cord",
+        "cervical",
+        "trauma"
+      ]
+    },
+    {
+      "id": "mri_tspine_with_without",
+      "name": "MRI Thoracic Spine with and without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI t-spine with contrast"
+      ],
+      "ap_cost": 4,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "spine",
+      "tags": [
+        "spine",
+        "cord_compression",
+        "epidural_abscess",
+        "mass",
+        "thoracic"
+      ]
+    },
+    {
+      "id": "mri_tspine_no_contrast",
+      "name": "MRI Thoracic Spine without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI t-spine"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "spine",
+      "tags": [
+        "spine",
+        "disc",
+        "cord",
+        "thoracic"
+      ]
+    },
+    {
+      "id": "mri_lspine_with_without",
+      "name": "MRI Lumbar Spine with and without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI l-spine with contrast"
+      ],
+      "ap_cost": 4,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "spine",
+      "tags": [
+        "spine",
+        "cauda_equina",
+        "epidural_abscess",
+        "disc",
+        "lumbar"
+      ]
+    },
+    {
+      "id": "mri_lspine_no_contrast",
+      "name": "MRI Lumbar Spine without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI l-spine"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "spine",
+      "tags": [
+        "spine",
+        "disc",
+        "cauda_equina",
+        "lumbar",
+        "sciatica"
+      ]
+    },
+    {
+      "id": "mri_left_knee_no_contrast",
+      "name": "MRI Left Knee without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI left knee"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "left_lower_extremity",
+      "tags": [
+        "knee",
+        "ligament",
+        "meniscus",
+        "ortho",
+        "joint"
+      ]
+    },
+    {
+      "id": "mri_left_knee_with_without",
+      "name": "MRI Left Knee with and without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI left knee with contrast"
+      ],
+      "ap_cost": 4,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "left_lower_extremity",
+      "tags": [
+        "knee",
+        "mass",
+        "tumor",
+        "infection",
+        "joint"
+      ]
+    },
+    {
+      "id": "mri_right_knee_no_contrast",
+      "name": "MRI Right Knee without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI right knee"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "right_lower_extremity",
+      "tags": [
+        "knee",
+        "ligament",
+        "meniscus",
+        "ortho",
+        "joint"
+      ]
+    },
+    {
+      "id": "mri_right_knee_with_without",
+      "name": "MRI Right Knee with and without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI right knee with contrast"
+      ],
+      "ap_cost": 4,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "right_lower_extremity",
+      "tags": [
+        "knee",
+        "mass",
+        "tumor",
+        "joint"
+      ]
+    },
+    {
+      "id": "mri_left_shoulder_no_contrast",
+      "name": "MRI Left Shoulder without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI left shoulder"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "left_upper_extremity",
+      "tags": [
+        "shoulder",
+        "rotator_cuff",
+        "ortho",
+        "joint"
+      ]
+    },
+    {
+      "id": "mri_left_shoulder_with_without",
+      "name": "MRI Left Shoulder with and without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI left shoulder with contrast"
+      ],
+      "ap_cost": 4,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "left_upper_extremity",
+      "tags": [
+        "shoulder",
+        "mass",
+        "infection",
+        "joint"
+      ]
+    },
+    {
+      "id": "mri_right_shoulder_no_contrast",
+      "name": "MRI Right Shoulder without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI right shoulder"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "right_upper_extremity",
+      "tags": [
+        "shoulder",
+        "rotator_cuff",
+        "ortho",
+        "joint"
+      ]
+    },
+    {
+      "id": "mri_right_shoulder_with_without",
+      "name": "MRI Right Shoulder with and without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI right shoulder with contrast"
+      ],
+      "ap_cost": 4,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "right_upper_extremity",
+      "tags": [
+        "shoulder",
+        "mass",
+        "infection",
+        "joint"
+      ]
+    },
+    {
+      "id": "mri_left_hip_no_contrast",
+      "name": "MRI Left Hip without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI left hip"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "left_lower_extremity",
+      "tags": [
+        "hip",
+        "avascular_necrosis",
+        "ortho",
+        "joint"
+      ]
+    },
+    {
+      "id": "mri_left_hip_with_without",
+      "name": "MRI Left Hip with and without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI left hip with contrast"
+      ],
+      "ap_cost": 4,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "left_lower_extremity",
+      "tags": [
+        "hip",
+        "mass",
+        "infection",
+        "joint"
+      ]
+    },
+    {
+      "id": "mri_right_hip_no_contrast",
+      "name": "MRI Right Hip without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI right hip"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "right_lower_extremity",
+      "tags": [
+        "hip",
+        "avascular_necrosis",
+        "ortho",
+        "joint"
+      ]
+    },
+    {
+      "id": "mri_right_hip_with_without",
+      "name": "MRI Right Hip with and without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI right hip with contrast"
+      ],
+      "ap_cost": 4,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "right_lower_extremity",
+      "tags": [
+        "hip",
+        "mass",
+        "infection",
+        "joint"
+      ]
+    },
+    {
+      "id": "mri_left_ankle_no_contrast",
+      "name": "MRI Left Ankle without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI left ankle"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "left_lower_extremity",
+      "tags": [
+        "ankle",
+        "ligament",
+        "ortho",
+        "joint"
+      ]
+    },
+    {
+      "id": "mri_left_ankle_with_without",
+      "name": "MRI Left Ankle with and without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI left ankle with contrast"
+      ],
+      "ap_cost": 4,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "left_lower_extremity",
+      "tags": [
+        "ankle",
+        "infection",
+        "mass",
+        "joint"
+      ]
+    },
+    {
+      "id": "mri_right_ankle_no_contrast",
+      "name": "MRI Right Ankle without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI right ankle"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "right_lower_extremity",
+      "tags": [
+        "ankle",
+        "ligament",
+        "ortho",
+        "joint"
+      ]
+    },
+    {
+      "id": "mri_right_ankle_with_without",
+      "name": "MRI Right Ankle with and without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI right ankle with contrast"
+      ],
+      "ap_cost": 4,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "right_lower_extremity",
+      "tags": [
+        "ankle",
+        "infection",
+        "mass",
+        "joint"
+      ]
+    },
+    {
+      "id": "mri_left_wrist_no_contrast",
+      "name": "MRI Left Wrist without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI left wrist"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "left_upper_extremity",
+      "tags": [
+        "wrist",
+        "ligament",
+        "ortho",
+        "joint"
+      ]
+    },
+    {
+      "id": "mri_left_wrist_with_without",
+      "name": "MRI Left Wrist with and without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI left wrist with contrast"
+      ],
+      "ap_cost": 4,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "left_upper_extremity",
+      "tags": [
+        "wrist",
+        "infection",
+        "mass",
+        "joint"
+      ]
+    },
+    {
+      "id": "mri_right_wrist_no_contrast",
+      "name": "MRI Right Wrist without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI right wrist"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "right_upper_extremity",
+      "tags": [
+        "wrist",
+        "ligament",
+        "ortho",
+        "joint"
+      ]
+    },
+    {
+      "id": "mri_right_wrist_with_without",
+      "name": "MRI Right Wrist with and without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI right wrist with contrast"
+      ],
+      "ap_cost": 4,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "right_upper_extremity",
+      "tags": [
+        "wrist",
+        "infection",
+        "mass",
+        "joint"
+      ]
+    },
+    {
+      "id": "mri_left_elbow_no_contrast",
+      "name": "MRI Left Elbow without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI left elbow"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "left_upper_extremity",
+      "tags": [
+        "elbow",
+        "ligament",
+        "ortho",
+        "joint"
+      ]
+    },
+    {
+      "id": "mri_left_elbow_with_without",
+      "name": "MRI Left Elbow with and without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI left elbow with contrast"
+      ],
+      "ap_cost": 4,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "left_upper_extremity",
+      "tags": [
+        "elbow",
+        "infection",
+        "mass",
+        "joint"
+      ]
+    },
+    {
+      "id": "mri_right_elbow_no_contrast",
+      "name": "MRI Right Elbow without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI right elbow"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "right_upper_extremity",
+      "tags": [
+        "elbow",
+        "ligament",
+        "ortho",
+        "joint"
+      ]
+    },
+    {
+      "id": "mri_right_elbow_with_without",
+      "name": "MRI Right Elbow with and without Contrast",
+      "modality": "mri",
+      "ui_categories": [
+        "mri"
+      ],
+      "aliases": [
+        "MRI right elbow with contrast"
+      ],
+      "ap_cost": 4,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": true,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "right_upper_extremity",
+      "tags": [
+        "elbow",
+        "infection",
+        "mass",
+        "joint"
+      ]
+    },
+    {
+      "id": "mra_brain",
+      "name": "MR Angiogram Brain",
+      "modality": "mra",
+      "ui_categories": [
+        "mra"
+      ],
+      "aliases": [
+        "MRA brain",
+        "MR angiogram brain"
+      ],
+      "ap_cost": 4,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "head",
+      "tags": [
+        "stroke",
+        "aneurysm",
+        "vascular",
+        "brain"
+      ]
+    },
+    {
+      "id": "mra_neck",
+      "name": "MR Angiogram Neck",
+      "modality": "mra",
+      "ui_categories": [
+        "mra"
+      ],
+      "aliases": [
+        "MRA neck"
+      ],
+      "ap_cost": 4,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": true,
+      "pediatric_only": false,
+      "body_region": "neck",
+      "tags": [
+        "stroke",
+        "carotid_stenosis",
+        "vertebral_dissection",
+        "vascular"
+      ]
+    },
+    {
+      "id": "nuc_vq",
+      "name": "V/Q Scan",
+      "modality": "nuclear",
+      "ui_categories": [
+        "nuclear"
+      ],
+      "aliases": [
+        "VQ scan",
+        "ventilation perfusion scan",
+        "lung scan"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 300,
+      "result_delay_turns": 3,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "chest",
+      "tags": [
+        "pulmonary_embolism",
+        "PE",
+        "contrast_allergy",
+        "pregnancy",
+        "chest"
+      ]
+    },
+    {
+      "id": "nuc_hida",
+      "name": "HIDA Scan (Hepatobiliary)",
+      "modality": "nuclear",
+      "ui_categories": [
+        "nuclear"
+      ],
+      "aliases": [
+        "HIDA scan",
+        "hepatobiliary scan",
+        "cholescintigraphy"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 300,
+      "result_delay_turns": 3,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "abdomen",
+      "tags": [
+        "cholecystitis",
+        "biliary",
+        "gallbladder"
+      ]
+    },
+    {
+      "id": "nuc_bone_scan",
+      "name": "Bone Scan (Whole Body)",
+      "modality": "nuclear",
+      "ui_categories": [
+        "nuclear"
+      ],
+      "aliases": [
+        "bone scan",
+        "Tc-99m bone scan"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 300,
+      "result_delay_turns": 3,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "systemic",
+      "tags": [
+        "bone",
+        "metastasis",
+        "fracture",
+        "infection",
+        "occult_fracture"
+      ]
+    },
+    {
+      "id": "nuc_renal",
+      "name": "Renal Scan (DTPA / MAG3)",
+      "modality": "nuclear",
+      "ui_categories": [
+        "nuclear"
+      ],
+      "aliases": [
+        "renal scan",
+        "DTPA scan",
+        "MAG3 scan"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 300,
+      "result_delay_turns": 3,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "abdomen",
+      "tags": [
+        "renal",
+        "obstruction",
+        "function",
+        "transplant"
+      ]
+    },
+    {
+      "id": "nuc_tagged_wbc",
+      "name": "Tagged WBC Scan",
+      "modality": "nuclear",
+      "ui_categories": [
+        "nuclear"
+      ],
+      "aliases": [
+        "tagged WBC",
+        "leukocyte scan",
+        "labeled WBC scan"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 600,
+      "result_delay_turns": 4,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "systemic",
+      "tags": [
+        "occult_infection",
+        "abscess",
+        "osteomyelitis"
+      ]
+    },
+    {
+      "id": "nuc_gi_bleed",
+      "name": "GI Bleed Scan (Tagged RBC)",
+      "modality": "nuclear",
+      "ui_categories": [
+        "nuclear"
+      ],
+      "aliases": [
+        "GI bleed scan",
+        "tagged RBC scan"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 300,
+      "result_delay_turns": 3,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "abdomen",
+      "tags": [
+        "GI_bleed",
+        "occult_bleeding",
+        "abdomen"
+      ]
+    },
+    {
+      "id": "nuc_meckels",
+      "name": "Meckel's Scan",
+      "modality": "nuclear",
+      "ui_categories": [
+        "nuclear"
+      ],
+      "aliases": [
+        "meckels scan",
+        "meckel scan"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 300,
+      "result_delay_turns": 3,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "abdomen",
+      "tags": [
+        "meckels_diverticulum",
+        "pediatric",
+        "GI_bleed"
+      ]
+    },
+    {
+      "id": "nuc_thyroid_uptake",
+      "name": "Thyroid Uptake and Scan",
+      "modality": "nuclear",
+      "ui_categories": [
+        "nuclear"
+      ],
+      "aliases": [
+        "thyroid scan",
+        "RAIU",
+        "I-123 scan"
+      ],
+      "ap_cost": 3,
+      "result_delay_seconds": 600,
+      "result_delay_turns": 4,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "neck",
+      "tags": [
+        "thyroid",
+        "hyperthyroidism",
+        "graves",
+        "thyroid_nodule"
+      ]
+    },
+    {
+      "id": "fluoro_ugi",
+      "name": "Upper GI Series",
+      "modality": "fluoroscopy",
+      "ui_categories": [
+        "fluoroscopy"
+      ],
+      "aliases": [
+        "UGI",
+        "upper GI",
+        "barium swallow"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": true,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "abdomen",
+      "tags": [
+        "esophagus",
+        "stomach",
+        "duodenum",
+        "reflux",
+        "obstruction"
+      ]
+    },
+    {
+      "id": "fluoro_sbft",
+      "name": "Small Bowel Follow-Through",
+      "modality": "fluoroscopy",
+      "ui_categories": [
+        "fluoroscopy"
+      ],
+      "aliases": [
+        "SBFT",
+        "small bowel series"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 120,
+      "result_delay_turns": 2,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": true,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "abdomen",
+      "tags": [
+        "small_bowel",
+        "obstruction",
+        "crohns",
+        "abdomen"
+      ]
+    },
+    {
+      "id": "fluoro_ba_enema",
+      "name": "Barium Enema",
+      "modality": "fluoroscopy",
+      "ui_categories": [
+        "fluoroscopy"
+      ],
+      "aliases": [
+        "BE",
+        "barium enema"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "abdomen",
+      "tags": [
+        "colon",
+        "intussusception",
+        "stricture"
+      ]
+    },
+    {
+      "id": "fluoro_cystogram",
+      "name": "Cystogram",
+      "modality": "fluoroscopy",
+      "ui_categories": [
+        "fluoroscopy"
+      ],
+      "aliases": [
+        "cystogram"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "pelvis",
+      "tags": [
+        "bladder",
+        "trauma",
+        "urinary"
+      ]
+    },
+    {
+      "id": "fluoro_vcug",
+      "name": "VCUG (Voiding Cystourethrogram)",
+      "modality": "fluoroscopy",
+      "ui_categories": [
+        "fluoroscopy"
+      ],
+      "aliases": [
+        "VCUG",
+        "voiding cystourethrogram"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": false,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "pelvis",
+      "tags": [
+        "pediatric",
+        "reflux",
+        "urinary"
+      ]
+    },
+    {
+      "id": "fluoro_esophagram",
+      "name": "Esophagram",
+      "modality": "fluoroscopy",
+      "ui_categories": [
+        "fluoroscopy"
+      ],
+      "aliases": [
+        "esophagram",
+        "esophagus barium swallow"
+      ],
+      "ap_cost": 2,
+      "result_delay_seconds": 60,
+      "result_delay_turns": 1,
+      "requires_iv_contrast": false,
+      "requires_oral_contrast": true,
+      "requires_stable": false,
+      "pediatric_only": false,
+      "body_region": "chest",
+      "tags": [
+        "esophagus",
+        "perforation",
+        "stricture",
+        "reflux"
+      ]
+    }
+  ]
+}

@@ -36,6 +36,7 @@ var sort_mode: String = "time"
 var confirm_mode: bool = false  # true when showing "Confirm / Cancel" row
 var llm_searching: bool = false
 var expanded_panels: Dictionary = {}  # panel_name -> bool
+var name_section_expanded: Dictionary = {"panels": false, "labs": false}  # default collapsed
 var order_counter: int = 0  # increments each time _execute_order() runs
 var result_cache: Dictionary = {}  # key: "lab_id|state" -> cached result value
 								   # cleared only on patient state change
@@ -291,7 +292,7 @@ func _make_results_col_header() -> HBoxContainer:
 	name_hdr.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	hdr.add_child(name_hdr)
 	# Panel — fixed width matching note_lbl
-	var panel_hdr := _make_label("Panel", 11, C_DIM)
+	var panel_hdr := _make_label("Returns Full Panel", 11, C_DIM)
 	panel_hdr.custom_minimum_size.x = 260
 	hdr.add_child(panel_hdr)
 	# AP Cost — fixed width matching ap_lbl
@@ -340,27 +341,46 @@ func _refresh_name_results(query: String) -> void:
 		c.queue_free()
 
 	var lower_q := query.to_lower().strip_edges()
-	var matches: Array = []
 
-	# First: panels matching
+	# --- Panels section ---
+	var panel_matches: Array = []
 	for panel in all_panels:
 		if _panel_matches(panel, lower_q):
-			matches.append({"type": "panel", "data": panel})
-		if matches.size() >= 30:
-			break
+			panel_matches.append({"type": "panel", "data": panel})
+	panel_matches.sort_custom(func(a, b): return a["data"]["name"] < b["data"]["name"])
 
-	# Then: individual labs matching
+	# --- Labs section ---
+	var lab_matches: Array = []
 	for lab in all_labs:
 		if _lab_matches(lab, lower_q):
-			matches.append({"type": "lab", "data": lab})
-		if matches.size() >= 60:
-			break
+			lab_matches.append({"type": "lab", "data": lab})
+	lab_matches.sort_custom(func(a, b): return a["data"]["name"] < b["data"]["name"])
 
-	var row_idx := 0
-	for match_item in matches:
-		var row := _make_result_row(match_item, row_idx)
-		name_results_list.add_child(row)
-		row_idx += 1
+	# --- Panels collapsible group ---
+	var panels_expanded: bool = name_section_expanded.get("panels", lower_q != "")
+	var panels_header := _make_section_header(
+		"Panels (%d)" % panel_matches.size(), panels_expanded, "panels"
+	)
+	name_results_list.add_child(panels_header)
+
+	if panels_expanded:
+		var row_idx := 0
+		for match_item in panel_matches:
+			name_results_list.add_child(_make_result_row(match_item, row_idx))
+			row_idx += 1
+
+	# --- Labs collapsible group ---
+	var labs_expanded: bool = name_section_expanded.get("labs", lower_q != "")
+	var labs_header := _make_section_header(
+		"Labs (%d)" % lab_matches.size(), labs_expanded, "labs"
+	)
+	name_results_list.add_child(labs_header)
+
+	if labs_expanded:
+		var row_idx := 0
+		for match_item in lab_matches:
+			name_results_list.add_child(_make_result_row(match_item, row_idx))
+			row_idx += 1
 
 
 func _panel_matches(panel: Dictionary, q: String) -> bool:
@@ -376,8 +396,7 @@ func _panel_matches(panel: Dictionary, q: String) -> bool:
 
 func _lab_matches(lab: Dictionary, q: String) -> bool:
 	if q == "":
-		# Only show panel-less labs when empty (panels covered above)
-		return lab.get("panel_memberships", []).is_empty()
+		return true
 	if q in lab.get("name", "").to_lower():
 		return true
 	for alias in lab.get("aliases", []):
@@ -577,9 +596,18 @@ func _populate_categories() -> void:
 		btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		btn.toggle_mode = true
 		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		# Add left padding so text aligns with content on the right panel
+		var style := StyleBoxFlat.new()
+		style.bg_color = C_ROW_ALT if i % 2 == 0 else C_PANEL
+		style.set_corner_radius_all(3)
+		style.content_margin_left = 10
+		btn.add_theme_stylebox_override("normal", style)
+		var hover_style := StyleBoxFlat.new()
+		hover_style.bg_color = Color(style.bg_color.r + 0.08, style.bg_color.g + 0.08, style.bg_color.b + 0.10)
+		hover_style.set_corner_radius_all(3)
+		hover_style.content_margin_left = 10
+		btn.add_theme_stylebox_override("hover", hover_style)
 		btn.pressed.connect(_on_category_selected.bind(cat["id"], btn))
-		if i % 2 == 0:
-			_style_btn_bg(btn, C_ROW_ALT)
 		cat_list.add_child(btn)
 
 
@@ -624,6 +652,21 @@ func _on_category_selected(cat_id: String, btn: Button) -> void:
 # ============================================================
 # RESULT ROW — shared across all three tabs
 # ============================================================
+func _make_section_header(label_text: String, is_expanded: bool, section_key: String) -> Button:
+	var btn := Button.new()
+	btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	btn.custom_minimum_size.y = 34
+	btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	_style_btn_bg(btn, C_HEADER)
+	var icon := "▼ " if is_expanded else "▶ "
+	btn.text = icon + label_text
+	var captured_key := section_key
+	btn.pressed.connect(func():
+		name_section_expanded[captured_key] = not name_section_expanded.get(captured_key, false)
+		_refresh_name_results(name_search_field.text if name_search_field else "")
+	)
+	return btn
+
 func _make_result_row(match_item: Dictionary, row_idx: int) -> Button:
 	var is_panel: bool = match_item["type"] == "panel"
 	var data: Dictionary = match_item["data"]
@@ -1293,6 +1336,24 @@ func _make_panel_instance(pname: String, order_num: int, inst: Dictionary, inst_
 	labs_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	labs_vbox.visible = is_expanded
 	vbox.add_child(labs_vbox)
+
+	# Column headers inside expanded instance
+	var col_hdr := _make_hbox(0)
+	col_hdr.custom_minimum_size.y = 22
+	_bg_rect(col_hdr, Color(C_HEADER.r - 0.03, C_HEADER.g - 0.03, C_HEADER.b - 0.03))
+	var spacer := Control.new()
+	spacer.custom_minimum_size.x = 36
+	col_hdr.add_child(spacer)
+	var name_hdr := _make_label("Lab Name", 10, C_DIM)
+	name_hdr.custom_minimum_size.x = 280
+	col_hdr.add_child(name_hdr)
+	var result_hdr := _make_label("Result", 10, C_DIM)
+	result_hdr.custom_minimum_size.x = 160
+	col_hdr.add_child(result_hdr)
+	var ref_hdr := _make_label("Reference Range", 10, C_DIM)
+	ref_hdr.custom_minimum_size.x = 180
+	col_hdr.add_child(ref_hdr)
+	labs_vbox.add_child(col_hdr)
 
 	for i in results.size():
 		labs_vbox.add_child(_make_result_display_row(results[i], i))

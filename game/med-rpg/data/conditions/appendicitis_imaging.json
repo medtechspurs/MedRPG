@@ -1,0 +1,305 @@
+{
+  "schema_version": "1.0",
+  "condition_id": "appendicitis",
+  "condition_name": "Acute Appendicitis",
+  "patient_demographics": {
+    "age": 22,
+    "sex": "male",
+    "character": "Marcus"
+  },
+  "states": {
+    "stable": "Uncomplicated appendicitis. Inflamed appendix without perforation.",
+    "perforated": "Perforated appendicitis with localized peritonitis or early abscess.",
+    "septic_shock": "Perforated appendicitis with diffuse peritonitis, multiple abscesses, hemodynamic instability.",
+    "coma_fail": "Multi-organ failure from overwhelming sepsis. Profound peritoneal contamination."
+  },
+  "fallback_rule": "Studies not listed below return 'Normal study' templates appropriate to the modality.",
+  "result_ranges": {
+    "ct_abdpel_with_without": {
+      "stable": {
+        "findings": "Dilated, fluid-filled appendix measuring 11 mm in maximal diameter in the right lower quadrant. Periappendiceal fat stranding. Appendiceal wall enhancement and mild thickening. No appendicolith identified. No focal fluid collection or free air. No bowel obstruction. Normal liver, spleen, pancreas, kidneys, and adrenal glands. No biliary dilation. Bladder unremarkable.",
+        "impression": "Acute uncomplicated appendicitis. No perforation or abscess.",
+        "is_abnormal": true
+      },
+      "perforated": {
+        "findings": "Markedly dilated appendix measuring 14 mm with loss of wall continuity at the tip. Periappendiceal fluid and inflammatory stranding extending into the right paracolic gutter. Small (2.5 cm) loculated fluid collection adjacent to the cecum suggestive of early abscess. Mild reactive ileus. No free intraperitoneal air. Mild mesenteric lymphadenopathy.",
+        "impression": "Perforated appendicitis with early abscess formation. Surgical consultation recommended.",
+        "is_abnormal": true
+      },
+      "septic_shock": {
+        "findings": "Diffusely dilated and disrupted appendix with extensive periappendiceal phlegmon. Multiple loculated fluid collections in the right lower quadrant and pelvis ranging from 3-6 cm consistent with abscess formation. Diffuse peritoneal enhancement. Moderate to large free intraperitoneal fluid in dependent regions. Reactive bowel wall thickening throughout the right colon and terminal ileum. Severe ileus.",
+        "impression": "Perforated appendicitis with diffuse peritonitis and multiple intra-abdominal abscesses. Source control urgent.",
+        "is_abnormal": true
+      },
+      "coma_fail": {
+        "findings": "Profound peritoneal contamination with diffuse free fluid throughout the abdomen and pelvis. Extensive multi-loculated abscess formation. Pneumoperitoneum present consistent with full-thickness perforation. Diffuse bowel wall thickening with mural enhancement. Portal venous gas. Bilateral pleural effusions. Findings consistent with severe diffuse peritonitis with end-organ ischemic changes.",
+        "impression": "Catastrophic perforated appendicitis with extensive peritoneal sepsis, pneumoperitoneum, and findings concerning for bowel ischemia. Multi-organ involvement.",
+        "is_abnormal": true
+      }
+    },
+    "ct_abdpel_no_contrast": {
+      "stable": {
+        "findings": "Dilated tubular structure in the right lower quadrant measuring approximately 11 mm consistent with appendix. Periappendiceal fat stranding. Without IV contrast, evaluation of wall enhancement is limited. No definite appendicolith. No free air. No focal fluid collection identified.",
+        "impression": "Findings concerning for acute appendicitis. IV contrast study would be more sensitive for complications if clinically indicated.",
+        "is_abnormal": true
+      },
+      "perforated": {
+        "findings": "Dilated and irregular appendix in the right lower quadrant. Periappendiceal fat stranding extending into the paracolic gutter. Small fluid collection adjacent to the cecum. Without contrast, assessment of wall integrity and abscess characterization is limited.",
+        "impression": "Findings concerning for complicated appendicitis with possible early perforation. IV contrast strongly recommended.",
+        "is_abnormal": true
+      },
+      "septic_shock": {
+        "findings": "Multiple ill-defined fluid collections in the right lower quadrant and pelvis. Extensive inflammatory changes. Free intraperitoneal fluid. Bowel wall thickening of the cecum and terminal ileum. Without contrast, abscess vs phlegmon distinction limited.",
+        "impression": "Findings concerning for perforated appendicitis with extensive peritonitis. Contrast study or surgical exploration urgently indicated.",
+        "is_abnormal": true
+      },
+      "coma_fail": {
+        "findings": "Diffuse free fluid throughout the abdomen and pelvis. Pneumoperitoneum. Multi-loculated fluid collections. Diffuse bowel wall thickening. Portal venous gas.",
+        "impression": "Catastrophic perforated viscus with diffuse peritonitis, pneumoperitoneum, and concerning features for bowel ischemia.",
+        "is_abnormal": true
+      }
+    },
+    "ct_abdpel_oral_iv": {
+      "stable": {
+        "findings": "Dilated, fluid-filled appendix measuring 11 mm with peripheral wall enhancement. Periappendiceal fat stranding. Oral contrast fills the cecum and right colon without filling the appendix (expected \u2014 appendix typically does not fill with oral contrast). No fluid collection. No free air. No bowel obstruction.",
+        "impression": "Acute uncomplicated appendicitis.",
+        "is_abnormal": true
+      },
+      "perforated": {
+        "findings": "Disrupted appendix in the right lower quadrant. Periappendiceal abscess (3 cm) with peripheral enhancement. Oral contrast extravasation NOT seen. Free fluid in the right paracolic gutter. Reactive bowel wall thickening of the cecum.",
+        "impression": "Perforated appendicitis with periappendiceal abscess.",
+        "is_abnormal": true
+      },
+      "septic_shock": {
+        "findings": "Multiple intra-abdominal abscesses with peripheral enhancement. Diffuse peritoneal thickening and enhancement. Free intraperitoneal fluid. Reactive ileus throughout. Oral contrast in dilated bowel loops.",
+        "impression": "Diffuse peritonitis with multiple abscesses from perforated appendicitis.",
+        "is_abnormal": true
+      },
+      "coma_fail": {
+        "findings": "Pneumoperitoneum, extensive free fluid, multiple abscesses, bowel wall thickening with concerning features for ischemia, and portal venous gas.",
+        "impression": "Catastrophic peritonitis with multi-organ involvement.",
+        "is_abnormal": true
+      }
+    },
+    "us_appendix": {
+      "stable": {
+        "findings": "Visualized non-compressible blind-ended tubular structure in the right lower quadrant measuring 9 mm in maximal outer diameter. Hyperemia on color Doppler. No surrounding fluid collection. McBurney's sign elicited during exam.",
+        "impression": "Findings consistent with acute appendicitis.",
+        "is_abnormal": true
+      },
+      "perforated": {
+        "findings": "Non-compressible appendix with disrupted wall echotexture. Hypoechoic peri-appendiceal fluid collection measuring 2 x 1.5 cm. Increased peri-appendiceal echogenicity consistent with phlegmonous changes.",
+        "impression": "Findings concerning for perforated appendicitis with adjacent fluid collection.",
+        "is_abnormal": true
+      },
+      "septic_shock": {
+        "findings": "Severely disrupted appendiceal anatomy with multiple peri-appendiceal fluid collections. Echogenic fat stranding. Free fluid extending into the pelvis. Limited evaluation due to overlying bowel gas from ileus.",
+        "impression": "Findings consistent with perforated appendicitis with complex peri-appendiceal fluid collections suggesting abscess formation.",
+        "is_abnormal": true
+      },
+      "coma_fail": {
+        "findings": "Severely limited evaluation due to extensive bowel gas, free fluid throughout the abdomen, and patient discomfort. Complex inflammatory mass in the right lower quadrant.",
+        "impression": "Limited study; cross-sectional imaging strongly recommended.",
+        "is_abnormal": true
+      }
+    },
+    "us_abdomen_complete": {
+      "stable": {
+        "findings": "Liver, gallbladder, pancreas, spleen, kidneys are normal. No biliary dilation. No gallstones. Bladder unremarkable. No free fluid in standard views. Bowel evaluation limited but suggestion of inflammation in the right lower quadrant.",
+        "impression": "No primary hepatobiliary or renal abnormality. Right lower quadrant findings warrant dedicated appendix evaluation.",
+        "is_abnormal": false
+      },
+      "perforated": {
+        "findings": "Normal liver, gallbladder, pancreas, spleen, kidneys, and bladder. Trace free fluid noted in the right paracolic gutter. Right lower quadrant inflammatory changes incompletely characterized.",
+        "impression": "Trace free fluid; recommend dedicated appendix or CT for further evaluation.",
+        "is_abnormal": true
+      },
+      "septic_shock": {
+        "findings": "Moderate free fluid throughout the abdomen and pelvis. Liver and other organs grossly unremarkable. Limited evaluation due to bowel gas.",
+        "impression": "Moderate free intraperitoneal fluid. Surgical evaluation indicated.",
+        "is_abnormal": true
+      },
+      "coma_fail": {
+        "findings": "Large volume free fluid throughout the abdomen. Limited organ evaluation.",
+        "impression": "Massive ascites. Limited study.",
+        "is_abnormal": true
+      }
+    },
+    "us_fast": {
+      "stable": {
+        "findings": "Negative for free fluid in the hepatorenal (Morison's pouch), splenorenal, and pelvic views. No pericardial effusion. No pleural effusion.",
+        "impression": "Negative FAST exam.",
+        "is_abnormal": false
+      },
+      "perforated": {
+        "findings": "Trace free fluid in the pelvis and right paracolic gutter. Negative for pericardial effusion or hemothorax.",
+        "impression": "Positive for trace pelvic free fluid.",
+        "is_abnormal": true
+      },
+      "septic_shock": {
+        "findings": "Moderate free fluid in Morison's pouch, splenorenal recess, and pelvis. Negative pericardial effusion.",
+        "impression": "Positive for moderate intraperitoneal fluid.",
+        "is_abnormal": true
+      },
+      "coma_fail": {
+        "findings": "Large volume free fluid in all four quadrants. Negative for pericardial effusion.",
+        "impression": "Positive FAST \u2014 large volume free fluid throughout the abdomen.",
+        "is_abnormal": true
+      }
+    },
+    "xray_abdomen_2view": {
+      "stable": {
+        "findings": "No bowel obstruction. No free air. Mildly increased bowel gas in the right lower quadrant. No focal mass effect. Bowel gas pattern otherwise unremarkable.",
+        "impression": "Nonspecific bowel gas pattern. Cannot exclude appendicitis on plain film alone.",
+        "is_abnormal": false
+      },
+      "perforated": {
+        "findings": "Mildly dilated loops of small bowel with air-fluid levels suggesting reactive ileus. No definite free air. Mass effect in the right lower quadrant.",
+        "impression": "Reactive ileus with right lower quadrant findings concerning for an inflammatory mass.",
+        "is_abnormal": true
+      },
+      "septic_shock": {
+        "findings": "Diffusely dilated loops of small and large bowel with air-fluid levels. No clearly identified free air on this view, but limited sensitivity for pneumoperitoneum on supine films. Significant ileus.",
+        "impression": "Severe ileus. Recommend cross-sectional imaging.",
+        "is_abnormal": true
+      },
+      "coma_fail": {
+        "findings": "Massively dilated bowel loops. Free air present beneath the diaphragm on upright view. Extensive bowel distention.",
+        "impression": "Pneumoperitoneum and extensive ileus consistent with perforated viscus.",
+        "is_abnormal": true
+      }
+    },
+    "xray_abdomen_decub": {
+      "stable": {
+        "findings": "No free air on decubitus views. Normal bowel gas pattern. No bowel obstruction.",
+        "impression": "Negative for pneumoperitoneum or obstruction.",
+        "is_abnormal": false
+      },
+      "perforated": {
+        "findings": "No definite free air on decubitus films. Reactive ileus with mildly dilated loops in the right lower quadrant.",
+        "impression": "No pneumoperitoneum identified. Findings nonspecific.",
+        "is_abnormal": true
+      },
+      "septic_shock": {
+        "findings": "Possible small amount of free air on left lateral decubitus. Ileus.",
+        "impression": "Concerning for pneumoperitoneum. Cross-sectional imaging recommended.",
+        "is_abnormal": true
+      },
+      "coma_fail": {
+        "findings": "Definite free air on decubitus films. Massive ileus.",
+        "impression": "Pneumoperitoneum confirmed. Surgical emergency.",
+        "is_abnormal": true
+      }
+    },
+    "xray_kub": {
+      "stable": {
+        "findings": "Nonspecific bowel gas pattern. No bowel obstruction. No urinary tract calcifications.",
+        "impression": "Unremarkable KUB.",
+        "is_abnormal": false
+      },
+      "perforated": {
+        "findings": "Nonspecific bowel gas pattern with mild ileus.",
+        "impression": "Mild ileus. Nonspecific.",
+        "is_abnormal": true
+      },
+      "septic_shock": {
+        "findings": "Diffuse ileus with bowel gas throughout small and large bowel.",
+        "impression": "Diffuse ileus.",
+        "is_abnormal": true
+      },
+      "coma_fail": {
+        "findings": "Massively distended bowel loops. Free air not well evaluated on supine view.",
+        "impression": "Severe ileus. Upright or decubitus film recommended.",
+        "is_abnormal": true
+      }
+    },
+    "xray_chest_pa": {
+      "stable": {
+        "findings": "Lungs are clear. No pneumothorax or pleural effusion. Heart size normal. Bones and soft tissues unremarkable.",
+        "impression": "Normal chest radiograph.",
+        "is_abnormal": false
+      },
+      "perforated": {
+        "findings": "Lungs are clear. Heart size normal. No free air beneath the diaphragm.",
+        "impression": "Normal chest radiograph.",
+        "is_abnormal": false
+      },
+      "septic_shock": {
+        "findings": "Lungs hyperinflated. Increased interstitial markings bilaterally. Heart size normal. No free air. Possible early ARDS pattern.",
+        "impression": "Bilateral pulmonary edema vs early ARDS \u2014 likely related to septic state.",
+        "is_abnormal": true
+      },
+      "coma_fail": {
+        "findings": "Bilateral diffuse alveolar opacities. Heart size normal. ETT in good position if present. No pneumothorax.",
+        "impression": "Diffuse bilateral pulmonary edema / ARDS.",
+        "is_abnormal": true
+      }
+    },
+    "us_testicle": {
+      "stable": {
+        "findings": "Both testes normal in size and echotexture. Normal arterial flow bilaterally. No epididymitis, hydrocele, or mass.",
+        "impression": "Normal testicular ultrasound.",
+        "is_abnormal": false
+      },
+      "perforated": {
+        "findings": "Both testes normal. No torsion. Normal arterial flow bilaterally.",
+        "impression": "Normal study.",
+        "is_abnormal": false
+      },
+      "septic_shock": {
+        "findings": "Both testes normal. No focal abnormality.",
+        "impression": "Normal study.",
+        "is_abnormal": false
+      },
+      "coma_fail": {
+        "findings": "Both testes normal.",
+        "impression": "Normal study.",
+        "is_abnormal": false
+      }
+    },
+    "cta_chest": {
+      "stable": {
+        "findings": "No filling defect within the pulmonary arterial vasculature. No pulmonary embolism. Lungs clear. Heart size normal.",
+        "impression": "Negative for pulmonary embolism.",
+        "is_abnormal": false
+      },
+      "perforated": {
+        "findings": "No pulmonary embolism. Lungs clear.",
+        "impression": "Negative for PE.",
+        "is_abnormal": false
+      },
+      "septic_shock": {
+        "findings": "No pulmonary embolism. Bilateral interstitial opacities consistent with non-cardiogenic edema/ARDS.",
+        "impression": "Negative for PE. Findings of ARDS.",
+        "is_abnormal": true
+      },
+      "coma_fail": {
+        "findings": "No PE. Diffuse bilateral airspace disease consistent with ARDS.",
+        "impression": "Negative for PE. Severe ARDS.",
+        "is_abnormal": true
+      }
+    },
+    "ct_head_no_contrast": {
+      "stable": {
+        "findings": "No acute intracranial abnormality. No mass effect or midline shift. Ventricles and sulci normal for age. No hemorrhage.",
+        "impression": "Unremarkable head CT.",
+        "is_abnormal": false
+      },
+      "perforated": {
+        "findings": "No acute intracranial abnormality.",
+        "impression": "Normal head CT.",
+        "is_abnormal": false
+      },
+      "septic_shock": {
+        "findings": "No acute intracranial abnormality. Possible mild diffuse brain edema (nonspecific).",
+        "impression": "No acute findings. Septic encephalopathy possible \u2014 clinical correlation.",
+        "is_abnormal": false
+      },
+      "coma_fail": {
+        "findings": "Diffuse cerebral edema with effacement of sulci. No focal infarct or hemorrhage. Findings concerning for hypoxic-ischemic injury.",
+        "impression": "Diffuse cerebral edema concerning for hypoxic-ischemic injury.",
+        "is_abnormal": true
+      }
+    }
+  }
+}

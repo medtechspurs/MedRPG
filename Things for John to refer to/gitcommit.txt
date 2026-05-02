@@ -1,0 +1,4 @@
+cd "C:\Users\jmcar\OneDrive\Documents\Coding Projects\MedRPG"
+git add .
+git commit -m "brief description of what you did"
+git push
