@@ -28,6 +28,22 @@ var harm_threshold: int = 7
 
 # --- Clinical Flags ---
 var iv_access: bool = false
+# --- IV State ---
+# Per-site IV records. Null = no IV; Dictionary = IV in place.
+# See iv_system.gd for site IDs and record schema.
+var iv_sites: Dictionary = {
+	"left_ac":     null,
+	"right_ac":    null,
+	"left_hand":   null,
+	"right_hand":  null,
+	"left_foot":   null,
+	"right_foot":  null,
+}
+
+# --- IV Popup ---
+var iv_popup: Control = null
+
+
 var supplemental_o2: bool = false
 var npo: bool = false
 var intubated: bool = false
@@ -130,6 +146,12 @@ func _ready():
 	imaging_popup = $PopupLayer/ImagingPopup
 	imaging_popup.order_confirmed.connect(_on_imaging_order_confirmed)
 	imaging_popup.popup_closed.connect(_on_imaging_popup_closed)
+	
+# Wire IV popup
+	iv_popup = $PopupLayer/IVPopup
+	iv_popup.iv_placed.connect(_on_iv_placed)
+	iv_popup.iv_removed.connect(_on_iv_removed)
+	iv_popup.popup_closed.connect(_on_iv_popup_closed)
 # ============================================================
 func load_condition_data():
 	var file = FileAccess.open("res://data/conditions/appendicitis.json", FileAccess.READ)
@@ -340,7 +362,38 @@ func update_monitor():
 			v.get_node("RRRow/RRValue").text = "32"
 			v.get_node("TempRow/TempValue").text = "104.2°F"
 			v.get_node("SpO2Row/SpO2Value").text = "88%"
+	_update_iv_status_display()
 
+func _update_iv_status_display() -> void:
+	# Updates the IV access label below SpO2 in the vitals area.
+	var label = find_child("IVAccessLabel", true, false)
+	if not label:
+		return  # Label hasn't been added to the scene yet — see setup notes.
+
+	var sites: Array = []
+	var has_extravasated := false
+	for sid in iv_sites:
+		var rec = iv_sites[sid]
+		if rec == null:
+			continue
+		var display: String = ""
+		match sid:
+			"left_ac":     display = "L AC"
+			"right_ac":    display = "R AC"
+			"left_hand":   display = "L Hand"
+			"right_hand":  display = "R Hand"
+			"left_foot":   display = "L Foot"
+			"right_foot":  display = "R Foot"
+		if bool(rec.get("extravasated", false)):
+			sites.append("[color=#e64d4d]%s[/color]" % display)
+			has_extravasated = true
+		else:
+			sites.append(display)
+
+	if sites.is_empty():
+		label.text = "[color=#8c8e95]No IV access[/color]"
+	else:
+		label.text = "IVs: %d (%s)" % [sites.size(), ", ".join(sites)]
 # ============================================================
 func on_insufficient_ap():
 	print("Insufficient AP!")
@@ -616,9 +669,11 @@ func _on_diagnosis_btn_pressed() -> void:
 	$InputArea/InputPanel/InputRow/InputField.grab_focus()
 
 func _on_iv_btn_pressed() -> void:
-	current_mode = "other_treatments"
-	pending_input = "IV access"
-	show_confirmation_popup()
+	if iv_popup == null:
+		print("ERROR: iv_popup not wired")
+		return
+	$InputArea.visible = false
+	iv_popup.open(iv_sites, ap_current, elapsed_seconds, turn_count)
 
 func _on_o2_btn_pressed() -> void:
 	current_mode = "other_treatments"
@@ -797,3 +852,54 @@ func _on_imaging_order_confirmed(orders: Array, total_ap: int, used_iv_contrast:
 
 func _on_imaging_popup_closed() -> void:
 	$InputArea.visible = true
+
+func _on_iv_placed(site_id: String, success: bool, used_ap: int) -> void:
+	# spend_ap also calls increment_turn() and update_hud() internally,
+	# so don't call those again here.
+	if not spend_ap(used_ap):
+		print("WARN: spend_ap returned false during IV placement (insufficient AP?)")
+		return
+	if success:
+		iv_sites[site_id] = {
+			"site": site_id,
+			"placed_at_seconds": elapsed_seconds,
+			"placed_at_turn": turn_count,
+			"extravasated": false,
+			"extravasated_at_seconds": 0.0,
+			"extravasated_at_turn": 0,
+			"gauge": 18,  # default; mini-game will set this later
+		}
+	# Keep the legacy iv_access boolean in sync (still read by imaging system)
+	iv_access = _has_any_working_iv()
+	# Refresh vitals display (which now includes the IV access line)
+	update_monitor()
+	print("IV attempt at %s: success=%s, AP spent=%d" % [site_id, success, used_ap])
+
+
+func _on_iv_removed(site_id: String) -> void:
+	iv_sites[site_id] = null
+	iv_access = _has_any_working_iv()
+	update_monitor()
+	print("IV removed at %s" % site_id)
+
+
+func _on_iv_popup_closed() -> void:
+	$InputArea.visible = true
+
+
+# Helper — returns true if any site has a working (non-extravasated) IV.
+func _has_any_working_iv() -> bool:
+	for sid in iv_sites:
+		var rec = iv_sites[sid]
+		if rec != null and not bool(rec.get("extravasated", false)):
+			return true
+	return false
+
+
+# Helper — returns true if any AC site has a working IV (used later by CT PE protocol).
+func _has_working_ac_iv() -> bool:
+	for sid in ["left_ac", "right_ac"]:
+		var rec = iv_sites[sid]
+		if rec != null and not bool(rec.get("extravasated", false)):
+			return true
+	return false

@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://b410sst67v0p5"]
+
+[ext_resource type="Script" uid="uid://cjfmrchtm4t4r" path="res://scripts/iv_system.gd" id="1_re7ap"]
+
+[node name="IVPopup" type="Control" unique_id=1788736945]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_re7ap")

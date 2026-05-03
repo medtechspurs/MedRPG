@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://c3dmtfjt2apsq" path="res://scripts/clinical_engine.gd" id="1_nmkfv"]
 [ext_resource type="Texture2D" uid="uid://cbci7yn3qqtgu" path="res://assets/sprites/characters/meddy/MeddyBlinkAnimationSpriteSheetsecondtry.png" id="2_qqtt1"]
 [ext_resource type="PackedScene" uid="uid://txre63h7yad2" path="res://scenes/labs_popup.tscn" id="3_8ddsb"]
+[ext_resource type="PackedScene" uid="uid://b410sst67v0p5" path="res://scenes/iv_popup.tscn" id="4_8uh6k"]
 [ext_resource type="PackedScene" uid="uid://ecg3olkdi7s2" path="res://scenes/imaging_popup.tscn" id="4_j0ls3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nmkfv"]
@@ -101,9 +102,9 @@ layer = 10
 
 [node name="APBar" type="HBoxContainer" parent="HUD" unique_id=1964261684]
 offset_left = 20.0
-offset_top = 20.0
+offset_top = 25.0
 offset_right = 77.0
-offset_bottom = 60.0
+offset_bottom = 65.0
 
 [node name="APLabel" type="Label" parent="HUD/APBar" unique_id=1606057239]
 layout_mode = 2
@@ -129,9 +130,9 @@ text = "0"
 
 [node name="HarmPoints" type="HBoxContainer" parent="HUD" unique_id=595853405]
 offset_left = 20.0
-offset_top = 80.0
+offset_top = 75.0
 offset_right = 82.0
-offset_bottom = 120.0
+offset_bottom = 115.0
 
 [node name="HarmLabel" type="Label" parent="HUD/HarmPoints" unique_id=153481385]
 layout_mode = 2
@@ -155,8 +156,8 @@ layout_mode = 2
 text = "0"
 
 [node name="TimeCounter" type="HBoxContainer" parent="HUD" unique_id=1508811605]
-offset_left = 1100.0
-offset_right = 1215.0
+offset_left = 175.0
+offset_right = 290.0
 offset_bottom = 40.0
 
 [node name="TimeLabel" type="Label" parent="HUD/TimeCounter" unique_id=1984763068]
@@ -323,6 +324,9 @@ layout_mode = 0
 [node name="LabsPopup" parent="PopupLayer" unique_id=598023489 instance=ExtResource("3_8ddsb")]
 visible = false
 
+[node name="IVPopup" parent="PopupLayer" unique_id=1788736945 instance=ExtResource("4_8uh6k")]
+visible = false
+
 [node name="Background" type="Node2D" parent="." unique_id=352296938]
 
 [node name="PatientArea" type="Node2D" parent="." unique_id=1697206721]
@@ -380,7 +384,7 @@ layout_mode = 2
 text = "..."
 
 [node name="Monitor" type="Node2D" parent="." unique_id=692977342]
-position = Vector2(900, 20)
+position = Vector2(900, 10)
 
 [node name="MonitorBackground" type="Sprite2D" parent="Monitor" unique_id=603780646]
 
@@ -457,6 +461,14 @@ text = "ABP:"
 [node name="ALineValue" type="Label" parent="Monitor/VitalsContainer/ALineWaveform/ALineRow" unique_id=1003164308]
 layout_mode = 2
 text = "120/85"
+
+[node name="IVAccessLabel" type="RichTextLabel" parent="Monitor" unique_id=360698609]
+offset_top = 155.0
+offset_right = 375.0
+offset_bottom = 220.0
+bbcode_enabled = true
+text = "[color=#8c8e95]No IV access[/color]"
+fit_content = true
 
 [node name="OllamaRequest" type="HTTPRequest" parent="." unique_id=224163414]
 

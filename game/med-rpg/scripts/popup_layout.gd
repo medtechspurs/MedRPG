@@ -24,23 +24,30 @@ extends RefCounted
 # Keys: "left", "top", "right", "bottom"
 
 const IMAGING := {
-	"left":   160,
-	"top":    160,
-	"right":  230,
-	"bottom":  15,
+	"left":   150,
+	"top":    200,
+	"right":  200,
+	"bottom":  50,
 }
 
 const LABS := {
-	"left":   160,
-	"top":    160,
-	"right":  230,
-	"bottom":  15,
+	"left":   150,
+	"top":    200,
+	"right":  200,
+	"bottom":  50,
 }
 
 const MEDICATIONS := {
 	"left":   215,
 	"top":    240,
 	"right":  487,
+	"bottom":  65,
+}
+
+const IV := {
+	"left":   215,
+	"top":    240,
+	"right":  287,
 	"bottom":  65,
 }
 
@@ -86,4 +93,5 @@ static func _get_edges(popup_kind: String) -> Dictionary:
 		"imaging":     return IMAGING
 		"labs":        return LABS
 		"medications": return MEDICATIONS
+		"iv":          return IV
 		_:             return DEFAULT

@@ -1714,20 +1714,69 @@ func _build_results_view() -> void:
 
 	vbox.add_child(hdr)
 
-	# Column header
-	var col_hdr := _make_hbox(8)
+	# Column header — mirrors _make_order_row's inner HBox structure with
+	# small per-label nudges to align with data column starts.
+	# Data row: [8px outer pad] [22 chev] [8 sep] [80 badge] [8 sep] [name expand]
+	#           [8 sep] [200 status] [8 sep] [120 time]
+	#
+	# To move LEFT-side labels (Modality, Study) leftward we trim widths/padding
+	# to their LEFT. To move RIGHT-side labels (Status, Time) leftward we have
+	# to ADD width somewhere in the row before them — Study's expansion absorbs
+	# the difference, pulling everything after it leftward.
+	#
+	# Per-label nudges (negative = left of baseline):
+	#   Modality: -4px → trim outer lpad from 8 to 4
+	#   Study:    -3px → trim Modality column width from 80 to 77
+	#   Status:   -3px → 3px filler spacer between Study and Status, which
+	#                    reduces Study's expansion by 3, pulling Status 3px left
+	#   Time:     -3px → 3px filler spacer between Status and Time, which
+	#                    further reduces Study's expansion by 3, pulling Time 3px
+	#                    additionally left (Status's position is unaffected by
+	#                    spacers placed AFTER it)
+	var col_hdr := PanelContainer.new()
 	col_hdr.custom_minimum_size.y = 24
 	_bg_rect(col_hdr, C_HEADER)
-	var lpad := Control.new()
-	lpad.custom_minimum_size.x = 8
-	col_hdr.add_child(lpad)
-	col_hdr.add_child(_make_col_header("", 22))
-	col_hdr.add_child(_make_col_header("Modality", 80))
+
+	var col_inner := HBoxContainer.new()
+	col_inner.add_theme_constant_override("separation", 8)
+	col_hdr.add_child(col_inner)
+
+	# Outer-left pad — 0 to nudge "Modality" maximally left
+	var col_lpad := Control.new()
+	col_lpad.custom_minimum_size.x = 0
+	col_inner.add_child(col_lpad)
+
+	# Chevron column placeholder (22px)
+	var chev_pad := Control.new()
+	chev_pad.custom_minimum_size.x = 22
+	col_inner.add_child(chev_pad)
+
+	# "Modality" header — width trimmed from 80 to 77 to nudge "Study" 3px left
+	var modality_hdr := _make_col_header("Modality", 77)
+	col_inner.add_child(modality_hdr)
+
+	# "Study" header expands to fill the name column
 	var name_hdr := _make_col_header("Study", 0)
 	name_hdr.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	col_hdr.add_child(name_hdr)
-	col_hdr.add_child(_make_col_header("Status", 200))
-	col_hdr.add_child(_make_col_header("Time", 120))
+	col_inner.add_child(name_hdr)
+
+	# 2px filler spacer — net Status shift: -2px from baseline (was -3, now -2)
+	var status_filler := Control.new()
+	status_filler.custom_minimum_size.x = 2
+	col_inner.add_child(status_filler)
+
+	# "Status" header sits over the 200px status column
+	col_inner.add_child(_make_col_header("Status", 200))
+
+	# 7px filler spacer — Time shifts an additional 7px left of Status's offset
+	# (status_filler 2 + time_filler 7 = 9px total left of Time's baseline)
+	var time_filler := Control.new()
+	time_filler.custom_minimum_size.x = 7
+	col_inner.add_child(time_filler)
+
+	# "Time" header sits over the 120px time column
+	col_inner.add_child(_make_col_header("Time", 120))
+
 	vbox.add_child(col_hdr)
 
 	# Scrollable results
@@ -1862,6 +1911,11 @@ func _make_order_row(entry: Dictionary) -> VBoxContainer:
 	# Time column
 	var time_lbl := _make_label(_format_timestamp(ordered_s), 11, C_DIM)
 	time_lbl.custom_minimum_size.x = 120
+	# Small left content margin to nudge time text rightward within its column
+	# so it sits closer to where the "Time" header label is rendering.
+	var time_sb := StyleBoxEmpty.new()
+	time_sb.content_margin_left = 5
+	time_lbl.add_theme_stylebox_override("normal", time_sb)
 	inner.add_child(time_lbl)
 
 	# --- Body (findings + impression) — only when expanded + ready ---
