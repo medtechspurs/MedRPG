@@ -118,6 +118,7 @@ var labs_popup: Control = null
 var master_imaging_data: Dictionary = {}
 var condition_imaging_data: Dictionary = {}
 var encounter_imaging_orders: Array = []
+var current_measurements: Dictionary = {}
 
 # --- Imaging Popup ---
 var imaging_popup: Control = null
@@ -173,6 +174,8 @@ func load_condition_data():
 		print("master_labs.json loaded OK")
 	else:
 		print("ERROR: Could not load master_labs.json")
+	roll_radiology_measurements()
+	
 
 	var cond_labs_file = FileAccess.open("res://data/conditions/appendicitis_labs.json", FileAccess.READ)
 	if cond_labs_file:
@@ -214,6 +217,73 @@ func load_condition_data():
 	else:
 		print("ERROR: Could not load appendicitis_system_prompts.json")
 
+# ============================================================
+
+func roll_radiology_measurements() -> void:
+	current_measurements.clear()
+	var measurements: Dictionary = condition_data.get("radiology_measurements", {})
+	if measurements.is_empty():
+		return
+ 
+	var state_name: String = _get_state_name()
+	for measurement_id in measurements:
+		var spec: Dictionary = measurements[measurement_id]
+		var by_state: Dictionary = spec.get("by_state", {})
+		var range_for_state: Dictionary = by_state.get(state_name, {})
+		# Fall back to "stable" range if current state has no entry — useful
+		# for measurements that don't differ across states (or to reduce
+		# authoring burden for measurements that only vary in a few states).
+		if range_for_state.is_empty():
+			range_for_state = by_state.get("stable", {})
+		if range_for_state.is_empty():
+			continue
+		var mn: float = float(range_for_state.get("min", 0.0))
+		var mx: float = float(range_for_state.get("max", 0.0))
+		var value: float
+		if mx <= mn:
+			value = mn
+		else:
+			value = randf_range(mn, mx)
+		current_measurements[measurement_id] = value
+		print("Rolled measurement %s = %.2f (state: %s)" % [measurement_id, value, state_name])
+
+func format_measurement(measurement_id: String, modality: String = "ct") -> String:
+	if not current_measurements.has(measurement_id):
+		return ""
+	var raw_value: float = current_measurements[measurement_id]
+	var spec: Dictionary = condition_data.get("radiology_measurements", {}).get(measurement_id, {})
+	var unit: String = spec.get("unit", "")
+	var precision_map: Dictionary = spec.get("modality_precision", {})
+	# Add per-state offset if the patient has progressed beyond stable.
+	# E.g. perforated state adds +2mm to the original rolled appendix diameter.
+	var state_offsets: Dictionary = spec.get("state_offsets", {})
+	var state_name: String = _get_state_name()
+	var offset: float = float(state_offsets.get(state_name, 0))
+	var adjusted_value: float = raw_value + offset
+	# Default to 1 decimal if modality isn't listed
+	var decimals: int = int(precision_map.get(modality, 1))
+	var factor: float = pow(10.0, decimals)
+	var rounded: float = round(adjusted_value * factor) / factor
+	var formatted: String
+	if decimals == 0:
+		formatted = "%d" % int(rounded)
+	else:
+		formatted = "%.*f" % [decimals, rounded]
+	if unit != "":
+		formatted += " " + unit
+	return formatted
+	
+func substitute_measurements(text: String, modality: String = "ct") -> String:
+	if text.is_empty():
+		return text
+	var result: String = text
+	for measurement_id in current_measurements:
+		var placeholder: String = "{{" + measurement_id + "}}"
+		if placeholder in result:
+			var formatted: String = format_measurement(measurement_id, modality)
+			result = result.replace(placeholder, formatted)
+	return result
+	
 # ============================================================
 func update_hud():
 	# Update AP, bonus, harm, turn, time displays
@@ -316,6 +386,7 @@ func transition_to_state(new_state: PatientState):
 	print("Patient state changed to: " + PatientState.keys()[new_state])
 	update_monitor()
 	labs_popup.invalidate_result_cache()
+	imaging_popup.invalidate_result_cache()
 	# TODO: trigger MEDDY alarmed popup
 	# TODO: update patient sprite
 

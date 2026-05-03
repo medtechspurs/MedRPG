@@ -1622,6 +1622,20 @@ func _generate_result_text(study_id: String, state: String) -> Dictionary:
 		# Fallback — modality-aware "normal study" template
 		result = _fallback_result(study_id)
 
+	# Substitute {{measurement_id}} placeholders in findings/impression text
+	# with rolled values from the engine. Modality is looked up per study so
+	# each modality formats values with its own appropriate precision.
+	var modality: String = "ct"
+	if study_lookup.has(study_id):
+		modality = study_lookup[study_id].get("modality", "ct")
+	# Walk up to the engine node and call substitute_measurements if available.
+	# Wrapped in `has_method` so the popup gracefully degrades if invoked
+	# outside the normal scene tree (e.g. during isolated UI tests).
+	var engine := get_tree().get_root().get_node_or_null("ClinicalEncounter")
+	if engine and engine.has_method("substitute_measurements"):
+		result["findings"] = engine.substitute_measurements(result["findings"], modality)
+		result["impression"] = engine.substitute_measurements(result["impression"], modality)
+
 	result_cache[cache_key] = result
 	return result
 

@@ -17,12 +17,12 @@
   "result_ranges": {
     "ct_abdpel_with_without": {
       "stable": {
-        "findings": "Dilated, fluid-filled appendix measuring 11 mm in maximal diameter in the right lower quadrant. Periappendiceal fat stranding. Appendiceal wall enhancement and mild thickening. No appendicolith identified. No focal fluid collection or free air. No bowel obstruction. Normal liver, spleen, pancreas, kidneys, and adrenal glands. No biliary dilation. Bladder unremarkable.",
+        "findings": "Dilated, fluid-filled appendix measuring {{appendix_diameter}} in maximal diameter in the right lower quadrant. Periappendiceal fat stranding. Appendiceal wall enhancement and mild thickening. No appendicolith identified. No focal fluid collection or free air. No bowel obstruction. Normal liver, spleen, pancreas, kidneys, and adrenal glands. No biliary dilation. Bladder unremarkable.",
         "impression": "Acute uncomplicated appendicitis. No perforation or abscess.",
         "is_abnormal": true
       },
       "perforated": {
-        "findings": "Markedly dilated appendix measuring 14 mm with loss of wall continuity at the tip. Periappendiceal fluid and inflammatory stranding extending into the right paracolic gutter. Small (2.5 cm) loculated fluid collection adjacent to the cecum suggestive of early abscess. Mild reactive ileus. No free intraperitoneal air. Mild mesenteric lymphadenopathy.",
+        "findings": "Markedly dilated appendix measuring {{appendix_diameter}} with loss of wall continuity at the tip. Periappendiceal fluid and inflammatory stranding extending into the right paracolic gutter. Small (2.5 cm) loculated fluid collection adjacent to the cecum suggestive of early abscess. Mild reactive ileus. No free intraperitoneal air. Mild mesenteric lymphadenopathy.",
         "impression": "Perforated appendicitis with early abscess formation. Surgical consultation recommended.",
         "is_abnormal": true
       },
@@ -39,7 +39,7 @@
     },
     "ct_abdpel_no_contrast": {
       "stable": {
-        "findings": "Dilated tubular structure in the right lower quadrant measuring approximately 11 mm consistent with appendix. Periappendiceal fat stranding. Without IV contrast, evaluation of wall enhancement is limited. No definite appendicolith. No free air. No focal fluid collection identified.",
+        "findings": "Dilated tubular structure in the right lower quadrant measuring approximately {{appendix_diameter}} consistent with appendix. Periappendiceal fat stranding. Without IV contrast, evaluation of wall enhancement is limited. No definite appendicolith. No free air. No focal fluid collection identified.",
         "impression": "Findings concerning for acute appendicitis. IV contrast study would be more sensitive for complications if clinically indicated.",
         "is_abnormal": true
       },
@@ -61,7 +61,7 @@
     },
     "ct_abdpel_oral_iv": {
       "stable": {
-        "findings": "Dilated, fluid-filled appendix measuring 11 mm with peripheral wall enhancement. Periappendiceal fat stranding. Oral contrast fills the cecum and right colon without filling the appendix (expected \u2014 appendix typically does not fill with oral contrast). No fluid collection. No free air. No bowel obstruction.",
+        "findings": "Dilated, fluid-filled appendix measuring {{appendix_diameter}} with peripheral wall enhancement. Periappendiceal fat stranding. Oral contrast fills the cecum and right colon without filling the appendix (expected \u2014 appendix typically does not fill with oral contrast). No fluid collection. No free air. No bowel obstruction.",
         "impression": "Acute uncomplicated appendicitis.",
         "is_abnormal": true
       },
@@ -83,7 +83,7 @@
     },
     "us_appendix": {
       "stable": {
-        "findings": "Visualized non-compressible blind-ended tubular structure in the right lower quadrant measuring 9 mm in maximal outer diameter. Hyperemia on color Doppler. No surrounding fluid collection. McBurney's sign elicited during exam.",
+        "findings": "Visualized non-compressible blind-ended tubular structure in the right lower quadrant measuring {{appendix_diameter}} in maximal outer diameter. Hyperemia on color Doppler. No surrounding fluid collection. McBurney's sign elicited during exam.",
         "impression": "Findings consistent with acute appendicitis.",
         "is_abnormal": true
       },
