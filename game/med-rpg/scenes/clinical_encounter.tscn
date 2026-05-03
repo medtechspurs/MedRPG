@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://c3dmtfjt2apsq" path="res://scripts/clinical_engine.gd" id="1_nmkfv"]
 [ext_resource type="Texture2D" uid="uid://cbci7yn3qqtgu" path="res://assets/sprites/characters/meddy/MeddyBlinkAnimationSpriteSheetsecondtry.png" id="2_qqtt1"]
 [ext_resource type="PackedScene" uid="uid://txre63h7yad2" path="res://scenes/labs_popup.tscn" id="3_8ddsb"]
+[ext_resource type="PackedScene" uid="uid://ecg3olkdi7s2" path="res://scenes/imaging_popup.tscn" id="4_j0ls3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nmkfv"]
 bg_color = Color(0.14901961, 0.14901961, 0.14901961, 1)
@@ -313,6 +314,15 @@ focus_neighbor_left = NodePath("../ConfirmBtn")
 theme_override_styles/focus = SubResource("StyleBoxFlat_8ddsb")
 text = "Cancel"
 
+[node name="ImagingPopup" parent="PopupLayer" unique_id=2111658202 instance=ExtResource("4_j0ls3")]
+
+[node name="ImagingPopup" parent="PopupLayer/ImagingPopup" unique_id=1715570925 instance=ExtResource("4_j0ls3")]
+visible = false
+layout_mode = 0
+
+[node name="LabsPopup" parent="PopupLayer" unique_id=598023489 instance=ExtResource("3_8ddsb")]
+visible = false
+
 [node name="Background" type="Node2D" parent="." unique_id=352296938]
 
 [node name="PatientArea" type="Node2D" parent="." unique_id=1697206721]
@@ -472,9 +482,6 @@ text = "Patient:"
 layout_mode = 2
 text = "..."
 autowrap_mode = 2
-
-[node name="LabsPopup" parent="." unique_id=598023489 instance=ExtResource("3_8ddsb")]
-visible = false
 
 [connection signal="pressed" from="IconBar/IconContainer/HistoryBtn" to="." method="_on_history_btn_pressed"]
 [connection signal="pressed" from="IconBar/IconContainer/StabilityBtn" to="." method="_on_stability_btn_pressed"]

@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://ecg3olkdi7s2"]
+
+[ext_resource type="Script" uid="uid://c05yhhx0c8xgq" path="res://scripts/imaging_system.gd" id="1_77mlp"]
+
+[node name="ImagingPopup" type="Control" unique_id=2111658202]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_77mlp")

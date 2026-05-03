@@ -98,6 +98,14 @@ var encounter_lab_results: Array = []
 # --- Labs Popup ---
 var labs_popup: Control = null
 
+# --- Imaging Data ---
+var master_imaging_data: Dictionary = {}
+var condition_imaging_data: Dictionary = {}
+var encounter_imaging_orders: Array = []
+
+# --- Imaging Popup ---
+var imaging_popup: Control = null
+
 # ============================================================
 func _ready():
 	if DEV_MODE_LLM:
@@ -114,9 +122,14 @@ func _ready():
 	update_hud()
 	update_monitor()
 # Wire labs popup
-	labs_popup = $LabsPopup
+	labs_popup = $PopupLayer/LabsPopup
 	labs_popup.order_confirmed.connect(_on_labs_order_confirmed)
 	labs_popup.popup_closed.connect(_on_labs_popup_closed)
+	
+# Wire imaging popup
+	imaging_popup = $PopupLayer/ImagingPopup
+	imaging_popup.order_confirmed.connect(_on_imaging_order_confirmed)
+	imaging_popup.popup_closed.connect(_on_imaging_popup_closed)
 # ============================================================
 func load_condition_data():
 	var file = FileAccess.open("res://data/conditions/appendicitis.json", FileAccess.READ)
@@ -148,6 +161,26 @@ func load_condition_data():
 		print("appendicitis_labs.json loaded OK")
 	else:
 		print("ERROR: Could not load appendicitis_labs.json")
+		
+	var imaging_file = FileAccess.open("res://data/imaging/master_imaging.json", FileAccess.READ)
+	if imaging_file:
+		var imaging_json := JSON.new()
+		imaging_json.parse(imaging_file.get_as_text())
+		master_imaging_data = imaging_json.get_data()
+		imaging_file.close()
+		print("master_imaging.json loaded OK")
+	else:
+		print("ERROR: Could not load master_imaging.json")
+
+	var cond_imaging_file = FileAccess.open("res://data/conditions/appendicitis_imaging.json", FileAccess.READ)
+	if cond_imaging_file:
+		var cond_imaging_json := JSON.new()
+		cond_imaging_json.parse(cond_imaging_file.get_as_text())
+		condition_imaging_data = cond_imaging_json.get_data()
+		cond_imaging_file.close()
+		print("appendicitis_imaging.json loaded OK")
+	else:
+		print("ERROR: Could not load appendicitis_imaging.json")
 		
 	var prompt_file = FileAccess.open("res://data/conditions/appendicitis_system_prompts.json", FileAccess.READ)
 	if prompt_file:
@@ -526,9 +559,21 @@ func _on_labs_btn_pressed() -> void:
 	)
 
 func _on_imaging_btn_pressed() -> void:
-	current_mode = "imaging"
-	$InputArea/InputPanel/InputRow/InputField.placeholder_text = "Order imaging (e.g. CT abdomen)..."
-	$InputArea/InputPanel/InputRow/InputField.grab_focus()
+	if master_imaging_data.is_empty():
+		print("ERROR: master_imaging_data not loaded")
+		return
+	$InputArea.visible = false
+	imaging_popup.open(
+		master_imaging_data,
+		condition_imaging_data,
+		_get_state_name(),
+		elapsed_seconds,
+		turn_count,
+		encounter_imaging_orders,
+		iv_access,
+		condition_data.get("patient_demographics", {}),
+		{}
+	)
 
 func _on_meds_btn_pressed() -> void:
 	current_mode = "medications"
@@ -742,4 +787,13 @@ func _on_labs_order_confirmed(new_results: Array, total_ap: int) -> void:
 	print("Labs ordered: %d results, %d AP" % [new_results.size(), total_ap])
 
 func _on_labs_popup_closed() -> void:
+	$InputArea.visible = true
+
+func _on_imaging_order_confirmed(orders: Array, total_ap: int, used_iv_contrast: bool) -> void:
+	spend_ap(total_ap)
+	encounter_imaging_orders.append_array(orders)
+	increment_turn()
+	print("Imaging ordered: %d studies, %d AP, contrast=%s" % [orders.size(), total_ap, used_iv_contrast])
+
+func _on_imaging_popup_closed() -> void:
 	$InputArea.visible = true

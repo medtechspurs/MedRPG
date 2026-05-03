@@ -44,7 +44,6 @@ var result_cache: Dictionary = {}  # key: "lab_id|state" -> cached result value
 # ============================================================
 # UI REFERENCES
 # ============================================================
-var overlay: ColorRect
 var main_panel: PanelContainer
 var tab_container: TabContainer
 
@@ -110,13 +109,10 @@ func invalidate_result_cache() -> void:
 	print("Lab result cache cleared — patient state or intervention changed")
 
 func _center_panel() -> void:
-	if not main_panel:
-		return
-	var vp := get_viewport_rect().size
-	var ps := main_panel.size
-	if ps == Vector2.ZERO:
-		ps = Vector2(980, 660)
-	main_panel.position = Vector2((vp.x - ps.x) / 2.0, (vp.y - ps.y) / 2.0)
+	# Delegates to the shared PopupLayout helper so all popups (imaging, labs,
+	# meds, etc.) use one source of truth for edge offsets. To adjust the size
+	# or position of labs popups, edit popup_layout.gd, not here.
+	PopupLayout.apply_layout(main_panel, "labs")
 
 func open(master_labs: Dictionary, condition_labs: Dictionary,
 		patient_state: String, elapsed: float, prior_results: Array) -> void:
@@ -142,6 +138,19 @@ func open(master_labs: Dictionary, condition_labs: Dictionary,
 	confirm_mode = false
 	current_category_id = ""
 
+	# Reset Search-by-Name section expand state so Panels and Labs both
+	# start collapsed every time the popup is opened.
+	name_section_expanded = {"panels": false, "labs": false}
+	if name_search_field:
+		name_search_field.text = ""  # Clear any leftover search text
+	if desc_search_field:
+		desc_search_field.text = ""  # Clear MEDDY's search text
+	if desc_status_label:
+		desc_status_label.text = ""  # Clear MEDDY's status message
+	if desc_results_list:
+		for c in desc_results_list.get_children():
+			c.queue_free()  # Clear MEDDY's previous result rows
+
 	_populate_categories()
 	_refresh_name_results("")
 	_refresh_selected_display()
@@ -165,19 +174,12 @@ func _ready() -> void:
 
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
-	# Dark overlay
-	overlay = ColorRect.new()
-	overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	overlay.color = C_BG
-	add_child(overlay)
-
-	# Main panel — centered via _ready and viewport size
+	# Main panel — sizing/positioning handled by PopupLayout (see popup_layout.gd).
+	# We size the PanelContainer directly via position+size+custom_minimum_size
+	# instead of using anchors, which don't reliably work under CanvasLayer parents.
 	main_panel = PanelContainer.new()
-	main_panel.custom_minimum_size = Vector2(980, 555)
 	_style_panel(main_panel, C_PANEL)
 	add_child(main_panel)
-	# Center after added to tree
-	await get_tree().process_frame
 	_center_panel()
 
 	var root_vbox := VBoxContainer.new()
@@ -279,31 +281,58 @@ func _ready() -> void:
 # ============================================================
 # TAB: NAME SEARCH
 # ============================================================
-func _make_results_col_header() -> HBoxContainer:
-	var hdr := _make_hbox(8)
+func _make_results_col_header() -> Control:
+	# Header structure must mirror _make_result_row exactly so columns align:
+	#   [8px outer pad] [42px badge col] [8px sep] [Name (expand)] [8px sep]
+	#   [260px panel col] [8px sep] [40px ap col, right-aligned] [8px sep]
+	#   [70px sel col] [8px outer pad]
+	var hdr := PanelContainer.new()
 	hdr.custom_minimum_size.y = 24
 	_bg_rect(hdr, Color(C_HEADER.r - 0.02, C_HEADER.g - 0.02, C_HEADER.b - 0.02))
-	# Spacer matching type badge width + inner left padding
-	var badge_spacer := Control.new()
-	badge_spacer.custom_minimum_size.x = 58
-	hdr.add_child(badge_spacer)
-	# Lab Name — expands to fill name column
+
+	var inner := HBoxContainer.new()
+	inner.add_theme_constant_override("separation", 8)
+	hdr.add_child(inner)
+
+	# Outer-left padding so labels sit where data row's labels sit.
+	# Note: 2px (not 8px to match data row) because the PanelContainer wrapper
+	# adds its own internal margin that we observed shifts the header right by
+	# ~6px relative to the data rows. Empirically tuned.
+	var lpad := Control.new()
+	lpad.custom_minimum_size.x = 2
+	inner.add_child(lpad)
+
+	# Type badge column placeholder (42px to match type_lbl)
+	var badge_pad := Control.new()
+	badge_pad.custom_minimum_size.x = 42
+	inner.add_child(badge_pad)
+
+	# Lab Name — expands like the data row's name_lbl
 	var name_hdr := _make_label("Lab Name", 11, C_DIM)
 	name_hdr.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	hdr.add_child(name_hdr)
-	# Panel — fixed width matching note_lbl
+	inner.add_child(name_hdr)
+
+	# Panel column (260px to match panel_lbl)
 	var panel_hdr := _make_label("Returns Full Panel", 11, C_DIM)
 	panel_hdr.custom_minimum_size.x = 260
-	hdr.add_child(panel_hdr)
-	# AP Cost — fixed width matching ap_lbl
+	inner.add_child(panel_hdr)
+
+	# AP Cost column — right-aligned, same 40px width as ap_lbl
 	var ap_hdr := _make_label("AP Cost", 11, C_DIM)
 	ap_hdr.custom_minimum_size.x = 40
 	ap_hdr.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	hdr.add_child(ap_hdr)
-	# Spacer matching selected indicator + right padding
-	var right_spacer := Control.new()
-	right_spacer.custom_minimum_size.x = 86
-	hdr.add_child(right_spacer)
+	inner.add_child(ap_hdr)
+
+	# Selection indicator spacer (70px to match sel_lbl)
+	var sel_pad := Control.new()
+	sel_pad.custom_minimum_size.x = 70
+	inner.add_child(sel_pad)
+
+	# Outer-right padding
+	var rpad := Control.new()
+	rpad.custom_minimum_size.x = 8
+	inner.add_child(rpad)
+
 	return hdr
 
 func _build_name_search_tab() -> void:
@@ -314,6 +343,10 @@ func _build_name_search_tab() -> void:
 	tab_container.set_tab_title(tab_container.get_tab_count() - 1, "Search by Name")
 
 	var search_row := _make_hbox(6)
+	# Small leading spacer so the input's text aligns with the tab title text above it.
+	var name_search_lpad := Control.new()
+	name_search_lpad.custom_minimum_size.x = 9
+	search_row.add_child(name_search_lpad)
 	name_search_field = LineEdit.new()
 	name_search_field.placeholder_text = "Type a lab name or abbreviation... (e.g. BMP, troponin, CBC)"
 	name_search_field.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -416,6 +449,10 @@ func _build_desc_search_tab() -> void:
 	tab_container.set_tab_title(tab_container.get_tab_count() - 1, "Ask MEDDY! Describe what lab(s) you want to order")
 
 	var search_row := _make_hbox(6)
+	# Small leading spacer so the input's text aligns with the tab title text above it.
+	var desc_search_lpad := Control.new()
+	desc_search_lpad.custom_minimum_size.x = 9
+	search_row.add_child(desc_search_lpad)
 	desc_search_field = LineEdit.new()
 	desc_search_field.placeholder_text = "Describe what you're looking for... (e.g. 'infection markers', 'check liver')"
 	desc_search_field.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -427,7 +464,16 @@ func _build_desc_search_tab() -> void:
 	tab.add_child(search_row)
 
 	desc_status_label = _make_label("", 12, C_DIM)
-	tab.add_child(desc_status_label)
+	# Wrap status label in an HBox with a leading spacer so its text aligns
+	# under the search bar's text (and the tab title's "S") above.
+	var status_row := HBoxContainer.new()
+	status_row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var status_lpad := Control.new()
+	status_lpad.custom_minimum_size.x = 11
+	status_row.add_child(status_lpad)
+	desc_status_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	status_row.add_child(desc_status_label)
+	tab.add_child(status_row)
 	tab.add_child(_make_results_col_header())
 
 	var scroll := ScrollContainer.new()
@@ -658,6 +704,9 @@ func _make_section_header(label_text: String, is_expanded: bool, section_key: St
 	btn.custom_minimum_size.y = 34
 	btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
 	_style_btn_bg(btn, C_HEADER)
+	# Nudge text 2 pixels right of the panel's left edge so the arrow and
+	# section name don't sit flush against the panel's left margin.
+	_set_btn_left_padding(btn, 2)
 	var icon := "▼ " if is_expanded else "▶ "
 	btn.text = icon + label_text
 	var captured_key := section_key
@@ -1520,3 +1569,13 @@ func _style_btn_bg(btn: Button, color: Color) -> void:
 	hover.bg_color = Color(color.r + 0.08, color.g + 0.08, color.b + 0.08)
 	hover.set_corner_radius_all(3)
 	btn.add_theme_stylebox_override("hover", hover)
+
+
+# Adds a left content margin to a button's existing styleboxes so the text is
+# nudged right by `pixels`. Applied to both "normal" and "hover" so the text
+# doesn't shift when the cursor enters/leaves the button.
+func _set_btn_left_padding(btn: Button, pixels: int) -> void:
+	for state in ["normal", "hover"]:
+		var sb: StyleBox = btn.get_theme_stylebox(state)
+		if sb is StyleBoxFlat:
+			sb.content_margin_left = float(pixels)
