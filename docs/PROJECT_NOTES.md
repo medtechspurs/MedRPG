@@ -1,473 +1,248 @@
 # MedRPG — Project Notes
-*Single source of truth. Update this file every session.*
+
+*Single source of truth. Re-paste this at the start of new chat sessions to give Claude full context.*
+*Two sections below: one optimized for Claude (dense reference), one for John (overview & quick lookups).*
 
 ---
-
-## Concept
-Retro pixel art RPG where player is a doctor traveling a world map curing patients. Clinical encounters are turn-based. Player uses 13 icon categories + quick access buttons to interact with patients. Input classified by LLM, routed to authored responses in shipped game.
-
 ---
 
-## Platform & Stack
-- **Engine:** Godot 4 (GDScript)
-- **Primary target:** PC / Steam
-- **Secondary:** Mac / Linux via Godot export
-- **Art:** LPC sprites + Itch.io tilesets (placeholder)
-- **LLM:** Anthropic API (Claude Sonnet 4.5) via Node.js backend server
-- **Git repo:** `C:\Users\jmcar\OneDrive\Documents\Coding Projects\MedRPG`
-- **Godot project root:** `C:\Users\jmcar\OneDrive\Documents\Coding Projects\MedRPG\game\med-rpg\`
-- **Backend server:** `C:\Users\jmcar\OneDrive\Documents\Coding Projects\MedRPG\server\`
+# 🤖 SECTION FOR CLAUDE — read this first when starting a new chat
 
----
+This section is dense by design. Skim once, refer back to specifics as needed.
 
-## Backend Server
-Node.js server on `http://localhost:3000`. Proxies all LLM requests to Anthropic API.
-**To run:** `cd server && node server.js`
-**Model:** `claude-sonnet-4-5`
-**Endpoints:** `GET /health` / `POST /llm`
+## Project basics
 
----
+- **Engine:** Godot 4.6.2 stable, GDScript, warnings-as-errors strict typing
+- **Render:** Compatibility renderer / 1280×720 / canvas_items stretch / Nearest filter
+- **LLM backend:** Claude Sonnet 4.5 via local Node.js on `localhost:3000` (run with `cd server && node server.js`)
+- **Repo root:** `C:\Users\jmcar\OneDrive\Documents\Coding Projects\MedRPG`
+- **Godot project root:** `MedRPG/game/med-rpg/`
+- **Scripts:** `game/med-rpg/scripts/`
+- **Scenes:** `game/med-rpg/scenes/`
+- **Data:** `game/med-rpg/data/` (subfolders: `conditions/`, `labs/`, `imaging/`, `medications/`, `responses/`, `badges/`)
 
-## Developer Toggles (clinical_engine.gd)
+## Working with John
+
+- **John is a physician, not a coder.** Treat him as the implementer who needs exact instructions. Tell him what to paste where, not architectural debates (unless he's specifically asking for design discussion).
+- **He pastes terminal/code output in chat with mangled markdown:** filenames like `clinical_engine.gd` show as `clinical_[engine.gd](http://engine.gd)`. The brackets and URLs are chat-interface auto-link artifacts — ignore them, the real filenames are clean.
+- **He hates the word "genuinely" and hollow validation.** Be direct. Acknowledge mistakes plainly. Don't pad with affirmations.
+- **He's a paying Pro customer.** Treat his time accordingly — don't drag out simple tasks.
+- **Strict technical accuracy required.** No guessing UI elements, button names, or library APIs. Search documentation first.
+- **He has memory entry about Wheel Stand Pro fix** — irrelevant to MedRPG, ignore.
+
+## Working style preferences (learned the hard way)
+
+- **When changes don't produce expected results, STOP and add debug prints** rather than continuing to guess. We've burned hours iterating on layout values based on incorrect mental models. If a change has zero effect or moves something the wrong direction, that's the signal to verify behavior empirically before proposing more changes.
+- **Pixel-tweaking UI is a bottomless pit.** Don't get sucked in. After 2-3 rounds of "another N pixels left/right" with diminishing returns, suggest stopping and accepting "good enough."
+- **Prefer "good enough" + commit + move on** over "perfect but never shipped." Commits are checkpoints; ship the feature even if there's a 2px misalignment.
+- **Don't ask "what's next" between every micro-step.** Batch related changes. Ask for direction at meaningful decision points only.
+- **When he says "you decide" or "I trust you,"** he means it — make the call, don't bounce back with options.
+
+## Godot/GDScript quirks already discovered (don't re-learn these)
+
+- **Anchors don't work for Controls parented under CanvasLayer.** Solution implemented in `popup_layout.gd`: set `position` and `size` directly via `get_viewport_rect().size`, with `set_anchors_preset(Control.PRESET_TOP_LEFT)`.
+- **PanelContainer auto-grows to content's minimum size.** Setting smaller dimensions silently gets clamped. Affects all our popup sizing — picking too-small numbers in `popup_layout.gd` produces unchanged output.
+- **HBox layout with expand-fill children:** spacers added BEFORE the expand child move later siblings leftward (consume from expand allocation). Spacers AFTER the expand child sometimes have no visible effect because right-edge clamping hits first. We have NOT fully understood this — the imaging results column header alignment was partially solved empirically.
+- **External CDN libraries blocked in artifact rendering environment** — including Three.js. Use self-contained Canvas 2D solutions for any browser-rendered demos.
+- **GDScript strict typing:** `:= max(...)` and `:= dict.get()` produce ambiguous return types and trigger warnings-as-errors. Use explicit annotations: `var x: float = max(a, b)`, `var s: String = dict.get("key", "")`.
+- **`spend_ap()` in clinical_engine.gd already calls `increment_turn()` and `update_hud()` internally.** Handlers calling `spend_ap()` must NOT call those again or turns double-bump.
+
+## File organization conventions
+
+- New popup → script in `scripts/`, scene in `scenes/`, scene parented under `PopupLayer` (CanvasLayer node) inside `clinical_encounter.tscn`. Set `visible = false` by default.
+- Scene root nodes named PascalCase: `IVPopup`, `LabsPopup`, `ImagingPopup`.
+- Engine references popups by `$PopupLayer/PopupName`, not `$PopupName` (post-refactor).
+- Scripts use snake_case filenames, snake_case function names, snake_case variables.
+- Constants in SCREAMING_SNAKE_CASE.
+- Color constants prefixed `C_` (e.g. `C_PANEL`, `C_DIM`, `C_CONFIRM`).
+- Helper functions prefixed with underscore: `_make_label`, `_style_panel`, `_set_btn_left_padding`.
+
+## What's built and how it's wired
+
+### Engine (`clinical_engine.gd`)
+The brain. Holds patient state, AP, turns, time, IV state, measurement rolls. Wires up popups in `_ready()`. Loads condition data from JSON files in `_ready()` via `load_condition_data()`.
+
+Key state vars: `current_state` (PatientState enum), `ap_current`, `bonus_points`, `harm_points`, `turn_count`, `elapsed_seconds`, `iv_sites`, `iv_access`, `current_measurements`.
+
+Key functions: `spend_ap(amount)` (returns bool, handles increment+HUD), `increment_turn()`, `update_monitor()`, `transition_to_state()`, `roll_radiology_measurements()`, `format_measurement(id, modality)`, `substitute_measurements(text, modality)`, `_has_any_working_iv()`, `_has_working_ac_iv()`, `_update_iv_status_display()`.
+
+### Popups (all share patterns)
+- **Labs popup** (`labs_system.gd` + `labs_popup.tscn`) — three tabs (Search by Name, Browse Categories, Ask MEDDY!), section headers (Panels/Labs), result rows with selection, AP cost summary, two-step confirm. Result variation via `randf_range` between min/max in `appendicitis_labs.json`. Cache invalidated on state transition.
+- **Imaging popup** (`imaging_system.gd` + `imaging_popup.tscn`) — three tabs, hierarchical category tree (X-Ray with subcategories, CT With/Without Contrast, etc.), IV contrast modal, stability blocks (most MRI blocked when septic_shock/coma_fail), pediatric filter, modality color badges, pending state with dual delays (real-time AND turn). Result text from `appendicitis_imaging.json`, with `{{measurement_id}}` placeholders substituted via engine call. Cache NOT invalidated on state transition (known gap).
+- **IV popup** (`iv_system.gd` + `iv_popup.tscn`) — single panel, 6 site rows in clinical priority (L AC, R AC, L Hand, R Hand, L Foot, R Foot), confirmation modal for both place (1 AP) and remove (free). Mini-game stub `_attempt_iv_placement(site, harm_modifiers)` always returns success. Modal: Confirm left, Cancel right, centered.
+
+### Shared layout (`popup_layout.gd`)
+Static class with edge-offset constants per popup (IMAGING, LABS, MEDICATIONS, IV, DEFAULT). `apply_layout(panel, popup_kind)` sets position+size directly (not anchors). To resize a popup, edit constants here only.
+
+### Status displays (in `clinical_encounter.tscn`)
+- Vitals stack: HR, BP, RR, Temp, SpO2 inside `Monitor/VitalsContainer` (rigid narrow rows)
+- IV access status: `Monitor/IVAccessLabel` (RichTextLabel, sibling of VitalsContainer, BBCode enabled). Shows `No IV access` / `IVs: N (sites)`. Red BBCode for extravasated sites.
+
+### Variation systems
+- **Labs:** uniform random sample between min/max per `(lab_id, patient_state)`. Cached. Function: `_generate_single_result()` in `labs_system.gd` line ~ middle. Uses `randf_range(min, max)` then rounds to `display_decimals`. The `normal_distribution` / `mean` / `std_dev` fields in JSON are NOT used — the actual code uses only `min` / `max`. The labs JSON schema is "ahead of" the implementation.
+- **Radiology measurements:** new system. Schema in `appendicitis.json` under `radiology_measurements`. `roll_radiology_measurements()` fires at end of `load_condition_data()`, samples each measurement once. `state_offsets` block adds delta for derived states (e.g. perforated = stable + 2mm). `format_measurement()` applies offset and per-modality precision. `substitute_measurements()` replaces `{{id}}` placeholders in any text. Wired into `_generate_result_text()` in `imaging_system.gd` before caching.
+
+## What's deferred (explicitly NOT built yet)
+
+### IV system stages D-F
+- **Stage D:** Harm-badge modifier integration. Currently passes empty `[]` array to mini-game stub.
+- **Stage E:** CT PE protocol AC requirement. Only that one specific study uses power injection and needs AC IV. Other contrast studies just need any working IV. Helper `_has_working_ac_iv()` already exists.
+- **Stage F:** Extravasation state machine (currently `extravasated` field exists in IV record but never set true), MEDDY auto-suggest removal popup when extravasation detected, exam findings showing local swelling/erythema/tenderness around extravasated site.
+
+### IV mini-game itself
+Currently `_attempt_iv_placement(site, harm_modifiers)` in `iv_system.gd` always returns `{"success": true, "extravasation": false, "notes": ""}`. Real mini-game replaces only the body of this function — signature is the contract.
+
+### Patient diagram
+Future chalk-outline pixel art body sprite that all systems annotate (IV sites, edema, rashes, drains, lines). Deferred until pixel art exists. For now, text status label below SpO2 is the source of truth for IV state.
+
+### Imaging cache invalidation on state transition
+Labs has it (`labs_popup.invalidate_result_cache()` called in `transition_to_state()`). Imaging does not. Means a CT ordered before perforation will keep showing pre-perforation findings if state changes. One-line fix when ready: add `imaging_popup.invalidate_result_cache()` to `transition_to_state()`.
+
+### Other major systems not started
+- Authored response system (architecture documented in `AUTHORED_RESPONSE_SYSTEM.md` but not yet implemented in code)
+- Auto-runner (`auto_runner.gd` mentioned in plans, not built)
+- Ask MEDDY button (separate from imaging/labs MEDDY tabs)
+- PPE button + system
+- Diagnosis evaluation system
+- MEDDY emotional animations (idle works, others don't exist)
+- Badge system implementation
+- Win/fail end-game states
+- Balatro run mode + encounter selection
+- Character creator screen
+- Medication ordering popup (planned, will follow imaging/labs pattern)
+
+## Known broken things
+
+- **Imaging cache stale across state transitions** — described above, easy fix not yet applied
+- **Imaging "Time" column header alignment** — sits ~1px right of data text. Multiple attempts to fix failed. Mechanism not understood. Accepted as good-enough.
+- **Lab variation schema unused fields** — `mean`, `std_dev`, `type: "normal_distribution"`, `flag_above` fields in lab JSON are not read by the variation function. Only `min` and `max` are used. The schema is aspirational.
+- **`.gitignore` had a parse bug** — `Photos saved/` was concatenated to previous line. Fixed mid-session by splitting onto own line. Verify hasn't regressed.
+
+## Dev toggles in clinical_engine.gd
+
 ```gdscript
-const DEV_MODE_LLM: bool = true          # true = live LLM, false = authored responses
-const DEV_MODE_SKIP_CONFIRM: bool = false # true = skip AP popups (auto-runs only)
-```
-**Before shipping:** Delete all DEV_MODE_LLM code paths and auto-runner script entirely.
-
----
-
-## JSON Schema Versioning Rule
-**All JSON files must include `schema_version` as the first field.**
-- Current version: `"1.0"`
-- Bump to `"1.1"` for non-breaking additions
-- Bump to `"2.0"` for breaking schema changes
-
----
-
-## File Structure
-```
-MedRPG/
-├── docs/
-│   ├── PROJECT_NOTES.md
-│   └── AUTHORED_RESPONSE_SYSTEM.md    ← full authored response architecture
-├── server/
-│   ├── server.js
-│   ├── package.json
-│   └── node_modules/
-├── game/
-│   └── med-rpg/
-│       ├── .gitignore
-│       ├── project.godot
-│       ├── data/
-│       │   ├── master_categories.json     ← global category list for all conditions
-│       │   ├── action_registry.json
-│       │   ├── airway.json
-│       │   ├── badges/
-│       │   │   ├── boost_badges.json
-│       │   │   ├── burnout_badges.json
-│       │   │   └── badge_youtock_dialogue.json
-│       │   ├── conditions/
-│       │   │   ├── appendicitis.json
-│       │   │   ├── appendicitis_system_prompts.json
-│       │   │   ├── appendicitis_other_treatments.json
-│       │   │   ├── appendicitis_surgeries_procedures.json
-│       │   │   └── appendicitis_end_conditions.json
-│       │   ├── medications/
-│       │   │   └── (23 medication JSON files)
-│       │   └── responses/
-│       │       ├── appendicitis/
-│       │       │   ├── history_responses.json
-│       │       │   ├── exam_responses.json
-│       │       │   ├── meddy_responses.json
-│       │       │   ├── ask_meddy_responses.json
-│       │       │   └── deflection_responses.json
-│       │       └── coverage_reports/      ← auto-runner output
-│       ├── scenes/
-│       │   └── clinical_encounter.tscn
-│       ├── scripts/
-│       │   ├── clinical_engine.gd
-│       │   └── auto_runner.gd             ← dev only, deleted before shipping
-│       └── assets/
-│           ├── sprites/characters/
-│           │   ├── meddy/
-│           │   │   ├── meddy_neutral.png
-│           │   │   └── MeddyBlinkAnimationSpriteSheet.png
-│           │   ├── player/
-│           │   │   ├── body/ head/ hair/ clothing/ extras/
-│           │   │   └── body_baby/ head_baby/ hair_baby/ clothing_baby/
-│           │   ├── patients/patient_young_male/
-│           │   └── npcs/
-│           ├── badges/boost/ + burnout/
-│           ├── ui/icons/ + panels/ + buttons/ + fonts/ + hud/
-│           ├── backgrounds/
-│           └── audio/
-├── exports/
-└── reference/
+const DEV_MODE_LLM: bool = true          # true = live LLM, false = authored responses (not built yet)
+const DEV_MODE_SKIP_CONFIRM: bool = false # true = skip AP confirmation popups (auto-runner mode)
 ```
 
+Before shipping: delete all `DEV_MODE_LLM` code paths and the auto-runner script entirely.
+
+## Schema versioning rule
+
+All JSON files include `schema_version` as first field. Current: `"1.0"`. Bump to `"1.1"` for non-breaking additions, `"2.0"` for breaking changes.
+
+---
 ---
 
-## Authored Response System
-*Full architecture in `docs/AUTHORED_RESPONSE_SYSTEM.md`*
+# 👤 SECTION FOR JOHN — your project at a glance
 
-### Overview
-All patient dialogue and MEDDY content is pre-authored and physician-reviewed. LLM used only for input classification in shipped game.
+This section is the human-readable overview. Skim when you want to remember where you are, what's been built, or look up a quick reference.
 
-### Pipeline
-1. **Auto-runner** generates test inputs (LLM plays as doctor)
-2. **Coverage reports** exported to `data/responses/coverage_reports/`
-3. **Human review** — physician curates best responses
-4. **Answer bank** built in response JSON files
-5. **Local classifier** trained eventually for offline classification
+## What MedRPG is
 
-### Answer Bank Structure
-```json
-{
-  "schema_version": "1.0",
-  "category": "symptom_drill_pain",
-  "variants": [
-    {
-      "id": "pain_first_ask",
-      "priority": 3,
-      "conditions": {
-        "domains_asked": [],
-        "patient_state": "any"
-      },
-      "answers": ["Answer option 1", "Answer option 2"],
-      "speaker": "patient"
-    }
-  ],
-  "fallback_answer": "Can we focus on what's going on with me right now?"
-}
+A retro pixel-art RPG where you play a doctor. You travel a world map healing patients via turn-based clinical encounters. Each encounter, you spend Action Points (AP) on history-taking, exams, labs, imaging, treatments, and surgery. Burn through AP without curing the patient → they deteriorate. The game has both replayability (Balatro-style runs with random cases and badges) and learning value (works as a teaching tool for any non-medical person).
+
+## Where you are right now
+
+**Working in-game:**
+- Full encounter scene with vitals monitor, AP/turn/time tracking
+- All 13 action button categories wired
+- History and exam systems with LLM-powered question handling
+- Confirmation popups for all actions
+- Labs system (full popup, three tabs, search, ordering, results, variation)
+- Imaging system (full popup, three tabs, contrast handling, stability blocks, results, modality color coding)
+- IV system (popup with 6 sites, place/remove with confirmation, status display below SpO2)
+- Radiology measurement variation (appendix diameter rolls per session, displays in CT/ultrasound/MRI reports with appropriate precision per modality, +2mm if perforated)
+
+**Working but rough:**
+- Live LLM responses for patient dialogue (placeholder — will be replaced by authored responses in shipped game)
+
+**Not yet started:**
+- Authored response system implementation
+- Auto-runner for content discovery
+- Medication ordering popup
+- Ask MEDDY button
+- PPE button
+- Badge system
+- Win/fail end-game logic
+- Balatro run mode
+- Character creator
+- World map / overworld
+- Patient diagram for visualizing IV sites and other status
+
+## Conventions to remember
+
+- Each new popup goes under `PopupLayer` (CanvasLayer) in the encounter scene, hidden by default
+- Sizing is controlled centrally in `popup_layout.gd` — to resize any popup, edit the constants there
+- Modals (like IV place/remove confirmation) live INSIDE their parent popup, not as separate scenes
+- Confirm button always on the LEFT, Cancel on the RIGHT, centered
+- All variation values rolled once per encounter, cached, and consistent across modalities
+
+## Quick reference
+
+### Git commit routine
+
+```
+git status
+git add .
+git commit -m "your message here"
+git push
 ```
 
-### Master Categories (42 total)
-- **History (14):** overview, symptom_drill_pain/nausea/fever/appetite/bowel/urinary, review_of_systems, pmh_surgical, medications, allergies, social_travel_exposure, family_history, sexual_history
-- **Physical Exam (17):** exam_general/abdomen/cardiovascular/respiratory/neurological/skin/heent/musculoskeletal/genitourinary/rectal/breast + maneuver_mcburneys/rovsing/psoas/obturator/rebound/murphy/other
-- **Ask MEDDY (5):** meddy_general_knowledge, meddy_differential, meddy_condition_tests, meddy_condition_treatment, meddy_finding_significance
-- **Irrelevant (1):** catch-all deflection
+If `git status` shows screenshots in `Photos saved/` getting picked up, your `.gitignore` is broken again. The line should read `Photos saved/` on its own line (not concatenated to another).
 
-*New categories can be added anytime — just add to `master_categories.json` and create corresponding response entries.*
+### Dev toggles (top of `clinical_engine.gd`)
 
----
+- `DEV_MODE_LLM = true` → live LLM responses (current dev mode)
+- `DEV_MODE_LLM = false` → authored responses (future shipped mode, not implemented yet)
+- `DEV_MODE_SKIP_CONFIRM = true` → skip AP popups (auto-runner mode)
 
-## MEDDY Sprite System
+### File locations
 
-### Current Status
-- ✅ Idle animation: `MeddyBlinkAnimationSpriteSheet.png` (10 frames, AnimatedSprite2D)
-- ⬜ Excited, Worried, Alarmed, Thinking, Celebrating animations
+- Engine code: `game/med-rpg/scripts/clinical_engine.gd`
+- Popup scripts: `game/med-rpg/scripts/{labs,imaging,iv}_system.gd`
+- Popup scenes: `game/med-rpg/scenes/{labs,imaging,iv}_popup.tscn`
+- Shared sizing: `game/med-rpg/scripts/popup_layout.gd`
+- Main scene: `game/med-rpg/scenes/clinical_encounter.tscn`
+- Condition data: `game/med-rpg/data/conditions/appendicitis.json` and related
+- Backend server: `server/server.js` (run with `cd server && node server.js`)
 
-### Animation Workflow
-1. Generate in **ChatGPT** → convert in **Pixelicious** → clean in **Aseprite** → animate in **PixelLab** → import to Godot
-2. PixelLab idle prompt: *"Idle animation. Consistent sprite size. Subtle breathing motion. Knees flex up and down, elbows flex and unflex, green eyes and smile pulsing with light, looping idle animation, standing still. All frames same size, seamless loop."*
-3. Export from PixelLab as individual PNGs → import to Aseprite → export as horizontal sprite sheet
-4. In Godot: AnimatedSprite2D → SpriteFrames → frame width 256px → ~10 FPS → loop
+### To resize any popup
 
----
+Edit `game/med-rpg/scripts/popup_layout.gd`. Each popup has its own constant block (IMAGING, LABS, IV, MEDICATIONS) with four numbers (left/top/right/bottom edge offsets in pixels from screen edges). Save and reload.
 
-## Game Modes
+### To add a new measurement to randomize
 
-### Balatro Run Mode (build first)
-- 3 random cases per run
-- Cases pulled from full case library
-- Badges accumulate across run
-- Between cases: Badge Board (spend XP), encounter selection (3 options)
+1. Add a block to `radiology_measurements` in `appendicitis.json` (or future condition file)
+2. Add `{{your_measurement_id}}` placeholders in the imaging report text wherever it should appear
+3. Variation rolls automatically at encounter start — no engine code changes needed
 
-### Themed Runs (future DLC)
-- Trauma Run, Infectious Disease Run, Cardiology Run, Pediatrics Run, ICU Run, Night Float Run
-- Natural DLC packs — themed run + new cases + specialty badges
+## Big design decisions you've locked in
 
-### RPG Overworld Mode (future)
-- World map, story, linear progression
-- Add after Balatro mode is complete and polished
+- **Authored responses + LLM classification, not live LLM dialogue.** The shipped game uses pre-written, physician-reviewed responses. LLM only routes input to the right response. This is the entire content authoring pipeline (see `AUTHORED_RESPONSE_SYSTEM.md`).
+- **Balatro run mode first, world overworld later.** Faster to ship, more replayable, validates the core loop before building world content.
+- **Radiology measurements consistent across modalities.** Appendix diameter rolled once per encounter, displays the same value (with modality-appropriate precision) on CT, ultrasound, and MRI. Perforated state adds +2mm to derived states.
+- **IV system architecture allows future patient-diagram integration.** Per-site state model with rich record schema means we can later replace text status display with annotated body sprite without changing the engine.
+- **Single-file artifacts for popups.** All UI logic for a popup lives in one `.gd` file, no separate CSS/JS-style splits.
+- **Schema versioning on all JSON.** Future migrations easier.
 
----
+## Things to come back to
 
-## Personal Difficulty Scaling
-Per-case performance tracked across runs:
-- AP remaining, turns taken, bonus points, harm points
-- If case crushed → next time: less AP, faster decompensation, pre-attached Burnout Badge, comorbidities
-- **Difficulty tiers (appendicitis example):**
+These aren't urgent but you flagged them as "we'll do this later":
 
-| Tier | AP | Decompensation | Burnout Badges | Comorbidities |
-|---|---|---|---|---|
-| 1 | 100 | Standard | 0 | None |
-| 2 | 85 | 10% faster | 1 | Obese |
-| 3 | 70 | 25% faster | 1 | Diabetic |
-| 4 | 55 | 40% faster | 2 | Warfarin + diabetic |
-| 5 | 40 | 50% faster | 2 | Complex, atypical |
+- IV mini-game (real implementation, replacing the always-success stub)
+- IV harm-badge modifiers (dehydration, obesity, etc. affecting placement success)
+- CT PE protocol AC requirement (currently any IV works for any contrast study)
+- Extravasation state machine + MEDDY auto-suggest popup
+- Patient diagram (chalk-outline body sprite for visualizing patient status)
+- Imaging cache invalidation on state transitions (one-line fix)
+- Convert lab variation system to use the `mean`/`std_dev`/`normal_distribution` fields the schema implies (currently uniform sampling)
 
----
+## Session log (high level)
 
-## Turn Counter
-- Every confirmed action = 1 turn (even free AP actions)
-- Display near AP/Bonus/Harm in HUD
-- Turn 10 → draw Burnout Badge (early game max 1, late game max 2)
-- Creates pressure alongside AP — efficiency on two axes
-
----
-
-## Badge System
-
-### Boost Badges (13 + new)
-Acquired via Badge Board (XP) / Badge Dispenser (10 AP, draw 3 pick 1, stable only) / mid-encounter rewards / critical hit chance (5% per bonus point earned)
-
-**Diminishing returns:** Multiple badges less impactful, situational by design
-
-### Burnout Badges (12 + new)
-Triggered at 5 harm OR 50 AP remaining OR turn 10. Random from pool.
-Early game: max 1. Late game: max 2. Pre-attached on some encounters = higher XP.
-
-### New Badges Designed
-| ID | Name | Type | Effect |
-|---|---|---|---|
-| boost_universal_healthcare | Universal Coverage | Boost | All actions -1 AP, non-emergent has 2-turn wait |
-| boost_prayer | Thoughts & Prayers | Boost | 20% chance +1 AP per turn, 10% chance -1 harm per turn, heavenly glow |
-| burnout_insurance_denial | Prior Auth Required | Burnout | 50% non-life-saving actions denied, AP still charged. CEO laughs counting money. Peer-to-peer 2AP/20% success, prior auth 3AP/50% success |
-| burnout_national_backorder | National Backorder | Burnout | 33% chance med on backorder, AP charged, 40% chance stays backordered on retry |
-| burnout_youtock | YouTock University | Burnout | 50% refuse meds/vaccines/procedures, funny refusal quotes, education attempts declined politely |
-
-*(Full YouTock dialogue in `badge_youtock_dialogue.json`)*
-
----
-
-## Ask MEDDY System
-- Dedicated button above MEDDY's head on encounter screen
-- Costs 2-4 AP depending on question type
-- Uses conversation log as context for differential diagnosis
-- All responses authored (not live LLM in shipped game)
-- Accessible to non-medical players as learning tool
-
-### MEDDY Hints
-- Triggers if no clinical progress after X turns
-- Triggers if AP drops critically without key actions
-- Triggers on clinically wrong decisions
-- Never condescending, always encouraging
-
----
-
-## PPE System
-- PPE button on main UI near IV and O2 quick access
-- Required before physical exam or procedures
-- Not donning appropriate PPE = 1 harm point
-- One-time action per encounter
-- For appendicitis: standard precautions (gloves + mask)
-- Future: contact/droplet/airborne/full PPE for infectious cases
-
----
-
-## Accessibility & Difficulty Modes
-- **Tourist Mode** — MEDDY very proactive, suggests next steps
-- **Attending Mode** — MEDDY helpful, larger Ask MEDDY radius
-- **Resident Mode** — occasional nudges if going wrong direction
-- **Med Student Mode** — full game, MEDDY only answers when asked
-- **Family Friendly Mode** — blocks sexual history, age-appropriate content
-
----
-
-## Character Creator
-
-### Doctor Sprite
-- Male and female base sprites (different body/face, same hair assets)
-- Layered system: Body → Head → Hair → Beard (male) → Eyes → Glasses → White coat
-- Skin tone: horizontal gradient slider
-- Hair styles (13, shared male/female): Bald, Short/Medium/Long straight, Short/Medium/Long natural African, Short/Medium/Long braids, Short/Medium wavy
-- Beard (male only): None, Short, Medium
-- Hair color + Eye color: color wheels
-- Glasses: toggle
-- White coat: always worn
-
-### Patient / NPC Sprites
-- Same layered asset system as doctor
-- Different clothing layer per character type
-- Four tiers: Adult (100%) / Child (65-70%) / Toddler (body 45-50%, head 60-65%) / Baby (separate assets)
-
-### Patient Visual States (appendicitis)
-- **Standing** — default, slightly hunched, hand on right side, casual clothes
-- **In hospital bed** — triggered by IV access / O2 / septic shock. Hospital gown.
-
----
-
-## 13 Icon UI Bar + Quick Access
-| # | Button | Mode | AP Cost |
-|---|---|---|---|
-| 1 | Hx | history | 1 per question |
-| 2 | Stab | stability | 2 |
-| 3 | Exam | exam | 2 (free repeat) |
-| 4 | Labs | labs | varies |
-| 5 | Ima | imaging | 8 |
-| 6 | Med | medications | 3 |
-| 7 | Con | consults | 7 |
-| 8 | Sur | surgeries | 10 |
-| 9 | Tx | other_treatments | 2 |
-| 10 | Air | airway | 5 |
-| 11 | Path | pathology | 4 |
-| 12 | Misc | misc_tests | 5 |
-| 13 | Dx | diagnosis | 0 |
-
-**Quick Access (always visible):** IV (2 AP), O2 (1 AP), PPE (1 AP), Ask MEDDY (2-4 AP)
-
-**Input field max length:** 150 characters
-
-**Keyboard:** Enter = submit/confirm, Escape = cancel, Left/Right = toggle confirm/cancel
-
----
-
-## Points System
-- **AP:** 100 per case. Every action costs AP. Depleted = fail.
-- **Turns:** Every confirmed action = 1 turn. Turn 10 triggers Burnout Badge.
-- **Bonus Points:** Clinical excellence. Offset harm OR bank for XP.
-- **Harm Points:** Threshold 7. Triggers septic shock + AP capped at 30.
-- **XP Formula:** `base_xp + (remaining AP × 1) + (banked bonus × 3) - (harm × 10)`
-
----
-
-## Appendicitis Case
-
-### Patient: Marcus
-22yo male, 6'0", 84kg, BMI 25.1, no allergies, no PMH, college student
-
-### States
-| State | Trigger | HR | BP | RR | Temp | SpO2 |
-|---|---|---|---|---|---|---|
-| Stable | Start | 105 ±3 | 120/85 | 16 | 100.8°F | 99 |
-| Perforated | 50 AP without appendectomy | 122 ±4 | 106/70 | 24 | 102.1°F | 98 |
-| Septic Shock | 70 AP without appendectomy OR 7 harm points | 135 ±6 | 100/60 | 28 | 103.4°F | 95 |
-| Coma/Fail | 100 AP | 148 ±2 | 80/40 | 32 | 104.2°F | 88 |
-
-### Bonus Points: 34 total
-History (2) + Exam (3) + Stability (2) + Consult (1) + Other Treatments (2) + Diagnosis (13) + Appendectomy (10) + Disposition (1)
-
----
-
-## Achievements (pixel art badge for each)
-| ID | Name | Description |
-|---|---|---|
-| first_diagnosis | First Blood | First correct diagnosis |
-| speed_demon | Speed Demon | Complete case under 15 turns |
-| textbook | Textbook | Earn every bonus point |
-| oops | Oops | Trigger septic shock |
-| miracle_worker | Miracle Worker | Prayer badge saves the run |
-| thorough | Thorough | Ask every possible history domain |
-| sharpshooter | Sharpshooter | Correct diagnosis without Ask MEDDY |
-| frequent_flyer | Frequent Flyer | Send 10 patients to Mega Hospital |
-| boy_scout | Boy Scout | Place IV before any other action |
-| insurance_nightmare | Insurance Nightmare | Get denied 5 times in one run |
-| i_did_my_research | I Did My Own Research | Treat YouTock patient despite 5 refusals |
-| respectfully_disagree | Respectfully Disagree | Patient declines education attempt |
-
----
-
-## Godot Project Settings
-Renderer: Compatibility / Window: 1280×720 / Stretch: canvas_items / Texture Filter: Nearest
-
----
-
-## MVP Sequence
-1. ✅ Scene built — ClinicalEncounter.tscn
-2. ✅ ClinicalEngine.gd — state machine, AP, bonus/harm
-3. ✅ Vitals monitor
-4. ✅ All 13 buttons + IV + O2 wired
-5. ✅ Confirmation popup — keyboard nav, white focus ring
-6. ✅ Anthropic API connected
-7. ✅ Patient system prompt locked in clinically
-8. ✅ Exam validation layer
-9. ✅ History domain AP system
-10. ✅ Exam tracking — free re-examination
-11. ✅ MEDDY idle animation
-12. ✅ Dev toggles added
-13. ✅ Master categories defined
-14. ✅ Response folder structure created
-15. ✅ Authored response system architecture documented
-16. ⬜ AutoRunner.gd
-17. ⬜ Coverage report export
-18. ✅ Turn counter + HUD display
-19. ✅ Time counter + HUD display
-20. ⬜ Log system
-20. ⬜ Ask MEDDY button + system
-21. ⬜ PPE button
-22. ⬜ Labs system
-23. ⬜ Diagnosis evaluation
-24. ⬜ MEDDY emotional animations
-25. ⬜ Badge system implementation
-26. ⬜ Win/fail states
-27. ⬜ Balatro run mode + encounter selection
-28. ⬜ Character creator screen
-
----
-
-## Monetization
-$10 base. DLC condition packs + themed runs later. School/institution licensing potential.
-
----
-
-## Turn Counter & Time Counter
-
-### Turn Counter
-- `turn_count` increments on every confirmed action — including free AP (irrelevant deflections, repeat exams, repeat history)
-- Increments via `increment_turn()` which also calls `check_burnout_triggers()`
-- Turn 10 → triggers Burnout Badge draw
-- Displayed in HUD: `HUD/TurnCounter/TurnValue`
-
-### Time Counter
-- `elapsed_seconds` increments every 1 second via a `Timer` node created in `_ready()`
-- Clock runs continuously — never pauses during LLM wait
-- `time_limit_active: bool = false` — off by default, activated by timed badges/game modes
-- `time_limit_seconds: float = 36000.0` — 10 hours default (effectively disabled)
-- When limit hit → same outcome as 0 AP (Mega Hospital transfer)
-- To activate a time limit: set `time_limit_active = true` and `time_limit_seconds` to target value
-- Displayed in HUD: `HUD/TimeCounter/TimeValue` in `HH:MM:SS` format
-
----
-
-## Labs System
-
-### UI Flow
-1. Player clicks **Labs** button → Labs popup window opens
-2. Popup has three ways to find and select labs:
-   - **Search by description** (top bar): free text interpreted by LLM → returns matching labs by tag
-   - **Search by name** (second bar): exact match on lab name or acronym (e.g. "CBC" or "complete blood count") → live dropdown of matches below
-   - **Category browser** (main panel): scrollable vertical list of broad categories → click to expand → click lab to select
-3. Labs can be selected from any of the three methods — selections accumulate
-4. **"Order Selected Labs"** button → AP cost popup showing combined cost → Confirm or Cancel
-
-### Lab Categories (broad, for UI browser)
-General / Screening, Hematology, Chemistry / Metabolic, Liver / Hepatic, Renal, Cardiac, Inflammatory / Infection, Coagulation, Endocrine / Hormonal, Pulmonary / Blood Gas, Rheumatologic / Autoimmune, Toxicology / Drug Levels, Urinalysis, Microbiology / Cultures, Tumor Markers, Nutritional / Vitamins, Genetic / Molecular
-
-*Labs can appear in multiple categories.*
-
-### Lab Tag System
-Each lab has a comprehensive tag array covering:
-- **Organ system:** hematologic, hepatic, renal, cardiac, pulmonary, endocrine, GI, neurologic, musculoskeletal, reproductive
-- **Category:** chemistry, hematology, coagulation, inflammatory, metabolic, hormonal, toxicology, urinalysis, culture, tumor_marker, nutritional, genetic
-- **Body region:** abdomen, chest, pelvis, systemic
-- **Clinical association:** tags linking to conditions/diagnoses (e.g. `appendicitis`, `anemia`, `sepsis`, `liver_disease`, etc.)
-- **Clinical use:** screening, diagnosis, monitoring, preoperative
-
-### Lab Result System
-- Each lab has result ranges per patient state: `stable`, `perforated`, `septic_shock`, `coma_fail`
-- Results are randomized within range each playthrough for replayability
-- Example: WBC range 8–22 for appendicitis stable state
-- Ranges based on real clinical literature
-
-### JSON Structure
-- **Master lab list:** `data/labs/master_labs.json` — all labs, tags, categories, AP costs
-- **Condition-specific results:** `data/conditions/appendicitis_labs.json` — result ranges per state per lab
-
-### AP Cost
-- TBD per lab or per lab category — to be designed
-
----
-- **Session 1-12:** Architecture, data layer, all JSON files
-- **Session 13:** Godot initialized
-- **Session 14:** Scene + ClinicalEngine.gd
-- **Session 15:** Vitals monitor, basic layout
-- **Session 16:** History + Submit buttons wired
-- **Session 17:** Anthropic API via Node.js
-- **Session 18:** Patient personality + system prompts
-- **Session 19:** All 14 buttons, confirmation popup, keyboard nav
-- **Session 20:** Exam validation, MEDDY idle animation
-- **Session 21:** History domain AP system, two-call architecture
-- **Session 22:** Authored response system designed, dev toggles, master categories, response folder structure, new badges designed, game modes planned, personal difficulty scaling, turn counter, achievements, character creator finalized
-- **Session 23:** Migration session. Turn counter + time counter implemented in clinical_engine.gd and HUD. Labs system fully designed (UI flow, tag system, categories, result ranges, JSON structure). PROJECT_NOTES updated. AutoRunner design clarified — full encounter coverage, undifferentiated patient LLM persona, mode-constrained runs, free-text persona instructions, button lives on main scene.
+- **Sessions 1–22:** Architecture, JSON data layer, scene skeleton, ClinicalEngine, vitals monitor, all 13 buttons, confirmation popups, LLM API integration, exam validation, history domain AP system, MEDDY idle animation, dev toggles
+- **Session 23:** Turn counter + time counter, labs system designed, project notes baseline established
+- **Session 24:** Imaging system built end-to-end (master imaging data, condition imaging data, popup with three tabs, hierarchical category tree, contrast handling)
+- **Session 25:** Shared `popup_layout.gd` extracted, popups reparented under PopupLayer, dark overlay removed, extensive column header alignment work
+- **Session 26:** IV access system built (Stages A, B, C). Per-site state, popup, confirmation modal, status display below SpO2. Mini-game stub ready to swap
+- **Session 27:** Radiology measurement variation system. Appendix diameter rolls per session, displays in imaging reports with per-modality precision and state-based offset. PROJECT_NOTES rewritten to bootstrap-doc format

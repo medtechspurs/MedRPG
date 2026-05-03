@@ -215,12 +215,11 @@
   },
 
   "exam_bonus_points": {
-	"description": "Player gains AP by asking targeted exam questions BEFORE requesting the general exam section. Opportunities expire once the general section is examined.",
+	"description": "Player gains a bonus point by performing specific maneuvers. Special maneuver bonuses (mcburney, rovsing, psoas, obturator, heel_tap) can be earned at any time — order does not matter. Stability assessment bonuses are time-sensitive and expire if certain other exams are done first.",
 	"opportunities": [
 	  {
 		"id": "bonus_mcburney",
 		"trigger_phrases": ["mcburney", "mcburney's point", "right lower quadrant point", "rlq point", "point tenderness"],
-		"must_ask_before": "exam_abdominal",
 		"ap_gain": 1,
 		"patient_response": {
 		  "plain": "Ow! Yes — right there! That's exactly where it hurts the most.",
@@ -230,7 +229,6 @@
 	  {
 		"id": "bonus_rovsing",
 		"trigger_phrases": ["rovsing", "rovsing's sign", "press left side", "push left lower quadrant", "llq pressure", "pain on right when pressing left"],
-		"must_ask_before": "exam_abdominal",
 		"ap_gain": 1,
 		"patient_response": {
 		  "plain": "That's weird — when you press on my left side, I feel it on the right. Why does that happen?",
@@ -240,11 +238,28 @@
 	  {
 		"id": "bonus_psoas",
 		"trigger_phrases": ["psoas", "psoas sign", "extend right hip", "straighten right leg against resistance", "hip extension", "flex right thigh against hand"],
-		"must_ask_before": "exam_abdominal",
 		"ap_gain": 1,
 		"patient_response": {
 		  "plain": "Ouch — yes, straightening my leg out like that makes the pain much worse.",
 		  "clinical": "Positive psoas sign. Pain with right hip extension against resistance. Suggests retrocecal appendix."
+		}
+	  },
+	  {
+		"id": "bonus_obturator",
+		"trigger_phrases": ["obturator", "obturator sign", "internal rotation of right hip", "rotate right hip inward", "internally rotate flexed right hip"],
+		"ap_gain": 1,
+		"patient_response": {
+		  "plain": "Yeah — when you turn my leg in like that, I feel a pulling pain in the lower right side.",
+		  "clinical": "Positive obturator sign. Pain with internal rotation of the flexed right hip. Suggests pelvic appendix in contact with obturator internus."
+		}
+	  },
+	  {
+		"id": "bonus_heel_tap",
+		"trigger_phrases": ["heel tap", "heel jar", "tap the heel", "strike the heel", "heel strike", "have him drop on his heels", "jar test"],
+		"ap_gain": 1,
+		"patient_response": {
+		  "plain": "Ow — yeah, that jolt goes straight to the lower right side. That hurts.",
+		  "clinical": "Positive heel tap / jar test. Percussion at the heel transmits force to inflamed peritoneum, eliciting RLQ pain. Indicates peritoneal irritation."
 		}
 	  },
 	  {
@@ -288,7 +303,7 @@
 
   "exam_findings": {
 	"exam_general": {
-	  "ap_cost": 2,
+	  "ap_cost": 1,
 	  "label": "General Appearance",
 	  "expires_stability_bonus": true,
 	  "by_state": {
@@ -307,7 +322,7 @@
 	  }
 	},
 	"exam_skin": {
-	  "ap_cost": 2,
+	  "ap_cost": 1,
 	  "label": "Skin",
 	  "expires_stability_bonus": true,
 	  "by_state": {
@@ -326,7 +341,7 @@
 	  }
 	},
 	"exam_heent": {
-	  "ap_cost": 2,
+	  "ap_cost": 1,
 	  "label": "Head / Eyes / Ears / Nose / Throat",
 	  "by_state": {
 		"stable": {
@@ -344,7 +359,7 @@
 	  }
 	},
 	"exam_neck": {
-	  "ap_cost": 2,
+	  "ap_cost": 1,
 	  "label": "Neck",
 	  "by_state": {
 		"stable": {
@@ -362,7 +377,7 @@
 	  }
 	},
 	"exam_cardiovascular": {
-	  "ap_cost": 2,
+	  "ap_cost": 1,
 	  "label": "Cardiovascular",
 	  "by_state": {
 		"stable": {
@@ -380,7 +395,7 @@
 	  }
 	},
 	"exam_respiratory": {
-	  "ap_cost": 2,
+	  "ap_cost": 1,
 	  "label": "Respiratory",
 	  "expires_stability_bonus": true,
 	  "by_state": {
@@ -399,12 +414,12 @@
 	  }
 	},
 	"exam_abdominal": {
-	  "ap_cost": 2,
+	  "ap_cost": 1,
 	  "label": "Abdominal",
 	  "by_state": {
 		"stable": {
-		  "plain": "His belly isn't swollen or distended. He tenses up when you get near the lower right side. When you press there he winces and pulls away — that area is very tender. When you press the lower left side, he feels pain on the right — strange but telling. When you quickly release your hand after pressing, he gets a sharp jolt of pain. Gut sounds are quiet but present. When you have him try to straighten his right leg against your hand, the right sided pain gets worse. Rotating his right hip inward also causes pain in the right lower belly.",
-		  "clinical": "Abdomen flat, non-distended. Hypoactive bowel sounds. Focal RLQ tenderness with voluntary and involuntary guarding. Positive rebound tenderness. Positive McBurney's point. Positive Rovsing's sign. Positive psoas sign. Positive obturator sign. No hepatosplenomegaly. No surgical scars."
+		  "plain": "His belly isn't swollen or distended. He tenses up when you get near the lower right side. When you press there he winces and pulls away — that area is very tender. When you quickly release your hand after pressing, he gets a sharp jolt of pain. Gut sounds are quiet but present.",
+		  "clinical": "Abdomen flat, non-distended. Hypoactive bowel sounds. Focal RLQ tenderness with voluntary and involuntary guarding. Positive rebound tenderness. No hepatosplenomegaly. No surgical scars."
 		},
 		"perforated": {
 		  "plain": "His belly is now rigid — hard as a board when you press anywhere. He cries out even with light touch. The whole abdomen is tender, not just the right side. There are almost no gut sounds.",
@@ -414,11 +429,10 @@
 		  "plain": "His abdomen is grossly distended and board-like. He barely reacts to your pressing — which is actually a bad sign at this stage, as his altered mental status is blunting his pain response. No bowel sounds at all.",
 		  "clinical": "Distended, rigid abdomen. Diffuse peritonitis. Absent bowel sounds. Reduced pain response secondary to septic encephalopathy. Consistent with catastrophic intraabdominal sepsis."
 		}
-	  },
-	  "expires_bonus_opportunities": ["bonus_mcburney", "bonus_rovsing", "bonus_psoas"]
+	  }
 	},
 	"exam_genitourinary": {
-	  "ap_cost": 2,
+	  "ap_cost": 1,
 	  "label": "Genitourinary",
 	  "by_state": {
 		"all_states": {
@@ -428,7 +442,7 @@
 	  }
 	},
 	"exam_musculoskeletal": {
-	  "ap_cost": 2,
+	  "ap_cost": 1,
 	  "label": "Musculoskeletal",
 	  "by_state": {
 		"stable": {
@@ -446,7 +460,7 @@
 	  }
 	},
 	"exam_neurological": {
-	  "ap_cost": 2,
+	  "ap_cost": 1,
 	  "label": "Neurological",
 	  "by_state": {
 		"stable": {
@@ -464,7 +478,7 @@
 	  }
 	},
 	"exam_mental_status": {
-	  "ap_cost": 2,
+	  "ap_cost": 1,
 	  "label": "Mental Status",
 	  "expires_stability_bonus": true,
 	  "by_state": {
