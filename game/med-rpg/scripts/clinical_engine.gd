@@ -123,6 +123,14 @@ var current_measurements: Dictionary = {}
 # --- Imaging Popup ---
 var imaging_popup: Control = null
 
+var medications_popup: Control = null
+
+# Medications state
+var master_medications_data: Dictionary = {}   # full master_medications.json
+var medications_given: Array = []              # log of what's been ordered: [{canonical_id, route, ap_spent, turn_given}]
+var anaphylaxis_triggered: bool = false        # set when player overrides allergy warning; state machine deferred
+
+
 # ============================================================
 func _ready():
 	if DEV_MODE_LLM:
@@ -153,6 +161,14 @@ func _ready():
 	iv_popup.iv_placed.connect(_on_iv_placed)
 	iv_popup.iv_removed.connect(_on_iv_removed)
 	iv_popup.popup_closed.connect(_on_iv_popup_closed)
+	
+# Wire medications popup
+	medications_popup = $PopupLayer/MedicationsPopup
+	medications_popup.medication_ordered.connect(_on_medication_ordered)
+	medications_popup.allergy_warning_shown.connect(_on_medication_allergy_warning)
+	medications_popup.anaphylaxis_triggered_signal.connect(_on_anaphylaxis_triggered)
+	medications_popup.popup_closed.connect(_on_medications_popup_closed)
+	
 # ============================================================
 func load_condition_data():
 	var file = FileAccess.open("res://data/conditions/appendicitis.json", FileAccess.READ)
@@ -196,6 +212,17 @@ func load_condition_data():
 		print("master_imaging.json loaded OK")
 	else:
 		print("ERROR: Could not load master_imaging.json")
+		
+	# Load master medications catalog
+	var meds_file = FileAccess.open("res://data/medications/master_medications.json", FileAccess.READ)
+	if meds_file:
+		var meds_json := JSON.new()
+		meds_json.parse(meds_file.get_as_text())
+		master_medications_data = meds_json.get_data()
+		meds_file.close()
+		print("master_medications.json loaded OK")
+	else:
+		print("ERROR: Could not load master_medications.json")
 
 	var cond_imaging_file = FileAccess.open("res://data/conditions/appendicitis_imaging.json", FileAccess.READ)
 	if cond_imaging_file:
@@ -700,9 +727,21 @@ func _on_imaging_btn_pressed() -> void:
 	)
 
 func _on_meds_btn_pressed() -> void:
-	current_mode = "medications"
-	$InputArea/InputPanel/InputRow/InputField.placeholder_text = "Order a medication..."
-	$InputArea/InputPanel/InputRow/InputField.grab_focus()
+	if medications_popup == null:
+		print("ERROR: medications_popup not wired")
+		return
+	if master_medications_data.is_empty():
+		print("ERROR: master_medications_data not loaded")
+		return
+	$InputArea.visible = false
+	medications_popup.open(
+		master_medications_data.get("medications", []),
+		condition_data.get("patient_allergies", []),
+		medications_given,
+		_get_vascular_access_points(),
+		ap_current,
+		system_prompts.get("system_prompts", {}).get("meddy_medication_filter", {}).get("prompt", "")
+	)
 
 func _on_consults_btn_pressed() -> void:
 	current_mode = "consults"
@@ -974,3 +1013,62 @@ func _has_working_ac_iv() -> bool:
 		if rec != null and not bool(rec.get("extravasated", false)):
 			return true
 	return false
+
+# ============================================================
+# MEDICATIONS POPUP HANDLERS
+# ============================================================
+func _on_medication_ordered(canonical_id: String, route: String, ap_spent: int) -> void:
+	if not spend_ap(ap_spent):
+		print("Medication order failed — insufficient AP")
+		return
+	medications_given.append({
+		"canonical_id": canonical_id,
+		"route": route,
+		"ap_spent": ap_spent,
+		"turn_given": turn_count,
+	})
+	print("Medication ordered: %s via %s (%d AP)" % [canonical_id, route, ap_spent])
+	# Future: apply clinical effects (antibiotic stops sepsis progression, etc.) — not in v1
+
+
+func _on_medication_allergy_warning(canonical_id: String, allergy_class: String) -> void:
+	# 1 harm point for hitting the warning at all
+	award_harm_points(1, "Attempted to order %s despite documented %s allergy" % [canonical_id, allergy_class])
+
+
+func _on_anaphylaxis_triggered(canonical_id: String) -> void:
+	# Additional harm point for proceeding through warning
+	award_harm_points(1, "Proceeded with %s after allergy warning — anaphylaxis triggered" % canonical_id)
+	anaphylaxis_triggered = true
+	print("ANAPHYLAXIS TRIGGERED — flag set; state machine deferred")
+
+
+func _on_medications_popup_closed() -> void:
+	$InputArea.visible = true
+
+
+# Returns array of dicts representing currently-usable vascular access points.
+# Used by medications popup route picker. Forward-compatible: when IO and central
+# line ship, append those entries to the returned array.
+func _get_vascular_access_points() -> Array:
+	var points: Array = []
+	# Display name lookup mirrors iv_system.gd SITE_DISPLAY_NAMES
+	var site_names: Dictionary = {
+		"left_ac":     "L AC",
+		"right_ac":    "R AC",
+		"left_hand":   "L Hand",
+		"right_hand":  "R Hand",
+		"left_foot":   "L Foot",
+		"right_foot":  "R Foot",
+	}
+	for site_id in iv_sites.keys():
+		var record = iv_sites.get(site_id, null)
+		if record == null:
+			continue
+		if bool(record.get("extravasated", false)):
+			continue
+		points.append({
+			"site_id": site_id,
+			"display_name": site_names.get(site_id, site_id),
+		})
+	return points

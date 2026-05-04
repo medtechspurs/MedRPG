@@ -19,6 +19,8 @@
 	"description_plain": "A young man sitting hunched over, clutching his right side. He looks uncomfortable but is awake and able to talk to you."
   },
 
+  "patient_allergies": ["nsaids"],
+
 "radiology_measurements": {
 	"appendix_diameter": {
 	  "label": "Appendix diameter",

@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://c0obs6vfedom6"]
+
+[ext_resource type="Script" uid="uid://bfadhl2t7rrsa" path="res://scripts/medications_system.gd" id="1_y6sfb"]
+
+[node name="MedicationsPopup" type="Control" unique_id=2050177608]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_y6sfb")

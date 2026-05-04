@@ -57,6 +57,14 @@ This section is dense by design. Skim once, refer back to specifics as needed.
 - Color constants prefixed `C_` (e.g. `C_PANEL`, `C_DIM`, `C_CONFIRM`).
 - Helper functions prefixed with underscore: `_make_label`, `_style_panel`, `_set_btn_left_padding`.
 
+## Critical reference docs
+
+These exist alongside PROJECT_NOTES and are mandatory reading for the topics they cover. Do not start work on these systems without reading them first.
+
+- **`AUTHORED_RESPONSE_SYSTEM.md`** — architecture for authored patient dialogue (deferred)
+- **`MEDICATIONS_INTEGRATION.md`** — engine integration steps for the medications popup (Session 30 active work)
+- **`SCORING_DESIGN.md`** — *(NEW Session 30)* full scoring/economy/badge/difficulty design spec. **THIS IS A MAJOR REFACTOR ITEM.** When implementing, follow the file order in that doc's "Implementation Order" section. The current `bonus_points` system in JSON files will be split into `score_value` (per-action, per-case, run measurement) and `bonus_points` (persistent meta-currency between runs). Schema docs in PROJECT_NOTES will need updating after refactor.
+
 ## What's built and how it's wired
 
 ### Engine (`clinical_engine.gd`)
@@ -81,6 +89,57 @@ Static class with edge-offset constants per popup (IMAGING, LABS, MEDICATIONS, I
 ### Variation systems
 - **Labs:** uniform random sample between min/max per `(lab_id, patient_state)`. Cached. Function: `_generate_single_result()` in `labs_system.gd` line ~ middle. Uses `randf_range(min, max)` then rounds to `display_decimals`. The `normal_distribution` / `mean` / `std_dev` fields in JSON are NOT used — the actual code uses only `min` / `max`. The labs JSON schema is "ahead of" the implementation.
 - **Radiology measurements:** new system. Schema in `appendicitis.json` under `radiology_measurements`. `roll_radiology_measurements()` fires at end of `load_condition_data()`, samples each measurement once. `state_offsets` block adds delta for derived states (e.g. perforated = stable + 2mm). `format_measurement()` applies offset and per-modality precision. `substitute_measurements()` replaces `{{id}}` placeholders in any text. Wired into `_generate_result_text()` in `imaging_system.gd` before caching.
+
+### Medications system (Session 29 — schema designed, popup not yet built)
+
+**Critical to read before working on medications. The architecture decisions here are locked in.**
+
+**File loading model:**
+- Engine loads ONE file at startup: `data/medications/master_medications.json`
+- The 23 source category files (`medications_antibiotics.json`, `medications_analgesics.json`, etc.) live in `data/medications/source/` and are NEVER loaded by the engine. They're authoring source — copy entries from them into `master_medications.json` to expand the v1 set.
+- This mirrors the labs/imaging pattern: `master_labs.json` + `master_imaging.json` are the engine's load targets.
+
+**v1 catalog scope:** 40 drugs covering 9 of 23 categories — antibiotics (10), analgesics (6), gi (4 incl. antiemetics + pantoprazole), fluids_electrolytes (4), vasopressors_inotropes (4), anesthetics (4), paralytics (2), reversal_antidotes (3), endocrine (3 incl. hydrocortisone for septic shock).
+
+**v1 deferred categories** (not in master_medications.json yet, source files exist): rheumatological, allergy, antifungals, antiparasitics, antivirals, anticoagulants, cardiovascular, dermatologic, gynecologic, neuro_psych, respiratory, transfusions, vaccines_immunoglobulins, other.
+
+**Per-medication schema (master_medications.json):**
+- `id` — unique entry primary key
+- `canonical_id` — drug's true identity. Multiple entries (same drug across multiple categories, e.g. ondansetron in GI vs Other) share canonical_id so engine treats them as one drug for allergy/already-given/max-dose tracking. For non-duplicates canonical_id == id.
+- `category_id` — drives Browse Categories tab placement, mirrors source file
+- `routes` — available routes for this drug (PO, IV, IM, SQ, intranasal, topical, inhaled, PR, sublingual, ODT, transdermal, ophthalmic, otic, etc.)
+- `ap_cost` — per-drug global, same regardless of route. Scale: routine meds 1 AP, vasopressors/inotropes 2 AP, blood products 2 AP (none in v1), thrombolytics 4-5 AP (none in v1)
+- `allergy_class` — categorical (penicillins, cephalosporins, carbapenems, sulfonamides, nsaids, opioids, etc.) or null. Matched against `patient_allergies` array in condition file
+- `peripheral_extravasation_risk` — `low` | `moderate` | `high`. Currently informational only. Wires into IV Stage F extravasation roll when that ships. DO NOT REMOVE.
+- `semantic_tags` — free-text bag for Ask MEDDY filter
+
+**Patient allergy enforcement:**
+- Condition files include `patient_allergies` array at top level (e.g. `appendicitis.json` has `"patient_allergies": ["nsaids"]`)
+- Marcus's allergy is also reflected in `appendicitis_system_prompts.json` in two places: `clinical_ground_truth.allergies` and the history prompt itself, so he discloses it naturally when asked
+- When player tries to order a med with `allergy_class` matching any value in `patient_allergies`, MEDDY warning popup fires: 1 harm point for the attempt, player can cancel (still keeps the harm point) or proceed (gets another harm point and triggers anaphylaxis)
+- For Marcus's NSAID allergy in v1 catalog, the trigger drugs are: `ibuprofen`, `ketorolac` (both `allergy_class: "nsaids"`)
+
+**Anaphylaxis state — DEFERRED (planned, architecture must support):**
+- Not implemented in v1. Engine should set a flag `anaphylaxis_triggered: true` and log it but not yet enact state changes
+- When implemented: anaphylaxis is its own patient state with respiratory distress → shock → arrest progression, reversible with timely IM epinephrine, IV fluids, steroids, antihistamines
+
+**Vascular access architecture (v1 = peripheral IV only, future-proof for IO + central line):**
+- Engine concept: `vascular_access_points` — a unified list the medication popup queries. Currently contains only working peripheral IVs from `iv_sites`. Future IO and central line entries append to the same list
+- Medication confirmation popup builds route buttons from `medication.routes` intersected with what's currently feasible. Non-IV routes (PO, inhaled, PR, IM, SQ, topical, sublingual, intranasal) always show. IV routes only show if `vascular_access_points` is non-empty
+- Each individual access point = its own button. So today player sees "L AC IV / R Hand IV" as separate route buttons; later they might see "L AC IV / Central line — RIJ / IO — L tibia"
+- All vascular access types are interchangeable for the medication popup. NO `requires_central_line: true` flag in v1 — anything can go through peripheral. Some drugs (norepinephrine, vasopressin, epinephrine, phenylephrine, vancomycin, D50, promethazine) have `peripheral_extravasation_risk: high` or `moderate` — when IV Stage F ships, that risk drives an extravasation probability roll
+
+**Medication popup UX (planned, not built yet):**
+- Same shape as labs/imaging — three tabs (Search by Name, Browse Categories, Ask MEDDY)
+- **Single medication at a time** (NOT a multi-cart like labs/imaging). Each med needs route selection so cart-with-per-item-route would be awkward
+- Flow: pick drug from list → confirmation popup with route radio buttons (one per available route) + Order button → AP cost confirmation popup with Confirm/Cancel (same shape as IV placement)
+- Allergy check fires AFTER drug pick, BEFORE route selection
+- IV-without-access flow: if player picks IV-only drug and `vascular_access_points` is empty, MEDDY warning popup fires telling them to close, exit meds, click IV button, place IV, retry. NOT the auto-place-IV behavior from `appendicitis_other_treatments.json` (that was for the old non-popup ordering path)
+
+**Ask MEDDY tab mechanism:**
+- Player asks question → LLM call returns list of `semantic_tags` to filter on
+- Engine filters `medications` by tag overlap, popup displays filtered list
+- Player still picks. MEDDY narrows, doesn't decide
 
 ## What's deferred (explicitly NOT built yet)
 
@@ -109,7 +168,14 @@ Labs has it (`labs_popup.invalidate_result_cache()` called in `transition_to_sta
 - Win/fail end-game states
 - Balatro run mode + encounter selection
 - Character creator screen
-- Medication ordering popup (planned, will follow imaging/labs pattern)
+
+### Medications system status (Sessions 29–30)
+- **Schema designed and documented** (see "Medications system" subsection above). Catalog file `master_medications.json` created with 40 drugs across 9 categories. `patient_allergies` field added to `appendicitis.json`. Marcus's NSAID allergy reflected in `appendicitis_system_prompts.json`.
+- **Popup BUILT (Session 30):** `medications_system.gd` created (~1000 lines). Three-tab UI (Search by Name / Browse Categories / Ask MEDDY). Order flow: medication click → feasibility check → optional allergy modal → route picker → AP confirmation. Single-medication-at-a-time. Returns to popup after order. Integration patches in `MEDICATIONS_INTEGRATION.md`. Scene file `medications_popup.tscn` must be created in Godot editor (instructions in integration doc).
+- **`meddy_medication_filter` prompt added** to `appendicitis_system_prompts.json` for the Ask MEDDY tab. Popup makes its own HTTP call to `localhost:3000/llm` (mirrors labs Ask MEDDY pattern). Returns JSON `{canonical_ids: [...]}` which the popup uses to filter the displayed list.
+- **Anaphylaxis state DEFERRED** — popup emits `anaphylaxis_triggered_signal`, engine sets `anaphylaxis_triggered: bool` flag and adds harm point. State machine for respiratory distress/shock/arrest progression is future work.
+- **IO and central line procedures DEFERRED** — engine helper `_get_vascular_access_points()` reads from `iv_sites` only. Future IO/central line entries append to the returned array; popup needs no changes.
+- **Clinical effects of giving meds DEFERRED** — antibiotics don't yet stop sepsis, opioids don't reduce pain reports, ondansetron doesn't stop nausea symptoms. The popup orders, the engine logs to `medications_given`, but no effect is enacted on patient state. That's the next major treatment-effects system.
 
 ## Known broken things
 
@@ -117,6 +183,7 @@ Labs has it (`labs_popup.invalidate_result_cache()` called in `transition_to_sta
 - **Imaging "Time" column header alignment** — sits ~1px right of data text. Multiple attempts to fix failed. Mechanism not understood. Accepted as good-enough.
 - **Lab variation schema unused fields** — `mean`, `std_dev`, `type: "normal_distribution"`, `flag_above` fields in lab JSON are not read by the variation function. Only `min` and `max` are used. The schema is aspirational.
 - **`.gitignore` had a parse bug** — `Photos saved/` was concatenated to previous line. Fixed mid-session by splitting onto own line. Verify hasn't regressed.
+- **Engine doesn't handle `is_other` from exam cost detection** — Session 28 added an `is_other: true` fallback to the `exam_cost_detection` prompt for inputs that don't match any known system or maneuver. The engine's `handle_exam_cost_response` was not updated to read this field, so unclassifiable exam input ("examine one eyelash") still falls through to the live patient-response LLM call instead of showing a "I'm not sure what you're trying to examine" redirect. Acceptable while in `DEV_MODE_LLM = true` since the LLM will produce a plausible response either way.
 
 ## Dev toggles in clinical_engine.gd
 
@@ -156,6 +223,7 @@ A retro pixel-art RPG where you play a doctor. You travel a world map healing pa
 
 **Working but rough:**
 - Live LLM responses for patient dialogue (placeholder — will be replaced by authored responses in shipped game)
+- Exam cost-detection prompt was upgraded in Session 28 to use a canonical ID enum matching the JSON keys (`exam_abdominal`, `bonus_mcburney`, etc.) and to return `is_other: true` for unrecognized input. Engine doesn't yet read `is_other` (see Known broken things)
 
 **Not yet started:**
 - Authored response system implementation
@@ -205,6 +273,8 @@ If `git status` shows screenshots in `Photos saved/` getting picked up, your `.g
 - Shared sizing: `game/med-rpg/scripts/popup_layout.gd`
 - Main scene: `game/med-rpg/scenes/clinical_encounter.tscn`
 - Condition data: `game/med-rpg/data/conditions/appendicitis.json` and related
+- Medication catalog (engine loads this): `game/med-rpg/data/medications/master_medications.json`
+- Medication source files (NOT loaded — authoring reference): `game/med-rpg/data/medications/source/medications_*.json` (23 files)
 - Backend server: `server/server.js` (run with `cd server && node server.js`)
 
 ### To resize any popup
@@ -246,3 +316,6 @@ These aren't urgent but you flagged them as "we'll do this later":
 - **Session 25:** Shared `popup_layout.gd` extracted, popups reparented under PopupLayer, dark overlay removed, extensive column header alignment work
 - **Session 26:** IV access system built (Stages A, B, C). Per-site state, popup, confirmation modal, status display below SpO2. Mini-game stub ready to swap
 - **Session 27:** Radiology measurement variation system. Appendix diameter rolls per session, displays in imaging reports with per-modality precision and state-based offset. PROJECT_NOTES rewritten to bootstrap-doc format
+- **Session 28:** Physical exam authored-response groundwork (later deferred). `appendicitis.json` exam data updated: 1 AP per system / 1 AP per maneuver, named maneuvers (McBurney, Rovsing, psoas, obturator) removed from `exam_abdominal` clinical text so they must be ordered separately, `bonus_obturator` and `bonus_heel_tap` added (5 special-maneuver bonuses total, each worth 1 bonus point, no ordering gate). `exam_cost_detection` prompt rewritten with canonical IDs as a constrained enum and an `is_other: true` fallback for unclassifiable input. **Server recreation:** `server/server.js` was lost from OneDrive (no version history, no recycle bin); rebuilt from scratch using `@anthropic-ai/sdk` with model `claude-sonnet-4-5-20250929`. Has `/llm` POST endpoint and `/health` GET endpoint. Authored-response lookup for exams was scoped but not built — pivoted to focus on auto-runner first since results may inform a different architecture entirely
+- **Session 29:** Medications system schema designed and documented end-to-end. 23 source category files (~600 medications total) reviewed and confirmed as authoring-only — engine loads ONE file: `master_medications.json`. v1 catalog created with 40 drugs across 9 categories (antibiotics 10, analgesics 6, gi 4 incl. antiemetics + pantoprazole, fluids 4, vasopressors 4, anesthetics 4, paralytics 2, reversal 3, endocrine 3). Schema fields: `id`, `canonical_id` (for cross-category dedup), `category_id`, `routes`, `ap_cost` (per-drug global, 1 AP routine / 2 AP vasopressors / 4-5 AP thrombolytics), `allergy_class`, `peripheral_extravasation_risk` (low/moderate/high — informational until IV Stage F ships), `semantic_tags`. **Marcus given an NSAID allergy** — `patient_allergies: ["nsaids"]` added to `appendicitis.json`, allergy reflected in `clinical_ground_truth.allergies` and history prompt of `appendicitis_system_prompts.json`. Marcus discloses ibuprofen rash + breathing difficulty when asked. v1 trigger drugs for this allergy: `ibuprofen`, `ketorolac`. Anaphylaxis state and IO/central-line procedures explicitly deferred but architecture (`vascular_access_points`, `anaphylaxis_triggered` flag) left forward-compatible. Medication popup itself NOT yet built — will follow labs/imaging three-tab pattern but single-medication-at-a-time (no multi-cart) because each med needs route selection.
+- **Session 30:** Medications popup built. `medications_system.gd` (~1000 lines), three tabs (Search/Browse/Ask MEDDY), order flow (feasibility check → allergy modal → route picker → AP confirm). Search matches token-prefix on generic OR brand names ("tor" finds Toradol). Browse uses flat category list (left) + medication list (right). Ask MEDDY makes its own HTTP call (mirrors labs MEDDY pattern), prompt added to `appendicitis_system_prompts.json` as `meddy_medication_filter`, returns `{canonical_ids: [...]}`. Allergy modal fires before route picker — first harm point on display, second on Proceed Anyway with `anaphylaxis_triggered_signal` emitted. Route picker shows non-IV routes always + one button per vascular access point for IV (encoded as `IV|left_ac` token). After order resolves, returns to popup main view (per spec). Engine integration documented in separate `MEDICATIONS_INTEGRATION.md` (5 explicit edits + scene file creation steps for the Godot editor). Scene file `medications_popup.tscn` must be created manually in editor. Clinical effects (antibiotics stopping sepsis, etc.) DEFERRED — popup orders, engine logs to `medications_given` array, but no patient state effects yet. **Also Session 30:** extensive design discussion on game philosophy → produced `SCORING_DESIGN.md` capturing the full economy redesign (Score / Bonus / XP / AP four-currency system, diagnosis-as-AP-cost mechanic, time-into-AP-debit pressure, difficulty card draws, badge categories incl. Hot Mess, shop UI sketch). Implementation deferred to Session 31. The existing `bonus_points` system in all JSON files will be refactored — most current bonus_points become score_values (per-action run measurement), real bonus_points become persistent meta-currency for between-run shop.

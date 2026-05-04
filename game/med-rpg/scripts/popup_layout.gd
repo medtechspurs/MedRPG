@@ -38,10 +38,10 @@ const LABS := {
 }
 
 const MEDICATIONS := {
-	"left":   215,
-	"top":    240,
-	"right":  487,
-	"bottom":  65,
+	"left":   150,
+	"top":    200,
+	"right":  200,
+	"bottom":  50,
 }
 
 const IV := {
